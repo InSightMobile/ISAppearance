@@ -1,9 +1,12 @@
 
 UINavigationBar: 
-  tintColor: !UIColor blue
+- tintColor: !UIColor red 
+- [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics UIBarMetricsDefault]
 
 UIButton:
-  tintColor: !UIColor red
+- tintColor: !UIColor red
 
 UISwitch:
-  tintColor: !UIColor green
+- tintColor: !UIColor green
+- onTintColor: !UIColor red
+

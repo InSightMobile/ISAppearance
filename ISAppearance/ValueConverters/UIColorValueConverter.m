@@ -1,26 +1,14 @@
 //
 // 
 
-#import "UIColorConverter.h"
+#import "UIColorValueConverter.h"
 #import "YKTag.h"
 
-@interface UIColorConverter () <YKTagDelegate>
+@interface UIColorValueConverter () <YKTagDelegate>
 @end
 
-@implementation UIColorConverter
-{
+@implementation UIColorValueConverter
 
-}
-
-+ (UIColorConverter *)instance
-{
-    static UIColorConverter *_instance = nil;
-    static dispatch_once_t pred;
-    dispatch_once(&pred, ^{
-    _instance = [[self alloc] init];
-});
-    return _instance;
-}
 
 - (id)createFromNode:(id)node
 {
