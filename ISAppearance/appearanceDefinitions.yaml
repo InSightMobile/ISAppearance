@@ -1,0 +1,14 @@
+define:
+  tintColor: UIColor
+  UIBarMetrics: [UIBarMetricsDefault,UIBarMetricsLandscapePhone]
+
+  UINavigationBar:
+    __scope: [UIBarMetrics,UIBarMetricsDefault]
+    backgroundImage: ["setBackgroundImage:forBarMetrics:",UIImage,UIBarMetrics]
+
+  UIBarButtonItem:
+    __scope: [UIBarMetrics,UIBarMetricsDefault]
+    __scope: [UIControlState,UIControlStateNormal]
+    backgroundImage: ["setBackgroundImage:forState:barMetrics:",UIImage,UIControlState,UIBarMetrics]
+    backButtonBackgroundImage: ["setBackButtonBackgroundImage:forState:barMetrics:",UIImage,UIControlState,UIBarMetrics]
+

@@ -1,0 +1,9 @@
+
+UINavigationBar: 
+  tintColor: !UIColor blue
+
+UIButton:
+  tintColor: !UIColor red
+
+UISwitch:
+  tintColor: !UIColor green
