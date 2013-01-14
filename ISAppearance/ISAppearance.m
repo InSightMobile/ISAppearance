@@ -4,6 +4,7 @@
 #import "ISAppearance.h"
 #import "YAMLKit.h"
 #import "ISValueConverter.h"
+#import "FeedViewController.h"
 
 @interface ISAppearance () <YKTagDelegate, YKParserDelegate>
 
@@ -104,10 +105,45 @@
         }
 
         if ([key isKindOfClass:[NSString class]]) {
-            className = key;
             Class cl = NSClassFromString(key);
             if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
                 appearanceProxy = [cl appearance];
+            }
+        }
+        else if ([key isKindOfClass:[NSArray class]]) {
+            if ([key count]) {
+                Class cl = NSClassFromString(key[0]);
+                if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
+
+                    NSMutableArray *classes = [NSMutableArray arrayWithCapacity:[key count]-1];
+                    for (int j = 1; j < [key count]; j++) {
+                        Class mcl = NSClassFromString(key[j]);
+                        if (mcl) [classes addObject:mcl];
+                    }
+
+                    switch (classes.count) {
+                        case 0:
+                            appearanceProxy = [cl appearance];
+                        break;
+                        case 1:
+                            appearanceProxy = [cl appearanceWhenContainedIn:classes[0],nil];
+                        break;
+                        case 2:
+                            appearanceProxy = [cl appearanceWhenContainedIn:classes[0],classes[1],nil];
+                        break;
+                        case 3:
+                            appearanceProxy = [cl appearanceWhenContainedIn:classes[0],classes[1],classes[2],nil];
+                        break;
+                        case 4:
+                            appearanceProxy = [cl appearanceWhenContainedIn:classes[0],classes[1],classes[2],classes[3],nil];
+                        break;
+                        default:
+                            NSLog(@"ISArrearance: many appearance arguments: %d",classes.count);
+                        case 5:
+                            appearanceProxy = [cl appearanceWhenContainedIn:classes[0],classes[1],classes[2],classes[3],classes[4],nil];
+                        break;
+                    }
+                }
             }
         }
 
