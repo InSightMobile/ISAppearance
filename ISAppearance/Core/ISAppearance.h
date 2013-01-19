@@ -10,8 +10,10 @@
 + (ISAppearance *)sharedInstance;
 
 - (void)loadAppearanceFromFile:(NSString *)file;
+- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;
 
 - (void)processAppearance;
 
-- (void)applyAppearanceTo:(UIView *)view class:(NSString *)class;
+- (void)applyAppearanceTo:(UIView *)view usingClasses:(NSString *)classes;
+
 @end

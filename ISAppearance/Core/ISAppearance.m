@@ -1,11 +1,14 @@
 //
 // 
 
+#import <QuartzCore/QuartzCore.h>
 #import "ISAppearance.h"
 #import "YAMLKit.h"
 #import "ISAValueConverter.h"
 #import "ISASwizzler.h"
 #import "ISAEntry.h"
+#import "ISAFileMonitor.h"
+#import "UIView+ISAppearance.h"
 
 @interface ISAppearance () <YKTagDelegate, YKParserDelegate>
 
@@ -19,6 +22,9 @@
 
     NSMutableDictionary *_classStyles;
     NSMutableDictionary *_objectStyles;
+    NSMutableArray *_sourses;
+    id _registeredObjects;
+    BOOL _monitoring;
 }
 
 + (ISAppearance *)sharedInstance
@@ -37,8 +43,8 @@
     if (self) {
         _classStyles = [NSMutableDictionary dictionary];
         _objectStyles = [NSMutableDictionary dictionary];
-
         _definitions = [NSMutableArray array];
+        _sourses = [NSMutableArray array];
 
         NSString *definitionsFile = [[NSBundle mainBundle] pathForResource:@"appearanceDefinitions" ofType:@"yaml"];
         if (definitionsFile)
@@ -68,7 +74,7 @@
     return tag;
 }
 
-- (void)loadAppearanceFromFile:(NSString *)file
+- (void)loadAppearanceData:(NSString *)file
 {
     YKParser *parser = [[YKParser alloc] init];
     parser.delegate = self;
@@ -86,6 +92,43 @@
         }
     }
 }
+
+- (void)loadAppearanceFromFile:(NSString *)file
+{
+    [_sourses addObject:file];
+
+    [self loadAppearanceData:file];
+
+}
+
+- (void)reloadAppearanceSources
+{
+    [_definitions removeAllObjects];
+    for (NSString *file in _sourses) {
+        [self loadAppearanceData:file];
+    }
+}
+
+-(void)reloadAppearance
+{
+    [_classStyles removeAllObjects];
+    [_objectStyles removeAllObjects];
+    [self reloadAppearanceSources];
+    [self processAppearance];
+    [self updateAppearanceRegisteredObjects];
+}
+
+- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
+{
+    [self loadAppearanceFromFile:file];
+    if (monitoring) {
+        _monitoring = YES;
+        [ISAFileMonitor watch:file withCallback:^{
+             [self reloadAppearance];
+        }];
+    }
+}
+
 
 - (void)processAppearance
 {
@@ -334,8 +377,37 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     return invocations;
 }
 
-- (void)applyAppearanceTo:(UIView *)view class:(NSString *)isaClass
+- (void) registerObject:(id)object
 {
+    if (!_registeredObjects) {
+        Class cl = NSClassFromString(@"NSHashTable");
+        if ([cl resolveClassMethod:@selector(weakObjectsHashTable)]) {
+            _registeredObjects = [NSHashTable weakObjectsHashTable];
+        }
+        else {
+            _registeredObjects = [NSMutableSet set];
+        }
+    }
+    [_registeredObjects addObject:object];
+}
+
+
+- (void) updateAppearanceRegisteredObjects
+{
+    for (id object in [_registeredObjects copy]) {
+        [self applyAppearanceTo:object usingClasses:[object isaClass]];
+    }
+    [CATransaction flush];
+    [[[UIApplication sharedApplication] keyWindow] setNeedsLayout];
+    [[[[[UIApplication sharedApplication] keyWindow] rootViewController] view] setNeedsLayout];
+}
+
+- (void)applyAppearanceTo:(UIView *)view usingClasses:(NSString *)classNames
+{
+    if (_monitoring) {
+        [self registerObject:view];
+    }
+
     // apply class styles first
     NSMutableArray *classes = [NSMutableArray array];
 
@@ -355,19 +427,22 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
         }
     }
 
-    if (isaClass) {
-        // apply styled classes
-        for (Class class in classes.reverseObjectEnumerator) {
-            NSDictionary *styles = [_objectStyles objectForKey:class];
-            NSArray *objectParams = nil;
-            if (styles) {
-                objectParams = [styles objectForKey:isaClass];
+    for (NSString *className in [classNames componentsSeparatedByString:@":"]) {
+        if (classes) {
+            // apply styled classes
+            for (Class class in classes.reverseObjectEnumerator) {
+                NSDictionary *styles = [_objectStyles objectForKey:class];
+                NSArray *objectParams = nil;
+                if (styles) {
+                    objectParams = [styles objectForKey:className];
 
-                for (ISAEntry *entry in objectParams) {
-                    [entry invokeWithTarget:view];
+                    for (ISAEntry *entry in objectParams) {
+                        [entry invokeWithTarget:view];
+                    }
                 }
             }
         }
     }
 }
+
 @end

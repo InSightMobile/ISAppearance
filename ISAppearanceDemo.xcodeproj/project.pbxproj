@@ -12,11 +12,15 @@
 		1D26A709B7B64FD580F53C42 /* ISAEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A1C7A7B806A1246EA248 /* ISAEntry.m */; };
 		1D26AAB1BBF32D636DAE8284 /* ISAUIImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A08CD100DA1F26E888C9 /* ISAUIImageValueConverter.m */; };
 		1D26AB2BF0B68C43D36E9BEF /* ISASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */; };
+		1D26AB535DD229D731C98288 /* ISACGColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */; };
 		1D26AB6F71C25552DC07152F /* UIView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */; };
 		1D26AC02BB53D36AC09B1FE4 /* ISAUIBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A9E781297B903B25F345 /* ISAUIBarMetricsValueConverter.m */; };
+		1D26ACBE7A6577456E3B16A9 /* ISACGColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */; };
 		1D26ACCCE1B09A706EDE2413 /* ISAUIImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A08CD100DA1F26E888C9 /* ISAUIImageValueConverter.m */; };
 		1D26AE34EEEC4E62AD14F30F /* UIView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */; };
+		1D26AE3BCFB2D55DD117A649 /* ISAFileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A85A96C106E90734864C /* ISAFileMonitor.m */; };
 		1D26AE801B54267783C0E38D /* ISASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */; };
+		1D26AF06D52A999C6E0032C4 /* ISAFileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A85A96C106E90734864C /* ISAFileMonitor.m */; };
 		5C4D643A1693F2BA006CB6D3 /* appearanceDefinitions.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D64331693F2BA006CB6D3 /* appearanceDefinitions.yaml */; };
 		5C4D643C1693F2BA006CB6D3 /* ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64351693F2BA006CB6D3 /* ISAppearance.m */; };
 		5C4D643E1693F2BA006CB6D3 /* ISAValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64371693F2BA006CB6D3 /* ISAValueConverter.m */; };
@@ -72,6 +76,7 @@
 		5C4D65E116941646006CB6D3 /* nav_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D65DF16941646006CB6D3 /* nav_bg.png */; };
 		5C4D65E216941646006CB6D3 /* nav_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D65E016941646006CB6D3 /* nav_bg@2x.png */; };
 		5C6B471F16AA0CC100270291 /* ISAUIControlStateValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6B471E16AA0CC100270291 /* ISAUIControlStateValueConverter.m */; };
+		5CA2EC8216AA461B00F913D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA2EC8116AA461B00F913D3 /* QuartzCore.framework */; };
 		5CFFF1441693F23200C6BCC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFFF1431693F23200C6BCC1 /* UIKit.framework */; };
 		5CFFF1461693F23200C6BCC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFFF1451693F23200C6BCC1 /* Foundation.framework */; };
 		5CFFF1481693F23200C6BCC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFFF1471693F23200C6BCC1 /* CoreGraphics.framework */; };
@@ -98,9 +103,13 @@
 		1D26A1C7A7B806A1246EA248 /* ISAEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAEntry.m; sourceTree = "<group>"; };
 		1D26A232FED811C0C8B18BA1 /* ISAUIImageValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIImageValueConverter.h; sourceTree = "<group>"; };
 		1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISASwizzler.m; sourceTree = "<group>"; };
+		1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGColorValueConverter.m; sourceTree = "<group>"; };
+		1D26A85A96C106E90734864C /* ISAFileMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAFileMonitor.m; sourceTree = "<group>"; };
 		1D26A87F6D6676C23074DB10 /* UIView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAppearance.h"; sourceTree = "<group>"; };
+		1D26A953913A256DAB608AFA /* ISAFileMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAFileMonitor.h; sourceTree = "<group>"; };
 		1D26A9E781297B903B25F345 /* ISAUIBarMetricsValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIBarMetricsValueConverter.m; sourceTree = "<group>"; };
 		1D26AA41F303965BAB658705 /* ISAEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAEntry.h; sourceTree = "<group>"; };
+		1D26ABFF267042393DE87D12 /* ISACGColorValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGColorValueConverter.h; sourceTree = "<group>"; };
 		1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAppearance.m"; sourceTree = "<group>"; };
 		5C4D64331693F2BA006CB6D3 /* appearanceDefinitions.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = appearanceDefinitions.yaml; sourceTree = "<group>"; };
 		5C4D64341693F2BA006CB6D3 /* ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAppearance.h; sourceTree = "<group>"; };
@@ -152,6 +161,7 @@
 		5C4D65E016941646006CB6D3 /* nav_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_bg@2x.png"; sourceTree = "<group>"; };
 		5C6B471D16AA0CC100270291 /* ISAUIControlStateValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIControlStateValueConverter.h; sourceTree = "<group>"; };
 		5C6B471E16AA0CC100270291 /* ISAUIControlStateValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIControlStateValueConverter.m; sourceTree = "<group>"; };
+		5CA2EC8116AA461B00F913D3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5CFFF13F1693F23200C6BCC1 /* ISAppearanceDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ISAppearanceDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CFFF1431693F23200C6BCC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5CFFF1451693F23200C6BCC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -194,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CA2EC8216AA461B00F913D3 /* QuartzCore.framework in Frameworks */,
 				5C4D64A71693F45C006CB6D3 /* libicucore.dylib in Frameworks */,
 				5CFFF1441693F23200C6BCC1 /* UIKit.framework in Frameworks */,
 				5CFFF1461693F23200C6BCC1 /* Foundation.framework in Frameworks */,
@@ -217,6 +228,8 @@
 				5C6B471E16AA0CC100270291 /* ISAUIControlStateValueConverter.m */,
 				5C4D64361693F2BA006CB6D3 /* ISAValueConverter.h */,
 				5C4D64371693F2BA006CB6D3 /* ISAValueConverter.m */,
+				1D26ABFF267042393DE87D12 /* ISACGColorValueConverter.h */,
+				1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -239,6 +252,8 @@
 				1D26A04C039754156FF88CA3 /* ISASwizzler.h */,
 				5C4D64351693F2BA006CB6D3 /* ISAppearance.m */,
 				5C4D64341693F2BA006CB6D3 /* ISAppearance.h */,
+				1D26A85A96C106E90734864C /* ISAFileMonitor.m */,
+				1D26A953913A256DAB608AFA /* ISAFileMonitor.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -369,6 +384,7 @@
 		5CFFF1421693F23200C6BCC1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5CA2EC8116AA461B00F913D3 /* QuartzCore.framework */,
 				5C4D64A61693F45C006CB6D3 /* libicucore.dylib */,
 				5CFFF1431693F23200C6BCC1 /* UIKit.framework */,
 				5CFFF1451693F23200C6BCC1 /* Foundation.framework */,
@@ -560,6 +576,8 @@
 				1D26AE801B54267783C0E38D /* ISASwizzler.m in Sources */,
 				1D26AB6F71C25552DC07152F /* UIView+ISAppearance.m in Sources */,
 				1D26A6ECC6D04163E5D72AE8 /* ISAEntry.m in Sources */,
+				1D26ACBE7A6577456E3B16A9 /* ISACGColorValueConverter.m in Sources */,
+				1D26AF06D52A999C6E0032C4 /* ISAFileMonitor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +616,8 @@
 				1D26AE34EEEC4E62AD14F30F /* UIView+ISAppearance.m in Sources */,
 				1D26A709B7B64FD580F53C42 /* ISAEntry.m in Sources */,
 				5C6B471F16AA0CC100270291 /* ISAUIControlStateValueConverter.m in Sources */,
+				1D26AB535DD229D731C98288 /* ISACGColorValueConverter.m in Sources */,
+				1D26AE3BCFB2D55DD117A649 /* ISAFileMonitor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

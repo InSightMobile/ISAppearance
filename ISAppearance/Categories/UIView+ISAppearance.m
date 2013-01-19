@@ -20,7 +20,7 @@
 - (void)applyISAppearance
 {
     self.isaIsApplied = @YES;
-    [[ISAppearance sharedInstance] applyAppearanceTo:self class:self.isaClass];
+    [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass];
 }
 
 static void* isaClass = 0;

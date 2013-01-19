@@ -36,7 +36,13 @@
 {
     id target;
     if (_keyPath) {
-        target = [rootTarget valueForKeyPath:_keyPath];
+        @try {
+             target = [rootTarget valueForKeyPath:_keyPath];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"exception = %@", exception);
+            return;
+        }
     }
     else {
         target = rootTarget;

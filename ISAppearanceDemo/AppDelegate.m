@@ -13,9 +13,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSString *file = [[NSBundle mainBundle] pathForResource:@"appearance" ofType:@"yaml"];
-    if (file)
-        [[ISAppearance sharedInstance] loadAppearanceFromFile:file];
+    if (YES) {
+        NSString *file = [[NSBundle mainBundle] pathForResource:@"appearance" ofType:@"yaml"];
+        if (file) {
+            [[ISAppearance sharedInstance] loadAppearanceFromFile:file];
+        }
+    }
+    else {
+        NSString* file = @"/Users/yar/prj/ISAppearance/ISAppearanceDemo/appearance.yaml";
+        [[ISAppearance sharedInstance] loadAppearanceFromFile:file withMonitoring:YES];
+    }
 
     [[ISAppearance sharedInstance] processAppearance];
     return YES;
