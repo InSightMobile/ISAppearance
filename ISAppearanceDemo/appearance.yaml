@@ -1,3 +1,10 @@
+---
+ # define base constants
+- &primaryColor !UIColor 468756
+- &primaryFontName Times
+- &primaryFont !UIFont [*primaryFontName, 15]
+
+--- # definition part
 UIAppearance:
 
   UISwitch:
@@ -8,22 +15,30 @@ UIAppearance:
   - tintColor: !UIColor green
   - [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics default]
 
-UIButton:Red:
-- backgroundColor: !UIColor green
-- [setTitleColor: !UIColor red, forState: !UIControlState normal]
+UITableView:
+- backgroundColor:  !UIColor underPageBackground
 
-UITableViewCell:First:
-- backgroundColor: !UIColor green 
 
-UITableViewCell:Middle:
-- backgroundColor: !UIColor orange
-- [accessoryView, setTitleColor: !UIColor red, forState: !UIControlState normal ]
-- [textLabel,setText: "tefdsfsdfsdxt"]
+UIButton:
+- [titleLabel, setFont: *primaryFont ]
 
-UITableViewCell:Last:
-- [backgroundView, setBackgroundColor: !UIColor yellow]
-- [backgroundView, setBackgroundColor: !UIColor red]
+UIButton:Rounded:
+- [layer, setBorderColor: !CGColor 444444 ]
+- [layer, setBorderWidth: 1 ]
+- [layer, setCornerRadius: 8 ]
 - [layer, setMasksToBounds: true ]
+
+UIButton:Red:
+- [setBackgroundColor: !UIColor red, forState: !UIControlState normal]
+- [setBackgroundColor: !UIColor DD0000, forState: !UIControlState highlighted]
+- [setTitleColor: !UIColor 440000, forState: !UIControlState normal]
+- [setTitleColor: !UIColor FFAAAA, forState: !UIControlState highlighted]
+
+UIButton:Green:
+- [setBackgroundColor: !UIColor green, forState: !UIControlState normal]
+- [setBackgroundColor: !UIColor 00AA00, forState: !UIControlState highlighted]
+- [setTitleColor: !UIColor 004400, forState: !UIControlState normal]
+- [setTitleColor: !UIColor CCFFCC, forState: !UIControlState highlighted]
 
 
 

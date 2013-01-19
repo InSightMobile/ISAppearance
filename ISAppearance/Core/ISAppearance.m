@@ -46,9 +46,9 @@
         _definitions = [NSMutableArray array];
         _sourses = [NSMutableArray array];
 
-        NSString *definitionsFile = [[NSBundle mainBundle] pathForResource:@"appearanceDefinitions" ofType:@"yaml"];
-        if (definitionsFile)
-            [self loadAppearanceFromFile:definitionsFile];
+        //NSString *definitionsFile = [[NSBundle mainBundle] pathForResource:@"appearanceDefinitions" ofType:@"yaml"];
+        //if (definitionsFile)
+        //    [self loadAppearanceFromFile:definitionsFile];
 
     }
     return self;
@@ -137,6 +137,8 @@
 
 - (void)processUIAppearance:(NSDictionary *)definition
 {
+    if (![definition isKindOfClass:[NSDictionary class]]) return;
+
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         id appearanceProxy = nil;
@@ -273,6 +275,8 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
 
 - (void)processISAppearance:(NSDictionary *)definition
 {
+    if (![definition isKindOfClass:[NSDictionary class]]) return;
+
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if ([key isEqual:@"UIAppearance"]) {
