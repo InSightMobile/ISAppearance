@@ -29,6 +29,11 @@
     return converter;
 }
 
+- (id)tag:(YKTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
+{
+    return [self createFromNode:node];
+}
+
 - (id)tag:(YKTag *)tag castValue:(id)value fromTag:(YKTag *)castingTag
 {
     return [self createFromNode:value];

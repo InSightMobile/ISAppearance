@@ -50,9 +50,6 @@
         if (definitionsFile)
             [self loadAppearanceFromFile:definitionsFile];
 
-        NSString *file = [[NSBundle mainBundle] pathForResource:@"appearance" ofType:@"yaml"];
-        if (file)
-            [self loadAppearanceFromFile:file];
     }
     return self;
 }
