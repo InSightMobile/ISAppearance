@@ -1,32 +1,27 @@
 ---
  # define base constants
-- &primaryColor !UIColor 468756
+- &primaryColor !UIColor 468750
 - &primaryFontName Times
 - &primaryFont !UIFont [*primaryFontName, 15]
 
 --- # definition part
-UIAppearance:
 
-  UISwitch:
-  - tintColor: !UIColor blue
-  - onTintColor: !UIColor blue
+UISwitch:
+- tintColor: !UIColor red
+- onTintColor: !UIColor blue
 
-  UINavigationBar:
-  - tintColor: !UIColor green
-  - [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics default]
+UINavigationBar:
+- tintColor: !UIColor blue
+- [setBackgroundImage: !UIImage [*primaryColor], forBarMetrics: !UIBarMetrics default]
 
 UITableView:
 - backgroundColor:  !UIColor underPageBackground
 
-
 UIButton:
 - [titleLabel, setFont: *primaryFont ]
 
-UIButton:Rounded:
-- [layer, setBorderColor: !CGColor 444444 ]
-- [layer, setBorderWidth: 1 ]
-- [layer, setCornerRadius: 8 ]
-- [layer, setMasksToBounds: true ]
+UIView:Rounded: 
+- [setBorderColor: !UIColor 444444, width: 1, radius: 6]
 
 UIButton:Red:
 - [setBackgroundColor: !UIColor red, forState: !UIControlState normal]

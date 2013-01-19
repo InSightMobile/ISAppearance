@@ -13,19 +13,16 @@
 		1D26A67E8F4208340AAF4F97 /* UIButton+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A5E353F05FCCE6C26970 /* UIButton+ISAppearance.m */; };
 		1D26A6ECC6D04163E5D72AE8 /* ISAEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A1C7A7B806A1246EA248 /* ISAEntry.m */; };
 		1D26A709B7B64FD580F53C42 /* ISAEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A1C7A7B806A1246EA248 /* ISAEntry.m */; };
+		1D26A78AD66058ECE217B0A7 /* UIView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A67A79C1FABDD37B422C /* UIView+ISAppearance.m */; };
 		1D26AAB1BBF32D636DAE8284 /* ISAUIImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A08CD100DA1F26E888C9 /* ISAUIImageValueConverter.m */; };
-		1D26AB2BF0B68C43D36E9BEF /* ISASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */; };
+		1D26AAC877F52A6476CDF113 /* UIView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A67A79C1FABDD37B422C /* UIView+ISAppearance.m */; };
 		1D26AB535DD229D731C98288 /* ISACGColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */; };
-		1D26AB6F71C25552DC07152F /* UIView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */; };
+		1D26AB6F71C25552DC07152F /* UIView+ISAInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AC54E52D22F761A6FFA6 /* UIView+ISAInjection.m */; };
 		1D26AC02BB53D36AC09B1FE4 /* ISAUIBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A9E781297B903B25F345 /* ISAUIBarMetricsValueConverter.m */; };
 		1D26ACBE7A6577456E3B16A9 /* ISACGColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */; };
 		1D26ACCCE1B09A706EDE2413 /* ISAUIImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A08CD100DA1F26E888C9 /* ISAUIImageValueConverter.m */; };
-		1D26AE34EEEC4E62AD14F30F /* UIView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */; };
-		1D26AE3BCFB2D55DD117A649 /* ISAFileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A85A96C106E90734864C /* ISAFileMonitor.m */; };
+		1D26AE34EEEC4E62AD14F30F /* UIView+ISAInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AC54E52D22F761A6FFA6 /* UIView+ISAInjection.m */; };
 		1D26AE6ABEAE8B9CD7D581F3 /* UIImage+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AEB8CC1F72AE5962B05E /* UIImage+ISAppearance.m */; };
-		1D26AE801B54267783C0E38D /* ISASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */; };
-		1D26AF06D52A999C6E0032C4 /* ISAFileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A85A96C106E90734864C /* ISAFileMonitor.m */; };
-		5C4D643A1693F2BA006CB6D3 /* appearanceDefinitions.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D64331693F2BA006CB6D3 /* appearanceDefinitions.yaml */; };
 		5C4D643C1693F2BA006CB6D3 /* ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64351693F2BA006CB6D3 /* ISAppearance.m */; };
 		5C4D643E1693F2BA006CB6D3 /* ISAValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64371693F2BA006CB6D3 /* ISAValueConverter.m */; };
 		5C4D64401693F2BA006CB6D3 /* ISAUIColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64391693F2BA006CB6D3 /* ISAUIColorValueConverter.m */; };
@@ -71,7 +68,6 @@
 		5C4D64F41693F674006CB6D3 /* YKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64611693F38E006CB6D3 /* YKParser.m */; };
 		5C4D64F51693F674006CB6D3 /* YKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64631693F38E006CB6D3 /* YKTag.m */; };
 		5C4D64F61693F674006CB6D3 /* YKUnknownNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64651693F38E006CB6D3 /* YKUnknownNode.m */; };
-		5C4D64F71693F68F006CB6D3 /* appearanceDefinitions.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D64331693F2BA006CB6D3 /* appearanceDefinitions.yaml */; };
 		5C4D64F81693F68F006CB6D3 /* ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64351693F2BA006CB6D3 /* ISAppearance.m */; };
 		5C4D64F91693F68F006CB6D3 /* ISAValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64371693F2BA006CB6D3 /* ISAValueConverter.m */; };
 		5C4D64FA1693F68F006CB6D3 /* ISAUIColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64391693F2BA006CB6D3 /* ISAUIColorValueConverter.m */; };
@@ -102,25 +98,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D26A04C039754156FF88CA3 /* ISASwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISASwizzler.h; sourceTree = "<group>"; };
 		1D26A08CD100DA1F26E888C9 /* ISAUIImageValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIImageValueConverter.m; sourceTree = "<group>"; };
 		1D26A195FCCE1C0096011D76 /* ISAUIBarMetricsValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIBarMetricsValueConverter.h; sourceTree = "<group>"; };
 		1D26A1C7A7B806A1246EA248 /* ISAEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAEntry.m; sourceTree = "<group>"; };
+		1D26A225A8751B4393D2161B /* UIView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAppearance.h"; sourceTree = "<group>"; };
 		1D26A232FED811C0C8B18BA1 /* ISAUIImageValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIImageValueConverter.h; sourceTree = "<group>"; };
-		1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISASwizzler.m; sourceTree = "<group>"; };
 		1D26A5E353F05FCCE6C26970 /* UIButton+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ISAppearance.m"; sourceTree = "<group>"; };
+		1D26A67A79C1FABDD37B422C /* UIView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAppearance.m"; sourceTree = "<group>"; };
 		1D26A7E9F64E3392AD6FF269 /* ISACGColorValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGColorValueConverter.m; sourceTree = "<group>"; };
-		1D26A85A96C106E90734864C /* ISAFileMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAFileMonitor.m; sourceTree = "<group>"; };
-		1D26A87F6D6676C23074DB10 /* UIView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAppearance.h"; sourceTree = "<group>"; };
-		1D26A953913A256DAB608AFA /* ISAFileMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAFileMonitor.h; sourceTree = "<group>"; };
+		1D26A87F6D6676C23074DB10 /* UIView+ISAInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAInjection.h"; sourceTree = "<group>"; };
 		1D26A9E781297B903B25F345 /* ISAUIBarMetricsValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIBarMetricsValueConverter.m; sourceTree = "<group>"; };
 		1D26AA41F303965BAB658705 /* ISAEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAEntry.h; sourceTree = "<group>"; };
 		1D26ABE46EBE4AB11663C389 /* UIImage+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAppearance.h"; sourceTree = "<group>"; };
 		1D26ABFF267042393DE87D12 /* ISACGColorValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGColorValueConverter.h; sourceTree = "<group>"; };
-		1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAppearance.m"; sourceTree = "<group>"; };
+		1D26AC54E52D22F761A6FFA6 /* UIView+ISAInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAInjection.m"; sourceTree = "<group>"; };
 		1D26AD80B09D8C80332DF3D4 /* UIButton+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ISAppearance.h"; sourceTree = "<group>"; };
 		1D26AEB8CC1F72AE5962B05E /* UIImage+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAppearance.m"; sourceTree = "<group>"; };
-		5C4D64331693F2BA006CB6D3 /* appearanceDefinitions.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = appearanceDefinitions.yaml; sourceTree = "<group>"; };
 		5C4D64341693F2BA006CB6D3 /* ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAppearance.h; sourceTree = "<group>"; };
 		5C4D64351693F2BA006CB6D3 /* ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAppearance.m; sourceTree = "<group>"; };
 		5C4D64361693F2BA006CB6D3 /* ISAValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAValueConverter.h; sourceTree = "<group>"; };
@@ -250,12 +243,12 @@
 		1D26A7C32501B4700BC08881 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				1D26AC54E52D22F761A6FFA6 /* UIView+ISAppearance.m */,
-				1D26A87F6D6676C23074DB10 /* UIView+ISAppearance.h */,
 				1D26AEB8CC1F72AE5962B05E /* UIImage+ISAppearance.m */,
 				1D26ABE46EBE4AB11663C389 /* UIImage+ISAppearance.h */,
 				1D26A5E353F05FCCE6C26970 /* UIButton+ISAppearance.m */,
 				1D26AD80B09D8C80332DF3D4 /* UIButton+ISAppearance.h */,
+				1D26A67A79C1FABDD37B422C /* UIView+ISAppearance.m */,
+				1D26A225A8751B4393D2161B /* UIView+ISAppearance.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -263,14 +256,12 @@
 		1D26AA3E639BFA680C1F9CB2 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1D26A3CBB2D0DA6997ED3602 /* ISASwizzler.m */,
 				1D26A1C7A7B806A1246EA248 /* ISAEntry.m */,
 				1D26AA41F303965BAB658705 /* ISAEntry.h */,
-				1D26A04C039754156FF88CA3 /* ISASwizzler.h */,
 				5C4D64351693F2BA006CB6D3 /* ISAppearance.m */,
 				5C4D64341693F2BA006CB6D3 /* ISAppearance.h */,
-				1D26A85A96C106E90734864C /* ISAFileMonitor.m */,
-				1D26A953913A256DAB608AFA /* ISAFileMonitor.h */,
+				1D26AC54E52D22F761A6FFA6 /* UIView+ISAInjection.m */,
+				1D26A87F6D6676C23074DB10 /* UIView+ISAInjection.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -278,10 +269,9 @@
 		5C4D64321693F2BA006CB6D3 /* ISAppearance */ = {
 			isa = PBXGroup;
 			children = (
-				5C4D64331693F2BA006CB6D3 /* appearanceDefinitions.yaml */,
+				1D26AA3E639BFA680C1F9CB2 /* Core */,
 				1D26A5BFEB10E7754E1070DB /* ValueConverters */,
 				1D26A7C32501B4700BC08881 /* Categories */,
-				1D26AA3E639BFA680C1F9CB2 /* Core */,
 			);
 			path = ISAppearance;
 			sourceTree = "<group>";
@@ -380,12 +370,12 @@
 		5CFFF1341693F23200C6BCC1 = {
 			isa = PBXGroup;
 			children = (
-				5C4D64431693F38E006CB6D3 /* YAML */,
+				5C4D64321693F2BA006CB6D3 /* ISAppearance */,
 				5CFFF1491693F23200C6BCC1 /* ISAppearanceDemo */,
 				5C4D64D81693F626006CB6D3 /* ISAppearanceTests */,
+				5C4D64431693F38E006CB6D3 /* YAML */,
 				5CFFF1421693F23200C6BCC1 /* Frameworks */,
 				5CFFF1401693F23200C6BCC1 /* Products */,
-				5C4D64321693F2BA006CB6D3 /* ISAppearance */,
 			);
 			sourceTree = "<group>";
 		};
@@ -431,7 +421,7 @@
 				5CFFF14A1693F23200C6BCC1 /* Supporting Files */,
 			);
 			path = ISAppearanceDemo;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		5CFFF14A1693F23200C6BCC1 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -518,7 +508,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C4D64DD1693F626006CB6D3 /* InfoPlist.strings in Resources */,
-				5C4D64F71693F68F006CB6D3 /* appearanceDefinitions.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +525,6 @@
 				5CFFF1671693F23200C6BCC1 /* first@2x.png in Resources */,
 				5CFFF16C1693F23200C6BCC1 /* second.png in Resources */,
 				5CFFF16E1693F23200C6BCC1 /* second@2x.png in Resources */,
-				5C4D643A1693F2BA006CB6D3 /* appearanceDefinitions.yaml in Resources */,
 				5C4D64FC1693FA68006CB6D3 /* appearance.yaml in Resources */,
 				5C4D65E116941646006CB6D3 /* nav_bg.png in Resources */,
 				5C4D65E216941646006CB6D3 /* nav_bg@2x.png in Resources */,
@@ -590,13 +578,12 @@
 				5C4D64FA1693F68F006CB6D3 /* ISAUIColorValueConverter.m in Sources */,
 				1D26AAB1BBF32D636DAE8284 /* ISAUIImageValueConverter.m in Sources */,
 				1D26A619BED8C856CBF50572 /* ISAUIBarMetricsValueConverter.m in Sources */,
-				1D26AE801B54267783C0E38D /* ISASwizzler.m in Sources */,
-				1D26AB6F71C25552DC07152F /* UIView+ISAppearance.m in Sources */,
+				1D26AB6F71C25552DC07152F /* UIView+ISAInjection.m in Sources */,
 				1D26A6ECC6D04163E5D72AE8 /* ISAEntry.m in Sources */,
 				1D26ACBE7A6577456E3B16A9 /* ISACGColorValueConverter.m in Sources */,
-				1D26AF06D52A999C6E0032C4 /* ISAFileMonitor.m in Sources */,
 				1D26A4340DAB48205E23AE56 /* UIImage+ISAppearance.m in Sources */,
 				1D26A3802936BB685DFAE9C8 /* UIButton+ISAppearance.m in Sources */,
+				1D26A78AD66058ECE217B0A7 /* UIView+ISAppearance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,15 +618,14 @@
 				5C4D64881693F38E006CB6D3 /* YKUnknownNode.m in Sources */,
 				1D26ACCCE1B09A706EDE2413 /* ISAUIImageValueConverter.m in Sources */,
 				1D26AC02BB53D36AC09B1FE4 /* ISAUIBarMetricsValueConverter.m in Sources */,
-				1D26AB2BF0B68C43D36E9BEF /* ISASwizzler.m in Sources */,
-				1D26AE34EEEC4E62AD14F30F /* UIView+ISAppearance.m in Sources */,
+				1D26AE34EEEC4E62AD14F30F /* UIView+ISAInjection.m in Sources */,
 				1D26A709B7B64FD580F53C42 /* ISAEntry.m in Sources */,
 				5C6B471F16AA0CC100270291 /* ISAUIControlStateValueConverter.m in Sources */,
 				1D26AB535DD229D731C98288 /* ISACGColorValueConverter.m in Sources */,
-				1D26AE3BCFB2D55DD117A649 /* ISAFileMonitor.m in Sources */,
 				5CA2ECA916AA7D4D00F913D3 /* ISAUIFontValueConverter.m in Sources */,
 				1D26AE6ABEAE8B9CD7D581F3 /* UIImage+ISAppearance.m in Sources */,
 				1D26A67E8F4208340AAF4F97 /* UIButton+ISAppearance.m in Sources */,
+				1D26AAC877F52A6476CDF113 /* UIView+ISAppearance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

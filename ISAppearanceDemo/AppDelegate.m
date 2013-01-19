@@ -14,19 +14,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 #if TARGET_IPHONE_SIMULATOR
-        NSString* file = @"/Users/yar/prj/ISAppearance/ISAppearanceDemo/appearance.yaml";
-        [[ISAppearance sharedInstance] loadAppearanceFromFile:file withMonitoring:YES];
+    NSString* file = @"/Users/yar/prj/ISAppearance/ISAppearanceDemo/appearance.yaml";
+    [[ISAppearance sharedInstance] loadAppearanceFromFile:file withMonitoring:YES];
 #else
-    NSString *file = [[NSBundle mainBundle] pathForResource:@"appearance" ofType:@"yaml"];
-    if (file) {
-        [[ISAppearance sharedInstance] loadAppearanceFromFile:file];
-    }
+    [[ISAppearance sharedInstance] loadAppearanceNamed:@"appearance.yaml"];
 #endif
-
     [[ISAppearance sharedInstance] processAppearance];
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

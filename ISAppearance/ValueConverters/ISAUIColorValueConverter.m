@@ -3,7 +3,7 @@
 
 #import "ISAUIColorValueConverter.h"
 
-@interface ISAUIColorValueConverter () <YKTagDelegate>
+@interface ISAUIColorValueConverter ()
 @end
 
 @implementation ISAUIColorValueConverter

@@ -176,7 +176,6 @@ typedef enum
 
     YKParserState* state = [YKParserState new];
     YKParserState* lastState = [YKParserState new];
-    YKParserState* containerState = [YKParserState new];
 
     while (!done) {
         if (!yaml_parser_parse(opaque_parser, &event)) {

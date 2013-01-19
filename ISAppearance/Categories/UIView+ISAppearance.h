@@ -1,14 +1,10 @@
 //
-// 
-
-
+//
 
 #import <Foundation/Foundation.h>
 
 @interface UIView (ISAppearance)
 
-@property(copy, nonatomic) NSString *isaClass;
-
-- (void)applyISAppearance;
+- (void)setBorderColor:(UIColor *)color width:(CGFloat)width radius:(CGFloat)radius;
 
 @end

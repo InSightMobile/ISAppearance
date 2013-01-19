@@ -10,6 +10,9 @@
 + (ISAppearance *)sharedInstance;
 
 - (void)loadAppearanceFromFile:(NSString *)file;
+
+-(void)loadAppearanceNamed:(NSString *)name;
+
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;
 
 - (void)processAppearance;

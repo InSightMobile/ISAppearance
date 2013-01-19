@@ -1,16 +1,13 @@
-//
-// 
 
 #import <QuartzCore/QuartzCore.h>
+#import <objc/runtime.h>
 #import "ISAppearance.h"
 #import "YAMLKit.h"
 #import "ISAValueConverter.h"
-#import "ISASwizzler.h"
 #import "ISAEntry.h"
-#import "ISAFileMonitor.h"
-#import "UIView+ISAppearance.h"
+#import "UIView+ISAInjection.h"
 
-@interface ISAppearance () <YKTagDelegate, YKParserDelegate>
+@interface ISAppearance () <YKParserDelegate>
 
 
 @property(nonatomic, strong) NSMutableArray *definitions;
@@ -19,10 +16,9 @@
 
 @implementation ISAppearance
 {
-
     NSMutableDictionary *_classStyles;
     NSMutableDictionary *_objectStyles;
-    NSMutableArray *_sourses;
+    NSMutableArray *_sources;
     id _registeredObjects;
     BOOL _monitoring;
 }
@@ -44,15 +40,64 @@
         _classStyles = [NSMutableDictionary dictionary];
         _objectStyles = [NSMutableDictionary dictionary];
         _definitions = [NSMutableArray array];
-        _sourses = [NSMutableArray array];
-
-        //NSString *definitionsFile = [[NSBundle mainBundle] pathForResource:@"appearanceDefinitions" ofType:@"yaml"];
-        //if (definitionsFile)
-        //    [self loadAppearanceFromFile:definitionsFile];
-
+        _sources = [NSMutableArray array];
+        
+        // ensure appearance are supported
+        [self swizzle:[UIView class]
+                                   from:@selector(didMoveToWindow)
+                                     to:@selector(isaOverride_didMoveToWindow)];
     }
     return self;
 }
+
+- (void)swizzle:(Class)class from:(SEL)original to:(SEL)new
+{
+    Method originalMethod = class_getInstanceMethod(class, original);
+    Method newMethod = class_getInstanceMethod(class, new);
+    if (class_addMethod(class, original, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
+        class_replaceMethod(class, new, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    } else {
+        method_exchangeImplementations(originalMethod, newMethod);
+    }
+}
+
+- (void)watch:(NSString *)path withCallback:(void (^)())callback
+{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    int fileDescriptor = open([path UTF8String], O_EVTONLY);
+
+    __block dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, fileDescriptor,
+            DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND,
+            queue);
+    dispatch_source_set_event_handler(source, ^{
+        unsigned long flags = dispatch_source_get_data(source);
+        if (flags & DISPATCH_VNODE_DELETE) {
+            dispatch_source_cancel(source);
+            callback();
+            [self watch:path withCallback:callback];
+        }
+        else {
+            callback();
+        }
+    });
+    dispatch_source_set_cancel_handler(source, ^(void) {
+        close(fileDescriptor);
+    });
+    dispatch_resume(source);
+}
+
+- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
+{
+    [self loadAppearanceFromFile:file];
+    if (monitoring) {
+        _monitoring = YES;
+        [self watch:file withCallback:^{
+            [self reloadAppearance];
+        }];
+    }
+}
+
+
 
 - (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri
 {
@@ -92,16 +137,23 @@
 
 - (void)loadAppearanceFromFile:(NSString *)file
 {
-    [_sourses addObject:file];
-
+    [_sources addObject:file];
     [self loadAppearanceData:file];
-
 }
+
+- (void)loadAppearanceNamed:(NSString *)name
+{
+    NSString *file = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+    if (file) {
+        [self loadAppearanceFromFile:file];
+    }
+}
+
 
 - (void)reloadAppearanceSources
 {
     [_definitions removeAllObjects];
-    for (NSString *file in _sourses) {
+    for (NSString *file in _sources) {
         [self loadAppearanceData:file];
     }
 }
@@ -115,16 +167,6 @@
     [self updateAppearanceRegisteredObjects];
 }
 
-- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
-{
-    [self loadAppearanceFromFile:file];
-    if (monitoring) {
-        _monitoring = YES;
-        [ISAFileMonitor watch:file withCallback:^{
-             [self reloadAppearance];
-        }];
-    }
-}
 
 
 - (void)processAppearance
@@ -268,7 +310,7 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
 
 - (BOOL)invokeWithTarget:(id)appearanceProxy selector:(SEL)selector parameters:(NSArray *)parameters
 {
-    [(ISAEntry *) [ISAEntry entryWithSelector:selector parameters:parameters keyPath:0] invokeWithTarget:appearanceProxy];
+    [(ISAEntry *) [ISAEntry entryWithSelector:selector arguments:parameters keyPath:0] invokeWithTarget:appearanceProxy];
     return YES;
 }
 
@@ -288,26 +330,19 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
             return;
         }
 
-        if ([key isEqual:@"define"]) {
-            [self processDefinitions:(NSDictionary *) obj];
-        }
-        if ([key isEqual:@"general"]) {
-            [self processDefinition:obj forClass:@"general"];
-        }
-
 
         NSArray *components = [key componentsSeparatedByString:@":"];
         NSString *className = components[0];
         Class baseClass = NSClassFromString(className);
         if (baseClass) {
-            // ensure appearance are supported
-            if (![[ISASwizzler instance] swizzle:baseClass]) {
-                NSLog(@"Sorry bu ISAppearance can not be used on %@ class", className);
-                return;
-            }
+
             // save a
             NSMutableArray *params = [self styleBlockWithParams:obj];
 
+            if(!params) {
+                return;
+            }
+            
             if (components.count == 1) { // setup class itself
                 NSMutableArray *entries = [_classStyles objectForKey:baseClass];
                 if (entries) {
@@ -340,6 +375,10 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
 
 - (NSMutableArray *)styleBlockWithParams:(NSArray *)params
 {
+    if(![params isKindOfClass:[NSArray class]]) {
+        return nil;
+    }
+    
     NSMutableArray *invocations = [NSMutableArray arrayWithCapacity:params.count];
     for (id operation in params) {
 
@@ -363,14 +402,14 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
                 }
             }
             [invocations addObject:[ISAEntry entryWithSelector:NSSelectorFromString(selectorName)
-                                                    parameters:parameters keyPath:keyPath]];
+                                                     arguments:parameters keyPath:keyPath]];
         }
         else if ([operation isKindOfClass:[NSDictionary class]]) {  // property style
 
             [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 // decode keys
                 [invocations addObject:[ISAEntry entryWithSelector:SelectorForPropertySetterFromString(key)
-                                                        parameters:@[obj]
+                                                         arguments:@[obj]
                                                            keyPath:nil]];
             }];
         }
@@ -399,8 +438,6 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
         [self applyAppearanceTo:object usingClasses:[object isaClass]];
     }
     [CATransaction flush];
-    [[[UIApplication sharedApplication] keyWindow] setNeedsLayout];
-    [[[[[UIApplication sharedApplication] keyWindow] rootViewController] view] setNeedsLayout];
 }
 
 - (void)applyAppearanceTo:(UIView *)view usingClasses:(NSString *)classNames
