@@ -1,17 +1,17 @@
 //
 // 
 
-#import "UIColorValueConverter.h"
-#import "YKTag.h"
+#import "ISAUIColorValueConverter.h"
 
-@interface UIColorValueConverter () <YKTagDelegate>
+@interface ISAUIColorValueConverter () <YKTagDelegate>
 @end
 
-@implementation UIColorValueConverter
+@implementation ISAUIColorValueConverter
 
--(UIColor*)colorWithHexString:(NSString*)hex
+- (UIColor *)colorWithHexString:(NSString *)hex
 {
-    NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    NSString *cString =
+            [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
 
     // String should be 6 or 8 characters
     if ([cString length] < 6) return nil;
@@ -20,7 +20,7 @@
     if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
     if ([cString hasPrefix:@"#"]) cString = [cString substringFromIndex:1];
 
-    if ([cString length] != 6) return  nil;
+    if ([cString length] != 6) return nil;
 
     NSRange range;
     range.location = 0;
@@ -67,19 +67,19 @@
         if (cl) return cl;
     }
     else if ([node isKindOfClass:[NSArray class]]) {
-        if([node count] >= 4) {
+        if ([node count] >= 4) {
             return [UIColor colorWithRed:[[node objectAtIndex:0] floatValue]
                                    green:[[node objectAtIndex:1] floatValue]
                                     blue:[[node objectAtIndex:2] floatValue]
                                    alpha:[[node objectAtIndex:3] floatValue]];
         }
-        else if([node count] >= 3) {
+        else if ([node count] >= 3) {
             return [UIColor colorWithRed:[[node objectAtIndex:0] floatValue]
                                    green:[[node objectAtIndex:1] floatValue]
                                     blue:[[node objectAtIndex:2] floatValue]
                                    alpha:1];
         }
-        if([node count] >= 2) {
+        if ([node count] >= 2) {
             if ([node[0] isKindOfClass:[NSString class]]) {
                 UIColor *cl = [self colorWithString:node];
                 if (cl)

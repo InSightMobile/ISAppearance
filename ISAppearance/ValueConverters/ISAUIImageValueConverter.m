@@ -1,10 +1,10 @@
 //
 // 
 
-#import "UIImageValueConverter.h"
+#import "ISAUIImageValueConverter.h"
 
 
-@implementation UIImageValueConverter
+@implementation ISAUIImageValueConverter
 
 - (id)createFromNode:(id)node
 {

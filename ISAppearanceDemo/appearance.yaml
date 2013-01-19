@@ -1,12 +1,24 @@
+UIAppearance:
 
-UINavigationBar: 
-- tintColor: !UIColor red 
-- [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics UIBarMetricsDefault]
+  UISwitch:
+  - tintColor: !UIColor green
+  - onTintColor: !UIColor red
 
-UIButton:
-- tintColor: !UIColor red
+  UINavigationBar:
+  - tintColor: !UIColor green
+  - [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics default]
 
-UISwitch:
-- tintColor: !UIColor green
-- onTintColor: !UIColor red
+UIButton:Red:
+- backgroundColor: !UIColor gray
+- [setTitleColor: !UIColor blue, forState: !UIControlState normal]
+
+UITableViewCell:First:
+- backgroundColor: !UIColor red
+
+UITableViewCell:Middle:
+- backgroundColor: !UIColor orange
+- [accessoryView, setTitleColor: !UIColor red, forState: !UIControlState normal ]
+
+UITableViewCell:Last:
+- backgroundColor: !UIColor yellow
 

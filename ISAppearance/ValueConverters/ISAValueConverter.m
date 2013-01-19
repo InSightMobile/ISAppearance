@@ -3,25 +3,24 @@
 
 
 
-#import "ISValueConverter.h"
-#import "YKTag.h"
+#import "ISAValueConverter.h"
 
-@interface ISValueConverter () <YKTagDelegate>
+@interface ISAValueConverter () <YKTagDelegate>
 
 @end
 
-@implementation ISValueConverter
+@implementation ISAValueConverter
 {
 
 }
 
-+ (ISValueConverter*) converterNamed:(NSString *)className
++ (ISAValueConverter *)converterNamed:(NSString *)className
 {
-    NSMutableDictionary * convertersByName = [self convertersByName];
-    ISValueConverter* converter = convertersByName[className];
+    NSMutableDictionary *convertersByName = [self convertersByName];
+    ISAValueConverter *converter = convertersByName[className];
     if (converter)return converter;
 
-    className = [NSString stringWithFormat:@"%@ValueConverter", className];
+    className = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
     Class cl = NSClassFromString(className);
     if (cl) {
         converter = [[cl alloc] init];

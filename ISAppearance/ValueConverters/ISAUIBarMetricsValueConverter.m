@@ -1,9 +1,9 @@
 //
 // 
 
-#import "UIBarMetricsValueConverter.h"
+#import "ISAUIBarMetricsValueConverter.h"
 
-@implementation UIBarMetricsValueConverter
+@implementation ISAUIBarMetricsValueConverter
 
 - (id)createFromNode:(id)node
 {
@@ -13,6 +13,10 @@
         if ([node isEqualToString:@"UIBarMetricsDefault"])
             value = UIBarMetricsDefault;
         else if ([node isEqualToString:@"UIBarMetricsLandscapePhone"])
+            value = UIBarMetricsLandscapePhone;
+        else if ([node isEqualToString:@"default"])
+            value = UIBarMetricsDefault;
+        else if ([node isEqualToString:@"landscapePhone"])
             value = UIBarMetricsLandscapePhone;
         else
             return nil;
