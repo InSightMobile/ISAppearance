@@ -32,10 +32,14 @@
     return [[ISAEntry alloc] initWithSelector:selector parameters:parameters keyPath:keyPath];
 }
 
-- (void)invokeWithTarget:(id)target
+- (void)invokeWithTarget:(id)rootTarget
 {
+    id target;
     if (_keyPath) {
-        target = [target valueForKeyPath:_keyPath];
+        target = [rootTarget valueForKeyPath:_keyPath];
+    }
+    else {
+        target = rootTarget;
     }
     if (!target) return;
 
@@ -47,19 +51,71 @@
     invocation.selector = _selector;
 
     void *buffer = malloc([invocation.methodSignature frameLength]);
+    
+    NSMethodSignature* methodSignature = invocation.methodSignature;
 
     int argumentPos = 2;
     for (id argument in _parameters) {
-
-        char const *expectedType = [invocation.methodSignature getArgumentTypeAtIndex:argumentPos];
-        if (strcmp(@encode(id), expectedType) == 0) {
+        
+        char const *expectedType = [methodSignature getArgumentTypeAtIndex:argumentPos];
+        
+        if([argument isKindOfClass:[NSInvocation class]]) {
+            
+            NSInvocation* argumentInvocation = argument;
+                            
+            if (strcmp(argumentInvocation.methodSignature.methodReturnType, expectedType) == 0)
+            {
+                [argumentInvocation invoke];
+                [argumentInvocation getReturnValue:buffer];
+                [invocation setArgument:buffer atIndex:argumentPos];
+            }
+            else {
+                return;
+            }
+        }
+        else if (strcmp(@encode(id), expectedType) == 0) {
             __autoreleasing id obj = argument;
             [invocation setArgument:&obj atIndex:argumentPos];
         }
+        else if ([argument isKindOfClass:[NSNumber class]]) {            
+            if (strcmp(@encode(float), expectedType) == 0) {
+                float value = [argument floatValue];
+                [invocation setArgument:&value atIndex:argumentPos];
+            }
+            else if (strcmp(@encode(NSInteger), expectedType) == 0) {
+                NSInteger value = [argument integerValue];
+                [invocation setArgument:&value atIndex:argumentPos];
+            }
+            else if (strcmp(@encode(BOOL), expectedType) == 0) {
+                BOOL value = [argument boolValue];
+                [invocation setArgument:&value atIndex:argumentPos];
+            }
+            else if (strcmp(@encode(double), expectedType) == 0) {
+                double value = [argument doubleValue];
+                [invocation setArgument:&value atIndex:argumentPos];
+            }
+
+            else if (strcmp(@encode(NSUInteger), expectedType) == 0) {
+                NSUInteger value = [argument unsignedIntegerValue];
+                [invocation setArgument:&value atIndex:argumentPos];
+            }
+
+            else { // general NSValue
+                
+                char const *type = [(NSValue *) argument objCType];                
+                if (strcmp(type, expectedType) == 0) {
+                    [(NSValue *) argument getValue:buffer];
+                    [invocation setArgument:buffer atIndex:argumentPos];
+                }
+                else {
+                    return;
+                }
+            }
+        }
         else if ([argument isKindOfClass:[NSValue class]]) {
-
+            
             char const *type = [(NSValue *) argument objCType];
-
+            
             if (strcmp(type, expectedType) == 0) {
                 [(NSValue *) argument getValue:buffer];
                 [invocation setArgument:buffer atIndex:argumentPos];
