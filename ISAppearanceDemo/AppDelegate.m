@@ -14,9 +14,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 #if TARGET_IPHONE_SIMULATOR
+
+    [[ISAppearance sharedInstance] addAssetsFolder:@"/Users/yar/prj/ISAppearance/ISAppearanceDemo/images" withMonitoring:YES];
     NSString* file = @"/Users/yar/prj/ISAppearance/ISAppearanceDemo/appearance.yaml";
     [[ISAppearance sharedInstance] loadAppearanceFromFile:file withMonitoring:YES];
+
 #else
+    [[ISAppearance sharedInstance] addAssetsFolder:[[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"images"]];
     [[ISAppearance sharedInstance] loadAppearanceNamed:@"appearance.yaml"];
 #endif
     [[ISAppearance sharedInstance] processAppearance];

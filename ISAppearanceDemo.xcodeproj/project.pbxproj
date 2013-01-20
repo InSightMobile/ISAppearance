@@ -73,11 +73,10 @@
 		5C4D64FA1693F68F006CB6D3 /* ISAUIColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D64391693F2BA006CB6D3 /* ISAUIColorValueConverter.m */; };
 		5C4D64FC1693FA68006CB6D3 /* appearance.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D64FB1693FA68006CB6D3 /* appearance.yaml */; };
 		5C4D65021693FD9E006CB6D3 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4D64A61693F45C006CB6D3 /* libicucore.dylib */; };
-		5C4D65E116941646006CB6D3 /* nav_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D65DF16941646006CB6D3 /* nav_bg.png */; };
-		5C4D65E216941646006CB6D3 /* nav_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C4D65E016941646006CB6D3 /* nav_bg@2x.png */; };
 		5C6B471F16AA0CC100270291 /* ISAUIControlStateValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6B471E16AA0CC100270291 /* ISAUIControlStateValueConverter.m */; };
 		5CA2EC8216AA461B00F913D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA2EC8116AA461B00F913D3 /* QuartzCore.framework */; };
 		5CA2ECA916AA7D4D00F913D3 /* ISAUIFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CA2ECA816AA7D4D00F913D3 /* ISAUIFontValueConverter.m */; };
+		5CEEE1B116AC42C200235B72 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 5CEEE1B016AC42C200235B72 /* images */; };
 		5CFFF1441693F23200C6BCC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFFF1431693F23200C6BCC1 /* UIKit.framework */; };
 		5CFFF1461693F23200C6BCC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFFF1451693F23200C6BCC1 /* Foundation.framework */; };
 		5CFFF1481693F23200C6BCC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFFF1471693F23200C6BCC1 /* CoreGraphics.framework */; };
@@ -159,13 +158,12 @@
 		5C4D64DF1693F626006CB6D3 /* ISAppearanceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISAppearanceTests.m; sourceTree = "<group>"; };
 		5C4D64E11693F626006CB6D3 /* ISAppearanceTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISAppearanceTests-Prefix.pch"; sourceTree = "<group>"; };
 		5C4D64FB1693FA68006CB6D3 /* appearance.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = appearance.yaml; sourceTree = "<group>"; };
-		5C4D65DF16941646006CB6D3 /* nav_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_bg.png; sourceTree = "<group>"; };
-		5C4D65E016941646006CB6D3 /* nav_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_bg@2x.png"; sourceTree = "<group>"; };
 		5C6B471D16AA0CC100270291 /* ISAUIControlStateValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIControlStateValueConverter.h; sourceTree = "<group>"; };
 		5C6B471E16AA0CC100270291 /* ISAUIControlStateValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIControlStateValueConverter.m; sourceTree = "<group>"; };
 		5CA2EC8116AA461B00F913D3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5CA2ECA716AA7D4D00F913D3 /* ISAUIFontValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIFontValueConverter.h; sourceTree = "<group>"; };
 		5CA2ECA816AA7D4D00F913D3 /* ISAUIFontValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIFontValueConverter.m; sourceTree = "<group>"; };
+		5CEEE1B016AC42C200235B72 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		5CFFF13F1693F23200C6BCC1 /* ISAppearanceDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ISAppearanceDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CFFF1431693F23200C6BCC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5CFFF1451693F23200C6BCC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -358,15 +356,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5C4D65DE16941646006CB6D3 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				5C4D65DF16941646006CB6D3 /* nav_bg.png */,
-				5C4D65E016941646006CB6D3 /* nav_bg@2x.png */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
 		5CFFF1341693F23200C6BCC1 = {
 			isa = PBXGroup;
 			children = (
@@ -404,7 +393,7 @@
 		5CFFF1491693F23200C6BCC1 /* ISAppearanceDemo */ = {
 			isa = PBXGroup;
 			children = (
-				5C4D65DE16941646006CB6D3 /* images */,
+				5CEEE1B016AC42C200235B72 /* images */,
 				5C4D64FB1693FA68006CB6D3 /* appearance.yaml */,
 				5CFFF1521693F23200C6BCC1 /* AppDelegate.h */,
 				5CFFF1531693F23200C6BCC1 /* AppDelegate.m */,
@@ -526,8 +515,7 @@
 				5CFFF16C1693F23200C6BCC1 /* second.png in Resources */,
 				5CFFF16E1693F23200C6BCC1 /* second@2x.png in Resources */,
 				5C4D64FC1693FA68006CB6D3 /* appearance.yaml in Resources */,
-				5C4D65E116941646006CB6D3 /* nav_bg.png in Resources */,
-				5C4D65E216941646006CB6D3 /* nav_bg@2x.png in Resources */,
+				5CEEE1B116AC42C200235B72 /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

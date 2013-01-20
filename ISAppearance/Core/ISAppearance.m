@@ -21,6 +21,9 @@
     NSMutableArray *_sources;
     id _registeredObjects;
     BOOL _monitoring;
+    NSMutableArray *_monitoredAssets;
+    NSMutableArray *_assets;
+    NSMutableSet *_wachedFiles;
 }
 
 + (ISAppearance *)sharedInstance
@@ -61,8 +64,14 @@
     }
 }
 
-- (void)watch:(NSString *)path withCallback:(void (^)())callback
+- (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback
 {
+    if (_wachedFiles) _wachedFiles = [NSMutableSet setWithCapacity:1];
+    if ([_wachedFiles containsObject:path]) {
+        return;
+    }
+    [_wachedFiles addObject:path];
+
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     int fileDescriptor = open([path UTF8String], O_EVTONLY);
 
@@ -71,16 +80,21 @@
             queue);
     dispatch_source_set_event_handler(source, ^{
         unsigned long flags = dispatch_source_get_data(source);
-        if (flags & DISPATCH_VNODE_DELETE) {
+        if (once) {
             dispatch_source_cancel(source);
             callback();
-            [self watch:path withCallback:callback];
+        }
+        else if (flags & DISPATCH_VNODE_DELETE) {
+            dispatch_source_cancel(source);
+            callback();
+            [self watch:path once:once withCallback:callback];
         }
         else {
             callback();
         }
     });
     dispatch_source_set_cancel_handler(source, ^(void) {
+        [_wachedFiles removeObject:path];
         close(fileDescriptor);
     });
     dispatch_resume(source);
@@ -91,13 +105,11 @@
     [self loadAppearanceFromFile:file];
     if (monitoring) {
         _monitoring = YES;
-        [self watch:file withCallback:^{
+        [self watch:file once:NO withCallback:^{
             [self reloadAppearance];
         }];
     }
 }
-
-
 
 - (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri
 {
@@ -168,6 +180,23 @@
 }
 
 
+- (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring
+{
+    if (monitoring) {
+        if (!_monitoredAssets) _monitoredAssets = [NSMutableArray arrayWithCapacity:1];
+        [_monitoredAssets addObject:folder];
+    }
+    else {
+        [self addAssetsFolder:folder];
+    }
+}
+
+- (void)addAssetsFolder:(NSString *)folder
+{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if (!_assets) _assets = [NSMutableArray arrayWithCapacity:1];
+    [_assets addObject:folder];
+}
 
 - (void)processAppearance
 {
@@ -438,6 +467,11 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
         [self applyAppearanceTo:object usingClasses:[object isaClass]];
     }
     [CATransaction flush];
+    UIView * mainView = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
+    // flush view window
+    UIView *superview = mainView.superview;
+    [mainView removeFromSuperview];
+    [superview addSubview:mainView];
 }
 
 - (void)applyAppearanceTo:(UIView *)view usingClasses:(NSString *)classNames
@@ -483,4 +517,131 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     }
 }
 
+- (NSString *)findFile:(NSString *)file inFolder:(NSString *)folder recursive:(BOOL)reqcursive
+{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    NSString *path = [folder stringByAppendingPathComponent:file];
+    if([manager fileExistsAtPath:path])
+    {
+        return path;
+    }
+
+    if (reqcursive) {
+
+        NSDirectoryEnumerator *dirEnumerator =
+                [manager enumeratorAtURL:[NSURL fileURLWithPath:folder]
+                        includingPropertiesForKeys:@[NSURLIsDirectoryKey]
+                                           options: NSDirectoryEnumerationSkipsHiddenFiles             |
+                                                   NSDirectoryEnumerationSkipsSubdirectoryDescendants |
+                                                   NSDirectoryEnumerationSkipsPackageDescendants
+                                      errorHandler:nil];
+
+        NSError *error;
+        // Enumerate the dirEnumerator results, each value is stored in allURLs
+        for (NSURL *theURL in dirEnumerator)
+        {
+            // Retrieve whether a directory.
+            NSNumber *isDirectory;
+            [theURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+
+            if ([isDirectory boolValue] == YES)
+            {
+                path = [self findFile:file inFolder:theURL.path recursive:YES];
+                if (path) return path;
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSString *)findImageFile:(NSString *)file inFolder:(NSString *)folder  forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
+                      scale:(CGFloat*)scale
+{
+    NSString *ext = [file pathExtension];
+    NSString *name = [file stringByDeletingPathExtension];
+
+    NSString *mutatedFile;
+    NSString *path;
+
+    if (isIpad) {
+
+        if (isRetina) {
+            mutatedFile= [NSString stringWithFormat:@"%@@2x~ipad.%@", name, ext];
+            path = [self findFile:mutatedFile inFolder:folder recursive:YES];
+            if (path) {
+                *scale = 2;
+                return path;
+            }
+        }
+        mutatedFile= [NSString stringWithFormat:@"%@~ipad.%@", name, ext];
+        path = [self findFile:mutatedFile inFolder:folder recursive:YES];
+        if (path) {
+            *scale = 1;
+            return path;
+        }
+    }
+
+    if (isRetina) {
+        mutatedFile= [NSString stringWithFormat:@"%@@2x.%@", name, ext];
+        path = [self findFile:mutatedFile inFolder:folder recursive:YES];
+        if (path) {
+            *scale = 2;
+            return path;
+        }
+    }
+    mutatedFile= [NSString stringWithFormat:@"%@.%@", name, ext];
+    path = [self findFile:mutatedFile inFolder:folder recursive:YES];
+    if (path) {
+        *scale = 1;
+        return path;
+    }
+    return nil;
+}
+
+- (UIImage *)loadImageNamed:(NSString *)string forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
+{
+    NSString *path = nil;
+    UIImage *image = nil;
+    CGFloat scale = 0;
+    // find images
+    for (NSString *folder in _monitoredAssets) {
+        path = [self findImageFile:string inFolder:folder forRetina:isRetina forPad:isIpad scale:&scale];
+        if (path) {
+            [self watch:path once:YES withCallback:^{
+                [self reloadAppearance];
+            }];
+            break;
+        }
+    }
+    if (!image) {
+    for (NSString *folder in _assets) {
+        path = [self findImageFile:string inFolder:folder forRetina:isRetina forPad:isIpad scale:&scale];
+        if (path) {
+            break;
+        }
+    }
+    }
+    if (!path) return nil;
+    if (scale != 1) {
+        return [UIImage imageWithCGImage:[[UIImage imageWithContentsOfFile:path] CGImage]
+                                   scale:scale orientation:UIImageOrientationUp];
+    }
+    return [UIImage imageWithContentsOfFile:path];
+}
+
+- (UIImage *)loadImageNamed:(NSString *)string
+{
+    bool isRetina = [UIScreen mainScreen].scale == 2.0;
+    bool isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+
+    UIImage *image = [self loadImageNamed:string forRetina:isRetina forPad:isIpad];
+    if (image) return image;
+
+    if (!isRetina) {
+        image = [self loadImageNamed:string forRetina:YES forPad:isIpad];
+        // scale image
+        return image;
+    }
+    return [UIImage imageNamed:string];
+}
 @end
