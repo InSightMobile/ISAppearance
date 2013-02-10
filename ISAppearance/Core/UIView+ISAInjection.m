@@ -26,6 +26,9 @@ static void* isaIsApplied = 0;
 - (void)setIsaClass:(NSString *)value
 {
     objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (self.isaIsApplied) {
+        [self applyISAppearance];
+    }
 }
 
 - (NSString *)isaClass

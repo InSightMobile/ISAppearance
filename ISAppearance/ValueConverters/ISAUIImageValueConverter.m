@@ -34,9 +34,37 @@
              image = [UIImage imageWithColor:firstParam];
         }
         else if ([firstParam isKindOfClass:[NSString class]]) {
-
             image = [self imageNamed:firstParam];
+        }
 
+        if([node count] == 2 ) {
+
+            id mode = [node objectAtIndex:1];
+            if([mode isKindOfClass:[NSValue class]]) {
+                char const* type = [(NSValue *) mode objCType];
+
+                UIEdgeInsets insets;
+                [ mode getValue:&insets];
+                image = [image resizableImageWithCapInsets:insets];
+            }
+        }
+        else if([node count] == 3 ) {
+
+            image =
+                    [image stretchableImageWithLeftCapWidth:[[node objectAtIndex:1] intValue]
+                                               topCapHeight:[[node objectAtIndex:2] intValue]];
+
+        }
+        else if([node count] == 5 ) {
+
+            UIEdgeInsets insets =
+                    UIEdgeInsetsMake(
+                            [[node objectAtIndex:1] intValue],
+                            [[node objectAtIndex:2] intValue],
+                            [[node objectAtIndex:3] intValue],
+                            [[node objectAtIndex:4] intValue]);
+
+            image = [image resizableImageWithCapInsets:insets];
         }
 
     }
