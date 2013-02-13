@@ -4,7 +4,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "UIView+ISAInjection.h"
 
 @interface ISAppearance : NSObject
 + (ISAppearance *)sharedInstance;
