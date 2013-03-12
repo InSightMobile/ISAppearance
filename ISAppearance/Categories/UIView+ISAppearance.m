@@ -14,4 +14,9 @@
     [self.layer setMasksToBounds: YES];
 }
 
+- (void)setLayerImage:(UIImage *)image
+{
+    self.layer.contents = (id)image.CGImage;
+}
+
 @end

@@ -2,6 +2,7 @@
 // 
 
 #import "ISAUIColorValueConverter.h"
+#import "ISAppearance.h"
 
 @interface ISAUIColorValueConverter ()
 @end
@@ -35,9 +36,12 @@
 
     // Scan values
     unsigned int r, g, b;
-    [[NSScanner scannerWithString:rString] scanHexInt:&r];
-    [[NSScanner scannerWithString:gString] scanHexInt:&g];
-    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    BOOL ok = YES;
+    ok &= [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    ok &= [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    ok &= [[NSScanner scannerWithString:bString] scanHexInt:&b];
+
+    if(!ok) return nil;
 
     return [UIColor colorWithRed:((float) r / 255.0f)
                            green:((float) g / 255.0f)
@@ -55,8 +59,16 @@
 
         return [UIColor performSelector:colorNameSelector];
     }
+    UIColor* cl = [self colorWithHexString:node];
 
-    return [self colorWithHexString:node];
+    if(!cl) {
+        UIImage *image = [[ISAppearance sharedInstance] loadImageNamed:node];
+        if(image) {
+            return [UIColor colorWithPatternImage:image];
+        }
+    }
+    if(!cl) cl = [UIColor whiteColor];
+    return cl;
 }
 
 - (id)createFromNode:(id)node
@@ -79,12 +91,15 @@
                                     blue:[[node objectAtIndex:2] floatValue]
                                    alpha:1];
         }
-        if ([node count] >= 2) {
+        else if ([node count] >= 2) {
             if ([node[0] isKindOfClass:[NSString class]]) {
-                UIColor *cl = [self colorWithString:node];
+                UIColor *cl = [self colorWithString:node[0]];
                 if (cl)
                     return [cl colorWithAlphaComponent:[node[1] floatValue]];
             }
+        }
+        else {
+            [self colorWithString:node[0]];
         }
     }
     else if ([node isKindOfClass:[NSDictionary class]]) {
