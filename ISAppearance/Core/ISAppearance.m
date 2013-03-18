@@ -214,6 +214,17 @@
 
         id appearanceProxy = nil;
         NSString *className;
+        
+        if ([key isKindOfClass:[NSString class]]) {            
+            key = [key componentsSeparatedByString:@":"];
+        }
+        
+        if ([key isKindOfClass:[NSArray class]]) {            
+            if([key count] == 1) {
+                key = key[0];
+            }
+        }
+
 
         if ([key isKindOfClass:[NSString class]]) {
             Class cl = NSClassFromString(key);
