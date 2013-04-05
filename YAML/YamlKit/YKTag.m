@@ -116,8 +116,10 @@
         return node;
     }
     id result = [(id<YKTagDelegate>)delegate tag:self processNode:node extraInfo:nil];
-    if (!result) return node;
-
+    if (!result) {
+        
+        //return node;
+    }
     return result;
 }
 

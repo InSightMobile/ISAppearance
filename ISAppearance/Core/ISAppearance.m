@@ -571,6 +571,10 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     NSString *ext = [file pathExtension];
     NSString *name = [file stringByDeletingPathExtension];
 
+    if(!ext) {
+        ext = @"png";
+    }
+    
     NSString *mutatedFile;
     NSString *path;
 
@@ -632,12 +636,21 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
         }
     }
     }
-    if (!path) return nil;
+    if (path) {
     if (scale != 1) {
-        return [UIImage imageWithCGImage:[[UIImage imageWithContentsOfFile:path] CGImage]
+        image = [UIImage imageWithCGImage:[[UIImage imageWithContentsOfFile:path] CGImage]
                                    scale:scale orientation:UIImageOrientationUp];
     }
-    return [UIImage imageWithContentsOfFile:path];
+    else {
+    image = [UIImage imageWithContentsOfFile:path];
+    }
+    }
+    
+    if(!image) {
+       image = [UIImage imageNamed:string]; 
+    }
+    
+    return image;
 }
 
 - (UIImage *)loadImageNamed:(NSString *)string

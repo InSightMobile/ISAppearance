@@ -66,9 +66,10 @@
 
             image = [image resizableImageWithCapInsets:insets];
         }
-
     }
-
+    if(!image) {
+        image = [UIImage new];
+    }
     return image;
 }
 

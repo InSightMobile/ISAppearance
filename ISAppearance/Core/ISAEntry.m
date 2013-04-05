@@ -35,18 +35,20 @@
 
 - (void)safeInvokeWithTarget:(id)target
 {
-    @try {
-        [_invocation invokeWithTarget:target];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"invocation failed with selector %@  for %@", NSStringFromSelector(_selector), [target class]);
-        return;
-    }
+    //if([target respondsToSelector:_invocation.selector]) {
+        @try {
+            [_invocation invokeWithTarget:target];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"invocation failed with selector %@  for %@", NSStringFromSelector(_selector), [target class]);
+            return;
+        }
+    //}
 }
 
 - (void)invokeWithTarget:(id)rootTarget
 {
-    id target;
+    id target = nil;
     if (_keyPath) {
         @try {
             target = [rootTarget valueForKeyPath:_keyPath];
