@@ -26,7 +26,7 @@
     }
     else if ([node isKindOfClass:[NSArray class]]) {
 
-        if ([node count] == 0)return nil;
+        if ([node count] == 0)return [UIImage new];
 
         id firstParam = [node objectAtIndex:0];
 
