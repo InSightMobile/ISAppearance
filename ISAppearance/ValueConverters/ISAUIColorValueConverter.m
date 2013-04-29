@@ -103,7 +103,22 @@
         }
     }
     else if ([node isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *components = node;
+        float alpha = 1.0f;
+        if(components[@"alpha"]) {
+            alpha = [components[@"alpha"] floatValue];
+        }
+        id hue = components[@"hue"];
+        id saturation = components[@"saturation"];
+        id brightness = components[@"brightness"];
 
+        if(hue && saturation && brightness)
+        {
+            return [UIColor colorWithHue:[hue floatValue]
+                              saturation:[saturation floatValue]
+                              brightness:[brightness floatValue]
+                                   alpha:alpha];
+        }
 
     }
     return [UIColor whiteColor];
