@@ -13,6 +13,8 @@
 
 -(void)loadAppearanceNamed:(NSString *)name;
 
+- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory;
+
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;
 - (void)setAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring;
 
