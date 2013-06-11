@@ -4,6 +4,7 @@
 #import "YAMLKit.h"
 #import "ISAValueConverter.h"
 #import "ISAEntry.h"
+#import "DDLog.h"
 
 @interface ISAppearance () <YKParserDelegate>
 
@@ -128,10 +129,10 @@
         NSError *error = nil;
         NSArray *result = [parser parseWithError:&error];
         if (error) {
-            NSLog(@"error = %@", error);
+            DDLogError(@"error = %@", error);
         }
         else {
-            NSLog(@"result = %@", result);
+            DDLogVerbose(@"appearance loaded: %@", result);
             [_definitions addObjectsFromArray:result];
         }
     }
