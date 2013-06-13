@@ -11,5 +11,6 @@
 
 - (void)applyISAppearance;
 
-- (void)applyISAppearanceWithSubviews:(BOOL)withSubviews;
+- (void)applyISAppearanceWithSubviews:(BOOL)subviews;
+
 @end

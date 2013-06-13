@@ -20,15 +20,16 @@
     [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass];
 }
 
-- (void)applyISAppearanceWithSubviews:(BOOL)withSubviews
+- (void)applyISAppearanceWithSubviews:(BOOL)subviews
 {
     [self applyISAppearance];
-    if(withSubviews) {
+    if(subviews) {
         for (UIView *subview in self.subviews) {
-            [subview applyISAppearanceWithSubviews:withSubviews];
+            [subview applyISAppearanceWithSubviews:YES];
         }
     }
 }
+
 
 static void* isaClass = 0;
 static void* isaIsApplied = 0;
