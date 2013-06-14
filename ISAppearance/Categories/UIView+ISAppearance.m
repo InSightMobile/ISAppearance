@@ -19,4 +19,20 @@
     self.layer.contents = (id)image.CGImage;
 }
 
+- (void)setBackgroundViewImage:(UIImage *)image forKeyPath:(NSString *)keyPath;
+{
+    UIView *currentView = [self valueForKeyPath:keyPath];
+
+    if([currentView isKindOfClass:[UIImageView class]]) {
+        [(UIImageView*)currentView setImage:image];
+    }
+    else {
+        UIImageView *view = [[UIImageView alloc] initWithImage:image];
+        view.frame = self.bounds;
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        [self setValue:view forKeyPath:keyPath];
+    }
+}
+
+
 @end

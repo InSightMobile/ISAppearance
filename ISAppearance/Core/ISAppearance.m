@@ -156,7 +156,18 @@
     [self loadAppearanceNamed:name];
 
 #else
-    
+
+    if([directory hasPrefix:@"~/"]) {
+        // we use this trick to locate user directory outside of simulator
+
+        NSString* path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+
+        NSUInteger pos = [path rangeOfString:@"/Library/Application Support/iPhone Simulator/"].location;
+        path = [path substringToIndex:pos];
+
+        directory = [path stringByAppendingPathComponent:[directory substringFromIndex:2]];
+    }
+
     BOOL isDirectory;
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDirectory];
     
@@ -164,7 +175,7 @@
         
         NSString* appearancePath = [directory stringByAppendingPathComponent:name];
         
-        if([[NSFileManager defaultManager] fileExistsAtPath:appearancePath]) {
+        if(appearancePath && [[NSFileManager defaultManager] fileExistsAtPath:appearancePath]) {
             [self loadAppearanceFromFile:appearancePath withMonitoring:YES];
         }
         else {
@@ -572,6 +583,7 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     }
     return nil;
 }
+
 
 - (NSString *)findImageFile:(NSString *)file inFolder:(NSString *)folder  forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
                       scale:(CGFloat *)scale {
