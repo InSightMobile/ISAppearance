@@ -11,20 +11,23 @@
 
 - (void)loadAppearanceFromFile:(NSString *)file;
 
--(void)loadAppearanceNamed:(NSString *)name;
++ (void)processInjections;
+
+- (void)loadAppearanceNamed:(NSString *)name;
 
 - (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory;
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;
-- (void)setAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring;
 
--(void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring;
+- (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring;
 
--(void)addAssetsFolder:(NSString *)folder;
+- (void)addAssetsFolder:(NSString *)folder;
+
 
 - (void)processAppearance;
 
-- (void)applyAppearanceTo:(UIView *)view usingClasses:(NSString *)classes;
+
+- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classes;
 
 - (UIImage *)loadImageNamed:(NSString *)string;
 @end

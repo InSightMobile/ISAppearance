@@ -2,6 +2,7 @@
 #import <objc/runtime.h>
 #import "UIView+ISAInjection.h"
 #import "ISAppearance.h"
+#import "NSObject+ISA_Swizzle.h"
 
 @implementation UIView (ISAInjection)
 
@@ -14,10 +15,18 @@
     [self isaOverride_didMoveToWindow];
 }
 
++ (void)ISA_swizzleClass {
+
+    [self ISA_swizzle:[UIView class]
+             from:@selector(didMoveToWindow)
+               to:@selector(isaOverride_didMoveToWindow)];
+
+}
+
+
 - (void)applyISAppearance
 {
-    self.isaIsApplied = @YES;
-    [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass];
+    self.isaIsApplied = @([[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass]);
 }
 
 - (void)applyISAppearanceWithSubviews:(BOOL)subviews

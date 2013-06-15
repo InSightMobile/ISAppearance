@@ -4,7 +4,7 @@
 #import "YAMLKit.h"
 #import "ISAValueConverter.h"
 #import "ISAEntry.h"
-#import "DDLog.h"
+#import "NSObject+ISA_Swizzle.h"
 
 @interface ISAppearance () <YKParserDelegate>
 
@@ -13,7 +13,25 @@
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
 @end
 
-@implementation ISAppearance {
+static NSString *SelectorNameForSetterWithString(NSString *string) {
+    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                                    withString:[[string substringToIndex:1] uppercaseString]];
+
+    return [NSString stringWithFormat:@"set%@", sel];
+}
+
+
+static SEL SelectorForPropertySetterFromString(NSString *string) {
+
+    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                                    withString:[[string substringToIndex:1] uppercaseString]];
+
+    return NSSelectorFromString([NSString stringWithFormat:@"set%@:", sel]);
+}
+
+
+@implementation ISAppearance
+{
     NSMutableDictionary *_classStyles;
     NSMutableDictionary *_objectStyles;
     NSMutableArray *_sources;
@@ -22,9 +40,11 @@
     NSMutableArray *_monitoredAssets;
     NSMutableArray *_assets;
     NSMutableSet *_wachedFiles;
+    BOOL _isAppearanceLoaded;
 }
 
-+ (ISAppearance *)sharedInstance {
++ (ISAppearance *)sharedInstance
+{
     static ISAppearance *_instance = nil;
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
@@ -33,7 +53,8 @@
     return _instance;
 }
 
-- (id)init {
+- (id)init
+{
     self = [super init];
     if (self) {
         _classStyles = [NSMutableDictionary dictionary];
@@ -41,25 +62,32 @@
         _definitions = [NSMutableArray array];
         _sources = [NSMutableArray array];
 
-        // ensure appearance are supported
-        [self swizzle:[UIView class]
-                 from:@selector(didMoveToWindow)
-                   to:@selector(isaOverride_didMoveToWindow)];
+        [self.class processInjections];
     }
     return self;
 }
 
-- (void)swizzle:(Class)class from:(SEL)original to:(SEL)new {
-    Method originalMethod = class_getInstanceMethod(class, original);
-    Method newMethod = class_getInstanceMethod(class, new);
-    if (class_addMethod(class, original, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
-        class_replaceMethod(class, new, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, newMethod);
-    }
-}
++ (void)processInjections
+{
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
 
-- (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback {
+        if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)])
+        {
+            [UIView ISA_swizzleClass];
+            // do whatever you need to do
+        }
+
+        if ([[UIViewController class] respondsToSelector:@selector(ISA_swizzleClass)])
+        {
+            [UIViewController ISA_swizzleClass];
+            // do whatever you need to do
+        }
+    });
+ }
+
+- (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback
+{
     if (_wachedFiles) _wachedFiles = [NSMutableSet setWithCapacity:1];
     if ([_wachedFiles containsObject:path]) {
         return;
@@ -94,7 +122,8 @@
     dispatch_resume(source);
 }
 
-- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring {
+- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
+{
     [self loadAppearanceFromFile:file];
     if (monitoring) {
         _monitoring = YES;
@@ -104,7 +133,8 @@
     }
 }
 
-- (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri {
+- (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri
+{
     if (uri.length < 1)return nil;
 
     YKTag *tag = nil;
@@ -120,7 +150,8 @@
     return tag;
 }
 
-- (void)loadAppearanceData:(NSString *)file {
+- (void)loadAppearanceData:(NSString *)file
+{
     YKParser *parser = [[YKParser alloc] init];
     parser.delegate = self;
 
@@ -138,19 +169,22 @@
     }
 }
 
-- (void)loadAppearanceFromFile:(NSString *)file {
+- (void)loadAppearanceFromFile:(NSString *)file
+{
     [_sources addObject:file];
     [self loadAppearanceData:file];
 }
 
-- (void)loadAppearanceNamed:(NSString *)name {
+- (void)loadAppearanceNamed:(NSString *)name
+{
     NSString *file = [[NSBundle mainBundle] pathForResource:name ofType:nil];
     if (file) {
         [self loadAppearanceFromFile:file];
     }
 }
 
-- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory {
+- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory
+{
 #if !(TARGET_IPHONE_SIMULATOR)
 
     [self loadAppearanceNamed:name];
@@ -191,28 +225,31 @@
 #endif
 }
 
-- (void)reloadAppearanceSources {
+- (void)reloadAppearanceSources
+{
     [_definitions removeAllObjects];
     for (NSString *file in _sources) {
         [self loadAppearanceData:file];
     }
 }
 
-- (void)reloadAppearance {
+- (void)reloadAppearance
+{
     [_classStyles removeAllObjects];
     [_objectStyles removeAllObjects];
     [self reloadAppearanceSources];
     [self processAppearance];
-    [self updateAppearanceRegisteredObjects];
 }
 
-- (void)autoReloadAppearance {
+- (void)autoReloadAppearance
+{
     [self reloadAppearance];
     [self performSelector:@selector(reloadAppearance) withObject:nil afterDelay:0.3];
 }
 
 
-- (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring {
+- (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring
+{
     if (monitoring) {
         if (!_monitoredAssets) _monitoredAssets = [NSMutableArray arrayWithCapacity:1];
         [_monitoredAssets addObject:folder];
@@ -222,20 +259,24 @@
     }
 }
 
-- (void)addAssetsFolder:(NSString *)folder {
+- (void)addAssetsFolder:(NSString *)folder
+{
     NSFileManager *manager = [NSFileManager defaultManager];
     if (!_assets) _assets = [NSMutableArray arrayWithCapacity:1];
     [_assets addObject:folder];
 }
 
-- (void)processAppearance {
+- (void)processAppearance
+{
     for (NSDictionary *definition in _definitions) {
-
         [self processISAppearance:definition];
     }
+    _isAppearanceLoaded = YES;
+    [self updateAppearanceRegisteredObjects];
 }
 
-- (void)processUIAppearance:(NSDictionary *)definition {
+- (void)processUIAppearance:(NSDictionary *)definition
+{
     if (![definition isKindOfClass:[NSDictionary class]]) return;
 
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -300,12 +341,13 @@
         }
 
         if (appearanceProxy) {
-            [self processAppearanceProxy:appearanceProxy forClassNamed:className withParams:obj];
+            [self processUIAppearanceProxy:appearanceProxy withParams:obj];
         }
     }];
 }
 
-- (void)processDefinition:(NSDictionary *)definition forClass:(NSString *)class {
+- (void)processDefinition:(NSDictionary *)definition forClass:(NSString *)class
+{
     if (!_definitionsByClass)
         _definitionsByClass = [NSMutableDictionary dictionary];
 
@@ -318,7 +360,8 @@
     _definitionsByClass[class] = classInfo;
 }
 
-- (void)processDefinitions:(NSDictionary *)definition {
+- (void)processDefinitions:(NSDictionary *)definition
+{
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if ([key isKindOfClass:[NSString class]]) {
@@ -332,64 +375,24 @@
     }];
 }
 
-
-SEL SelectorForPropertySetterFromString(NSString *string) {
-    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-                                                    withString:[[string substringToIndex:1] uppercaseString]];
-
-    sel = [NSString stringWithFormat:@"set%@:", sel];
-
-    return NSSelectorFromString(sel);
-}
-
-- (void)processAppearanceProxy:(id)appearanceProxy forClassNamed:(NSString *)named withParams:(NSArray *)params {
-    for (id operation in params) {
-
-        if ([operation isKindOfClass:[NSArray class]]) {
-
-            NSMutableString *selectorName = [NSMutableString string];
-            NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[operation count]];
-
-            for (NSDictionary *component in operation) {
-
-                [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-
-                    [selectorName appendFormat:@"%@:", key];
-                    [parameters addObject:obj];
-                }];
-            }
-            [self invokeWithTarget:appearanceProxy selector:NSSelectorFromString(selectorName) parameters:parameters];
-        }
-        else if ([operation isKindOfClass:[NSDictionary class]]) {
-
-            [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                // decode keys
-                [self invokeWithTarget:appearanceProxy
-                              selector:SelectorForPropertySetterFromString(key)
-                            parameters:@[obj]];
-
-            }];
-        }
+- (void)processUIAppearanceProxy:(id)appearanceProxy withParams:(NSArray *)params
+{
+    NSMutableArray *entries = [self styleBlockWithParams:params selectorParams:nil ];
+    for (ISAEntry* entry in entries) {
+        [entry invokeWithTarget:appearanceProxy];
     }
 }
 
-- (BOOL)invokeWithTarget:(id)appearanceProxy selector:(SEL)selector parameters:(NSArray *)parameters {
-    [(ISAEntry *) [ISAEntry entryWithSelector:selector arguments:parameters keyPath:0] invokeWithTarget:appearanceProxy];
-    return YES;
-}
-
-
-- (void)processISAppearance:(NSDictionary *)definition {
+- (void)processISAppearance:(NSDictionary *)definition
+{
     if (![definition isKindOfClass:[NSDictionary class]]) return;
 
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if ([key isEqual:@"UIAppearance"]) {
-            if(_monitoring && NO) {
+            [self processUIAppearance:obj];
+            if (_monitoring) {
                 [self processISAppearance:obj];
-            }
-            else {
-                [self processUIAppearance:obj];
             }
             return;
         }
@@ -404,7 +407,7 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
         if (baseClass) {
 
             // save a
-            NSMutableArray *params = [self styleBlockWithParams:obj];
+            NSMutableArray *params = [self styleBlockWithParams:obj selectorParams:nil ];
 
             if (!params) {
                 return;
@@ -440,50 +443,139 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     }];
 }
 
-- (NSMutableArray *)styleBlockWithParams:(NSArray *)params {
-    if (![params isKindOfClass:[NSArray class]]) {
-        return nil;
+- (NSMutableArray *)styleBlockWithParams:(id)params selectorParams:(NSArray *)selectorParams
+{
+    NSMutableArray *invocations = [NSMutableArray arrayWithCapacity:[params count]];
+
+    if ([params isKindOfClass:[NSDictionary class]]) {
+        [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+
+            ISAEntry * entry= [self entryWithKey:key value:obj selectorParams:selectorParams];
+            if(entry) {
+                [invocations addObject:entry];
+            }
+        }];
     }
+    else if ([params isKindOfClass:[NSArray class]]) {
 
-    NSMutableArray *invocations = [NSMutableArray arrayWithCapacity:params.count];
-    for (id operation in params) {
+        for (id operation in params) {
 
-        if ([operation isKindOfClass:[NSArray class]]) {  // method style
+            if ([operation isKindOfClass:[NSArray class]]) {  // method style
 
-            NSMutableString *selectorName = [NSMutableString string];
-            NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[operation count]];
-            NSString *keyPath = nil;
-
-            for (id component in operation) {
-
-                if ([component isKindOfClass:[NSDictionary class]]) {
-                    [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-
-                        [selectorName appendFormat:@"%@:", key];
-                        [parameters addObject:obj];
-                    }];
-                }
-                else if ([component isKindOfClass:[NSString class]]) {
-                    keyPath = component;
+                ISAEntry * entry= [self entryWithParams:operation selectorParams:selectorParams];
+                if(entry) {
+                    [invocations addObject:entry];
                 }
             }
-            [invocations addObject:[ISAEntry entryWithSelector:NSSelectorFromString(selectorName)
-                                                     arguments:parameters keyPath:keyPath]];
-        }
-        else if ([operation isKindOfClass:[NSDictionary class]]) {  // property style
+            else if ([operation isKindOfClass:[NSDictionary class]]) {
 
-            [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                // decode keys
-                [invocations addObject:[ISAEntry entryWithSelector:SelectorForPropertySetterFromString(key)
-                                                         arguments:@[obj]
-                                                           keyPath:nil]];
-            }];
+                [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                    if ([key isKindOfClass:[NSString class]]) {    // property set style
+                        // decode keys
+                        ISAEntry * entry= [self entryWithKey:key value:obj selectorParams:selectorParams];
+                        if(entry) {
+                            [invocations addObject:entry];
+                        }
+                    }
+                    else if ([key isKindOfClass:[NSArray class]]) {  // modifier style
+
+                        if (selectorParams) {
+                            key = [key arrayByAddingObjectsFromArray:selectorParams];
+                        }
+
+                        NSMutableArray *subInvokations = [self styleBlockWithParams:obj selectorParams:key];
+                        if (subInvokations.count) {
+                            [invocations addObjectsFromArray:subInvokations];
+                        }
+                    }
+                    else {
+                        // error
+                    }
+                }];
+            }
         }
+    }
+    else {
+        // error
     }
     return invocations;
 }
 
-- (void)registerObject:(id)object {
+- (ISAEntry * const)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams
+{
+    if([key isKindOfClass:[NSString class]]) {
+
+        NSArray *array;
+
+        NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;
+        if (keys.count > 1) {
+            key = keys.lastObject;
+            [keys removeLastObject];
+            NSString *keyPath = [keys componentsJoinedByString:@"."];
+            array = @[keyPath,@{SelectorNameForSetterWithString(key) : value}];
+        }
+        else {
+            array = @[@{SelectorNameForSetterWithString(key) : value}];
+        }
+
+        ISAEntry *const entry = [self entryWithParams:array selectorParams:selectorParams];
+        return entry;
+    }
+    else {
+        // error
+        return nil;
+    }
+}
+
+- (ISAEntry * const)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
+{
+    NSMutableString *selectorName = [NSMutableString string];
+    NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[params count]];
+    __block NSString *keyPath = nil;
+
+    if (selectorParams) {
+        params = [params arrayByAddingObjectsFromArray:selectorParams];
+    }
+    __block BOOL firstItem = YES;
+
+    for (id component in params) {
+
+        if ([component isKindOfClass:[NSDictionary class]]) {
+            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+
+                if (firstItem) {
+                    NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;
+                    if (keys.count > 1) {
+                        key = keys.lastObject;
+                        [keys removeLastObject];
+                        if (keyPath) {
+                            [keys insertObject:keyPath atIndex:0];
+                        }
+                        keyPath = [keys componentsJoinedByString:@"."];
+                    }
+                }
+                firstItem = NO;
+
+                [selectorName appendFormat:@"%@:", key];
+                [parameters addObject:obj];
+            }];
+        }
+        else if ([component isKindOfClass:[NSString class]]) {
+            if (keyPath) {
+                keyPath = [@[keyPath, component] componentsJoinedByString:@"."];
+            }
+            else {
+                keyPath = component;
+            }
+        }
+    }
+
+    return [ISAEntry entryWithSelector:NSSelectorFromString(selectorName)
+                             arguments:parameters keyPath:keyPath];;
+}
+
+- (void)registerObject:(id)object
+{
     if (!_registeredObjects) {
         Class cl = NSClassFromString(@"NSHashTable");
         if ([cl resolveClassMethod:@selector(weakObjectsHashTable)]) {
@@ -497,28 +589,40 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
 }
 
 
-- (void)updateAppearanceRegisteredObjects {
+- (void)updateAppearanceRegisteredObjects
+{
     for (id object in [_registeredObjects copy]) {
         [self applyAppearanceTo:object usingClasses:[object isaClass]];
     }
-    [CATransaction flush];
-    UIView *mainView = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
-    // flush view window
-    UIView *superview = mainView.superview;
-    [mainView removeFromSuperview];
-    [superview addSubview:mainView];
+    if(_monitoring) {
+        [CATransaction flush];
+        UIView *mainView = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
+        // flush view window
+        UIView *superview = mainView.superview;
+        [mainView removeFromSuperview];
+        [superview addSubview:mainView];
+    }
+    else {
+        [_registeredObjects removeAllObjects];
+    }
 }
 
-- (void)applyAppearanceTo:(UIView *)view usingClasses:(NSString *)classNames {
+- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
+{
+    if(!_isAppearanceLoaded) {
+        [self registerObject:target];
+        return NO;
+    } 
+    
     if (_monitoring) {
-        [self registerObject:view];
+        [self registerObject:target];
     }
 
     // apply class styles first
     NSMutableArray *classes = [NSMutableArray array];
 
     {// find all styles classes
-        Class class = [view class];
+        Class class = [target class];
         while (class) {
             [classes addObject:class];
             class = [class superclass];
@@ -529,7 +633,7 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     for (Class class in classes.reverseObjectEnumerator) {
         NSArray *classParams = [_classStyles objectForKey:class];
         for (ISAEntry *entry in classParams) {
-            [entry invokeWithTarget:view];
+            [entry invokeWithTarget:target];
         }
     }
 
@@ -543,15 +647,17 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
                     objectParams = [styles objectForKey:className];
 
                     for (ISAEntry *entry in objectParams) {
-                        [entry invokeWithTarget:view];
+                        [entry invokeWithTarget:target];
                     }
                 }
             }
         }
     }
+    return YES;
 }
 
-- (NSString *)findFile:(NSString *)file inFolder:(NSString *)folder recursive:(BOOL)reqcursive {
+- (NSString *)findFile:(NSString *)file inFolder:(NSString *)folder recursive:(BOOL)reqcursive
+{
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *path = [folder stringByAppendingPathComponent:file];
     if ([manager fileExistsAtPath:path]) {
@@ -586,7 +692,8 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
 
 
 - (NSString *)findImageFile:(NSString *)file inFolder:(NSString *)folder  forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
-                      scale:(CGFloat *)scale {
+                      scale:(CGFloat *)scale
+{
     NSString *ext = [file pathExtension];
     NSString *name = [file stringByDeletingPathExtension];
 
@@ -632,7 +739,8 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     return nil;
 }
 
-- (UIImage *)loadImageNamed:(NSString *)string forRetina:(BOOL)isRetina forPad:(BOOL)isIpad {
+- (UIImage *)loadImageNamed:(NSString *)string forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
+{
     NSString *path = nil;
     UIImage *image = nil;
     CGFloat scale = 0;
@@ -671,7 +779,8 @@ SEL SelectorForPropertySetterFromString(NSString *string) {
     return image;
 }
 
-- (UIImage *)loadImageNamed:(NSString *)string {
+- (UIImage *)loadImageNamed:(NSString *)string
+{
     bool isRetina = [UIScreen mainScreen].scale == 2.0;
     bool isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 
