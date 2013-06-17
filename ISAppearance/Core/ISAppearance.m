@@ -62,12 +62,12 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         _definitions = [NSMutableArray array];
         _sources = [NSMutableArray array];
 
-        [self.class processInjections];
+        [self.class prepareAppearance];
     }
     return self;
 }
 
-+ (void)processInjections
++ (void)prepareAppearance
 {
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{

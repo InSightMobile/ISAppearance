@@ -11,7 +11,7 @@
 
 - (void)loadAppearanceFromFile:(NSString *)file;
 
-+ (void)processInjections;
++ (void)prepareAppearance;
 
 - (void)loadAppearanceNamed:(NSString *)name;
 
