@@ -635,22 +635,24 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         }
     }
 
-    for (NSString *className in [classNames componentsSeparatedByString:@":"]) {
-        if (classes) {
-            // apply styled classes
-            for (Class class in classes.reverseObjectEnumerator) {
-                NSDictionary *styles = [_objectStyles objectForKey:class];
-                NSArray *objectParams = nil;
-                if (styles) {
-                    objectParams = [styles objectForKey:className];
+    NSSet* userClasses = [NSSet setWithArray:[classNames componentsSeparatedByString:@":"]];
 
-                    for (ISAEntry *entry in objectParams) {
-                        [entry invokeWithTarget:target];
-                    }
+    // apply individual classes
+    for (NSString *className in userClasses) {
+        for (Class class in classes.reverseObjectEnumerator) {
+            NSDictionary *styles = [_objectStyles objectForKey:class];
+            NSArray *objectParams = nil;
+            if (styles) {
+                objectParams = [styles objectForKey:className];
+
+                for (ISAEntry *entry in objectParams) {
+                    [entry invokeWithTarget:target];
                 }
             }
         }
     }
+    // apply individual classes sets
+
     return YES;
 }
 

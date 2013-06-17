@@ -34,5 +34,18 @@
     }
 }
 
+- (void)setImageView:(UIImage *)image forKeyPath:(NSString *)keyPath;
+{
+    UIView *currentView = [self valueForKeyPath:keyPath];
+
+    if([currentView isKindOfClass:[UIImageView class]]) {
+        [(UIImageView*)currentView setImage:image];
+    }
+    else {
+        UIImageView *view = [[UIImageView alloc] initWithImage:image];
+        [self setValue:view forKeyPath:keyPath];
+    }
+}
+
 
 @end
