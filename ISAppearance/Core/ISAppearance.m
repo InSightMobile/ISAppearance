@@ -103,12 +103,14 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     dispatch_source_set_event_handler(source, ^{
         unsigned long flags = dispatch_source_get_data(source);
         if (once) {
+            [_wachedFiles removeObject:path];
             dispatch_source_cancel(source);
             callback();
         }
         else if (flags & DISPATCH_VNODE_DELETE) {
             dispatch_source_cancel(source);
             callback();
+            [_wachedFiles removeObject:path];
             [self watch:path once:once withCallback:callback];
         }
         else {
@@ -127,9 +129,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     [self loadAppearanceFromFile:file];
     if (monitoring) {
         _monitoring = YES;
-        [self watch:file once:NO withCallback:^{
-            [self autoReloadAppearance];
-        }];
+        [self watchAndReloadPath:file once:NO ];
     }
 }
 
@@ -261,7 +261,6 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
 - (void)addAssetsFolder:(NSString *)folder
 {
-    NSFileManager *manager = [NSFileManager defaultManager];
     if (!_assets) _assets = [NSMutableArray arrayWithCapacity:1];
     [_assets addObject:folder];
 }
@@ -282,7 +281,6 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         id appearanceProxy = nil;
-        NSString *className;
 
         if ([key isKindOfClass:[NSString class]]) {
             key = [key componentsSeparatedByString:@":"];
@@ -674,7 +672,6 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
                                          NSDirectoryEnumerationSkipsPackageDescendants
                             errorHandler:nil];
 
-        NSError *error;
         // Enumerate the dirEnumerator results, each value is stored in allURLs
         for (NSURL *theURL in dirEnumerator) {
             // Retrieve whether a directory.
@@ -748,9 +745,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     for (NSString *folder in _monitoredAssets) {
         path = [self findImageFile:string inFolder:folder forRetina:isRetina forPad:isIpad scale:&scale];
         if (path) {
-            [self watch:path once:YES withCallback:^{
-                [self autoReloadAppearance];
-            }];
+            [self watchAndReloadPath:path once:YES ];
             break;
         }
     }
@@ -779,6 +774,12 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     return image;
 }
 
+- (void)watchAndReloadPath:(NSString *)path once:(BOOL)once {
+    [self watch:path once:once withCallback:^{
+                [self autoReloadAppearance];
+            }];
+}
+
 - (UIImage *)loadImageNamed:(NSString *)string
 {
     bool isRetina = [UIScreen mainScreen].scale == 2.0;
@@ -794,4 +795,5 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     }
     return [UIImage imageNamed:string];
 }
+
 @end
