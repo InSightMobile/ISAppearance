@@ -1,10 +1,11 @@
 #import <QuartzCore/QuartzCore.h>
-#import <objc/runtime.h>
 #import "ISAppearance.h"
 #import "YAMLKit.h"
 #import "ISAValueConverter.h"
-#import "ISAEntry.h"
+#import "ISAStyleEntry.h"
 #import "NSObject+ISA_Swizzle.h"
+#import "ISAStyle.h"
+#import "NSArray+Finding.h"
 
 @interface ISAppearance () <YKParserDelegate>
 
@@ -72,19 +73,17 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
 
-        if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)])
-        {
+        if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)]) {
             [UIView ISA_swizzleClass];
             // do whatever you need to do
         }
 
-        if ([[UIViewController class] respondsToSelector:@selector(ISA_swizzleClass)])
-        {
+        if ([[UIViewController class] respondsToSelector:@selector(ISA_swizzleClass)]) {
             [UIViewController ISA_swizzleClass];
             // do whatever you need to do
         }
     });
- }
+}
 
 - (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback
 {
@@ -376,7 +375,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 - (void)processUIAppearanceProxy:(id)appearanceProxy withParams:(NSArray *)params
 {
     NSMutableArray *entries = [self styleBlockWithParams:params selectorParams:nil ];
-    for (ISAEntry* entry in entries) {
+    for (ISAStyleEntry *entry in entries) {
         [entry invokeWithTarget:appearanceProxy];
     }
 }
@@ -399,46 +398,79 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
             return;
         }
 
-        NSArray *components = [key componentsSeparatedByString:@":"];
-        NSString *className = components[0];
-        Class baseClass = NSClassFromString(className);
-        if (baseClass) {
+        NSString *selector = key;
+        NSMutableArray *params = [self styleBlockWithParams:obj selectorParams:nil];
+        if (!params) {
+            return;
+        }
+        [self addParams:params toSelector:selector];
+    }];
+}
 
-            // save a
-            NSMutableArray *params = [self styleBlockWithParams:obj selectorParams:nil ];
+- (void)addParams:(NSMutableArray *)params toSelector:(NSString *)selector
+{
+    NSArray *components = [selector componentsSeparatedByString:@":"];
+    NSString *className = components[0];
+    Class baseClass = NSClassFromString(className);
+    if (!baseClass) {
+        return;
+    }
+    className = NSStringFromClass(baseClass);
 
-            if (!params) {
-                return;
-            }
+    NSSet *selectors = [NSSet setWithArray:[components arrayByRemovingObjectAtIndex:0]];
+    ISAStyle *style = [self styleWithClass:className selectors:selectors];
 
-            if (components.count == 1) { // setup class itself
-                NSMutableArray *entries = [_classStyles objectForKey:baseClass];
-                if (entries) {
-                    [entries addObjectsFromArray:params];
-                }
-                else {
-                    [_classStyles setObject:params forKey:baseClass];
-                }
+    if (style) {
+        [style addEntries:params];
+    }
+    else {
+        style = [ISAStyle new];
+        style.baseClass = baseClass;
+        style.className = className;
+        style.selectors = selectors;
+        [style addEntries:params];
+        [self indexStyle:style];
+    }
+}
+
+- (void)indexStyle:(ISAStyle *)style
+{
+    NSSet *components = style.selectors;
+    NSString *className = style.className;
+
+    // save a
+    if (components.count == 0) { // setup class itself
+        [_classStyles setObject:style forKey:className];
+    }
+    else {
+        NSMutableDictionary *objectStyles = [_objectStyles objectForKey:className];
+        if (!objectStyles) {
+            objectStyles = [NSMutableDictionary dictionaryWithCapacity:1];
+            [_objectStyles setObject:objectStyles forKey:className];
+        }
+        [objectStyles setObject:style forKey:components];
+
+        for (NSString *component in components) {
+            NSMutableArray *entries = [objectStyles objectForKey:component];
+            if (entries) {
+                [entries addObject:style];
             }
             else {
-                NSString *isaClass = components[1];
-
-                NSMutableDictionary *objectStyles = [_objectStyles objectForKey:baseClass];
-                if (!objectStyles) {
-                    objectStyles = [NSMutableDictionary dictionaryWithCapacity:1];
-                    [_objectStyles setObject:objectStyles forKey:baseClass];
-                }
-                NSMutableArray *entries = [objectStyles objectForKey:isaClass];
-                if (entries) {
-                    [entries addObjectsFromArray:params];
-                }
-                else {
-                    [objectStyles setObject:params forKey:isaClass];
-                }
+                [objectStyles setObject:[NSMutableArray arrayWithObject:style] forKey:component];
             }
-
         }
-    }];
+    }
+}
+
+- (ISAStyle *)styleWithClass:(NSString *)className selectors:(NSSet *)components
+{
+    if (components.count == 0) { // setup class itself
+        return [_classStyles valueForKey:className];
+    }
+    else {
+        NSMutableDictionary *objectStyles = [_objectStyles objectForKey:className];
+        return [objectStyles objectForKey:components];
+    }
 }
 
 - (NSMutableArray *)styleBlockWithParams:(id)params selectorParams:(NSArray *)selectorParams
@@ -448,8 +480,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     if ([params isKindOfClass:[NSDictionary class]]) {
         [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
-            ISAEntry * entry= [self entryWithKey:key value:obj selectorParams:selectorParams];
-            if(entry) {
+            ISAStyleEntry *entry = [self entryWithKey:key value:obj selectorParams:selectorParams];
+            if (entry) {
                 [invocations addObject:entry];
             }
         }];
@@ -460,8 +492,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
             if ([operation isKindOfClass:[NSArray class]]) {  // method style
 
-                ISAEntry * entry= [self entryWithParams:operation selectorParams:selectorParams];
-                if(entry) {
+                ISAStyleEntry *entry = [self entryWithParams:operation selectorParams:selectorParams];
+                if (entry) {
                     [invocations addObject:entry];
                 }
             }
@@ -470,8 +502,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
                 [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                     if ([key isKindOfClass:[NSString class]]) {    // property set style
                         // decode keys
-                        ISAEntry * entry= [self entryWithKey:key value:obj selectorParams:selectorParams];
-                        if(entry) {
+                        ISAStyleEntry *entry = [self entryWithKey:key value:obj selectorParams:selectorParams];
+                        if (entry) {
                             [invocations addObject:entry];
                         }
                     }
@@ -499,9 +531,9 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     return invocations;
 }
 
-- (ISAEntry * const)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams
+- (ISAStyleEntry * const)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams
 {
-    if([key isKindOfClass:[NSString class]]) {
+    if ([key isKindOfClass:[NSString class]]) {
 
         NSArray *array;
 
@@ -510,13 +542,13 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
             key = keys.lastObject;
             [keys removeLastObject];
             NSString *keyPath = [keys componentsJoinedByString:@"."];
-            array = @[keyPath,@{SelectorNameForSetterWithString(key) : value}];
+            array = @[keyPath, @{SelectorNameForSetterWithString(key) : value}];
         }
         else {
             array = @[@{SelectorNameForSetterWithString(key) : value}];
         }
 
-        ISAEntry *const entry = [self entryWithParams:array selectorParams:selectorParams];
+        ISAStyleEntry *const entry = [self entryWithParams:array selectorParams:selectorParams];
         return entry;
     }
     else {
@@ -525,7 +557,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     }
 }
 
-- (ISAEntry * const)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
+- (ISAStyleEntry * const)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
 {
     NSMutableString *selectorName = [NSMutableString string];
     NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[params count]];
@@ -568,8 +600,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         }
     }
 
-    return [ISAEntry entryWithSelector:NSSelectorFromString(selectorName)
-                             arguments:parameters keyPath:keyPath];;
+    return [ISAStyleEntry entryWithSelector:NSSelectorFromString(selectorName)
+                                  arguments:parameters keyPath:keyPath];;
 }
 
 - (void)registerObject:(id)object
@@ -592,7 +624,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     for (id object in [_registeredObjects copy]) {
         [self applyAppearanceTo:object usingClasses:[object isaClass]];
     }
-    if(_monitoring) {
+    if (_monitoring) {
         [CATransaction flush];
         UIView *mainView = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
         // flush view window
@@ -607,11 +639,11 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
 {
-    if(!_isAppearanceLoaded) {
+    if (!_isAppearanceLoaded) {
         [self registerObject:target];
         return NO;
-    } 
-    
+    }
+
     if (_monitoring) {
         [self registerObject:target];
     }
@@ -622,37 +654,39 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     {// find all styles classes
         Class class = [target class];
         while (class) {
-            [classes addObject:class];
+            [classes addObject:NSStringFromClass(class)];
             class = [class superclass];
         }
     }
 
-    // apply styled classes
-    for (Class class in classes.reverseObjectEnumerator) {
-        NSArray *classParams = [_classStyles objectForKey:class];
-        for (ISAEntry *entry in classParams) {
-            [entry invokeWithTarget:target];
-        }
-    }
-
-    NSSet* userClasses = [NSSet setWithArray:[classNames componentsSeparatedByString:@":"]];
+    NSSet *userClasses = [NSSet setWithArray:[classNames componentsSeparatedByString:@":"]];
 
     // apply individual classes
-    for (NSString *className in userClasses) {
-        for (Class class in classes.reverseObjectEnumerator) {
-            NSDictionary *styles = [_objectStyles objectForKey:class];
-            NSArray *objectParams = nil;
-            if (styles) {
-                objectParams = [styles objectForKey:className];
+    for (NSString *className in classes.reverseObjectEnumerator) {
 
-                for (ISAEntry *entry in objectParams) {
-                    [entry invokeWithTarget:target];
+        ISAStyle *classStyle = [_classStyles objectForKey:className];
+        [classStyle applyToTarget:target];
+
+        NSMutableSet *stylesToApply = [NSMutableSet new];
+
+        for (NSString *userClass in userClasses) {
+            NSDictionary *styles = [_objectStyles objectForKey:className];
+            if (styles) {
+                NSArray *candidateStyles = [styles objectForKey:userClass];
+                for (ISAStyle *style in candidateStyles) {
+                    if(![stylesToApply containsObject:style] &&
+                            [style isConformToSelectors:userClasses]) {
+                        [stylesToApply addObject:style];
+                    }
                 }
             }
         }
-    }
-    // apply individual classes sets
 
+        // apply individual classes sets
+        for (ISAStyle *style in stylesToApply) {
+            [style applyToTarget:target];
+        }
+    }
     return YES;
 }
 
@@ -776,10 +810,11 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     return image;
 }
 
-- (void)watchAndReloadPath:(NSString *)path once:(BOOL)once {
+- (void)watchAndReloadPath:(NSString *)path once:(BOOL)once
+{
     [self watch:path once:once withCallback:^{
-                [self autoReloadAppearance];
-            }];
+        [self autoReloadAppearance];
+    }];
 }
 
 - (UIImage *)loadImageNamed:(NSString *)string

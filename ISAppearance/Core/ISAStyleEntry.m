@@ -2,19 +2,21 @@
 // 
 
 
-#import "ISAEntry.h"
+#import "ISAStyleEntry.h"
 
 
-@interface ISAEntry ()
+@interface ISAStyleEntry ()
 @end
 
-@implementation ISAEntry
+@implementation ISAStyleEntry
 {
 @private
     NSInvocation *_invocation;
     NSArray *_arguments;
     SEL _selector;
     NSString *_keyPath;
+
+    void (^_block)(id);
 }
 
 - (id)initWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath
@@ -28,14 +30,26 @@
     return self;
 }
 
+- (id)initWithBlock:(void (^)(id))block
+{
+    self = [super init];
+    if (self) {
+        _block = [block copy];
+    }
+    return self;
+}
+
 + (id)entryWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath
 {
-    return [[ISAEntry alloc] initWithSelector:selector arguments:arguments keyPath:keyPath];
+    return [[ISAStyleEntry alloc] initWithSelector:selector arguments:arguments keyPath:keyPath];
 }
 
 - (void)safeInvokeWithTarget:(id)target
 {
-    //if([target respondsToSelector:_invocation.selector]) {
+    if(_block) {
+        _block(target);
+    }
+    if(_invocation) {
         @try {
             [_invocation invokeWithTarget:target];
         }
@@ -43,7 +57,12 @@
             NSLog(@"invocation failed with selector %@  for %@", NSStringFromSelector(_selector), [target class]);
             return;
         }
-    //}
+    }
+}
+
++ (id)entryWithBlock:(void (^)(id object))block
+{
+    return [[ISAStyleEntry alloc] initWithBlock:block];
 }
 
 - (void)invokeWithTarget:(id)rootTarget
