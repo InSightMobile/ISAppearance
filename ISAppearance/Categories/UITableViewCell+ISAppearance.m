@@ -67,8 +67,6 @@ static NSString *const ISACellSeparatorLayerName = @"ISACellSeparatorLayer";
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         imageView.layer.name = ISACellSeparatorLayerName;
 
-        //imageView.highlightedImage = [UIImage imageWithColor:[UIColor clearColor]];
-
         [self addSubview:imageView];
     }
     imageView.image = image;

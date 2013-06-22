@@ -622,7 +622,12 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 - (void)updateAppearanceRegisteredObjects
 {
     for (id object in [_registeredObjects copy]) {
-        [self applyAppearanceTo:object usingClasses:[object isaClass]];
+        if([object respondsToSelector:@selector(isaClass)]) {
+            [self applyAppearanceTo:object usingClasses:[object isaClass]];
+        }
+        else {
+            [self applyAppearanceTo:object usingClasses:nil];
+        }        
     }
     if (_monitoring) {
         [CATransaction flush];
