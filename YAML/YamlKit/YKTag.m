@@ -7,7 +7,7 @@
 //
 
 #import "YKTag.h"
-#import "RegexKitLite.h"
+//#import "RegexKitLite.h"
 #import "YKUnknownNode.h"
 
 @interface YKTag (YKTagPrivateMethods)
@@ -171,11 +171,30 @@
     return [super _internalDecodeFromString:stringValue extraInfo:scopeExtraInfo];
 }
 
+-(NSArray *) arrayOfCaptureComponentsFrom:(NSString*)string matchedByRegex:(NSString *)regexp
+{
+    NSError  *error  = NULL;
+
+    NSRegularExpression *regex = [NSRegularExpression
+            regularExpressionWithPattern:regexp
+                                 options:0
+                                   error:&error];
+
+    NSMutableArray *array = [NSMutableArray new];
+    [regex enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+
+        [array addObject:[string substringWithRange:result.range]];
+
+    }];
+    return array;
+}
+
 - (NSArray *)_findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id*)hint
 {
     NSArray *components = nil;
     for (NSString *regex in regexDeclarations) {
-        components = [stringValue ISarrayOfCaptureComponentsMatchedByRegex:regex];
+
+        components = [self arrayOfCaptureComponentsFrom:stringValue matchedByRegex:regex];
         if ([components count] > 0) {
             if (hint)
                 *hint = [regexDeclarations valueForKey:regex];
@@ -186,3 +205,5 @@
 }
 
 @end
+
+

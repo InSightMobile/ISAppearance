@@ -14,7 +14,6 @@
 		5C5345601776DB4D00B0B5B2 /* libISAppearance.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5345471776DB4D00B0B5B2 /* libISAppearance.a */; };
 		5C5345661776DB4D00B0B5B2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C5345641776DB4D00B0B5B2 /* InfoPlist.strings */; };
 		5C5345691776DB4D00B0B5B2 /* ISAppearanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345681776DB4D00B0B5B2 /* ISAppearanceTests.m */; };
-		5C5346091776DBF700B0B5B2 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345E91776DBF700B0B5B2 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5C53460A1776DBF700B0B5B2 /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345EB1776DBF700B0B5B2 /* api.c */; };
 		5C53460B1776DBF700B0B5B2 /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345ED1776DBF700B0B5B2 /* dumper.c */; };
 		5C53460C1776DBF700B0B5B2 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345EE1776DBF700B0B5B2 /* emitter.c */; };
@@ -110,8 +109,6 @@
 		5C5345651776DB4D00B0B5B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5C5345671776DB4D00B0B5B2 /* ISAppearanceTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISAppearanceTests.h; sourceTree = "<group>"; };
 		5C5345681776DB4D00B0B5B2 /* ISAppearanceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISAppearanceTests.m; sourceTree = "<group>"; };
-		5C5345E81776DBF700B0B5B2 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		5C5345E91776DBF700B0B5B2 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		5C5345EB1776DBF700B0B5B2 /* api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = api.c; sourceTree = "<group>"; };
 		5C5345EC1776DBF700B0B5B2 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		5C5345ED1776DBF700B0B5B2 /* dumper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dumper.c; sourceTree = "<group>"; };
@@ -286,20 +283,10 @@
 		5C5345E61776DBF700B0B5B2 /* YAML */ = {
 			isa = PBXGroup;
 			children = (
-				5C5345E71776DBF700B0B5B2 /* RegexKitLite */,
 				5C5345EA1776DBF700B0B5B2 /* yaml */,
 				5C5345F61776DBF700B0B5B2 /* YamlKit */,
 			);
 			path = YAML;
-			sourceTree = "<group>";
-		};
-		5C5345E71776DBF700B0B5B2 /* RegexKitLite */ = {
-			isa = PBXGroup;
-			children = (
-				5C5345E81776DBF700B0B5B2 /* RegexKitLite.h */,
-				5C5345E91776DBF700B0B5B2 /* RegexKitLite.m */,
-			);
-			path = RegexKitLite;
 			sourceTree = "<group>";
 		};
 		5C5345EA1776DBF700B0B5B2 /* yaml */ = {
@@ -447,7 +434,7 @@
 				5C5345441776DB4D00B0B5B2 /* Frameworks */,
 				5C5345451776DB4D00B0B5B2 /* CopyFiles */,
 				5C5346211776DE9D00B0B5B2 /* Headers */,
-				5C5346761776E00B00B0B5B2 /* ShellScript */,
+				5C5346761776E00B00B0B5B2 /* Prepare Framework */,
 			);
 			buildRules = (
 			);
@@ -529,13 +516,14 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-		5C5346761776E00B00B0B5B2 /* ShellScript */ = {
+		5C5346761776E00B00B0B5B2 /* Prepare Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Prepare Framework";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,7 +537,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C5346091776DBF700B0B5B2 /* RegexKitLite.m in Sources */,
 				5C53460A1776DBF700B0B5B2 /* api.c in Sources */,
 				5C53460B1776DBF700B0B5B2 /* dumper.c in Sources */,
 				5C53460C1776DBF700B0B5B2 /* emitter.c in Sources */,
