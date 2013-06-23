@@ -175,7 +175,7 @@
 {
     NSArray *components = nil;
     for (NSString *regex in regexDeclarations) {
-        components = [stringValue arrayOfCaptureComponentsMatchedByRegex:regex];
+        components = [stringValue ISarrayOfCaptureComponentsMatchedByRegex:regex];
         if ([components count] > 0) {
             if (hint)
                 *hint = [regexDeclarations valueForKey:regex];

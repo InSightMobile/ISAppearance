@@ -7,22 +7,20 @@
 //
 
 #import "AppDelegate.h"
-#import "ISAppearance.h"
+#import <ISAppearance/ISAppearance.h>
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
++ (void) initialize
 {
-#if TARGET_IPHONE_SIMULATOR
+    [super initialize];
+    [ISAppearance prepareAppearance];
+}
 
-    [[ISAppearance sharedInstance] addAssetsFolder:@"/Users/yar/prj/ISAppearance/ISAppearanceDemo/images" withMonitoring:YES];
-    NSString* file = @"/Users/yar/prj/ISAppearance/ISAppearanceDemo/appearance.yaml";
-    [[ISAppearance sharedInstance] loadAppearanceFromFile:file withMonitoring:YES];
-
-#else
-    [[ISAppearance sharedInstance] addAssetsFolder:[[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"images"]];
-    [[ISAppearance sharedInstance] loadAppearanceNamed:@"appearance.yaml"];
-#endif
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{    
+    [[ISAppearance sharedInstance] loadAppearanceNamed:@"appearance.yaml" withMonitoringForDirectory:@"~/prj/ISAppearance/ISAppearanceDemo/"];
+    
     [[ISAppearance sharedInstance] processAppearance];
     
     return YES;

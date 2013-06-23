@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ISAppearance.h"
+#import <ISAppearance/ISAppearance.h>
 
 #import "AppDelegate.h"
 

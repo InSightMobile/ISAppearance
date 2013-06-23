@@ -6,13 +6,14 @@
 
 --- # definition part
 
+UIAppearance:
+  UINavigationBar:
+  - tintColor: !UIColor blue
+  - [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics default]
+
 UISwitch:
 - tintColor: !UIColor red
 - onTintColor: !UIColor blue
-
-UINavigationBar:
-- tintColor: !UIColor blue
-- [setBackgroundImage: !UIImage nav_bg.png, forBarMetrics: !UIBarMetrics default]
 
 UITableView:
 - backgroundColor:  !UIColor underPageBackground

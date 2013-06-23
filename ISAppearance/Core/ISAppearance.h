@@ -1,10 +1,9 @@
 //
 // 
 
-
-
 #import <Foundation/Foundation.h>
-#import "UIView+ISAInjection.h"
+#import <UIKit/UIKit.h>
+#include <ISAppearance/UIView+ISAInjection.h>
 
 @interface ISAppearance : NSObject
 + (ISAppearance *)sharedInstance;

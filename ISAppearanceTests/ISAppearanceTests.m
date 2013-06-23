@@ -2,8 +2,8 @@
 //  ISAppearanceTests.m
 //  ISAppearanceTests
 //
-//  Created by yar on 02.01.13.
-//  Copyright (c) 2013 infoshell. All rights reserved.
+//  Created by yar on 23.06.13.
+//  Copyright (c) 2013 yarryp. All rights reserved.
 //
 
 #import "ISAppearanceTests.h"
@@ -26,7 +26,7 @@
 
 - (void)testExample
 {
-    
+    STFail(@"Unit tests are not implemented yet in ISAppearanceTests");
 }
 
 @end

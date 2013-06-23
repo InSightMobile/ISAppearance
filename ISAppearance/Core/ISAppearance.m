@@ -5,7 +5,6 @@
 #import "ISAStyleEntry.h"
 #import "NSObject+ISA_Swizzle.h"
 #import "ISAStyle.h"
-#import "NSArray+Finding.h"
 
 @interface ISAppearance () <YKParserDelegate>
 
@@ -159,10 +158,10 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         NSError *error = nil;
         NSArray *result = [parser parseWithError:&error];
         if (error) {
-            DDLogError(@"error = %@", error);
+            NSLog(@"error = %@", error);
         }
         else {
-            DDLogVerbose(@"appearance loaded: %@", result);
+            NSLog(@"appearance loaded: %@", result);
             [_definitions addObjectsFromArray:result];
         }
     }
@@ -416,8 +415,10 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         return;
     }
     className = NSStringFromClass(baseClass);
+    
+    NSArray* userCompontnts = [components subarrayWithRange:NSMakeRange(1, components.count-1)];
 
-    NSSet *selectors = [NSSet setWithArray:[components arrayByRemovingObjectAtIndex:0]];
+    NSSet *selectors = [NSSet setWithArray:userCompontnts];
     ISAStyle *style = [self styleWithClass:className selectors:selectors];
 
     if (style) {
