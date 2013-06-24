@@ -23,7 +23,9 @@
 - (void)addAssetsFolder:(NSString *)folder;
 
 
-- (void)processAppearance;
+- (BOOL)processAppearance;
+
+- (BOOL)processAppearanceWithError:(NSError **)error;
 
 
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classes;

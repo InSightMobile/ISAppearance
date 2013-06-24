@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D26A2902C611CEFA6663C2D /* ISAEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */; };
+		1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */; };
 		5C53454B1776DB4D00B0B5B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53454A1776DB4D00B0B5B2 /* Foundation.framework */; };
 		5C53455A1776DB4D00B0B5B2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5345591776DB4D00B0B5B2 /* SenTestingKit.framework */; };
 		5C53455C1776DB4D00B0B5B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53455B1776DB4D00B0B5B2 /* UIKit.framework */; };
@@ -99,6 +101,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAEnumValueConverter.m; sourceTree = "<group>"; };
+		1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAEnumValueConverter.h; sourceTree = "<group>"; };
 		5C5345471776DB4D00B0B5B2 /* libISAppearance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISAppearance.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C53454A1776DB4D00B0B5B2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5C53454E1776DB4D00B0B5B2 /* ISAppearance-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISAppearance-Prefix.pch"; sourceTree = "<group>"; };
@@ -389,6 +393,8 @@
 				5C53464B1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m */,
 				5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */,
 				5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */,
+				1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */,
+				1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -420,6 +426,7 @@
 				5C5346701776DEC700B0B5B2 /* ISAUIImageValueConverter.h in Headers */,
 				5C5346721776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h in Headers */,
 				5C5346741776DEC700B0B5B2 /* ISAValueConverter.h in Headers */,
+				1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +581,7 @@
 				5C5346711776DEC700B0B5B2 /* ISAUIImageValueConverter.m in Sources */,
 				5C5346731776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m in Sources */,
 				5C5346751776DEC700B0B5B2 /* ISAValueConverter.m in Sources */,
+				1D26A2902C611CEFA6663C2D /* ISAEnumValueConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

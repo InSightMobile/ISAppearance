@@ -8,33 +8,27 @@
 
 #import "ISAUIControlStateValueConverter.h"
 
+@interface ISAUIControlStateValueConverter ()
+
+@end
+
 @implementation ISAUIControlStateValueConverter
 
-- (id)createFromNode:(id)node
+- (id)init
 {
-    UIControlState result = UIControlStateNormal;
-    if ([node isKindOfClass:[NSString class]]) {
+    self = [super init];
+    if (self) {
+        self.mapping = @{
+                @"UIControlStateHighlighted":@(UIControlStateHighlighted),
+                @"UIControlStateSelected":@(UIControlStateSelected),
+                @"UIControlStateDisabled":@(UIControlStateDisabled),
 
-        NSArray *values = [node componentsSeparatedByString:@"|"];
-
-        for (NSString *value in values) {
-
-            if ([value isEqualToString:@"UIControlStateHighlighted"])
-                result |= UIControlStateHighlighted;
-            else if ([value isEqualToString:@"UIControlStateSelected"])
-                result |= UIControlStateSelected;
-            else if ([value isEqualToString:@"UIControlStateDisabled"])
-                result |= UIControlStateDisabled;
-                    // support common values
-            else if ([value isEqualToString:@"highlighted"])
-                result |= UIControlStateHighlighted;
-            else if ([value isEqualToString:@"selected"])
-                result |= UIControlStateSelected;
-            else if ([value isEqualToString:@"disabled"])
-                result |= UIControlStateDisabled;
-        }
+                @"highlighted":@(UIControlStateHighlighted),
+                @"selected":@(UIControlStateSelected),
+                @"disabled":@(UIControlStateDisabled),
+        };
     }
-    return [NSValue value:&result withObjCType:@encode(UIControlState)];
+    return self;
 }
 
 

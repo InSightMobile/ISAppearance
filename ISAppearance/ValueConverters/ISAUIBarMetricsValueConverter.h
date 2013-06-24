@@ -5,8 +5,9 @@
 
 #import <Foundation/Foundation.h>
 #import "ISAValueConverter.h"
+#import "ISAEnumValueConverter.h"
 
 
-@interface ISAUIBarMetricsValueConverter : ISAValueConverter
+@interface ISAUIBarMetricsValueConverter : ISAEnumValueConverter
 
 @end

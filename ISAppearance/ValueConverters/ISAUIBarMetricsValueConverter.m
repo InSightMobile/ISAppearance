@@ -5,25 +5,20 @@
 
 @implementation ISAUIBarMetricsValueConverter
 
-- (id)createFromNode:(id)node
+- (id)init
 {
-    UIBarMetrics value = UIBarMetricsDefault;
-    if ([node isKindOfClass:[NSString class]]) {
+    self = [super init];
+    if (self) {
+        self.mapping = @{
+                @"UIBarMetricsDefault":@(UIBarMetricsDefault),
+                @"UIBarMetricsLandscapePhone":@(UIBarMetricsLandscapePhone),
 
-        if ([node isEqualToString:@"UIBarMetricsDefault"])
-            value = UIBarMetricsDefault;
-        else if ([node isEqualToString:@"UIBarMetricsLandscapePhone"])
-            value = UIBarMetricsLandscapePhone;
-        else if ([node isEqualToString:@"default"])
-            value = UIBarMetricsDefault;
-        else if ([node isEqualToString:@"landscapePhone"])
-            value = UIBarMetricsLandscapePhone;
-        else
-            return nil;
-
-        return [NSValue value:&value withObjCType:@encode(UIBarMetrics)];
+                @"default":@(UIBarMetricsDefault),
+                @"landscapePhone":@(UIBarMetricsLandscapePhone),
+                @"landscape":@(UIBarMetricsLandscapePhone),
+        };
     }
-    return nil;
+    return self;
 }
 
 

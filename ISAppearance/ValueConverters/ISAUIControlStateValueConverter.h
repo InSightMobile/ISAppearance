@@ -7,7 +7,8 @@
 //
 
 #import "ISAValueConverter.h"
+#import "ISAEnumValueConverter.h"
 
-@interface ISAUIControlStateValueConverter : ISAValueConverter
+@interface ISAUIControlStateValueConverter : ISAEnumValueConverter
 
 @end

@@ -140,7 +140,6 @@
                 double value = [argument doubleValue];
                 [invocation setArgument:&value atIndex:argumentPos];
             }
-
             else if (strcmp(@encode(NSUInteger), expectedType) == 0) {
                 NSUInteger value = [argument unsignedIntegerValue];
                 [invocation setArgument:&value atIndex:argumentPos];

@@ -1,4 +1,3 @@
-#import <QuartzCore/QuartzCore.h>
 #import "ISAppearance.h"
 #import "YAMLKit.h"
 #import "ISAValueConverter.h"
@@ -148,29 +147,39 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     return tag;
 }
 
-- (void)loadAppearanceData:(NSString *)file
+- (BOOL)loadAppearanceData:(NSString *)file error:(NSError **)pError
 {
     YKParser *parser = [[YKParser alloc] init];
     parser.delegate = self;
 
-    if ([parser readFile:file]) {
+    NSError *error = nil;
 
-        NSError *error = nil;
+    if ([parser readFile:file]) {
         NSArray *result = [parser parseWithError:&error];
         if (error) {
-            NSLog(@"error = %@", error);
+            if (pError) {
+                // get error info
+
+                *pError = error;
+            }
+            return NO;
         }
         else {
-            NSLog(@"appearance loaded: %@", result);
             [_definitions addObjectsFromArray:result];
         }
     }
+    else {
+
+        return NO;
+    }
+    return YES;
 }
 
 - (void)loadAppearanceFromFile:(NSString *)file
 {
-    [_sources addObject:file];
-    [self loadAppearanceData:file];
+    if ([[NSFileManager defaultManager] isReadableFileAtPath:file]) {
+        [_sources addObject:file];
+    }
 }
 
 - (void)loadAppearanceNamed:(NSString *)name
@@ -223,26 +232,38 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 #endif
 }
 
-- (void)reloadAppearanceSources
+- (BOOL)reloadAppearanceSourcesWithError:(NSError **)error
 {
     [_definitions removeAllObjects];
     for (NSString *file in _sources) {
-        [self loadAppearanceData:file];
+        if (![self loadAppearanceData:file error:error]) {
+            return NO;
+        }
     }
+    return YES;
 }
 
-- (void)reloadAppearance
+- (BOOL)reloadAppearanceWithError:(NSError **)error
 {
     [_classStyles removeAllObjects];
     [_objectStyles removeAllObjects];
-    [self reloadAppearanceSources];
-    [self processAppearance];
+    return [self processAppearanceWithError:error];
 }
 
 - (void)autoReloadAppearance
 {
-    [self reloadAppearance];
-    [self performSelector:@selector(reloadAppearance) withObject:nil afterDelay:0.3];
+    NSError *error = nil;
+    if ([self reloadAppearanceWithError:&error]) {
+        [self performSelector:@selector(reloadAppearanceWithError:) withObject:nil afterDelay:0.3];
+    }
+    else {
+
+        UIAlertView *alertView =
+                [[UIAlertView alloc] initWithTitle:@"ISAppearance error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+
+        [alertView show];
+    }
+
 }
 
 
@@ -263,13 +284,28 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     [_assets addObject:folder];
 }
 
-- (void)processAppearance
+- (BOOL)processAppearance
 {
+    NSError *error = nil;
+    return [self processAppearanceWithError:&error];
+}
+
+- (BOOL)processAppearanceWithError:(NSError **)error
+{
+    if (![self reloadAppearanceSourcesWithError:error]) {
+
+        return NO;
+    }
+
     for (NSDictionary *definition in _definitions) {
-        [self processISAppearance:definition];
+        if (![self processISAppearance:definition error:error]) {
+            return NO;
+        }
     }
     _isAppearanceLoaded = YES;
     [self updateAppearanceRegisteredObjects];
+
+    return YES;
 }
 
 - (void)processUIAppearance:(NSDictionary *)definition
@@ -379,21 +415,23 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     }
 }
 
-- (void)processISAppearance:(NSDictionary *)definition
+- (BOOL)processISAppearance:(NSDictionary *)definition error:(NSError **)error
 {
-    if (![definition isKindOfClass:[NSDictionary class]]) return;
+    if (![definition isKindOfClass:[NSDictionary class]]) {
+        return YES;
+    }
 
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if ([key isEqual:@"UIAppearance"]) {
             [self processUIAppearance:obj];
             if (_monitoring) {
-                [self processISAppearance:obj];
+                [self processISAppearance:obj error:NULL ];
             }
             return;
         }
         if ([key isEqual:@"ISAppearance"]) {
-            [self processISAppearance:obj];
+            [self processISAppearance:obj error:NULL ];
             return;
         }
 
@@ -404,6 +442,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         }
         [self addParams:params toSelector:selector];
     }];
+    return YES;
 }
 
 - (void)addParams:(NSMutableArray *)params toSelector:(NSString *)selector
@@ -415,8 +454,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         return;
     }
     className = NSStringFromClass(baseClass);
-    
-    NSArray* userCompontnts = [components subarrayWithRange:NSMakeRange(1, components.count-1)];
+
+    NSArray *userCompontnts = [components subarrayWithRange:NSMakeRange(1, components.count - 1)];
 
     NSSet *selectors = [NSSet setWithArray:userCompontnts];
     ISAStyle *style = [self styleWithClass:className selectors:selectors];
@@ -623,12 +662,12 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 - (void)updateAppearanceRegisteredObjects
 {
     for (id object in [_registeredObjects copy]) {
-        if([object respondsToSelector:@selector(isaClass)]) {
+        if ([object respondsToSelector:@selector(isaClass)]) {
             [self applyAppearanceTo:object usingClasses:[object isaClass]];
         }
         else {
             [self applyAppearanceTo:object usingClasses:nil];
-        }        
+        }
     }
     if (_monitoring) {
         [CATransaction flush];
@@ -680,7 +719,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
             if (styles) {
                 NSArray *candidateStyles = [styles objectForKey:userClass];
                 for (ISAStyle *style in candidateStyles) {
-                    if(![stylesToApply containsObject:style] &&
+                    if (![stylesToApply containsObject:style] &&
                             [style isConformToSelectors:userClasses]) {
                         [stylesToApply addObject:style];
                     }
@@ -819,7 +858,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 - (void)watchAndReloadPath:(NSString *)path once:(BOOL)once
 {
     [self watch:path once:once withCallback:^{
-        [self autoReloadAppearance];
+        [self performSelectorOnMainThread:@selector(autoReloadAppearance) withObject:nil waitUntilDone:NO];
     }];
 }
 
