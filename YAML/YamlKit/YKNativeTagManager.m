@@ -248,7 +248,7 @@ static YKNativeTagManager *__sharedManager = nil;
         else if (tag == [tagsByName valueForKey:YKNullTagDeclaration])
             return [NSNull null];
         else if (tag == [tagsByName valueForKey:YKBinaryTagDeclaration])
-            return [NSData dataFromBase64String:value];
+            return [NSData ISA_dataFromBase64String:value];
     }
     return nil;
 }
