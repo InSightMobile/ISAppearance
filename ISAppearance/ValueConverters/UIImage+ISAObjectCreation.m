@@ -1,24 +1,25 @@
 //
 // 
 
-#import "ISAUIImageValueConverter.h"
+#import "UIImage+ISAObjectCreation.h"
 #import "UIImage+ISAppearance.h"
 #import "ISAppearance.h"
 
-@implementation ISAUIImageValueConverter
 
-- (UIImage*) imageNamed:(NSString*)name
+@implementation UIImage (ISAObjectCreation)
+
++ (UIImage*) isaImageNamed:(NSString*)name
 {
     return [[ISAppearance sharedInstance] loadImageNamed:name];
     //[UIImage imageNamed:name];
 }
 
-- (id)createFromNode:(id)node
++ (id)objectWithISANode:(id)node
 {
     UIImage *image = nil;
     if ([node isKindOfClass:[NSString class]]) {
 
-        image = [self imageNamed:node];
+        image = [self isaImageNamed:node];
         if (!image) {
             return [[UIImage alloc] init];
         }
@@ -31,10 +32,10 @@
         id firstParam = [node objectAtIndex:0];
 
         if ([firstParam isKindOfClass:[UIColor class]]) {
-             image = [UIImage imageWithColor:firstParam];
+            image = [UIImage imageWithColor:firstParam];
         }
         else if ([firstParam isKindOfClass:[NSString class]]) {
-            image = [self imageNamed:firstParam];
+            image = [self isaImageNamed:firstParam];
         }
 
         if([node count] == 2 ) {
@@ -72,5 +73,6 @@
     }
     return image;
 }
+
 
 @end

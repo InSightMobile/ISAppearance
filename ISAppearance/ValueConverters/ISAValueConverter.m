@@ -4,6 +4,7 @@
 
 
 #import "ISAValueConverter.h"
+#import "ISANSObjectValueConverter.h"
 
 @interface ISAValueConverter () <YKTagDelegate>
 
@@ -20,26 +21,35 @@
     ISAValueConverter *converter = convertersByName[className];
     if (converter)return converter;
 
-    className = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
-    Class cl = NSClassFromString(className);
-    if (cl) {
-        converter = [[cl alloc] init];
+    NSString* converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
+    Class converterClass = NSClassFromString(converterClassName);
+    if (converterClass) {
+        converter = [[converterClass alloc] init];
+    }
+    else {
+        Class cl = NSClassFromString(className);
+        if(cl) {
+            converter = [[ISANSObjectValueConverter alloc] initWithObjectClass:cl];
+        }
+    }
+    if(converter) {
         convertersByName[className] = converter;
     }
+
     return converter;
 }
 
 - (id)tag:(YKTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
 {
-    return [self createFromNode:node];
+    return [self objectWithISANode:node];
 }
 
 - (id)tag:(YKTag *)tag castValue:(id)value fromTag:(YKTag *)castingTag
 {
-    return [self createFromNode:value];
+    return [self objectWithISANode:value];
 }
 
-- (id)createFromNode:(id)node
+- (id)objectWithISANode:(id)node
 {
     return nil;
 }

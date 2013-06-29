@@ -10,7 +10,7 @@
 
 @implementation ISACGSizeValueConverter
 
-- (id)createFromNode:(id)node
+- (id)objectWithISANode:(id)node
 {
     CGSize size = CGSizeZero;
     

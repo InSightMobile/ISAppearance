@@ -1,16 +1,11 @@
 //
-//  ISAUIFontValueConverter.m
-//  socials
-//
-//  Created by yar on 19.01.13.
-//  Copyright (c) 2013 Ярослав. All rights reserved.
-//
+// 
 
-#import "ISAUIFontValueConverter.h"
+#import "UIFont+ISAObjectCreation.h"
 
-@implementation ISAUIFontValueConverter
+@implementation UIFont (ISAObjectCreation)
 
-- (id)createFromNode:(id)param
++ (id)objectWithISANode:(id)param
 {
     if([param isKindOfClass:[NSNumber class]]) {
         return [UIFont systemFontOfSize:[param floatValue]];

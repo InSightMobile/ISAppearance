@@ -10,7 +10,7 @@
 
 @implementation ISAUIOffsetValueConverter
 
-- (id)createFromNode:(id)node
+- (id)objectWithISANode:(id)node
 {
     UIOffset insets = UIOffsetZero;
     

@@ -7,8 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D26A0508D74BBAC8FBD443C /* UIImage+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A5D81B458BC5009D39D1 /* UIImage+ISAObjectCreation.m */; };
+		1D26A064EED940C2535738D3 /* UIFont+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AD305D6E7B152CE2AC45 /* UIFont+ISAObjectCreation.h */; };
+		1D26A175A6FD420238AF42C7 /* UIColor+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AC0BF8A8BB6EA0EF550F /* UIColor+ISAObjectCreation.h */; };
+		1D26A1C90CB10EE828F9E3BC /* UIFont+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A04746007248DCC1521F /* UIFont+ISAObjectCreation.m */; };
 		1D26A2902C611CEFA6663C2D /* ISAEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */; };
 		1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */; };
+		1D26A506A1EC817615D3E4D0 /* ISANSObjectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */; };
+		1D26A5DF3A716C6784F03064 /* NSObject+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AD13AE664DD64418F3A6 /* NSObject+ISAObjectCreation.h */; };
+		1D26ADC76D7BE8BD18C52398 /* ISANSObjectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */; };
+		1D26AE2D8C09CBFAC1DBDF93 /* UIImage+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */; };
+		1D26AFAAA273FDA81ECAB70C /* NSObject+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */; };
+		1D26AFCB15F023CCA401DA96 /* UIColor+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */; };
 		5C53454B1776DB4D00B0B5B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53454A1776DB4D00B0B5B2 /* Foundation.framework */; };
 		5C53455A1776DB4D00B0B5B2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5345591776DB4D00B0B5B2 /* SenTestingKit.framework */; };
 		5C53455C1776DB4D00B0B5B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53455B1776DB4D00B0B5B2 /* UIKit.framework */; };
@@ -62,16 +72,10 @@
 		5C5346651776DEC700B0B5B2 /* ISACGSizeValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53463D1776DEC700B0B5B2 /* ISACGSizeValueConverter.m */; };
 		5C5346661776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C53463E1776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.h */; };
 		5C5346671776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53463F1776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.m */; };
-		5C5346681776DEC700B0B5B2 /* ISAUIColorValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346401776DEC700B0B5B2 /* ISAUIColorValueConverter.h */; };
-		5C5346691776DEC700B0B5B2 /* ISAUIColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346411776DEC700B0B5B2 /* ISAUIColorValueConverter.m */; };
 		5C53466A1776DEC700B0B5B2 /* ISAUIControlStateValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346421776DEC700B0B5B2 /* ISAUIControlStateValueConverter.h */; };
 		5C53466B1776DEC700B0B5B2 /* ISAUIControlStateValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346431776DEC700B0B5B2 /* ISAUIControlStateValueConverter.m */; };
 		5C53466C1776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346441776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.h */; };
 		5C53466D1776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346451776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.m */; };
-		5C53466E1776DEC700B0B5B2 /* ISAUIFontValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346461776DEC700B0B5B2 /* ISAUIFontValueConverter.h */; };
-		5C53466F1776DEC700B0B5B2 /* ISAUIFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346471776DEC700B0B5B2 /* ISAUIFontValueConverter.m */; };
-		5C5346701776DEC700B0B5B2 /* ISAUIImageValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346481776DEC700B0B5B2 /* ISAUIImageValueConverter.h */; };
-		5C5346711776DEC700B0B5B2 /* ISAUIImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346491776DEC700B0B5B2 /* ISAUIImageValueConverter.m */; };
 		5C5346721776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C53464A1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h */; };
 		5C5346731776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53464B1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m */; };
 		5C5346741776DEC700B0B5B2 /* ISAValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */; };
@@ -101,8 +105,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D26A04746007248DCC1521F /* UIFont+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+ISAObjectCreation.m"; sourceTree = "<group>"; };
+		1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSObjectValueConverter.h; sourceTree = "<group>"; };
+		1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ISAObjectCreation.m"; sourceTree = "<group>"; };
+		1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ISAObjectCreation.m"; sourceTree = "<group>"; };
 		1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAEnumValueConverter.m; sourceTree = "<group>"; };
+		1D26A5D81B458BC5009D39D1 /* UIImage+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAObjectCreation.m"; sourceTree = "<group>"; };
+		1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSObjectValueConverter.m; sourceTree = "<group>"; };
+		1D26AC0BF8A8BB6EA0EF550F /* UIColor+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ISAObjectCreation.h"; sourceTree = "<group>"; };
 		1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAEnumValueConverter.h; sourceTree = "<group>"; };
+		1D26AD13AE664DD64418F3A6 /* NSObject+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ISAObjectCreation.h"; sourceTree = "<group>"; };
+		1D26AD305D6E7B152CE2AC45 /* UIFont+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+ISAObjectCreation.h"; sourceTree = "<group>"; };
+		1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAObjectCreation.h"; sourceTree = "<group>"; };
 		5C5345471776DB4D00B0B5B2 /* libISAppearance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISAppearance.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C53454A1776DB4D00B0B5B2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5C53454E1776DB4D00B0B5B2 /* ISAppearance-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISAppearance-Prefix.pch"; sourceTree = "<group>"; };
@@ -171,16 +185,10 @@
 		5C53463D1776DEC700B0B5B2 /* ISACGSizeValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGSizeValueConverter.m; sourceTree = "<group>"; };
 		5C53463E1776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIBarMetricsValueConverter.h; sourceTree = "<group>"; };
 		5C53463F1776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIBarMetricsValueConverter.m; sourceTree = "<group>"; };
-		5C5346401776DEC700B0B5B2 /* ISAUIColorValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIColorValueConverter.h; sourceTree = "<group>"; };
-		5C5346411776DEC700B0B5B2 /* ISAUIColorValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIColorValueConverter.m; sourceTree = "<group>"; };
 		5C5346421776DEC700B0B5B2 /* ISAUIControlStateValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIControlStateValueConverter.h; sourceTree = "<group>"; };
 		5C5346431776DEC700B0B5B2 /* ISAUIControlStateValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIControlStateValueConverter.m; sourceTree = "<group>"; };
 		5C5346441776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIEdgeInsetsValueConverter.h; sourceTree = "<group>"; };
 		5C5346451776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIEdgeInsetsValueConverter.m; sourceTree = "<group>"; };
-		5C5346461776DEC700B0B5B2 /* ISAUIFontValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIFontValueConverter.h; sourceTree = "<group>"; };
-		5C5346471776DEC700B0B5B2 /* ISAUIFontValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIFontValueConverter.m; sourceTree = "<group>"; };
-		5C5346481776DEC700B0B5B2 /* ISAUIImageValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIImageValueConverter.h; sourceTree = "<group>"; };
-		5C5346491776DEC700B0B5B2 /* ISAUIImageValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIImageValueConverter.m; sourceTree = "<group>"; };
 		5C53464A1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIOffsetValueConverter.h; sourceTree = "<group>"; };
 		5C53464B1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIOffsetValueConverter.m; sourceTree = "<group>"; };
 		5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAValueConverter.h; sourceTree = "<group>"; };
@@ -379,22 +387,26 @@
 				5C53463D1776DEC700B0B5B2 /* ISACGSizeValueConverter.m */,
 				5C53463E1776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.h */,
 				5C53463F1776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.m */,
-				5C5346401776DEC700B0B5B2 /* ISAUIColorValueConverter.h */,
-				5C5346411776DEC700B0B5B2 /* ISAUIColorValueConverter.m */,
 				5C5346421776DEC700B0B5B2 /* ISAUIControlStateValueConverter.h */,
 				5C5346431776DEC700B0B5B2 /* ISAUIControlStateValueConverter.m */,
 				5C5346441776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.h */,
 				5C5346451776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.m */,
-				5C5346461776DEC700B0B5B2 /* ISAUIFontValueConverter.h */,
-				5C5346471776DEC700B0B5B2 /* ISAUIFontValueConverter.m */,
-				5C5346481776DEC700B0B5B2 /* ISAUIImageValueConverter.h */,
-				5C5346491776DEC700B0B5B2 /* ISAUIImageValueConverter.m */,
 				5C53464A1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h */,
 				5C53464B1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m */,
 				5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */,
 				5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */,
 				1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */,
 				1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */,
+				1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */,
+				1D26AD13AE664DD64418F3A6 /* NSObject+ISAObjectCreation.h */,
+				1D26A5D81B458BC5009D39D1 /* UIImage+ISAObjectCreation.m */,
+				1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */,
+				1D26A04746007248DCC1521F /* UIFont+ISAObjectCreation.m */,
+				1D26AD305D6E7B152CE2AC45 /* UIFont+ISAObjectCreation.h */,
+				1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */,
+				1D26AC0BF8A8BB6EA0EF550F /* UIColor+ISAObjectCreation.h */,
+				1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */,
+				1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -419,14 +431,16 @@
 				5C5346621776DEC700B0B5B2 /* ISACGColorValueConverter.h in Headers */,
 				5C5346641776DEC700B0B5B2 /* ISACGSizeValueConverter.h in Headers */,
 				5C5346661776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.h in Headers */,
-				5C5346681776DEC700B0B5B2 /* ISAUIColorValueConverter.h in Headers */,
 				5C53466A1776DEC700B0B5B2 /* ISAUIControlStateValueConverter.h in Headers */,
 				5C53466C1776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.h in Headers */,
-				5C53466E1776DEC700B0B5B2 /* ISAUIFontValueConverter.h in Headers */,
-				5C5346701776DEC700B0B5B2 /* ISAUIImageValueConverter.h in Headers */,
 				5C5346721776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h in Headers */,
 				5C5346741776DEC700B0B5B2 /* ISAValueConverter.h in Headers */,
 				1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */,
+				1D26A5DF3A716C6784F03064 /* NSObject+ISAObjectCreation.h in Headers */,
+				1D26AE2D8C09CBFAC1DBDF93 /* UIImage+ISAObjectCreation.h in Headers */,
+				1D26A064EED940C2535738D3 /* UIFont+ISAObjectCreation.h in Headers */,
+				1D26A175A6FD420238AF42C7 /* UIColor+ISAObjectCreation.h in Headers */,
+				1D26A506A1EC817615D3E4D0 /* ISANSObjectValueConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,14 +588,16 @@
 				5C5346631776DEC700B0B5B2 /* ISACGColorValueConverter.m in Sources */,
 				5C5346651776DEC700B0B5B2 /* ISACGSizeValueConverter.m in Sources */,
 				5C5346671776DEC700B0B5B2 /* ISAUIBarMetricsValueConverter.m in Sources */,
-				5C5346691776DEC700B0B5B2 /* ISAUIColorValueConverter.m in Sources */,
 				5C53466B1776DEC700B0B5B2 /* ISAUIControlStateValueConverter.m in Sources */,
 				5C53466D1776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.m in Sources */,
-				5C53466F1776DEC700B0B5B2 /* ISAUIFontValueConverter.m in Sources */,
-				5C5346711776DEC700B0B5B2 /* ISAUIImageValueConverter.m in Sources */,
 				5C5346731776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m in Sources */,
 				5C5346751776DEC700B0B5B2 /* ISAValueConverter.m in Sources */,
 				1D26A2902C611CEFA6663C2D /* ISAEnumValueConverter.m in Sources */,
+				1D26AFAAA273FDA81ECAB70C /* NSObject+ISAObjectCreation.m in Sources */,
+				1D26A0508D74BBAC8FBD443C /* UIImage+ISAObjectCreation.m in Sources */,
+				1D26A1C90CB10EE828F9E3BC /* UIFont+ISAObjectCreation.m in Sources */,
+				1D26AFCB15F023CCA401DA96 /* UIColor+ISAObjectCreation.m in Sources */,
+				1D26ADC76D7BE8BD18C52398 /* ISANSObjectValueConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,7 +30,7 @@
     return result;
 }
 
-- (id)createFromNode:(id)node
+- (id)objectWithISANode:(id)node
 {
     NSInteger result = [self getIntegerFromNode:node];
     return [NSNumber numberWithInt:result];

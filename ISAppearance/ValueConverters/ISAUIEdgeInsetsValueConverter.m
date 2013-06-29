@@ -11,7 +11,7 @@
 
 }
 
-- (id)createFromNode:(id)node
+- (id)objectWithISANode:(id)node
 {
     UIEdgeInsets insets = UIEdgeInsetsZero;
 

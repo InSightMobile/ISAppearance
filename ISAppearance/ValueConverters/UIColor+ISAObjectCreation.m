@@ -1,15 +1,15 @@
 //
 // 
 
-#import "ISAUIColorValueConverter.h"
+
+
+#import "UIColor+ISAObjectCreation.h"
 #import "ISAppearance.h"
 
-@interface ISAUIColorValueConverter ()
-@end
 
-@implementation ISAUIColorValueConverter
+@implementation UIColor (ISAObjectCreation)
 
-- (UIColor *)colorWithHexString:(NSString *)hex
++ (UIColor *)colorWithHexString:(NSString *)hex
 {
     NSString *cString =
             [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
@@ -50,7 +50,7 @@
 }
 
 
-- (id)colorWithString:(NSString *)node
++ (id)colorWithString:(NSString *)node
 {
     // try named colors
     SEL colorNameSelector = NSSelectorFromString([NSString stringWithFormat:@"%@Color", node]);
@@ -71,7 +71,7 @@
     return cl;
 }
 
-- (id)createFromNode:(id)node
++ (id)objectWithISANode:(id)node
 {
     if ([node isKindOfClass:[NSString class]]) {
 
@@ -123,6 +123,7 @@
     }
     return [UIColor whiteColor];
 }
+
 
 
 @end

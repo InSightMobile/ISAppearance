@@ -7,27 +7,17 @@
 //
 
 #import "ISACGColorValueConverter.h"
-#import "ISAUIColorValueConverter.h"
+#import "UIColor+ISAObjectCreation.h"
+
 
 @implementation ISACGColorValueConverter
 {
-    ISAUIColorValueConverter *_colorConverter;
+
 }
 
-
-- (id)init
+- (id)objectWithISANode:(id)node
 {
-    self = [super init];
-    if (self) {
-        _colorConverter = [ISAUIColorValueConverter new];
-    }
-
-    return self;
-}
-
-- (id)createFromNode:(id)node
-{
-    UIColor* color = [_colorConverter createFromNode:node];
+    UIColor* color = [UIColor objectWithISANode:node];
     
     NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:[color methodSignatureForSelector:@selector(CGColor)]];
        
