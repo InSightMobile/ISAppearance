@@ -7,6 +7,6 @@
 
 @interface NSObject (ISAObjectCreation)
 
-+ (id) objectWithISANode:(id)node;
++ (id)objectWithISANode:(id)node;
 
 @end

@@ -50,7 +50,7 @@ static YKNativeTagManager *__sharedManager = nil;
     if (__sharedManager)
         return __sharedManager;
 
-    @synchronized([self class]) {
+    @synchronized ([self class]) {
         __sharedManager = [[self alloc] init];
     }
 
@@ -62,7 +62,7 @@ static YKNativeTagManager *__sharedManager = nil;
     if (__sharedManager)
         return nil;
 
-    @synchronized(self) {
+    @synchronized (self) {
         __sharedManager = [super allocWithZone:zone];
     }
 
@@ -95,8 +95,8 @@ static YKNativeTagManager *__sharedManager = nil;
 
     // !!bool: tag:yaml.org,2002:bool ( http://yaml.org/type/bool.html )
     YKRegexTag *boolTag = [[YKRegexTag alloc] initWithURI:YKBooleanTagDeclaration delegate:self];
-    [boolTag addRegexDeclaration:YAML_BOOL_TRUE_REGEX hint:(id)kCFBooleanTrue];
-    [boolTag addRegexDeclaration:YAML_BOOL_FALSE_REGEX hint:(id)kCFBooleanFalse];
+    [boolTag addRegexDeclaration:YAML_BOOL_TRUE_REGEX hint:(id) kCFBooleanTrue];
+    [boolTag addRegexDeclaration:YAML_BOOL_FALSE_REGEX hint:(id) kCFBooleanFalse];
     [mutableBuiltInTags setObject:boolTag forKey:YKBooleanTagDeclaration];
 
     // !!null: tag:yaml.org,2002:null ( http://yaml.org/type/null.html )
@@ -106,8 +106,8 @@ static YKNativeTagManager *__sharedManager = nil;
 
     // !!timestamp: tag:yaml.org,2002:timestamp ( http://yaml.org/type/timestamp.html )
     YKRegexTag *timestampTag = [[YKRegexTag alloc] initWithURI:YKTimeStampTagDeclaration delegate:self];
-    [timestampTag addRegexDeclaration:YAML_TIMESTAMP_YMD_REGEX hint:(id)kCFBooleanTrue];
-    [timestampTag addRegexDeclaration:YAML_TIMESTAMP_YMDTZ_REGEX hint:(id)kCFBooleanFalse];
+    [timestampTag addRegexDeclaration:YAML_TIMESTAMP_YMD_REGEX hint:(id) kCFBooleanTrue];
+    [timestampTag addRegexDeclaration:YAML_TIMESTAMP_YMDTZ_REGEX hint:(id) kCFBooleanFalse];
     [mutableBuiltInTags setObject:timestampTag forKey:YKTimeStampTagDeclaration];
 
     // !!str: tag:yaml.org,2002:str ( http://yaml.org/type/str.html )
@@ -126,9 +126,10 @@ static YKNativeTagManager *__sharedManager = nil;
 - (id)copyWithZone:(NSZone *)zone
 {
 #pragma unused(zone)
-	
+
     return self;
 }
+
 /*
 - (id)retain
 {
@@ -158,8 +159,9 @@ static YKNativeTagManager *__sharedManager = nil;
     if (tag == [tagsByName valueForKey:YKIntegerTagDeclaration]) {
         int base = [hint intValue];
         if (base == 2) {
-            return [NSNumber numberWithInteger:([[[components objectAtIndex:0] objectAtIndex:1] isEqualToString:@"-"] ? -1 : 1) *
-                    [[[components objectAtIndex:0] objectAtIndex:2] intValueFromBase:2]];
+            return [NSNumber numberWithInteger:
+                    ([[[components objectAtIndex:0] objectAtIndex:1] isEqualToString:@"-"] ? -1 : 1) *
+                            [[[components objectAtIndex:0] objectAtIndex:2] intValueFromBase:2]];
         } else if (base == 60) {
             NSInteger resultValue = 0;
             for (NSString *component in [stringValue componentsSeparatedByString:@":"]) {
@@ -175,9 +177,9 @@ static YKNativeTagManager *__sharedManager = nil;
         switch (base) {
             case -1:
                 if ([stringValue hasPrefix:@"-"])
-                    return (id)kCFNumberPositiveInfinity;
+                    return (id) kCFNumberPositiveInfinity;
                 else
-                    return (id)kCFNumberNegativeInfinity;
+                    return (id) kCFNumberNegativeInfinity;
                 break;
             case 10:
                 return [NSDecimalNumber decimalNumberWithString:[stringValue stringByReplacingOccurrencesOfString:@"_"
@@ -185,7 +187,7 @@ static YKNativeTagManager *__sharedManager = nil;
                 break;
             case 60:
                 for (NSString *component in [[stringValue stringByReplacingOccurrencesOfString:@"_" withString:@""]
-                                             componentsSeparatedByString:@":"]) {
+                        componentsSeparatedByString:@":"]) {
                     resultValue = (resultValue * 60.0f) + [component doubleValue];
                 }
                 return [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithDouble:resultValue] decimalValue]];
@@ -195,14 +197,14 @@ static YKNativeTagManager *__sharedManager = nil;
                 break;
         }
     } else if (tag == [tagsByName valueForKey:YKBooleanTagDeclaration] ||
-               tag == [tagsByName valueForKey:YKNullTagDeclaration]) {
+            tag == [tagsByName valueForKey:YKNullTagDeclaration]) {
         return hint;
     } else if (tag == [tagsByName valueForKey:YKTimeStampTagDeclaration]) {
         // Timestamp
-        if (hint == (id)kCFBooleanTrue) {
-            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        if (hint == (id) kCFBooleanTrue) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             //formatter.dateFormat = @" 00:00:00 +0000";
-            NSDate* date = [formatter dateFromString:[stringValue stringByAppendingFormat:@" 00:00:00 +0000"]];
+            NSDate *date = [formatter dateFromString:[stringValue stringByAppendingFormat:@" 00:00:00 +0000"]];
             return date;
         }
 
@@ -217,7 +219,7 @@ static YKNativeTagManager *__sharedManager = nil;
         NSInteger fractional = [[[components objectAtIndex:0] objectAtIndex:7] intValue];
 
         NSInteger deltaFromGMTInSeconds = ([[[components objectAtIndex:0] objectAtIndex:8] intValueFromBase:10] * 360) +
-        ([[[components objectAtIndex:0] objectAtIndex:9] intValue] * 60);
+                ([[[components objectAtIndex:0] objectAtIndex:9] intValue] * 60);
 
         NSTimeZone *timeZone = nil;
         if (deltaFromGMTInSeconds != 0)
@@ -232,7 +234,8 @@ static YKNativeTagManager *__sharedManager = nil;
 
         // This is not the most elegant way of doing it...but update the date with the fractional value
         if (fractional > 0) {
-            NSTimeInterval fractionalInterval = (double)fractional / pow(10.0, floor(log10((double)fractional))+1.0);
+            NSTimeInterval
+                    fractionalInterval = (double) fractional / pow(10.0, floor(log10((double) fractional)) + 1.0);
             resultDate = [resultDate dateByAddingTimeInterval:fractionalInterval];
         }
         return resultDate;
@@ -261,18 +264,18 @@ static YKNativeTagManager *__sharedManager = nil;
             return [NSNumber numberWithInt:0];
         if ([value isKindOfClass:[NSNumber class]])
             return [NSNumber numberWithInt:[value intValue]];
-    // Try to cast results to a 'Float'
+        // Try to cast results to a 'Float'
     } else if (castingTag == [tagsByName valueForKey:YKFloatTagDeclaration]) {
         if (value == [NSNull null])
             return [NSNumber numberWithDouble:0.0];
         if ([value isKindOfClass:[NSNumber class]])
             return [NSNumber numberWithDouble:[value doubleValue]];
-    // Try to cast results to a 'Boolean'
+        // Try to cast results to a 'Boolean'
     } else if (castingTag == [tagsByName valueForKey:YKBooleanTagDeclaration]) {
         if (value == [NSNull null])
-            return (id)kCFBooleanFalse;
+            return (id) kCFBooleanFalse;
         if ([value isKindOfClass:[NSNumber class]])
-            return ([value doubleValue] > 0 ? (id)kCFBooleanTrue : (id)kCFBooleanFalse);
+            return ([value doubleValue] > 0 ? (id) kCFBooleanTrue : (id) kCFBooleanFalse);
     }
     return nil;
 }

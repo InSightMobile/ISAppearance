@@ -10,12 +10,12 @@
     self = [super init];
     if (self) {
         self.mapping = @{
-                @"UIBarMetricsDefault":@(UIBarMetricsDefault),
-                @"UIBarMetricsLandscapePhone":@(UIBarMetricsLandscapePhone),
+                @"UIBarMetricsDefault" : @(UIBarMetricsDefault),
+                @"UIBarMetricsLandscapePhone" : @(UIBarMetricsLandscapePhone),
 
-                @"default":@(UIBarMetricsDefault),
-                @"landscapePhone":@(UIBarMetricsLandscapePhone),
-                @"landscape":@(UIBarMetricsLandscapePhone),
+                @"default" : @(UIBarMetricsDefault),
+                @"landscapePhone" : @(UIBarMetricsLandscapePhone),
+                @"landscape" : @(UIBarMetricsLandscapePhone),
         };
     }
     return self;

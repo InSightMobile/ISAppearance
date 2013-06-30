@@ -1,4 +1,3 @@
-
 #if HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -19,7 +18,7 @@ YAML_DECLARE(void *)
 yaml_realloc(void *ptr, size_t size);
 
 YAML_DECLARE(void)
-yaml_free(void *ptr);
+        yaml_free(void *ptr);
 
 YAML_DECLARE(yaml_char_t *)
 yaml_strdup(const yaml_char_t *);
@@ -29,14 +28,14 @@ yaml_strdup(const yaml_char_t *);
  */
 
 YAML_DECLARE(int)
-yaml_parser_update_buffer(yaml_parser_t *parser, size_t length);
+        yaml_parser_update_buffer(yaml_parser_t *parser, size_t length);
 
 /*
  * Scanner: Ensure that the token stack contains at least one token ready.
  */
 
 YAML_DECLARE(int)
-yaml_parser_fetch_more_tokens(yaml_parser_t *parser);
+        yaml_parser_fetch_more_tokens(yaml_parser_t *parser);
 
 /*
  * The size of the input raw buffer.
@@ -94,18 +93,19 @@ yaml_parser_fetch_more_tokens(yaml_parser_t *parser);
  * String management.
  */
 
-typedef struct {
+typedef struct
+{
     yaml_char_t *start;
     yaml_char_t *end;
     yaml_char_t *pointer;
 } yaml_string_t;
 
 YAML_DECLARE(int)
-yaml_string_extend(yaml_char_t **start,
+        yaml_string_extend(yaml_char_t **start,
         yaml_char_t **pointer, yaml_char_t **end);
 
 YAML_DECLARE(int)
-yaml_string_join(
+        yaml_string_join(
         yaml_char_t **a_start, yaml_char_t **a_pointer, yaml_char_t **a_end,
         yaml_char_t **b_start, yaml_char_t **b_pointer, yaml_char_t **b_end);
 
@@ -228,9 +228,9 @@ yaml_string_join(
         (string).pointer[offset] <= (yaml_char_t) 'f') ?                        \
        ((string).pointer[offset] - (yaml_char_t) 'a' + 10) :                    \
        ((string).pointer[offset] - (yaml_char_t) '0'))
- 
+
 #define AS_HEX(string)  AS_HEX_AT((string),0)
- 
+
 /*
  * Check if the character is ASCII.
  */
@@ -401,10 +401,10 @@ yaml_string_join(
  */
 
 YAML_DECLARE(int)
-yaml_stack_extend(void **start, void **top, void **end);
+        yaml_stack_extend(void **start, void **top, void **end);
 
 YAML_DECLARE(int)
-yaml_queue_extend(void **start, void **head, void **tail, void **end);
+        yaml_queue_extend(void **start, void **head, void **tail, void **end);
 
 #define STACK_INIT(context,stack,size)                                          \
     (((stack).start = yaml_malloc((size)*sizeof(*(stack).start))) ?             \

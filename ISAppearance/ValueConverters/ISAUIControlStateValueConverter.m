@@ -19,13 +19,13 @@
     self = [super init];
     if (self) {
         self.mapping = @{
-                @"UIControlStateHighlighted":@(UIControlStateHighlighted),
-                @"UIControlStateSelected":@(UIControlStateSelected),
-                @"UIControlStateDisabled":@(UIControlStateDisabled),
+                @"UIControlStateHighlighted" : @(UIControlStateHighlighted),
+                @"UIControlStateSelected" : @(UIControlStateSelected),
+                @"UIControlStateDisabled" : @(UIControlStateDisabled),
 
-                @"highlighted":@(UIControlStateHighlighted),
-                @"selected":@(UIControlStateSelected),
-                @"disabled":@(UIControlStateDisabled),
+                @"highlighted" : @(UIControlStateHighlighted),
+                @"selected" : @(UIControlStateSelected),
+                @"disabled" : @(UIControlStateDisabled),
         };
     }
     return self;

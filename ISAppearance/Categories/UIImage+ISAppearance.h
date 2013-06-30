@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (ISAppearance)
-+(UIImage *)imageWithColor:(UIColor *)color;
++ (UIImage *)imageWithColor:(UIColor *)color;
 @end

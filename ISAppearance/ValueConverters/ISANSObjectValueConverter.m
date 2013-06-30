@@ -19,7 +19,7 @@
 {
     self = [super init];
     if (self) {
-        if([objectClass respondsToSelector:@selector(objectWithISANode:)]) {
+        if ([objectClass respondsToSelector:@selector(objectWithISANode:)]) {
             self.objectClass = objectClass;
         }
         else {

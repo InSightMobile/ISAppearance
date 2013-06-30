@@ -10,7 +10,6 @@
 @implementation NSObject (ISA_Swizzle)
 
 
-
 + (void)ISA_swizzle:(Class)class from:(SEL)original to:(SEL)new
 {
     Method originalMethod = class_getInstanceMethod(class, original);
@@ -26,8 +25,6 @@
 {
     [self ISA_swizzle:[self class] from:original to:new];
 }
-
-
 
 
 @end

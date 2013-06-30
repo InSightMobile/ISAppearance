@@ -1,4 +1,3 @@
-
 #import <objc/runtime.h>
 #import "UIView+ISAInjection.h"
 #import "ISAppearance.h"
@@ -15,11 +14,12 @@
     [self isaOverride_didMoveToWindow];
 }
 
-+ (void)ISA_swizzleClass {
++ (void)ISA_swizzleClass
+{
 
     [self ISA_swizzle:[UIView class]
-             from:@selector(didMoveToWindow)
-               to:@selector(isaOverride_didMoveToWindow)];
+                 from:@selector(didMoveToWindow)
+                   to:@selector(isaOverride_didMoveToWindow)];
 
 }
 
@@ -32,7 +32,7 @@
 - (void)applyISAppearanceWithSubviews:(BOOL)subviews
 {
     [self applyISAppearance];
-    if(subviews) {
+    if (subviews) {
         for (UIView *subview in self.subviews) {
             [subview applyISAppearanceWithSubviews:YES];
         }
@@ -40,8 +40,8 @@
 }
 
 
-static void* isaClass = 0;
-static void* isaIsApplied = 0;
+static void *isaClass = 0;
+static void *isaIsApplied = 0;
 
 - (void)setIsaClass:(NSString *)value
 {

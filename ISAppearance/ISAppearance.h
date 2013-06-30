@@ -25,7 +25,7 @@
 
 - (BOOL)processAppearance;
 
-- (BOOL)processAppearanceWithError:(NSError **)error;
+- (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error;
 
 
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classes;

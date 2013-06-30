@@ -8,14 +8,12 @@
 
 #import "YKUnknownNode.h"
 
-inline YKRange YKMakeRange(YKMark start, YKMark end)
-{
-    YKRange results = {start,end};
+inline YKRange YKMakeRange(YKMark start, YKMark end) {
+    YKRange results = {start, end};
     return results;
 }
 
-inline YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx)
-{
+inline YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx) {
     YKMark results = {line, column, idx};
     return results;
 }
@@ -23,14 +21,14 @@ inline YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx)
 @implementation YKUnknownNode
 
 + (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(YKTag *)aImplicitTag
-                       explicitTag:(YKTag *)aExplicitTag position:(YKRange)aPosition
+                     explicitTag:(YKTag *)aExplicitTag position:(YKRange)aPosition
 {
     return [[self alloc] initWithStringValue:aStringValue implicitTag:aImplicitTag explicitTag:aExplicitTag
-                                     position:aPosition];
+                                    position:aPosition];
 }
 
 - (id)initWithStringValue:(NSString *)aStringValue implicitTag:(YKTag *)aImplicitTag explicitTag:(YKTag *)aExplicitTag
-                    position:(YKRange)aPosition
+                 position:(YKRange)aPosition
 {
     if (!(self = [super init]))
         return nil;
@@ -53,7 +51,7 @@ inline YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx)
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"{!%@ %@ (%ld:%ld),(%ld:%ld)}", explicitTag, stringValue,
-            (long)position.start.line,  (long)position.start.column,  (long)position.end.line,  (long)position.end.column];
+                                      (long) position.start.line, (long) position.start.column, (long) position.end.line, (long) position.end.column];
 }
 
 @synthesize position;

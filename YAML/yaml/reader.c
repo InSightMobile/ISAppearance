@@ -1,4 +1,3 @@
-
 #include "yaml_private.h"
 
 /*
@@ -6,17 +5,17 @@
  */
 
 static int
-yaml_parser_set_reader_error(yaml_parser_t *parser, const char *problem,
+        yaml_parser_set_reader_error(yaml_parser_t *parser, const char *problem,
         size_t offset, int value);
 
 static int
-yaml_parser_update_raw_buffer(yaml_parser_t *parser);
+        yaml_parser_update_raw_buffer(yaml_parser_t *parser);
 
 static int
-yaml_parser_determine_encoding(yaml_parser_t *parser);
+        yaml_parser_determine_encoding(yaml_parser_t *parser);
 
 YAML_DECLARE(int)
-yaml_parser_update_buffer(yaml_parser_t *parser, size_t length);
+        yaml_parser_update_buffer(yaml_parser_t *parser, size_t length);
 
 /*
  * Set the reader error and return 0.
@@ -24,8 +23,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length);
 
 static int
 yaml_parser_set_reader_error(yaml_parser_t *parser, const char *problem,
-        size_t offset, int value)
-{
+        size_t offset, int value) {
     parser->error = YAML_READER_ERROR;
     parser->problem = problem;
     parser->problem_offset = offset;
@@ -48,11 +46,10 @@ yaml_parser_set_reader_error(yaml_parser_t *parser, const char *problem,
  */
 
 static int
-yaml_parser_determine_encoding(yaml_parser_t *parser)
-{
+yaml_parser_determine_encoding(yaml_parser_t *parser) {
     /* Ensure that we had enough bytes in the raw buffer. */
 
-    while (!parser->eof 
+    while (!parser->eof
             && parser->raw_buffer.last - parser->raw_buffer.pointer < 3) {
         if (!yaml_parser_update_raw_buffer(parser)) {
             return 0;
@@ -91,8 +88,7 @@ yaml_parser_determine_encoding(yaml_parser_t *parser)
  */
 
 static int
-yaml_parser_update_raw_buffer(yaml_parser_t *parser)
-{
+yaml_parser_update_raw_buffer(yaml_parser_t *parser) {
     size_t size_read = 0;
 
     /* Return if the raw buffer is full. */
@@ -110,16 +106,16 @@ yaml_parser_update_raw_buffer(yaml_parser_t *parser)
     if (parser->raw_buffer.start < parser->raw_buffer.pointer
             && parser->raw_buffer.pointer < parser->raw_buffer.last) {
         memmove(parser->raw_buffer.start, parser->raw_buffer.pointer,
-                parser->raw_buffer.last - parser->raw_buffer.pointer);
+        parser->raw_buffer.last - parser->raw_buffer.pointer);
     }
     parser->raw_buffer.last -=
-        parser->raw_buffer.pointer - parser->raw_buffer.start;
+            parser->raw_buffer.pointer - parser->raw_buffer.start;
     parser->raw_buffer.pointer = parser->raw_buffer.start;
 
     /* Call the read handler to fill the buffer. */
 
     if (!parser->read_handler(parser->read_handler_data, parser->raw_buffer.last,
-                parser->raw_buffer.end - parser->raw_buffer.last, &size_read)) {
+            parser->raw_buffer.end - parser->raw_buffer.last, &size_read)) {
         return yaml_parser_set_reader_error(parser, "input error",
                 parser->offset, -1);
     }
@@ -139,8 +135,7 @@ yaml_parser_update_raw_buffer(yaml_parser_t *parser)
  */
 
 YAML_DECLARE(int)
-yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
-{
+yaml_parser_update_buffer(yaml_parser_t *parser, size_t length) {
     int first = 1;
 
     assert(parser->read_handler);   /* Read handler must be set. */
@@ -178,8 +173,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
 
     /* Fill the buffer until it has enough characters. */
 
-    while (parser->unread < length)
-    {
+    while (parser->unread < length) {
         /* Fill the raw buffer if necessary. */
 
         if (!first || parser->raw_buffer.pointer == parser->raw_buffer.last) {
@@ -189,8 +183,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
 
         /* Decode the raw buffer. */
 
-        while (parser->raw_buffer.pointer != parser->raw_buffer.last)
-        {
+        while (parser->raw_buffer.pointer != parser->raw_buffer.last) {
             unsigned int value = 0, value2 = 0;
             int incomplete = 0;
             unsigned char octet;
@@ -201,8 +194,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
 
             /* Decode the next character. */
 
-            switch (parser->encoding)
-            {
+            switch (parser->encoding) {
                 case YAML_UTF8_ENCODING:
 
                     /*
@@ -230,8 +222,8 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
                     octet = parser->raw_buffer.pointer[0];
                     width = (octet & 0x80) == 0x00 ? 1 :
                             (octet & 0xE0) == 0xC0 ? 2 :
-                            (octet & 0xF0) == 0xE0 ? 3 :
-                            (octet & 0xF8) == 0xF0 ? 4 : 0;
+                                    (octet & 0xF0) == 0xE0 ? 3 :
+                                            (octet & 0xF8) == 0xF0 ? 4 : 0;
 
                     /* Check if the leading octet is valid. */
 
@@ -256,13 +248,12 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
 
                     value = (octet & 0x80) == 0x00 ? octet & 0x7F :
                             (octet & 0xE0) == 0xC0 ? octet & 0x1F :
-                            (octet & 0xF0) == 0xE0 ? octet & 0x0F :
-                            (octet & 0xF8) == 0xF0 ? octet & 0x07 : 0;
+                                    (octet & 0xF0) == 0xE0 ? octet & 0x0F :
+                                            (octet & 0xF8) == 0xF0 ? octet & 0x07 : 0;
 
                     /* Check and decode the trailing octets. */
 
-                    for (k = 1; k < width; k ++)
-                    {
+                    for (k = 1; k < width; k++) {
                         octet = parser->raw_buffer.pointer[k];
 
                         /* Check if the octet is valid. */
@@ -270,7 +261,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
                         if ((octet & 0xC0) != 0x80)
                             return yaml_parser_set_reader_error(parser,
                                     "invalid trailing UTF-8 octet",
-                                    parser->offset+k, octet);
+                                    parser->offset + k, octet);
 
                         /* Decode the octet. */
 
@@ -295,7 +286,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
                                 parser->offset, value);
 
                     break;
-                
+
                 case YAML_UTF16LE_ENCODING:
                 case YAML_UTF16BE_ENCODING:
 
@@ -343,7 +334,7 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
                     /* Get the character. */
 
                     value = parser->raw_buffer.pointer[low]
-                        + (parser->raw_buffer.pointer[high] << 8);
+                            + (parser->raw_buffer.pointer[high] << 8);
 
                     /* Check for unexpected low surrogate area. */
 
@@ -372,15 +363,15 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
 
                         /* Get the next character. */
 
-                        value2 = parser->raw_buffer.pointer[low+2]
-                            + (parser->raw_buffer.pointer[high+2] << 8);
+                        value2 = parser->raw_buffer.pointer[low + 2]
+                                + (parser->raw_buffer.pointer[high + 2] << 8);
 
                         /* Check for a low surrogate area. */
 
                         if ((value2 & 0xFC00) != 0xDC00)
                             return yaml_parser_set_reader_error(parser,
                                     "expected low surrogate area",
-                                    parser->offset+2, value2);
+                                    parser->offset + 2, value2);
 
                         /* Generate the value of the surrogate pair. */
 
@@ -408,11 +399,11 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
              *      | [#x10000-#x10FFFF]                        (32 bit)
              */
 
-            if (! (value == 0x09 || value == 0x0A || value == 0x0D
-                        || (value >= 0x20 && value <= 0x7E)
-                        || (value == 0x85) || (value >= 0xA0 && value <= 0xD7FF)
-                        || (value >= 0xE000 && value <= 0xFFFD)
-                        || (value >= 0x10000 && value <= 0x10FFFF)))
+            if (!(value == 0x09 || value == 0x0A || value == 0x0D
+                    || (value >= 0x20 && value <= 0x7E)
+                    || (value == 0x85) || (value >= 0xA0 && value <= 0xD7FF)
+                    || (value >= 0xE000 && value <= 0xFFFD)
+                    || (value >= 0x10000 && value <= 0x10FFFF)))
                 return yaml_parser_set_reader_error(parser,
                         "control characters are not allowed",
                         parser->offset, value);
@@ -428,18 +419,18 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
             if (value <= 0x7F) {
                 *(parser->buffer.last++) = value;
             }
-            /* 0000 0080-0000 07FF -> 110xxxxx 10xxxxxx */
+                    /* 0000 0080-0000 07FF -> 110xxxxx 10xxxxxx */
             else if (value <= 0x7FF) {
                 *(parser->buffer.last++) = 0xC0 + (value >> 6);
                 *(parser->buffer.last++) = 0x80 + (value & 0x3F);
             }
-            /* 0000 0800-0000 FFFF -> 1110xxxx 10xxxxxx 10xxxxxx */
+                    /* 0000 0800-0000 FFFF -> 1110xxxx 10xxxxxx 10xxxxxx */
             else if (value <= 0xFFFF) {
                 *(parser->buffer.last++) = 0xE0 + (value >> 12);
                 *(parser->buffer.last++) = 0x80 + ((value >> 6) & 0x3F);
                 *(parser->buffer.last++) = 0x80 + (value & 0x3F);
             }
-            /* 0001 0000-0010 FFFF -> 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx */
+                    /* 0001 0000-0010 FFFF -> 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx */
             else {
                 *(parser->buffer.last++) = 0xF0 + (value >> 18);
                 *(parser->buffer.last++) = 0x80 + ((value >> 12) & 0x3F);
@@ -447,14 +438,14 @@ yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
                 *(parser->buffer.last++) = 0x80 + (value & 0x3F);
             }
 
-            parser->unread ++;
+            parser->unread++;
         }
 
         /* On EOF, put NUL into the buffer and return. */
 
         if (parser->eof) {
             *(parser->buffer.last++) = '\0';
-            parser->unread ++;
+            parser->unread++;
             return 1;
         }
 

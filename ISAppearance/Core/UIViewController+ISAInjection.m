@@ -36,7 +36,8 @@
 #pragma clang diagnostic pop
 
 
-+ (void)ISA_swizzleClass {
++ (void)ISA_swizzleClass
+{
 
     [self ISA_swizzle:[UIViewController class]
                  from:@selector(awakeFromNib)
@@ -63,14 +64,14 @@
 - (void)applyISAppearanceWithSubviews:(BOOL)subviews
 {
     [self applyISAppearance];
-    if(self.isViewLoaded) {
+    if (self.isViewLoaded) {
         [self.view applyISAppearanceWithSubviews:YES];
     }
 }
 
 
-static void* isaClass = 0;
-static void* isaIsApplied = 0;
+static void *isaClass = 0;
+static void *isaIsApplied = 0;
 
 - (void)setIsaClass:(NSString *)value
 {
@@ -94,7 +95,6 @@ static void* isaIsApplied = 0;
 {
     return objc_getAssociatedObject(self, &isaIsApplied);
 }
-
 
 
 @end

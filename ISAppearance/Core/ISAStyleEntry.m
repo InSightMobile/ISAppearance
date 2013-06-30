@@ -4,6 +4,21 @@
 
 #import "ISAStyleEntry.h"
 
+static NSString *SelectorNameForSetterWithString(NSString *string) {
+    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                                    withString:[[string substringToIndex:1] uppercaseString]];
+
+    return [NSString stringWithFormat:@"set%@", sel];
+}
+
+
+static SEL SelectorForPropertySetterFromString(NSString *string) {
+
+    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                                    withString:[[string substringToIndex:1] uppercaseString]];
+
+    return NSSelectorFromString([NSString stringWithFormat:@"set%@:", sel]);
+}
 
 @interface ISAStyleEntry ()
 @end
@@ -44,20 +59,31 @@
     return [[ISAStyleEntry alloc] initWithSelector:selector arguments:arguments keyPath:keyPath];
 }
 
-- (void)safeInvokeWithTarget:(id)target
+- (id)safeInvokeWithTarget:(id)target
 {
-    if(_block) {
+    if (_block) {
         _block(target);
     }
-    if(_invocation) {
+    if (_invocation) {
         @try {
             [_invocation invokeWithTarget:target];
+            return [self getReturnValue];
         }
         @catch (NSException *exception) {
             NSLog(@"invocation failed with selector %@  for %@", NSStringFromSelector(_selector), [target class]);
-            return;
+            return nil;
         }
     }
+}
+
+- (id)getReturnValue
+{
+    if (strcmp(_invocation.methodSignature.methodReturnType, @encode(id)) == 0) {
+        __autoreleasing id returnValue = nil;
+        [_invocation getReturnValue:&returnValue];
+        return returnValue;
+    }
+    return nil;
 }
 
 + (id)entryWithBlock:(void (^)(id object))block
@@ -65,7 +91,7 @@
     return [[ISAStyleEntry alloc] initWithBlock:block];
 }
 
-- (void)invokeWithTarget:(id)rootTarget
+- (id)invokeWithTarget:(id)rootTarget
 {
     id target = nil;
     if (_keyPath) {
@@ -74,24 +100,23 @@
         }
         @catch (NSException *exception) {
             NSLog(@"invalid key path \"%@\" for %@", _keyPath, [rootTarget class]);
-            return;
+            return nil;
         }
     }
     else {
         target = rootTarget;
     }
-    if (!target) return;
+    if (!target) return nil;
 
     // use cashed invocation
     if (_invocation) {
-        [self safeInvokeWithTarget:target];
-        return;
+        return [self safeInvokeWithTarget:target];
     }
 
     NSMethodSignature *signature = [target methodSignatureForSelector:_selector];
     if (!signature) {
         NSLog(@"invalid selector \"%@\" for %@", NSStringFromSelector(_selector), [rootTarget class]);
-        return;
+        return nil;
     }
 
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
@@ -116,7 +141,7 @@
                 [invocation setArgument:buffer atIndex:argumentPos];
             }
             else {
-                return;
+                return nil;
             }
         }
         else if (strcmp(@encode(id), expectedType) == 0) {
@@ -153,7 +178,7 @@
                     [invocation setArgument:buffer atIndex:argumentPos];
                 }
                 else {
-                    return;
+                    return nil;
                 }
             }
         }
@@ -166,18 +191,92 @@
                 [invocation setArgument:buffer atIndex:argumentPos];
             }
             else {
-                return;
+                return nil;
             }
         }
         else {
-            return;
+            return nil;
         }
         argumentPos++;
     }
     free(buffer);
     [invocation retainArguments];
     _invocation = invocation;
-    [self safeInvokeWithTarget:target];
+    return [self safeInvokeWithTarget:target];
+}
+
++ (ISAStyleEntry *)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams
+{
+    if ([key isKindOfClass:[NSString class]]) {
+
+        NSArray *array;
+
+        NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;
+        if (keys.count > 1) {
+            key = keys.lastObject;
+            [keys removeLastObject];
+            NSString *keyPath = [keys componentsJoinedByString:@"."];
+            array = @[keyPath, @{SelectorNameForSetterWithString(key) : value}];
+        }
+        else {
+            array = @[@{SelectorNameForSetterWithString(key) : value}];
+        }
+
+        ISAStyleEntry *const entry = [self entryWithParams:array selectorParams:selectorParams];
+        return entry;
+    }
+    else {
+        // error
+        return nil;
+    }
+}
+
+
++ (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
+{
+    NSMutableString *selectorName = [NSMutableString string];
+    NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[params count]];
+    __block NSString *keyPath = nil;
+
+    if (selectorParams) {
+        params = [params arrayByAddingObjectsFromArray:selectorParams];
+    }
+    __block BOOL firstItem = YES;
+
+    for (id component in params) {
+
+        if ([component isKindOfClass:[NSDictionary class]]) {
+            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+
+                if (firstItem) {
+                    NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;
+                    if (keys.count > 1) {
+                        key = keys.lastObject;
+                        [keys removeLastObject];
+                        if (keyPath) {
+                            [keys insertObject:keyPath atIndex:0];
+                        }
+                        keyPath = [keys componentsJoinedByString:@"."];
+                    }
+                }
+                firstItem = NO;
+
+                [selectorName appendFormat:@"%@:", key];
+                [parameters addObject:obj];
+            }];
+        }
+        else if ([component isKindOfClass:[NSString class]]) {
+            if (keyPath) {
+                keyPath = [@[keyPath, component] componentsJoinedByString:@"."];
+            }
+            else {
+                keyPath = component;
+            }
+        }
+    }
+
+    return [ISAStyleEntry entryWithSelector:NSSelectorFromString(selectorName)
+                                  arguments:parameters keyPath:keyPath];;
 }
 
 

@@ -56,7 +56,7 @@
 {
     // If string cannot be decoded, nil is returned.  If the string was decoded and cannot be casted, YKUknownNode is returned
     id resultingValue = [self _internalDecodeFromString:stringValue
-                                              extraInfo:[NSDictionary dictionaryWithObject:(explicitTag ? (id)explicitTag : (id)[NSNull null])
+                                              extraInfo:[NSDictionary dictionaryWithObject:(explicitTag ? (id) explicitTag : (id) [NSNull null])
                                                                                     forKey:@"explicitTag"]];
     if (!resultingValue || !explicitTag || self == explicitTag)
         return resultingValue;
@@ -66,7 +66,7 @@
         return castedValue;
 
     return [YKUnknownNode unknownNodeWithStringValue:stringValue implicitTag:self explicitTag:explicitTag
-                                            position:YKMakeRange(YKMakeMark(0, 0, 0),YKMakeMark(0, 0, 0))];
+                                            position:YKMakeRange(YKMakeMark(0, 0, 0), YKMakeMark(0, 0, 0))];
 }
 
 - (id)_internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
@@ -78,7 +78,7 @@
     if (![delegate respondsToSelector:@selector(tag:decodeFromString:extraInfo:)])
         return nil;
 
-    return [(id<YKTagDelegate>)delegate tag:self decodeFromString:stringValue extraInfo:extraInfo];
+    return [(id <YKTagDelegate>) delegate tag:self decodeFromString:stringValue extraInfo:extraInfo];
 }
 
 - (id)castValue:(id)value fromTag:(YKTag *)castingTag
@@ -93,19 +93,19 @@
 
     if (![delegate respondsToSelector:@selector(tag:castValue:fromTag:)])
         return nil;
-    return [(id<YKTagDelegate>)delegate tag:self castValue:value fromTag:castingTag];
+    return [(id <YKTagDelegate>) delegate tag:self castValue:value fromTag:castingTag];
 }
 
 - (id)castValue:(id)value toTag:(YKTag *)castingTag
 {
-	
+
     id resultingValue = [castingTag castValue:value fromTag:self];
     if (resultingValue)
-       return resultingValue;
+        return resultingValue;
 
     if (![delegate respondsToSelector:@selector(tag:castValue:toTag:)])
         return nil;
-    return [(id<YKTagDelegate>)delegate tag:self castValue:value toTag:castingTag];
+    return [(id <YKTagDelegate>) delegate tag:self castValue:value toTag:castingTag];
 }
 
 @synthesize verbatim;
@@ -115,9 +115,9 @@
     if (![delegate respondsToSelector:@selector(tag:processNode:extraInfo:)]) {
         return node;
     }
-    id result = [(id<YKTagDelegate>)delegate tag:self processNode:node extraInfo:nil];
+    id result = [(id <YKTagDelegate>) delegate tag:self processNode:node extraInfo:nil];
     if (!result) {
-        
+
         //return node;
     }
     return result;
@@ -130,7 +130,7 @@
 
 @interface YKRegexTag (YKRegexTagPrivateMethods)
 
-- (NSArray *)_findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id*)hint;
+- (NSArray *)_findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id *)hint;
 
 @end
 
@@ -171,9 +171,9 @@
     return [super _internalDecodeFromString:stringValue extraInfo:scopeExtraInfo];
 }
 
--(NSArray *) arrayOfCaptureComponentsFrom:(NSString*)string matchedByRegex:(NSString *)regexp
+- (NSArray *)arrayOfCaptureComponentsFrom:(NSString *)string matchedByRegex:(NSString *)regexp
 {
-    NSError  *error  = NULL;
+    NSError *error = NULL;
 
     NSRegularExpression *regex = [NSRegularExpression
             regularExpressionWithPattern:regexp
@@ -189,7 +189,7 @@
     return array;
 }
 
-- (NSArray *)_findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id*)hint
+- (NSArray *)_findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id *)hint
 {
     NSArray *components = nil;
     for (NSString *regex in regexDeclarations) {

@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "YKTag.h"
 
-@interface YKNativeTagManager : NSObject <YKTagDelegate> {
+@interface YKNativeTagManager : NSObject <YKTagDelegate>
+{
     NSDictionary *tagsByName;
 }
 
 + (id)sharedManager;
 
-@property (readonly) NSDictionary *tagsByName;
+@property(readonly) NSDictionary *tagsByName;
 
 @end

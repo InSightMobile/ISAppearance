@@ -10,7 +10,8 @@
 
 @protocol YKParserDelegate;
 
-@interface YKParser : NSObject {
+@interface YKParser : NSObject
+{
     BOOL readyToParse;
     FILE *fileInput;
     const char *stringInput;
@@ -20,26 +21,31 @@
 }
 
 - (void)reset;
+
 - (BOOL)readString:(NSString *)path;
+
 - (BOOL)readFile:(NSString *)path;
+
 - (NSArray *)parse;
+
 - (NSArray *)parseWithError:(NSError **)e;
 
 - (void)addTag:(YKTag *)tag;
+
 - (void)addExplicitTag:(YKTag *)tag;
 
-@property (readonly) BOOL isReadyToParse;
-@property (readonly) NSDictionary *tagsByName;
+@property(readonly) BOOL isReadyToParse;
+@property(readonly) NSDictionary *tagsByName;
 
-@property  (weak) id<YKParserDelegate>  delegate;
+@property(weak) id <YKParserDelegate> delegate;
 
 @end
 
 
-@protocol YKParserDelegate  <NSObject>
+@protocol YKParserDelegate <NSObject>
 @optional
 
-- (YKTag *) parser:(YKParser *)parser tagForURI:(NSString *)uri;
+- (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri;
 
 @end
 

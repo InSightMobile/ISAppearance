@@ -5,6 +5,7 @@
 
 #import "ISAValueConverter.h"
 #import "ISANSObjectValueConverter.h"
+#import "ISAStyleEntry.h"
 
 @interface ISAValueConverter () <YKTagDelegate>
 
@@ -21,18 +22,18 @@
     ISAValueConverter *converter = convertersByName[className];
     if (converter)return converter;
 
-    NSString* converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
+    NSString *converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
     Class converterClass = NSClassFromString(converterClassName);
     if (converterClass) {
         converter = [[converterClass alloc] init];
     }
     else {
         Class cl = NSClassFromString(className);
-        if(cl) {
+        if (cl) {
             converter = [[ISANSObjectValueConverter alloc] initWithObjectClass:cl];
         }
     }
-    if(converter) {
+    if (converter) {
         convertersByName[className] = converter;
     }
 
@@ -65,9 +66,21 @@
     static NSMutableDictionary *_instance = nil;
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
-    _instance = [[NSMutableDictionary alloc] init];
-});
+        _instance = [[NSMutableDictionary alloc] init];
+    });
     return _instance;
+}
+
++ (id)objectOfClass:(Class)pClass withISANode:(id)node
+{
+    id result = nil;
+    if([node isKindOfClass:[NSArray class]]) {
+        if([node count] > 0 && [node[0] isKindOfClass:[NSDictionary class]]) {
+            ISAStyleEntry *entry = [ISAStyleEntry entryWithParams:node selectorParams:nil];
+            result = [entry invokeWithTarget:pClass];
+        }
+    }
+    return result;
 }
 
 

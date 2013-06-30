@@ -5,7 +5,7 @@
 
 @interface ISAStyle : NSObject
 
-@property (strong, nonatomic) NSMutableArray* entries;
+@property(strong, nonatomic) NSMutableArray *entries;
 
 @property(nonatomic, strong) Class baseClass;
 

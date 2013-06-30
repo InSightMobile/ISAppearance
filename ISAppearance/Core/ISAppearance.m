@@ -12,21 +12,7 @@
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
 @end
 
-static NSString *SelectorNameForSetterWithString(NSString *string) {
-    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-                                                    withString:[[string substringToIndex:1] uppercaseString]];
 
-    return [NSString stringWithFormat:@"set%@", sel];
-}
-
-
-static SEL SelectorForPropertySetterFromString(NSString *string) {
-
-    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-                                                    withString:[[string substringToIndex:1] uppercaseString]];
-
-    return NSSelectorFromString([NSString stringWithFormat:@"set%@:", sel]);
-}
 
 
 @implementation ISAppearance
@@ -147,32 +133,32 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     return tag;
 }
 
-- (BOOL)loadAppearanceData:(NSString *)file error:(NSError **)pError
+- (NSArray *)loadAppearanceData:(NSString *)file error:(NSError * __autoreleasing *)error
 {
     YKParser *parser = [[YKParser alloc] init];
     parser.delegate = self;
-
-    NSError *error = nil;
-
     if ([parser readFile:file]) {
-        NSArray *result = [parser parseWithError:&error];
-        if (error) {
-            if (pError) {
-                // get error info
+        NSArray *result = [parser parseWithError:error];
+        if (error && *error) {
 
-                *pError = error;
-            }
-            return NO;
+            NSString *line = [*error userInfo][YKProblemLineKey];
+            NSString *column = [*error userInfo][YKProblemColumnKey];
+
+            NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
+
+            *error =
+                    [[NSError alloc] initWithDomain:@"ISAppearance" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];
+
+            return nil;
         }
         else {
-            [_definitions addObjectsFromArray:result];
+            return result;
         }
     }
     else {
 
-        return NO;
+        return nil;
     }
-    return YES;
 }
 
 - (void)loadAppearanceFromFile:(NSString *)file
@@ -184,66 +170,51 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
 - (void)loadAppearanceNamed:(NSString *)name
 {
-    NSString *file = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+    NSString *file = [self appearancePathForName:name];
     if (file) {
         [self loadAppearanceFromFile:file];
     }
 }
 
-- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory
+- (NSString *)appearancePathForName:(NSString *)name
 {
-#if !(TARGET_IPHONE_SIMULATOR)
-
-    [self loadAppearanceNamed:name];
-
-#else
-
-    if([directory hasPrefix:@"~/"]) {
-        // we use this trick to locate user directory outside of simulator
-
-        NSString* path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-
-        NSUInteger pos = [path rangeOfString:@"/Library/Application Support/iPhone Simulator/"].location;
-        path = [path substringToIndex:pos];
-
-        directory = [path stringByAppendingPathComponent:[directory substringFromIndex:2]];
+    NSString *ext = [name pathExtension];
+    NSString *path = nil;
+    if (!ext.length) {
+        path = [self findFileNamed:[name stringByAppendingPathExtension:@"yaml"]];
     }
-
-    BOOL isDirectory;
-    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDirectory];
-    
-    if(exists && isDirectory) {
-        
-        NSString* appearancePath = [directory stringByAppendingPathComponent:name];
-        
-        if(appearancePath && [[NSFileManager defaultManager] fileExistsAtPath:appearancePath]) {
-            [self loadAppearanceFromFile:appearancePath withMonitoring:YES];
-        }
-        else {
-           [self loadAppearanceNamed:name];
-        }
-        
-        [self addAssetsFolder:directory withMonitoring:YES];
+    if (!path) {
+        path = [self findFileNamed:name];
     }
-    else {
-        [self loadAppearanceNamed:name];
-    }
-
-#endif
+    return path;
 }
 
-- (BOOL)reloadAppearanceSourcesWithError:(NSError **)error
+- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory
+{
+#if (TARGET_IPHONE_SIMULATOR)
+    if (directory.length) {
+        [self addAssetsFolder:directory withMonitoring:YES];
+    }
+#endif
+    [self loadAppearanceNamed:name];
+}
+
+- (BOOL)reloadAppearanceSourcesWithError:(NSError * __autoreleasing *)error
 {
     [_definitions removeAllObjects];
     for (NSString *file in _sources) {
-        if (![self loadAppearanceData:file error:error]) {
+        NSArray *definitions = [self loadAppearanceData:file error:error];
+        if (definitions.count) {
+            [_definitions addObjectsFromArray:definitions];
+        }
+        else {
             return NO;
         }
     }
     return YES;
 }
 
-- (BOOL)reloadAppearanceWithError:(NSError **)error
+- (BOOL)reloadAppearanceWithError:(NSError * __autoreleasing *)error
 {
     [_classStyles removeAllObjects];
     [_objectStyles removeAllObjects];
@@ -257,7 +228,6 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         [self performSelector:@selector(reloadAppearanceWithError:) withObject:nil afterDelay:0.3];
     }
     else {
-
         UIAlertView *alertView =
                 [[UIAlertView alloc] initWithTitle:@"ISAppearance error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 
@@ -266,16 +236,47 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
 }
 
+- (NSString *)pathForMonitoredAssetFolder:(NSString *)directory
+{
+    if ([directory hasPrefix:@"~/"]) {
+        // we use this trick to locate user directory outside of simulator
+
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+
+        NSUInteger pos = [path rangeOfString:@"/Library/Application Support/iPhone Simulator/"].location;
+        path = [path substringToIndex:pos];
+
+        directory = [path stringByAppendingPathComponent:[directory substringFromIndex:2]];
+    }
+
+    BOOL isDirectory;
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDirectory];
+
+    if (exists && isDirectory) {
+        return directory;
+    }
+    else {
+        return nil;
+    }
+}
 
 - (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring
 {
+#if (TARGET_IPHONE_SIMULATOR)
     if (monitoring) {
-        if (!_monitoredAssets) _monitoredAssets = [NSMutableArray arrayWithCapacity:1];
-        [_monitoredAssets addObject:folder];
+        _monitoring = YES;
+        NSString *path = [self pathForMonitoredAssetFolder:folder];
+        if(path) {
+            if (!_monitoredAssets) _monitoredAssets = [NSMutableArray arrayWithCapacity:1];
+            [_monitoredAssets addObject:path];
+        }
     }
     else {
         [self addAssetsFolder:folder];
     }
+#else
+    [self addAssetsFolder:folder];
+#endif
 }
 
 - (void)addAssetsFolder:(NSString *)folder
@@ -287,10 +288,14 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 - (BOOL)processAppearance
 {
     NSError *error = nil;
-    return [self processAppearanceWithError:&error];
+    if (![self processAppearanceWithError:&error]) {
+        NSLog(@"ISAppearance failed with error %@", error);
+        return NO;
+    }
+    return YES;
 }
 
-- (BOOL)processAppearanceWithError:(NSError **)error
+- (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error
 {
     if (![self reloadAppearanceSourcesWithError:error]) {
 
@@ -328,14 +333,14 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
 
         if ([key isKindOfClass:[NSString class]]) {
-            Class cl = NSClassFromString(key);
+            Class <UIAppearance> cl = NSClassFromString(key);
             if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
                 appearanceProxy = [cl appearance];
             }
         }
         else if ([key isKindOfClass:[NSArray class]]) {
             if ([key count]) {
-                Class cl = NSClassFromString(key[0]);
+                Class <UIAppearance> cl = NSClassFromString(key[0]);
                 if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
 
                     NSMutableArray *classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
@@ -343,6 +348,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
                         Class mcl = NSClassFromString(key[j]);
                         if (mcl) [classes addObject:mcl];
                     }
+
+                    [UINavigationBar appearance];
 
                     switch (classes.count) {
                         case 0:
@@ -415,11 +422,22 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     }
 }
 
-- (BOOL)processISAppearance:(NSDictionary *)definition error:(NSError **)error
+- (BOOL)processISAppearance:(NSDictionary *)definition error:(NSError * __autoreleasing *)pError
 {
+    if ([definition isKindOfClass:[NSArray class]]) {
+        for (id subDefinition in definition) {
+            if (![self processISAppearance:subDefinition error:pError]) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+
     if (![definition isKindOfClass:[NSDictionary class]]) {
         return YES;
     }
+    __block BOOL result = YES;
+    __block NSError* error = nil;
 
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
@@ -430,8 +448,23 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
             }
             return;
         }
-        if ([key isEqual:@"ISAppearance"]) {
+        else if ([key isEqual:@"ISAppearance"]) {
             [self processISAppearance:obj error:NULL ];
+            return;
+        }
+        else if ([key isEqual:@"include"]) {
+            NSString *file = [self appearancePathForName:obj];
+            if (file) {
+                id includeDefinitions = [self loadAppearanceData:file error:&error];
+                if (includeDefinitions) {
+                    if ([self processISAppearance:includeDefinitions error:&error]) {
+                        return;
+                    }
+                }
+            }
+            // if something failed
+            result = NO;
+            *stop = YES;
             return;
         }
 
@@ -442,7 +475,10 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         }
         [self addParams:params toSelector:selector];
     }];
-    return YES;
+    if(pError && error) {
+        *pError = error;
+    }    
+    return result;
 }
 
 - (void)addParams:(NSMutableArray *)params toSelector:(NSString *)selector
@@ -520,7 +556,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     if ([params isKindOfClass:[NSDictionary class]]) {
         [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
-            ISAStyleEntry *entry = [self entryWithKey:key value:obj selectorParams:selectorParams];
+            ISAStyleEntry *entry = [ISAStyleEntry entryWithKey:key value:obj selectorParams:selectorParams];
             if (entry) {
                 [invocations addObject:entry];
             }
@@ -532,7 +568,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
             if ([operation isKindOfClass:[NSArray class]]) {  // method style
 
-                ISAStyleEntry *entry = [self entryWithParams:operation selectorParams:selectorParams];
+                ISAStyleEntry *entry = [ISAStyleEntry entryWithParams:operation selectorParams:selectorParams];
                 if (entry) {
                     [invocations addObject:entry];
                 }
@@ -542,7 +578,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
                 [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                     if ([key isKindOfClass:[NSString class]]) {    // property set style
                         // decode keys
-                        ISAStyleEntry *entry = [self entryWithKey:key value:obj selectorParams:selectorParams];
+                        ISAStyleEntry *entry = [ISAStyleEntry entryWithKey:key value:obj selectorParams:selectorParams];
                         if (entry) {
                             [invocations addObject:entry];
                         }
@@ -571,78 +607,8 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     return invocations;
 }
 
-- (ISAStyleEntry * const)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams
-{
-    if ([key isKindOfClass:[NSString class]]) {
 
-        NSArray *array;
 
-        NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;
-        if (keys.count > 1) {
-            key = keys.lastObject;
-            [keys removeLastObject];
-            NSString *keyPath = [keys componentsJoinedByString:@"."];
-            array = @[keyPath, @{SelectorNameForSetterWithString(key) : value}];
-        }
-        else {
-            array = @[@{SelectorNameForSetterWithString(key) : value}];
-        }
-
-        ISAStyleEntry *const entry = [self entryWithParams:array selectorParams:selectorParams];
-        return entry;
-    }
-    else {
-        // error
-        return nil;
-    }
-}
-
-- (ISAStyleEntry * const)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
-{
-    NSMutableString *selectorName = [NSMutableString string];
-    NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[params count]];
-    __block NSString *keyPath = nil;
-
-    if (selectorParams) {
-        params = [params arrayByAddingObjectsFromArray:selectorParams];
-    }
-    __block BOOL firstItem = YES;
-
-    for (id component in params) {
-
-        if ([component isKindOfClass:[NSDictionary class]]) {
-            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-
-                if (firstItem) {
-                    NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;
-                    if (keys.count > 1) {
-                        key = keys.lastObject;
-                        [keys removeLastObject];
-                        if (keyPath) {
-                            [keys insertObject:keyPath atIndex:0];
-                        }
-                        keyPath = [keys componentsJoinedByString:@"."];
-                    }
-                }
-                firstItem = NO;
-
-                [selectorName appendFormat:@"%@:", key];
-                [parameters addObject:obj];
-            }];
-        }
-        else if ([component isKindOfClass:[NSString class]]) {
-            if (keyPath) {
-                keyPath = [@[keyPath, component] componentsJoinedByString:@"."];
-            }
-            else {
-                keyPath = component;
-            }
-        }
-    }
-
-    return [ISAStyleEntry entryWithSelector:NSSelectorFromString(selectorName)
-                                  arguments:parameters keyPath:keyPath];;
-}
 
 - (void)registerObject:(id)object
 {
@@ -815,6 +781,30 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         return path;
     }
     return nil;
+}
+
+- (NSString *)findFileNamed:(NSString *)file
+{
+    NSString *path = nil;
+    for (NSString *folder in _monitoredAssets) {
+        path = [self findFile:file inFolder:folder recursive:YES];
+        if (path) {
+            [self watchAndReloadPath:path once:YES ];
+            break;
+        }
+    }
+    if (!path) {
+        path = [[NSBundle mainBundle] pathForResource:file ofType:nil];
+    }
+    if (!path) {
+        for (NSString *folder in _assets) {
+            path = [self findFile:file inFolder:folder recursive:YES];
+            if (path) {
+                break;
+            }
+        }
+    }
+    return path;
 }
 
 - (UIImage *)loadImageNamed:(NSString *)string forRetina:(BOOL)isRetina forPad:(BOOL)isIpad

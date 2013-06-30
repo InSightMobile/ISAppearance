@@ -4,11 +4,12 @@
 #import "UIImage+ISAObjectCreation.h"
 #import "UIImage+ISAppearance.h"
 #import "ISAppearance.h"
+#import "ISAValueConverter.h"
 
 
 @implementation UIImage (ISAObjectCreation)
 
-+ (UIImage*) isaImageNamed:(NSString*)name
++ (UIImage *)isaImageNamed:(NSString *)name
 {
     return [[ISAppearance sharedInstance] loadImageNamed:name];
     //[UIImage imageNamed:name];
@@ -27,6 +28,11 @@
     }
     else if ([node isKindOfClass:[NSArray class]]) {
 
+        image = [ISAValueConverter objectOfClass:self.class withISANode:node];
+        if(image) {
+            return image;
+        }
+
         if ([node count] == 0)return [UIImage new];
 
         id firstParam = [node objectAtIndex:0];
@@ -38,25 +44,25 @@
             image = [self isaImageNamed:firstParam];
         }
 
-        if([node count] == 2 ) {
+        if ([node count] == 2) {
 
             id mode = [node objectAtIndex:1];
-            if([mode isKindOfClass:[NSValue class]]) {
-                char const* type = [(NSValue *) mode objCType];
+            if ([mode isKindOfClass:[NSValue class]]) {
+                char const *type = [(NSValue *) mode objCType];
 
                 UIEdgeInsets insets;
-                [ mode getValue:&insets];
+                [mode getValue:&insets];
                 image = [image resizableImageWithCapInsets:insets];
             }
         }
-        else if([node count] == 3 ) {
+        else if ([node count] == 3) {
 
             image =
                     [image stretchableImageWithLeftCapWidth:[[node objectAtIndex:1] intValue]
                                                topCapHeight:[[node objectAtIndex:2] intValue]];
 
         }
-        else if([node count] == 5 ) {
+        else if ([node count] == 5) {
 
             UIEdgeInsets insets =
                     UIEdgeInsetsMake(
@@ -68,7 +74,7 @@
             image = [image resizableImageWithCapInsets:insets];
         }
     }
-    if(!image) {
+    if (!image) {
         image = [UIImage new];
     }
     return image;

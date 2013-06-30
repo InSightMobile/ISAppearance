@@ -9,21 +9,25 @@
 #import <Foundation/Foundation.h>
 #import "YKTag.h"
 
-typedef struct {
+typedef struct
+{
     NSUInteger line;
     NSUInteger column;
     NSUInteger index;
 } YKMark;
 
-typedef struct {
+typedef struct
+{
     YKMark start;
     YKMark end;
 } YKRange;
 
 YKRange YKMakeRange(YKMark start, YKMark end);
+
 YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger index);
 
-@interface YKUnknownNode : NSObject {
+@interface YKUnknownNode : NSObject
+{
     YKRange position;
     YKTag *implicitTag;
     YKTag *explicitTag;
@@ -31,13 +35,14 @@ YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger index);
 }
 
 + (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(YKTag *)aImplicitTag
-                       explicitTag:(YKTag *)aExplicitTag position:(YKRange)aPosition;
+                     explicitTag:(YKTag *)aExplicitTag position:(YKRange)aPosition;
+
 - (id)initWithStringValue:(NSString *)aStringValue implicitTag:(YKTag *)aImplicitTag explicitTag:(YKTag *)aExplicitTag
                  position:(YKRange)aPosition;
 
-@property (readonly) YKRange position;
-@property (readonly) YKTag *implicitTag;
-@property (readonly) YKTag *explicitTag;
-@property (readonly) NSString *stringValue;
+@property(readonly) YKRange position;
+@property(readonly) YKTag *implicitTag;
+@property(readonly) YKTag *explicitTag;
+@property(readonly) NSString *stringValue;
 
 @end

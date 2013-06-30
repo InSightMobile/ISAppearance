@@ -6,23 +6,20 @@
 //  Copyright (c) 2013 infoshell. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import <ISAppearance/ISAppearance.h>
-
 @implementation AppDelegate
 
-+ (void) initialize
++ (void)initialize
 {
     [super initialize];
     [ISAppearance prepareAppearance];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
+{
     [[ISAppearance sharedInstance] loadAppearanceNamed:@"appearance.yaml" withMonitoringForDirectory:@"~/prj/ISAppearance/ISAppearanceDemo/"];
-    
+
     [[ISAppearance sharedInstance] processAppearance];
-    
+
     return YES;
 }
 

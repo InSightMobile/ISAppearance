@@ -3,33 +3,32 @@
 
 #import "UITableViewCell+ISAppearance.h"
 #import "UIImage+ISAppearance.h"
-#import <QuartzCore/QuartzCore.h>
 
 
 @implementation UITableViewCell (ISAppearance)
 
 - (void)setBackgroundViewImage:(UIImage *)image
 {
-    if([self.backgroundView isKindOfClass:[UIImageView class]]) {
-        [(UIImageView*)self.backgroundView setImage:image];
+    if ([self.backgroundView isKindOfClass:[UIImageView class]]) {
+        [(UIImageView *) self.backgroundView setImage:image];
     }
     else {
         UIImageView *view = [[UIImageView alloc] initWithImage:image];
         view.frame = self.bounds;
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self setBackgroundView:view];
     }
 }
 
 - (void)setSelectedBackgroundViewImage:(UIImage *)image
 {
-    if([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
-        [(UIImageView*)self.selectedBackgroundView setImage:image];
+    if ([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
+        [(UIImageView *) self.selectedBackgroundView setImage:image];
     }
     else {
         UIImageView *view = [[UIImageView alloc] initWithImage:image];
         view.frame = self.bounds;
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self setSelectedBackgroundView:view];
     }
 }

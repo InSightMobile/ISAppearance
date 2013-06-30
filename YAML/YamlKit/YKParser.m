@@ -8,7 +8,6 @@
 #import "yaml.h"
 #import "YKParser.h"
 #import "YKConstants.h"
-#import "YKTag.h"
 #import "YKNativeTagManager.h"
 
 typedef enum
@@ -27,12 +26,12 @@ typedef enum
     YKTag *_tag;
     YKParserStates _state;
 }
-    @property (strong, nonatomic) id node;
-    @property (strong, nonatomic) YKTag * tag;
-    @property (nonatomic) YKParserStates state;
-    @property (nonatomic) BOOL isKey;
+@property(strong, nonatomic) id node;
+@property(strong, nonatomic) YKTag *tag;
+@property(nonatomic) YKParserStates state;
+@property(nonatomic) BOOL isKey;
 
-@property (nonatomic,copy)NSString *anchor;
+@property(nonatomic, copy) NSString *anchor;
 
 
 - (id)processNode;
@@ -46,7 +45,7 @@ typedef enum
 
 - (id)processNode
 {
-    if(_tag) {
+    if (_tag) {
         return [_tag processNode:_node];
     }
     else {
@@ -58,17 +57,19 @@ typedef enum
 @interface YKParser (YKParserPrivateMethods)
 
 - (id)interpretObjectFromEvent:(yaml_event_t)event;
+
 - (NSError *)_constructErrorFromParser:(yaml_parser_t *)p;
+
 - (void)_destroy;
 
 @end
 
 @implementation YKParser
 {
-    NSMutableDictionary * _aliases;
+    NSMutableDictionary *_aliases;
 }
 
-@synthesize isReadyToParse=readyToParse;
+@synthesize isReadyToParse = readyToParse;
 @synthesize tagsByName;
 
 - (id)init
@@ -77,8 +78,7 @@ typedef enum
         return nil;
 
     opaque_parser = malloc(sizeof(yaml_parser_t));
-    if (!opaque_parser || !yaml_parser_initialize(opaque_parser))
-    {
+    if (!opaque_parser || !yaml_parser_initialize(opaque_parser)) {
         return nil;
     }
 
@@ -118,7 +118,7 @@ typedef enum
     stringInput = [str UTF8String];
     readyToParse = yaml_parser_initialize(opaque_parser);
     if (readyToParse)
-        yaml_parser_set_input_string(opaque_parser, (const unsigned char *)stringInput, [str length]);
+        yaml_parser_set_input_string(opaque_parser, (const unsigned char *) stringInput, [str length]);
     return readyToParse;
 }
 
@@ -126,9 +126,10 @@ typedef enum
 {
     return [self parseWithError:NULL];
 }
+
 - (YKTag *)explicitTagWithString:(NSString *)string
 {
-    YKTag* tag = [_explicitTagsByName objectForKey:string];
+    YKTag *tag = [_explicitTagsByName objectForKey:string];
 
     if (tag) return tag;
 
@@ -140,16 +141,17 @@ typedef enum
 
     return tag;
 }
-- (YKTag *) tagWithUTF8String:(char*)tagName
+
+- (YKTag *)tagWithUTF8String:(char *)tagName
 {
     if (!tagName)return nil;
 
-    NSString *name = [NSString stringWithUTF8String:(const char *)tagName];
+    NSString *name = [NSString stringWithUTF8String:(const char *) tagName];
     return [self explicitTagWithString:name];
 }
 
 
--(id)processState:(YKParserState*)state
+- (id)processState:(YKParserState *)state
 {
     id value = [state processNode];
     if (state.anchor) {
@@ -174,8 +176,8 @@ typedef enum
 
     BOOL startNewDocument = FALSE;
 
-    YKParserState* state = [YKParserState new];
-    YKParserState* lastState = [YKParserState new];
+    YKParserState *state = [YKParserState new];
+    YKParserState *lastState = [YKParserState new];
 
     while (!done) {
         if (!yaml_parser_parse(opaque_parser, &event)) {
@@ -195,8 +197,8 @@ typedef enum
                     done = TRUE;
                     break;
                 case YAML_ALIAS_EVENT:
-                    if(event.data.alias.anchor) {
-                        NSString * anchor =  [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+                    if (event.data.alias.anchor) {
+                        NSString *anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
                         id value = [_aliases objectForKey:anchor];
                         if (value) {
                             state.node = value;
@@ -207,10 +209,10 @@ typedef enum
                     }
                     break;
                 case YAML_SEQUENCE_START_EVENT:
-                    if(event.data.sequence_start.anchor) {
-                        state.anchor =  [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+                    if (event.data.sequence_start.anchor) {
+                        state.anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
                     }
-                    state.tag =  [self tagWithUTF8String:event.data.sequence_start.tag];
+                    state.tag = [self tagWithUTF8String:event.data.sequence_start.tag];
                     state.node = [NSMutableArray array];
                     state.state = YKParserStateSeqence;
                     [containerStack addObject:lastState];
@@ -225,16 +227,16 @@ typedef enum
                     state = [YKParserState new];
                     break;
                 case YAML_MAPPING_START_EVENT:
-                    if(event.data.mapping_start.anchor) {
-                        state.anchor =  [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+                    if (event.data.mapping_start.anchor) {
+                        state.anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
                     }
-                    state.tag =  [self tagWithUTF8String:event.data.mapping_start.tag];
+                    state.tag = [self tagWithUTF8String:event.data.mapping_start.tag];
                     state.node = [NSMutableDictionary dictionary];
                     state.state = YKParserStateMapping;
                     [containerStack addObject:lastState];
                     lastState = state;
                     state = [YKParserState new];
-                break;
+                    break;
                 case YAML_SEQUENCE_END_EVENT:
                 case YAML_DOCUMENT_END_EVENT:
                 case YAML_MAPPING_END_EVENT:
@@ -245,10 +247,10 @@ typedef enum
                 case YAML_SCALAR_EVENT:
 
                     if (event.data.scalar.tag == 0 && lastState.state == YKParserStateMapping)
-                        state.node = [NSString stringWithUTF8String:(const char *)event.data.scalar.value];
+                        state.node = [NSString stringWithUTF8String:(const char *) event.data.scalar.value];
                     else
                         state.node = [self interpretObjectFromEvent:event];
-                break;
+                    break;
                 case YAML_NO_EVENT:
                 default:
                     break;
@@ -258,7 +260,7 @@ typedef enum
                     YKParserState *keyState = lastState;
                     lastState = [containerStack lastObject];
                     [containerStack removeLastObject];
-                    [lastState.node  setObject:[self processState:state] forKey:[self processState:keyState]];
+                    [lastState.node setObject:[self processState:state] forKey:[self processState:keyState]];
 
                     state = [YKParserState new];
                 }
@@ -321,28 +323,27 @@ typedef enum
 - (id)interpretObjectFromEvent:(yaml_event_t)event
 {
     NSString *anchor;
-    if(event.data.mapping_start.anchor) {
-        anchor =  [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+    if (event.data.mapping_start.anchor) {
+        anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
     }
 
     NSString *stringValue = (!event.data.scalar.value ? nil :
-                             [NSString stringWithUTF8String:(const char *)event.data.scalar.value]);
+            [NSString stringWithUTF8String:(const char *) event.data.scalar.value]);
     NSString *explicitTagString = (!event.data.scalar.tag ? nil :
-                                   [NSString stringWithUTF8String:(const char *)event.data.scalar.tag]);
+            [NSString stringWithUTF8String:(const char *) event.data.scalar.tag]);
 
     id value = [self interpretObjectFromString:stringValue
-                        explicitTag:explicitTagString
-                              plain:event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE];
-    
+                                   explicitTag:explicitTagString
+                                         plain:event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE];
+
     if (anchor && value) {
-        
-       [_aliases setObject:value forKey:anchor];
-        
+
+        [_aliases setObject:value forKey:anchor];
+
     }
-    
+
     return value;
 }
-
 
 
 - (NSError *)_constructErrorFromParser:(yaml_parser_t *)p
@@ -355,7 +356,7 @@ typedef enum
         code = p->error;
         // get the string encoding.
         NSStringEncoding enc = 0;
-        switch(p->encoding) {
+        switch (p->encoding) {
             case YAML_UTF8_ENCODING:
                 enc = NSUTF8StringEncoding;
                 break;
@@ -365,7 +366,8 @@ typedef enum
             case YAML_UTF16BE_ENCODING:
                 enc = NSUTF16BigEndianStringEncoding;
                 break;
-            default: break;
+            default:
+                break;
         }
         [data setObject:[NSNumber numberWithInteger:enc] forKey:NSStringEncodingErrorKey];
 

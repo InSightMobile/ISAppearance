@@ -17,14 +17,15 @@
 
 - (id)objectWithISANode:(id)node
 {
-    UIColor* color = [UIColor objectWithISANode:node];
-    
-    NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:[color methodSignatureForSelector:@selector(CGColor)]];
-       
+    UIColor *color = [UIColor objectWithISANode:node];
+
+    NSInvocation *invocation =
+            [NSInvocation invocationWithMethodSignature:[color methodSignatureForSelector:@selector(CGColor)]];
+
     invocation.target = color;
     invocation.selector = @selector(CGColor);
     [invocation retainArguments];
-    
+
     return invocation;
 }
 

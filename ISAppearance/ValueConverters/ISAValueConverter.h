@@ -11,6 +11,8 @@
 
 + (ISAValueConverter *)converterNamed:(NSString *)className;
 
++ (id)objectOfClass:(Class)pClass withISANode:(id)node;
+
 - (id)objectWithISANode:(id)node;
 
 - (YKTag *)parsingTagForURI:(NSString *)uri;

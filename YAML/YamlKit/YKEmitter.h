@@ -7,7 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YKEmitter : NSObject {
+@interface YKEmitter : NSObject
+{
     NSMutableData *buffer;
     BOOL usesExplicitDelimiters;
     NSStringEncoding encoding;
@@ -15,10 +16,12 @@
 }
 
 - (void)emitItem:(id)item;
+
 - (NSString *)emittedString;
+
 - (NSData *)emittedData;
 
-@property (assign) BOOL usesExplicitDelimiters;
-@property (assign) NSStringEncoding encoding;
+@property(assign) BOOL usesExplicitDelimiters;
+@property(assign) NSStringEncoding encoding;
 
 @end
