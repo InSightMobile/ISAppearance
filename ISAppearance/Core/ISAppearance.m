@@ -107,6 +107,18 @@
     dispatch_resume(source);
 }
 
++ (BOOL)isPad {
+    return [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+}
++ (BOOL)isPhone5 {
+    return !self.isPad && ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON );
+}
+
++ (BOOL)isRetina {
+    return [UIScreen mainScreen].scale == 2.0;
+}
+
+
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
 {
     [self loadAppearanceFromFile:file];

@@ -18,7 +18,7 @@
 		1D26A93A561F6F0749961801 /* UIImage+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AD0072D984D05627396E /* UIImage+Gradient.m */; };
 		1D26ADC76D7BE8BD18C52398 /* ISANSObjectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */; };
 		1D26AE2D8C09CBFAC1DBDF93 /* UIImage+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */; };
-		1D26AF6481256EEE4A7B800F /* UIImage+Gradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ABE48D1480E18261C743 /* UIImage+Gradient.h */; };
+		1D26AF6481256EEE4A7B800F /* UIImage+Gradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ABE48D1480E18261C743 /* UIImage+Gradient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26AFAAA273FDA81ECAB70C /* NSObject+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */; };
 		1D26AFCB15F023CCA401DA96 /* UIColor+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */; };
 		5521B8D11778470B00C63162 /* ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521B8CF1778470B00C63162 /* ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -52,7 +52,7 @@
 		5C5346201776DCFB00B0B5B2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */; };
 		5C53464E1776DEC700B0B5B2 /* UIButton+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346241776DEC700B0B5B2 /* UIButton+ISAppearance.h */; };
 		5C53464F1776DEC700B0B5B2 /* UIButton+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346251776DEC700B0B5B2 /* UIButton+ISAppearance.m */; };
-		5C5346501776DEC700B0B5B2 /* UIImage+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346261776DEC700B0B5B2 /* UIImage+ISAppearance.h */; };
+		5C5346501776DEC700B0B5B2 /* UIImage+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346261776DEC700B0B5B2 /* UIImage+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C5346511776DEC700B0B5B2 /* UIImage+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346271776DEC700B0B5B2 /* UIImage+ISAppearance.m */; };
 		5C5346521776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346281776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h */; };
 		5C5346531776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346291776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m */; };
