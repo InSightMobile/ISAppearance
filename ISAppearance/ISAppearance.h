@@ -8,6 +8,8 @@
 @interface ISAppearance : NSObject
 + (ISAppearance *)sharedInstance;
 
++ (id)loadDataFromFile:(NSString*)path;
+
 - (void)loadAppearanceFromFile:(NSString *)file;
 
 + (void)prepareAppearance;

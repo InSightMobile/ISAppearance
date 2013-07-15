@@ -38,6 +38,15 @@
     return _instance;
 }
 
++ (id)loadDataFromFile:(NSString *)path
+{
+    return [YAMLKit loadFromFile:path];
+
+    NSError *error = nil;
+    return [[self sharedInstance] loadAppearanceData:path error:&error];
+}
+
+
 - (id)init
 {
     self = [super init];
@@ -145,22 +154,18 @@
     return tag;
 }
 
-- (NSArray *)loadAppearanceData:(NSString *)file error:(NSError * __autoreleasing *)error
+- (id)loadAppearanceData:(NSString *)file error:(NSError * __autoreleasing *)error
 {
     YKParser *parser = [[YKParser alloc] init];
     parser.delegate = self;
     if ([parser readFile:file]) {
-        NSArray *result = [parser parseWithError:error];
+        id result = [parser parseWithError:error];
         if (error && *error) {
-
             NSString *line = [*error userInfo][YKProblemLineKey];
             NSString *column = [*error userInfo][YKProblemColumnKey];
-
             NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
-
             *error =
                     [[NSError alloc] initWithDomain:@"ISAppearance" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];
-
             return nil;
         }
         else {
@@ -168,7 +173,6 @@
         }
     }
     else {
-
         return nil;
     }
 }

@@ -50,7 +50,7 @@
 		5C53461C1776DC5100B0B5B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461B1776DC5100B0B5B2 /* UIKit.framework */; };
 		5C53461E1776DC5700B0B5B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461D1776DC5700B0B5B2 /* QuartzCore.framework */; };
 		5C5346201776DCFB00B0B5B2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */; };
-		5C53464E1776DEC700B0B5B2 /* UIButton+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346241776DEC700B0B5B2 /* UIButton+ISAppearance.h */; };
+		5C53464E1776DEC700B0B5B2 /* UIButton+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346241776DEC700B0B5B2 /* UIButton+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C53464F1776DEC700B0B5B2 /* UIButton+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346251776DEC700B0B5B2 /* UIButton+ISAppearance.m */; };
 		5C5346501776DEC700B0B5B2 /* UIImage+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346261776DEC700B0B5B2 /* UIImage+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C5346511776DEC700B0B5B2 /* UIImage+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346271776DEC700B0B5B2 /* UIImage+ISAppearance.m */; };
