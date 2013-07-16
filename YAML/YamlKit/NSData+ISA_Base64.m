@@ -12,7 +12,7 @@
 //  appreciated but not required.
 //
 
-#import "NSData+Base64.h"
+#import "NSData+ISA_Base64.h"
 
 //
 // Mapping from 6 bit pattern to ASCII character.

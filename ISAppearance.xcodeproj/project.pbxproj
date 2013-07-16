@@ -38,7 +38,7 @@
 		5C53460F1776DBF700B0B5B2 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F11776DBF700B0B5B2 /* reader.c */; };
 		5C5346101776DBF700B0B5B2 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F21776DBF700B0B5B2 /* scanner.c */; };
 		5C5346111776DBF700B0B5B2 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F31776DBF700B0B5B2 /* writer.c */; };
-		5C5346121776DBF700B0B5B2 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F81776DBF700B0B5B2 /* NSData+Base64.m */; };
+		5C5346121776DBF700B0B5B2 /* NSData+ISA_Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */; };
 		5C5346131776DBF700B0B5B2 /* NSString+YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FA1776DBF700B0B5B2 /* NSString+YAMLKit.m */; };
 		5C5346141776DBF700B0B5B2 /* YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FC1776DBF700B0B5B2 /* YAMLKit.m */; };
 		5C5346151776DBF700B0B5B2 /* YKConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FE1776DBF700B0B5B2 /* YKConstants.m */; };
@@ -144,8 +144,8 @@
 		5C5345F31776DBF700B0B5B2 /* writer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = writer.c; sourceTree = "<group>"; };
 		5C5345F41776DBF700B0B5B2 /* yaml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml.h; sourceTree = "<group>"; };
 		5C5345F51776DBF700B0B5B2 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml_private.h; sourceTree = "<group>"; };
-		5C5345F71776DBF700B0B5B2 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		5C5345F81776DBF700B0B5B2 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		5C5345F71776DBF700B0B5B2 /* NSData+ISA_Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ISA_Base64.h"; sourceTree = "<group>"; };
+		5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ISA_Base64.m"; sourceTree = "<group>"; };
 		5C5345F91776DBF700B0B5B2 /* NSString+YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+YAMLKit.h"; sourceTree = "<group>"; };
 		5C5345FA1776DBF700B0B5B2 /* NSString+YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+YAMLKit.m"; sourceTree = "<group>"; };
 		5C5345FB1776DBF700B0B5B2 /* YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YAMLKit.h; sourceTree = "<group>"; };
@@ -328,8 +328,8 @@
 		5C5345F61776DBF700B0B5B2 /* YamlKit */ = {
 			isa = PBXGroup;
 			children = (
-				5C5345F71776DBF700B0B5B2 /* NSData+Base64.h */,
-				5C5345F81776DBF700B0B5B2 /* NSData+Base64.m */,
+				5C5345F71776DBF700B0B5B2 /* NSData+ISA_Base64.h */,
+				5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */,
 				5C5345F91776DBF700B0B5B2 /* NSString+YAMLKit.h */,
 				5C5345FA1776DBF700B0B5B2 /* NSString+YAMLKit.m */,
 				5C5345FB1776DBF700B0B5B2 /* YAMLKit.h */,
@@ -573,7 +573,7 @@
 				5C53460F1776DBF700B0B5B2 /* reader.c in Sources */,
 				5C5346101776DBF700B0B5B2 /* scanner.c in Sources */,
 				5C5346111776DBF700B0B5B2 /* writer.c in Sources */,
-				5C5346121776DBF700B0B5B2 /* NSData+Base64.m in Sources */,
+				5C5346121776DBF700B0B5B2 /* NSData+ISA_Base64.m in Sources */,
 				5C5346131776DBF700B0B5B2 /* NSString+YAMLKit.m in Sources */,
 				5C5346141776DBF700B0B5B2 /* YAMLKit.m in Sources */,
 				5C5346151776DBF700B0B5B2 /* YKConstants.m in Sources */,

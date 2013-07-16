@@ -7,7 +7,7 @@
  *
  */
 
-#import "NSData+Base64.h"
+#import "NSData+ISA_Base64.h"
 #import "YKConstants.h"
 #import "YKTag.h"
 #import "YKUnknownNode.h"

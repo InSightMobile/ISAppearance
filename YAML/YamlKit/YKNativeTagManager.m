@@ -9,7 +9,7 @@
 #import "YKNativeTagManager.h"
 #import "YKConstants.h"
 #import "NSString+YAMLKit.h"
-#import "NSData+Base64.h"
+#import "NSData+ISA_Base64.h"
 
 // !!int: tag:yaml.org,2002:int ( http://yaml.org/type/int.html )
 #define YAML_INT_BINARY_REGEX           @"^([-+])?0b([0-1_]+)$"
