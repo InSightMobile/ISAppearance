@@ -84,7 +84,7 @@
         unsigned offset = 0;
 
         if ([node count] > 1) {
-            if ([node[0] isEqualToString:@"i"]) {
+            if ([node[0] isKindOfClass:[NSString class]] && [node[0] isEqualToString:@"i"]) {
                 mod = 1.0 / 255.0;
                 offset = 1;
             }
