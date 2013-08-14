@@ -14,25 +14,24 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "InfiniteRecursion"
 
-- (id)isaOverride_init
-{
-    id controller = [self isaOverride_init];
-    [controller applyISAppearance];
-    return controller;
-}
-
-- (id)isaOverride_initWithCoder:(NSCoder *)aDecoder;
-{
-    id controller = [self isaOverride_initWithCoder:aDecoder];
-    [controller applyISAppearance];
-    return controller;
-}
-
 - (void)isaOverride_awakeFromNib
 {
     [self applyISAppearance];
     [self isaOverride_awakeFromNib];
 }
+
+- (void)isaOverride_viewDidLoad
+{
+    if(self.isaClass) {
+        [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:[@"OnLoad:" stringByAppendingString:self.isaClass]];
+    }
+    else {
+        [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:@"OnLoad"];
+    }
+
+    [self isaOverride_viewDidLoad];
+}
+
 #pragma clang diagnostic pop
 
 
@@ -43,16 +42,10 @@
                  from:@selector(awakeFromNib)
                    to:@selector(isaOverride_awakeFromNib)];
 
-    /*
     [self ISA_swizzle:[UIViewController class]
-             from:@selector(init)
-               to:@selector(isaOverride_init)];
+                 from:@selector(viewDidLoad)
+                   to:@selector(isaOverride_viewDidLoad)];
 
-
-    [self ISA_swizzle:[UIViewController class]
-                 from:@selector(initWithCoder:)
-                   to:@selector(isaOverride_initWithCoder:)];
-    */
 }
 
 
