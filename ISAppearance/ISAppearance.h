@@ -22,6 +22,8 @@
 
 + (BOOL)isRetina;
 
++ (BOOL)isIOS7;
+
 - (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory;
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;

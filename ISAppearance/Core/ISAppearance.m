@@ -127,6 +127,19 @@
     return [UIScreen mainScreen].scale == 2.0;
 }
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+
++ (BOOL)isIOS7
+{
+#ifdef __IPHONE_7_0
+    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0");
+#else
+    return NO;
+#endif
+}
+
+
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
 {
