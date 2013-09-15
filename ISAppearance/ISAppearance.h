@@ -3,7 +3,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#include <ISAppearance/UIView+ISAInjection.h>
+#include "ISAppearance/UIView+ISAInjection.h"
 
 @interface ISAppearance : NSObject
 + (ISAppearance *)sharedInstance;
