@@ -2,7 +2,7 @@
 // 
 
 #import "UIButton+ISAppearance.h"
-#import "UIImage+ISAppearance.h"
+#import "UIImage+ISAColor.h"
 
 @implementation UIButton (ISAppearance)
 

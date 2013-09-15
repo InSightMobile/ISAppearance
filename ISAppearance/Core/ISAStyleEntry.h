@@ -20,6 +20,8 @@
 
 + (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams;
 
++ (ISAStyleEntry *)entryWithParams:(NSArray *)params fromIndex:(NSUInteger)index selectorParams:(NSArray *)selectorParams;
+
 - (id)invokeWithTarget:(id)target;
 
 @end

@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'ISAppearance' target in the 'ISAppearance' project
+// Prefix header for all source files of the 'ISAColor' target in the 'ISAColor' project
 //
 
 #ifdef __OBJC__

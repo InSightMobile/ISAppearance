@@ -5,6 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UIImage (Gradient)
+@interface UIImage (ISAGradient)
 + (UIImage *)imageWithVerticalGradient:(NSArray *)colors height:(CGFloat)height;
 @end

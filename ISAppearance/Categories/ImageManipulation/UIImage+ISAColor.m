@@ -3,9 +3,9 @@
 
 
 
-#import "UIImage+ISAppearance.h"
+#import "UIImage+ISAColor.h"
 
-@implementation UIImage (ISAppearance)
+@implementation UIImage (ISAColor)
 
 + (UIImage *)imageWithColor:(UIColor *)color
 {

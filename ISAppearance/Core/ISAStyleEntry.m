@@ -230,9 +230,12 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         return nil;
     }
 }
-
-
 + (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
+{
+    return [self entryWithParams:params fromIndex:0 selectorParams:selectorParams];
+}
+
++ (ISAStyleEntry *)entryWithParams:(NSArray *)params fromIndex:(NSUInteger)index selectorParams:(NSArray *)selectorParams
 {
     NSMutableString *selectorName = [NSMutableString string];
     NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[params count]];
@@ -244,6 +247,11 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     __block BOOL firstItem = YES;
 
     for (id component in params) {
+
+        if(index>0) {
+            index--;
+            continue;
+        }
 
         if ([component isKindOfClass:[NSDictionary class]]) {
             [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

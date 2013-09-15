@@ -1,9 +1,9 @@
 //
 // 
 
-#import "UIImage+Gradient.h"
+#import "UIImage+ISAGradient.h"
 
-@implementation UIImage (Gradient)
+@implementation UIImage (ISAGradient)
 
 + (UIImage *)imageWithVerticalGradient:(NSArray *)colors height:(CGFloat)height {
 

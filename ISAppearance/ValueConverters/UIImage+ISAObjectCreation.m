@@ -2,7 +2,7 @@
 // 
 
 #import "UIImage+ISAObjectCreation.h"
-#import "UIImage+ISAppearance.h"
+#import "UIImage+ISAColor.h"
 #import "ISAppearance.h"
 #import "ISAValueConverter.h"
 

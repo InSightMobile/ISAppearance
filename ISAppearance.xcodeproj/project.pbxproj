@@ -9,16 +9,20 @@
 /* Begin PBXBuildFile section */
 		1D26A0508D74BBAC8FBD443C /* UIImage+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A5D81B458BC5009D39D1 /* UIImage+ISAObjectCreation.m */; };
 		1D26A064EED940C2535738D3 /* UIFont+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AD305D6E7B152CE2AC45 /* UIFont+ISAObjectCreation.h */; };
+		1D26A0825C2067BD87478B61 /* UIImage+ISAColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A4A1BB6947E324D4DE53 /* UIImage+ISAColor.m */; };
+		1D26A0C11666B5C5B9A85972 /* UIImage+ISATrim.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AB6022142072561AD790 /* UIImage+ISATrim.m */; };
+		1D26A130C9E492F31F5E235B /* UIImage+ISAGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A766F875CA5E3F77329F /* UIImage+ISAGradient.m */; };
 		1D26A175A6FD420238AF42C7 /* UIColor+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AC0BF8A8BB6EA0EF550F /* UIColor+ISAObjectCreation.h */; };
 		1D26A1C90CB10EE828F9E3BC /* UIFont+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A04746007248DCC1521F /* UIFont+ISAObjectCreation.m */; };
 		1D26A2902C611CEFA6663C2D /* ISAEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */; };
 		1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */; };
+		1D26A304CBF8616F64A98CD1 /* UIImage+ISAGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AF803A4847DCE8D837F9 /* UIImage+ISAGradient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26A506A1EC817615D3E4D0 /* ISANSObjectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */; };
 		1D26A5DF3A716C6784F03064 /* NSObject+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AD13AE664DD64418F3A6 /* NSObject+ISAObjectCreation.h */; };
-		1D26A93A561F6F0749961801 /* UIImage+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AD0072D984D05627396E /* UIImage+Gradient.m */; };
+		1D26A717BCED38061C7303F1 /* UIImage+ISAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AF3BF4936C0963CD38ED /* UIImage+ISAColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D26A9D0DA536FAD2F238C80 /* UIImage+ISATrim.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A644288BE542A3B2A479 /* UIImage+ISATrim.h */; };
 		1D26ADC76D7BE8BD18C52398 /* ISANSObjectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */; };
 		1D26AE2D8C09CBFAC1DBDF93 /* UIImage+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */; };
-		1D26AF6481256EEE4A7B800F /* UIImage+Gradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ABE48D1480E18261C743 /* UIImage+Gradient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26AFAAA273FDA81ECAB70C /* NSObject+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */; };
 		1D26AFCB15F023CCA401DA96 /* UIColor+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */; };
 		5521B8D11778470B00C63162 /* ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521B8CF1778470B00C63162 /* ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -52,8 +56,6 @@
 		5C5346201776DCFB00B0B5B2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */; };
 		5C53464E1776DEC700B0B5B2 /* UIButton+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346241776DEC700B0B5B2 /* UIButton+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C53464F1776DEC700B0B5B2 /* UIButton+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346251776DEC700B0B5B2 /* UIButton+ISAppearance.m */; };
-		5C5346501776DEC700B0B5B2 /* UIImage+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346261776DEC700B0B5B2 /* UIImage+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5C5346511776DEC700B0B5B2 /* UIImage+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346271776DEC700B0B5B2 /* UIImage+ISAppearance.m */; };
 		5C5346521776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346281776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h */; };
 		5C5346531776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346291776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m */; };
 		5C5346541776DEC700B0B5B2 /* UIView+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C53462A1776DEC700B0B5B2 /* UIView+ISAppearance.h */; };
@@ -111,16 +113,20 @@
 		1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSObjectValueConverter.h; sourceTree = "<group>"; };
 		1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ISAObjectCreation.m"; sourceTree = "<group>"; };
 		1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ISAObjectCreation.m"; sourceTree = "<group>"; };
+		1D26A4A1BB6947E324D4DE53 /* UIImage+ISAColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAColor.m"; sourceTree = "<group>"; };
 		1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAEnumValueConverter.m; sourceTree = "<group>"; };
 		1D26A5D81B458BC5009D39D1 /* UIImage+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAObjectCreation.m"; sourceTree = "<group>"; };
+		1D26A644288BE542A3B2A479 /* UIImage+ISATrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISATrim.h"; sourceTree = "<group>"; };
+		1D26A766F875CA5E3F77329F /* UIImage+ISAGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAGradient.m"; sourceTree = "<group>"; };
 		1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSObjectValueConverter.m; sourceTree = "<group>"; };
-		1D26ABE48D1480E18261C743 /* UIImage+Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Gradient.h"; sourceTree = "<group>"; };
+		1D26AB6022142072561AD790 /* UIImage+ISATrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISATrim.m"; sourceTree = "<group>"; };
 		1D26AC0BF8A8BB6EA0EF550F /* UIColor+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ISAObjectCreation.h"; sourceTree = "<group>"; };
 		1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAEnumValueConverter.h; sourceTree = "<group>"; };
-		1D26AD0072D984D05627396E /* UIImage+Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Gradient.m"; sourceTree = "<group>"; };
 		1D26AD13AE664DD64418F3A6 /* NSObject+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ISAObjectCreation.h"; sourceTree = "<group>"; };
 		1D26AD305D6E7B152CE2AC45 /* UIFont+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+ISAObjectCreation.h"; sourceTree = "<group>"; };
 		1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAObjectCreation.h"; sourceTree = "<group>"; };
+		1D26AF3BF4936C0963CD38ED /* UIImage+ISAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAColor.h"; sourceTree = "<group>"; };
+		1D26AF803A4847DCE8D837F9 /* UIImage+ISAGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAGradient.h"; sourceTree = "<group>"; };
 		5521B8CF1778470B00C63162 /* ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAppearance.h; sourceTree = "<group>"; };
 		5521B8D01778470B00C63162 /* UIView+ISAInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAInjection.h"; sourceTree = "<group>"; };
 		5C5345471776DB4D00B0B5B2 /* libISAppearance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISAppearance.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,8 +173,6 @@
 		5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		5C5346241776DEC700B0B5B2 /* UIButton+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ISAppearance.h"; sourceTree = "<group>"; };
 		5C5346251776DEC700B0B5B2 /* UIButton+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ISAppearance.m"; sourceTree = "<group>"; };
-		5C5346261776DEC700B0B5B2 /* UIImage+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAppearance.h"; sourceTree = "<group>"; };
-		5C5346271776DEC700B0B5B2 /* UIImage+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAppearance.m"; sourceTree = "<group>"; };
 		5C5346281776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+ISAppearance.h"; sourceTree = "<group>"; };
 		5C5346291776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+ISAppearance.m"; sourceTree = "<group>"; };
 		5C53462A1776DEC700B0B5B2 /* UIView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAppearance.h"; sourceTree = "<group>"; };
@@ -225,6 +229,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D26A99A467CBBF872AD13BD /* ImageManipulation */ = {
+			isa = PBXGroup;
+			children = (
+				1D26A766F875CA5E3F77329F /* UIImage+ISAGradient.m */,
+				1D26AF803A4847DCE8D837F9 /* UIImage+ISAGradient.h */,
+				1D26AF3BF4936C0963CD38ED /* UIImage+ISAColor.h */,
+				1D26A4A1BB6947E324D4DE53 /* UIImage+ISAColor.m */,
+				1D26AB6022142072561AD790 /* UIImage+ISATrim.m */,
+				1D26A644288BE542A3B2A479 /* UIImage+ISATrim.h */,
+			);
+			path = ImageManipulation;
+			sourceTree = "<group>";
+		};
 		5C53453E1776DB4D00B0B5B2 = {
 			isa = PBXGroup;
 			children = (
@@ -355,14 +372,11 @@
 			children = (
 				5C5346241776DEC700B0B5B2 /* UIButton+ISAppearance.h */,
 				5C5346251776DEC700B0B5B2 /* UIButton+ISAppearance.m */,
-				5C5346261776DEC700B0B5B2 /* UIImage+ISAppearance.h */,
-				5C5346271776DEC700B0B5B2 /* UIImage+ISAppearance.m */,
 				5C5346281776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h */,
 				5C5346291776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m */,
 				5C53462A1776DEC700B0B5B2 /* UIView+ISAppearance.h */,
 				5C53462B1776DEC700B0B5B2 /* UIView+ISAppearance.m */,
-				1D26AD0072D984D05627396E /* UIImage+Gradient.m */,
-				1D26ABE48D1480E18261C743 /* UIImage+Gradient.h */,
+				1D26A99A467CBBF872AD13BD /* ImageManipulation */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -425,7 +439,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C53464E1776DEC700B0B5B2 /* UIButton+ISAppearance.h in Headers */,
-				5C5346501776DEC700B0B5B2 /* UIImage+ISAppearance.h in Headers */,
 				5C5346521776DEC700B0B5B2 /* UITableViewCell+ISAppearance.h in Headers */,
 				5C5346541776DEC700B0B5B2 /* UIView+ISAppearance.h in Headers */,
 				5C5346581776DEC700B0B5B2 /* ISAStyle.h in Headers */,
@@ -447,7 +460,9 @@
 				1D26A506A1EC817615D3E4D0 /* ISANSObjectValueConverter.h in Headers */,
 				5521B8D11778470B00C63162 /* ISAppearance.h in Headers */,
 				5521B8D21778470B00C63162 /* UIView+ISAInjection.h in Headers */,
-				1D26AF6481256EEE4A7B800F /* UIImage+Gradient.h in Headers */,
+				1D26A304CBF8616F64A98CD1 /* UIImage+ISAGradient.h in Headers */,
+				1D26A717BCED38061C7303F1 /* UIImage+ISAColor.h in Headers */,
+				1D26A9D0DA536FAD2F238C80 /* UIImage+ISATrim.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,7 +598,6 @@
 				5C5346191776DBF700B0B5B2 /* YKTag.m in Sources */,
 				5C53461A1776DBF700B0B5B2 /* YKUnknownNode.m in Sources */,
 				5C53464F1776DEC700B0B5B2 /* UIButton+ISAppearance.m in Sources */,
-				5C5346511776DEC700B0B5B2 /* UIImage+ISAppearance.m in Sources */,
 				5C5346531776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m in Sources */,
 				5C5346551776DEC700B0B5B2 /* UIView+ISAppearance.m in Sources */,
 				5C5346571776DEC700B0B5B2 /* ISAppearance.m in Sources */,
@@ -605,7 +619,9 @@
 				1D26A1C90CB10EE828F9E3BC /* UIFont+ISAObjectCreation.m in Sources */,
 				1D26AFCB15F023CCA401DA96 /* UIColor+ISAObjectCreation.m in Sources */,
 				1D26ADC76D7BE8BD18C52398 /* ISANSObjectValueConverter.m in Sources */,
-				1D26A93A561F6F0749961801 /* UIImage+Gradient.m in Sources */,
+				1D26A130C9E492F31F5E235B /* UIImage+ISAGradient.m in Sources */,
+				1D26A0825C2067BD87478B61 /* UIImage+ISAColor.m in Sources */,
+				1D26A0C11666B5C5B9A85972 /* UIImage+ISATrim.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

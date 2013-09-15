@@ -2,7 +2,7 @@
 // 
 
 #import "UITableViewCell+ISAppearance.h"
-#import "UIImage+ISAppearance.h"
+#import "UIImage+ISAColor.h"
 
 
 @implementation UITableViewCell (ISAppearance)
