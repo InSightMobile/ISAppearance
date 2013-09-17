@@ -87,7 +87,7 @@
                 ISAStyleEntry *entry = [ISAStyleEntry entryWithParams:node fromIndex:0 selectorParams:nil];
                 result = [entry invokeWithTarget:pClass];
             }
-            else if ([node[1] isKindOfClass:[NSDictionary class]]) {
+            else if ([node count] > 1 && [node[1] isKindOfClass:[NSDictionary class]]) {
                 ISAStyleEntry *entry = [ISAStyleEntry entryWithParams:node fromIndex:1 selectorParams:nil];
                 result = [entry invokeWithTarget:node[0]];
             }

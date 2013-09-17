@@ -178,7 +178,7 @@
             NSString *column = [*error userInfo][YKProblemColumnKey];
             NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
             *error =
-                    [[NSError alloc] initWithDomain:@"ISAColor" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];
+                    [[NSError alloc] initWithDomain:@"ISAppearance" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];
             return nil;
         }
         else {
@@ -258,7 +258,7 @@
     }
     else {
         UIAlertView *alertView =
-                [[UIAlertView alloc] initWithTitle:@"ISAColor error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                [[UIAlertView alloc] initWithTitle:@"ISAppearance error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 
         [alertView show];
     }
@@ -318,7 +318,7 @@
 {
     NSError *error = nil;
     if (![self processAppearanceWithError:&error]) {
-        NSLog(@"ISAColor failed with error %@", error);
+        NSLog(@"ISAppearance failed with error %@", error);
         return NO;
     }
     return YES;
@@ -477,7 +477,7 @@
             }
             return;
         }
-        else if ([key isEqual:@"ISAColor"]) {
+        else if ([key isEqual:@"ISAppearance"]) {
             [self processISAppearance:obj error:NULL ];
             return;
         }
@@ -705,7 +705,10 @@
     for (NSString *className in classes.reverseObjectEnumerator) {
 
         ISAStyle *classStyle = [_classStyles objectForKey:className];
-        [classStyle applyToTarget:target];
+        if(classStyle) {
+            [classStyle applyToTarget:target];
+        }
+
 
         NSMutableSet *stylesToApply = [NSMutableSet new];
 
