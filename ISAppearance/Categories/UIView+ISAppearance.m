@@ -21,6 +21,13 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
 - (void)setLayerImage:(UIImage *)image
 {
     self.layer.contents = (id) image.CGImage;
+    self.layer.contentsScale = [UIScreen mainScreen].scale;
+    self.layer.contentsCenter = CGRectMake(
+            image.capInsets.left / image.size.width,
+            image.capInsets.top / image.size.height, (
+                    image.size.width - image.capInsets.right - image.capInsets.left) /
+                    image.size.width, (image.size.height - image.capInsets.bottom -
+                    image.capInsets.top) / image.size.height);
 }
 
 - (void)setSeparatorImage:(UIImage *)image
