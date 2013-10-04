@@ -1,14 +1,14 @@
 //
-//  YAMLKit.m
-//  YAMLKit
+//  ISA_YAMLKit.m
+//  ISA_YAMLKit
 //
 //  Created by Patrick Thomson on 12/30/08.
 //  Copyright 2008 Patrick Thomson. All rights reserved.
 //
 
-#import "YAMLKit.h"
+#import "ISA_YAMLKit.h"
 
-@implementation YAMLKit
+@implementation ISA_YAMLKit
 
 #pragma mark Parser
 + (id)loadFromString:(NSString *)str
@@ -16,7 +16,7 @@
     if (!str || [str isEqualToString:@""])
         return nil;
 
-    YKParser *p = [[YKParser alloc] init];
+    ISA_YKParser *p = [[ISA_YKParser alloc] init];
     [p readString:str];
 
     NSArray *result = [p parse];
@@ -32,7 +32,7 @@
     if (!path || [path isEqualToString:@""])
         return nil;
 
-    YKParser *p = [[YKParser alloc] init];
+    ISA_YKParser *p = [[ISA_YKParser alloc] init];
     [p readFile:path];
 
     NSArray *result = [p parse];
@@ -58,14 +58,14 @@
 #pragma mark Emitter
 + (NSString *)dumpObject:(id)object
 {
-    YKEmitter *e = [[YKEmitter alloc] init];
+    ISA_YKEmitter *e = [[ISA_YKEmitter alloc] init];
     [e emitItem:object];
     return [e emittedString];
 }
 
 + (BOOL)dumpObject:(id)object toFile:(NSString *)path
 {
-    YKEmitter *e = [[YKEmitter alloc] init];
+    ISA_YKEmitter *e = [[ISA_YKEmitter alloc] init];
     [e emitItem:object];
     return [[e emittedString] writeToFile:path
                                atomically:YES
@@ -75,7 +75,7 @@
 
 + (BOOL)dumpObject:(id)object toURL:(NSURL *)path
 {
-    YKEmitter *e = [[YKEmitter alloc] init];
+    ISA_YKEmitter *e = [[ISA_YKEmitter alloc] init];
     [e emitItem:object];
     return [[e emittedString] writeToURL:path
                               atomically:YES

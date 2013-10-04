@@ -9,12 +9,12 @@
 
 #import "NSData+ISA_Base64.h"
 #import "YKConstants.h"
-#import "YKTag.h"
-#import "YKUnknownNode.h"
-#import "YKParser.h"
-#import "YKEmitter.h"
+#import "ISA_YKTag.h"
+#import "ISA_YKUnknownNode.h"
+#import "ISA_YKParser.h"
+#import "ISA_YKEmitter.h"
 
-@interface YAMLKit : NSObject
+@interface ISA_YAMLKit : NSObject
 {
 }
 

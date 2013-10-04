@@ -1,16 +1,16 @@
 //
-//  YKParser.h
-//  YAMLKit
+//  ISA_YKParser.h
+//  ISA_YAMLKit
 //
 //  Created by Patrick Thomson on 12/29/08.
 //
 
 #import <Foundation/Foundation.h>
-#import "YKTag.h"
+#import "ISA_YKTag.h"
 
 @protocol YKParserDelegate;
 
-@interface YKParser : NSObject
+@interface ISA_YKParser : NSObject
 {
     BOOL readyToParse;
     FILE *fileInput;
@@ -30,9 +30,9 @@
 
 - (NSArray *)parseWithError:(NSError **)e;
 
-- (void)addTag:(YKTag *)tag;
+- (void)addTag:(ISA_YKTag *)tag;
 
-- (void)addExplicitTag:(YKTag *)tag;
+- (void)addExplicitTag:(ISA_YKTag *)tag;
 
 @property(readonly) BOOL isReadyToParse;
 @property(readonly) NSDictionary *tagsByName;
@@ -45,7 +45,7 @@
 @protocol YKParserDelegate <NSObject>
 @optional
 
-- (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri;
+- (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri;
 
 @end
 

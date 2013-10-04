@@ -1,14 +1,14 @@
 //
-//  YKNativeTagManager.m
-//  YAMLKit
+//  ISA_YKNativeTagManager.m
+//  ISA_YAMLKit
 //
 //  Created by Faustino Osuna on 10/19/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "YKNativeTagManager.h"
+#import "ISA_YKNativeTagManager.h"
 #import "YKConstants.h"
-#import "NSString+YAMLKit.h"
+#import "NSString+ISA_YAMLKit.h"
 #import "NSData+ISA_Base64.h"
 
 // !!int: tag:yaml.org,2002:int ( http://yaml.org/type/int.html )
@@ -35,15 +35,15 @@
 #define YAML_TIMESTAMP_YMD_REGEX        @"^(?:[0-9]{4}-[0-9]{2}-[0-9]{2})$"
 #define YAML_TIMESTAMP_YMDTZ_REGEX      @"^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})(?:[Tt]|[ \\t]+)([0-9]{1,2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]*))?[ \\t]*(?:Z|(?:([-+][0-9]{1,2})(?::([0-9]{2}))?))?$"
 
-@interface YKNativeTagManager (YKNativeTagManagerMethods)
+@interface ISA_YKNativeTagManager (YKNativeTagManagerMethods)
 
 - (void)_addBuiltinTags;
 
 @end
 
-@implementation YKNativeTagManager
+@implementation ISA_YKNativeTagManager
 
-static YKNativeTagManager *__sharedManager = nil;
+static ISA_YKNativeTagManager *__sharedManager = nil;
 
 + (id)sharedManager
 {
@@ -111,11 +111,11 @@ static YKNativeTagManager *__sharedManager = nil;
     [mutableBuiltInTags setObject:timestampTag forKey:YKTimeStampTagDeclaration];
 
     // !!str: tag:yaml.org,2002:str ( http://yaml.org/type/str.html )
-    YKTag *stringTag = [[YKTag alloc] initWithURI:YKStringTagDeclaration delegate:self];
+    ISA_YKTag *stringTag = [[ISA_YKTag alloc] initWithURI:YKStringTagDeclaration delegate:self];
     [mutableBuiltInTags setObject:stringTag forKey:YKStringTagDeclaration];
 
     // !!binary: tag:yaml.org,2002:binary ( http://yaml.org/type/binary.html )
-    YKTag *binaryTag = [[YKTag alloc] initWithURI:YKBinaryTagDeclaration delegate:self];
+    ISA_YKTag *binaryTag = [[ISA_YKTag alloc] initWithURI:YKBinaryTagDeclaration delegate:self];
     [mutableBuiltInTags setObject:binaryTag forKey:YKBinaryTagDeclaration];
 
     tagsByName = [[NSDictionary alloc] initWithDictionary:mutableBuiltInTags];
@@ -151,7 +151,7 @@ static YKNativeTagManager *__sharedManager = nil;
     return self;
 }
 */
-- (id)tag:(YKTag *)tag decodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
+- (id)tag:(ISA_YKTag *)tag decodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
 {
     id hint = [extraInfo valueForKey:@"hint"];
     NSArray *components = [extraInfo valueForKey:@"components"];
@@ -161,15 +161,15 @@ static YKNativeTagManager *__sharedManager = nil;
         if (base == 2) {
             return [NSNumber numberWithInteger:
                     ([[[components objectAtIndex:0] objectAtIndex:1] isEqualToString:@"-"] ? -1 : 1) *
-                            [[[components objectAtIndex:0] objectAtIndex:2] intValueFromBase:2]];
+                            [[[components objectAtIndex:0] objectAtIndex:2] isa_intValueFromBase:2]];
         } else if (base == 60) {
             NSInteger resultValue = 0;
             for (NSString *component in [stringValue componentsSeparatedByString:@":"]) {
-                resultValue = (resultValue * 60) + [component intValueFromBase:10];
+                resultValue = (resultValue * 60) + [component isa_intValueFromBase:10];
             }
             return [NSNumber numberWithInteger:resultValue];
         } else {
-            return [NSNumber numberWithInteger:[stringValue intValueFromBase:base]];
+            return [NSNumber numberWithInteger:[stringValue isa_intValueFromBase:base]];
         }
     } else if (tag == [tagsByName valueForKey:YKFloatTagDeclaration]) {
         int base = [hint intValue];
@@ -218,7 +218,7 @@ static YKNativeTagManager *__sharedManager = nil;
 
         NSInteger fractional = [[[components objectAtIndex:0] objectAtIndex:7] intValue];
 
-        NSInteger deltaFromGMTInSeconds = ([[[components objectAtIndex:0] objectAtIndex:8] intValueFromBase:10] * 360) +
+        NSInteger deltaFromGMTInSeconds = ([[[components objectAtIndex:0] objectAtIndex:8] isa_intValueFromBase:10] * 360) +
                 ([[[components objectAtIndex:0] objectAtIndex:9] intValue] * 60);
 
         NSTimeZone *timeZone = nil;
@@ -243,7 +243,7 @@ static YKNativeTagManager *__sharedManager = nil;
     return nil;
 }
 
-- (id)tag:(YKTag *)tag castValue:(id)value fromTag:(YKTag *)castingTag
+- (id)tag:(ISA_YKTag *)tag castValue:(id)value fromTag:(ISA_YKTag *)castingTag
 {
     if (!castingTag) {
         if (tag == [tagsByName valueForKey:YKStringTagDeclaration])
@@ -251,12 +251,12 @@ static YKNativeTagManager *__sharedManager = nil;
         else if (tag == [tagsByName valueForKey:YKNullTagDeclaration])
             return [NSNull null];
         else if (tag == [tagsByName valueForKey:YKBinaryTagDeclaration])
-            return [NSData ISA_dataFromBase64String:value];
+            return [NSData isa_dataFromBase64String:value];
     }
     return nil;
 }
 
-- (id)tag:(YKTag *)tag castValue:(id)value toTag:(YKTag *)castingTag
+- (id)tag:(ISA_YKTag *)tag castValue:(id)value toTag:(ISA_YKTag *)castingTag
 {
     // Try to cast results to an 'Integer'
     if (castingTag == [tagsByName valueForKey:YKIntegerTagDeclaration]) {

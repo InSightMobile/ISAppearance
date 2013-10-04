@@ -1,34 +1,34 @@
 //
-//  YKUnknownNode.m
-//  YAMLKit
+//  ISA_YKUnknownNode.m
+//  ISA_YAMLKit
 //
 //  Created by Faustino Osuna on 10/18/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "YKUnknownNode.h"
+#import "ISA_YKUnknownNode.h"
 
-inline YKRange YKMakeRange(YKMark start, YKMark end) {
-    YKRange results = {start, end};
+inline ISA_YKRange ISA_YKMakeRange(ISA_YKMark start, ISA_YKMark end) {
+    ISA_YKRange results = {start, end};
     return results;
 }
 
-inline YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx) {
-    YKMark results = {line, column, idx};
+inline ISA_YKMark ISA_YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx) {
+    ISA_YKMark results = {line, column, idx};
     return results;
 }
 
-@implementation YKUnknownNode
+@implementation ISA_YKUnknownNode
 
-+ (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(YKTag *)aImplicitTag
-                     explicitTag:(YKTag *)aExplicitTag position:(YKRange)aPosition
++ (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(ISA_YKTag *)aImplicitTag
+                     explicitTag:(ISA_YKTag *)aExplicitTag position:(ISA_YKRange)aPosition
 {
     return [[self alloc] initWithStringValue:aStringValue implicitTag:aImplicitTag explicitTag:aExplicitTag
                                     position:aPosition];
 }
 
-- (id)initWithStringValue:(NSString *)aStringValue implicitTag:(YKTag *)aImplicitTag explicitTag:(YKTag *)aExplicitTag
-                 position:(YKRange)aPosition
+- (id)initWithStringValue:(NSString *)aStringValue implicitTag:(ISA_YKTag *)aImplicitTag explicitTag:(ISA_YKTag *)aExplicitTag
+                 position:(ISA_YKRange)aPosition
 {
     if (!(self = [super init]))
         return nil;
@@ -36,7 +36,7 @@ inline YKMark YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx) {
     stringValue = [aStringValue copy];
     implicitTag = aImplicitTag;
     explicitTag = aExplicitTag;
-    memcpy(&position, &aPosition, sizeof(YKRange));
+    memcpy(&position, &aPosition, sizeof(ISA_YKRange));
 
     return self;
 }

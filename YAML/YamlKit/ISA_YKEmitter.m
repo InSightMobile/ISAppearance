@@ -1,20 +1,20 @@
 //
-//  YKEmitter.m
-//  YAMLKit
+//  ISA_YKEmitter.m
+//  ISA_YAMLKit
 //
 //  Created by Patrick Thomson on 12/29/08.
 //
 
-#import "YKEmitter.h"
+#import "ISA_YKEmitter.h"
 #import "yaml.h"
 
-@interface YKEmitter (YKEmitterPrivateMEthods)
+@interface ISA_YKEmitter (YKEmitterPrivateMEthods)
 
 - (int)_writeItem:(id)item toDocument:(yaml_document_t *)document;
 
 @end
 
-@implementation YKEmitter
+@implementation ISA_YKEmitter
 
 @synthesize usesExplicitDelimiters, encoding;
 
@@ -115,7 +115,7 @@
             converted = YAML_UTF16BE_ENCODING;
             break;
         default:
-            NSLog(@"Unsupported encoding passed to YKEmitter#setEncoding:.");
+            NSLog(@"Unsupported encoding passed to ISA_YKEmitter#setEncoding:.");
             break;
     }
     yaml_emitter_set_encoding(opaque_emitter, converted);

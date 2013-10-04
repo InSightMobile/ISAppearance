@@ -1,5 +1,5 @@
 #import "ISAppearance.h"
-#import "YAMLKit.h"
+#import "ISA_YAMLKit.h"
 #import "ISAValueConverter.h"
 #import "ISAStyleEntry.h"
 #import "NSObject+ISA_Swizzle.h"
@@ -7,12 +7,10 @@
 
 @interface ISAppearance () <YKParserDelegate>
 
-
 @property(nonatomic, strong) NSMutableArray *definitions;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
+
 @end
-
-
 
 
 @implementation ISAppearance
@@ -24,8 +22,9 @@
     BOOL _monitoring;
     NSMutableArray *_monitoredAssets;
     NSMutableArray *_assets;
-    NSMutableSet *_wachedFiles;
+    NSMutableSet *_watchedFiles;
     BOOL _isAppearanceLoaded;
+    NSMutableSet *_globalStyles;
 }
 
 + (ISAppearance *)sharedInstance
@@ -40,10 +39,7 @@
 
 + (id)loadDataFromFile:(NSString *)path
 {
-    return [YAMLKit loadFromFile:path];
-
-    NSError *error = nil;
-    return [[self sharedInstance] loadAppearanceData:path error:&error];
+    return [ISA_YAMLKit loadFromFile:path];
 }
 
 
@@ -51,14 +47,29 @@
 {
     self = [super init];
     if (self) {
+        [self.class prepareAppearance];
+
         _classStyles = [NSMutableDictionary dictionary];
         _objectStyles = [NSMutableDictionary dictionary];
         _definitions = [NSMutableArray array];
         _sources = [NSMutableArray array];
-
-        [self.class prepareAppearance];
+        _globalStyles = [NSMutableSet setWithCapacity:6];
+        [self addDefaultStyles];
     }
     return self;
+}
+
+- (void)addDefaultStyles
+{
+    [self addGlobalStyle:[ISAppearance isPad] ? @"iPad" : @"iPhone"];
+    [self addGlobalStyle:[ISAppearance isIOS7] ? @"iOS7" : @"~iOS7"];
+    [self addGlobalStyle:[ISAppearance isPhone5] ? @"Phone5" : @"~Phone5"];
+    [self addGlobalStyle:[ISAppearance isRetina] ? @"Retina" : @"~Retina"];
+}
+
+- (void)addGlobalStyle:(NSString *)string
+{
+    [_globalStyles addObjectsFromArray:[string componentsSeparatedByString:@":"]];
 }
 
 + (void)prepareAppearance
@@ -68,23 +79,23 @@
 
         if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)]) {
             [UIView ISA_swizzleClass];
-            // do whatever you need to do
         }
 
         if ([[UIViewController class] respondsToSelector:@selector(ISA_swizzleClass)]) {
             [UIViewController ISA_swizzleClass];
-            // do whatever you need to do
         }
     });
 }
 
 - (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback
 {
-    if (_wachedFiles) _wachedFiles = [NSMutableSet setWithCapacity:1];
-    if ([_wachedFiles containsObject:path]) {
+    if (_watchedFiles) {
+        _watchedFiles = [NSMutableSet setWithCapacity:1];
+    }
+    if ([_watchedFiles containsObject:path]) {
         return;
     }
-    [_wachedFiles addObject:path];
+    [_watchedFiles addObject:path];
 
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     int fileDescriptor = open([path UTF8String], O_EVTONLY);
@@ -95,14 +106,14 @@
     dispatch_source_set_event_handler(source, ^{
         unsigned long flags = dispatch_source_get_data(source);
         if (once) {
-            [_wachedFiles removeObject:path];
+            [_watchedFiles removeObject:path];
             dispatch_source_cancel(source);
             callback();
         }
         else if (flags & DISPATCH_VNODE_DELETE) {
             dispatch_source_cancel(source);
             callback();
-            [_wachedFiles removeObject:path];
+            [_watchedFiles removeObject:path];
             [self watch:path once:once withCallback:callback];
         }
         else {
@@ -110,7 +121,7 @@
         }
     });
     dispatch_source_set_cancel_handler(source, ^(void) {
-        [_wachedFiles removeObject:path];
+        [_watchedFiles removeObject:path];
         close(fileDescriptor);
     });
     dispatch_resume(source);
@@ -139,8 +150,6 @@
 #endif
 }
 
-
-
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
 {
     [self loadAppearanceFromFile:file];
@@ -150,11 +159,11 @@
     }
 }
 
-- (YKTag *)parser:(YKParser *)parser tagForURI:(NSString *)uri
+- (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri
 {
     if (uri.length < 1)return nil;
 
-    YKTag *tag = nil;
+    ISA_YKTag *tag = nil;
 
     NSString *className = uri;
 
@@ -169,7 +178,7 @@
 
 - (id)loadAppearanceData:(NSString *)file error:(NSError * __autoreleasing *)error
 {
-    YKParser *parser = [[YKParser alloc] init];
+    ISA_YKParser *parser = [[ISA_YKParser alloc] init];
     parser.delegate = self;
     if ([parser readFile:file]) {
         id result = [parser parseWithError:error];
@@ -203,6 +212,9 @@
     if (file) {
         [self loadAppearanceFromFile:file];
     }
+    if (_monitoring) {
+        [self watchAndReloadPath:file once:NO ];
+    }
 }
 
 - (NSString *)appearancePathForName:(NSString *)name
@@ -218,13 +230,19 @@
     return path;
 }
 
-- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory
+- (void)monitorDirectory:(NSString *)directory
 {
 #if (TARGET_IPHONE_SIMULATOR)
     if (directory.length) {
         [self addAssetsFolder:directory withMonitoring:YES];
     }
 #endif
+}
+
+
+- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory
+{
+    [self monitorDirectory:directory];
     [self loadAppearanceNamed:name];
 }
 
@@ -470,34 +488,44 @@
 
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
-        if ([key isEqual:@"UIAppearance"]) {
-            [self processUIAppearance:obj];
-            if (_monitoring) {
+        NSArray *keys = [key componentsSeparatedByString:@":"];
+
+        NSString *defkey = keys[0];
+
+        if ([defkey isEqual:@"UIAppearance"]) {
+            if ([self checkStyleConformance:keys]) {
+                [self processUIAppearance:obj];
+                if (_monitoring) {
+                    [self processISAppearance:obj error:NULL ];
+                }
+            }
+            return;
+        }
+        else if ([defkey isEqual:@"ISAppearance"]) {
+            if ([self checkStyleConformance:keys]) {
                 [self processISAppearance:obj error:NULL ];
             }
             return;
         }
-        else if ([key isEqual:@"ISAppearance"]) {
-            [self processISAppearance:obj error:NULL ];
-            return;
-        }
-        else if ([key isEqual:@"include"]) {
-            NSString *file = [self appearancePathForName:obj];
-            if (file) {
-                id includeDefinitions = [self loadAppearanceData:file error:&error];
-                if (includeDefinitions) {
-                    if ([self processISAppearance:includeDefinitions error:&error]) {
-                        return;
+        else if ([defkey isEqual:@"include"]) {
+            if ([self checkStyleConformance:keys]) {
+                NSString *file = [self appearancePathForName:obj];
+                if (file) {
+                    id includeDefinitions = [self loadAppearanceData:file error:&error];
+                    if (includeDefinitions) {
+                        if ([self processISAppearance:includeDefinitions error:&error]) {
+                            return;
+                        }
                     }
                 }
+                // if something failed
+                result = NO;
+                *stop = YES;
             }
-            // if something failed
-            result = NO;
-            *stop = YES;
             return;
         }
 
-        NSString *selector = key;
+        NSArray *selector = keys;
         NSMutableArray *params = [self styleBlockWithParams:obj selectorParams:nil];
         if (!params) {
             return;
@@ -510,9 +538,19 @@
     return result;
 }
 
-- (void)addParams:(NSMutableArray *)params toSelector:(NSString *)selector
+- (BOOL)checkStyleConformance:(NSArray *)selectors
 {
-    NSArray *components = [selector componentsSeparatedByString:@":"];
+    for (int i = 1; i < selectors.count; i++) {
+        if(![_globalStyles containsObject:selectors[i]]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)addParams:(NSMutableArray *)params toSelector:(NSArray *)components
+{
+    //NSArray *components = [selector componentsSeparatedByString:@":"];
     NSString *className = components[0];
     Class baseClass = NSClassFromString(className);
     if (!baseClass) {
@@ -520,9 +558,9 @@
     }
     className = NSStringFromClass(baseClass);
 
-    NSArray *userCompontnts = [components subarrayWithRange:NSMakeRange(1, components.count - 1)];
+    NSArray *userComponents = [components subarrayWithRange:NSMakeRange(1, components.count - 1)];
 
-    NSSet *selectors = [NSSet setWithArray:userCompontnts];
+    NSSet *selectors = [NSSet setWithArray:userComponents];
     ISAStyle *style = [self styleWithClass:className selectors:selectors];
 
     if (style) {
@@ -636,9 +674,6 @@
     return invocations;
 }
 
-
-
-
 - (void)registerObject:(id)object
 {
     if (!_registeredObjects) {
@@ -679,6 +714,16 @@
 
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
 {
+    NSSet *userClasses = nil;
+    if(classNames.length) {
+        NSMutableSet *classes = [NSMutableSet setWithArray:[classNames componentsSeparatedByString:@":"]];
+        [classes unionSet:_globalStyles];
+        userClasses = classes;
+    }
+    else {
+        userClasses = [_globalStyles copy];
+    }
+
     if (!_isAppearanceLoaded) {
         [self registerObject:target];
         return NO;
@@ -699,8 +744,6 @@
         }
     }
 
-    NSSet *userClasses = [NSSet setWithArray:[classNames componentsSeparatedByString:@":"]];
-
     // apply individual classes
     for (NSString *className in classes.reverseObjectEnumerator) {
 
@@ -708,7 +751,6 @@
         if(classStyle) {
             [classStyle applyToTarget:target];
         }
-
 
         NSMutableSet *stylesToApply = [NSMutableSet new];
 

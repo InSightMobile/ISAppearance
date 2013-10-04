@@ -245,7 +245,7 @@ bool separateLines,
 //
 // returns the autoreleased NSData representation of the base64 string
 //
-+ (NSData *)ISA_dataFromBase64String:(NSString *)aString
++ (NSData *)isa_dataFromBase64String:(NSString *)aString
 {
     NSData *data = [aString dataUsingEncoding:NSASCIIStringEncoding];
     size_t outputLength;
@@ -264,7 +264,7 @@ bool separateLines,
 // returns an autoreleased NSString being the base 64 representation of the
 //	receiver.
 //
-- (NSString *)ISA_base64EncodedString
+- (NSString *)isa_base64EncodedString
 {
     size_t outputLength;
     char *outputBuffer =

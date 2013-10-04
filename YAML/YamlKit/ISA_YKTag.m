@@ -1,28 +1,28 @@
 //
-//  YKTag.m
-//  YAMLKit
+//  ISA_YKTag.m
+//  ISA_YAMLKit
 //
 //  Created by Faustino Osuna on 9/30/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "YKTag.h"
+#import "ISA_YKTag.h"
 //#import "RegexKitLite.h"
-#import "YKUnknownNode.h"
+#import "ISA_YKUnknownNode.h"
 
-@interface YKTag (YKTagPrivateMethods)
+@interface ISA_YKTag (YKTagPrivateMethods)
 
 // Following method is used for internal subclasses.  This method allows for subclasses to determine how a stringValue
 // should be decoded.  This method is called from -decodeFromString:explicitTag:.  -decodeFromString:explictTag: attempts
 // to decode a string value using -_internalDecodeFromString:extraInfo:, if a value was successfully decoded it then
 // attempts to cast the value (if an explicitTag was specified) using -castValue:toTag:.  If -castValue:toTag: is unsuccessful
 // then -castValue:toTag: attempts to call the explicit's tag -castValue:fromTag:.  If the explicit tag does not return a value
-// then the system cannot cast and the value is returned as an YKUnknownNode vice a native scalar value.
+// then the system cannot cast and the value is returned as an ISA_YKUnknownNode vice a native scalar value.
 - (id)_internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo;
 
 @end
 
-@implementation YKTag;
+@implementation ISA_YKTag;
 
 - (id)initWithURI:(NSString *)aURI delegate:(id <YKTagDelegate>)aDelegate
 {
@@ -52,7 +52,7 @@
     return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), verbatim];
 }
 
-- (id)decodeFromString:(NSString *)stringValue explicitTag:(YKTag *)explicitTag
+- (id)decodeFromString:(NSString *)stringValue explicitTag:(ISA_YKTag *)explicitTag
 {
     // If string cannot be decoded, nil is returned.  If the string was decoded and cannot be casted, YKUknownNode is returned
     id resultingValue = [self _internalDecodeFromString:stringValue
@@ -65,8 +65,8 @@
     if (castedValue)
         return castedValue;
 
-    return [YKUnknownNode unknownNodeWithStringValue:stringValue implicitTag:self explicitTag:explicitTag
-                                            position:YKMakeRange(YKMakeMark(0, 0, 0), YKMakeMark(0, 0, 0))];
+    return [ISA_YKUnknownNode unknownNodeWithStringValue:stringValue implicitTag:self explicitTag:explicitTag
+                                                position:ISA_YKMakeRange(ISA_YKMakeMark(0, 0, 0), ISA_YKMakeMark(0, 0, 0))];
 }
 
 - (id)_internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
@@ -81,7 +81,7 @@
     return [(id <YKTagDelegate>) delegate tag:self decodeFromString:stringValue extraInfo:extraInfo];
 }
 
-- (id)castValue:(id)value fromTag:(YKTag *)castingTag
+- (id)castValue:(id)value fromTag:(ISA_YKTag *)castingTag
 {
     id result = nil;
     if (!castingTag) {
@@ -96,7 +96,7 @@
     return [(id <YKTagDelegate>) delegate tag:self castValue:value fromTag:castingTag];
 }
 
-- (id)castValue:(id)value toTag:(YKTag *)castingTag
+- (id)castValue:(id)value toTag:(ISA_YKTag *)castingTag
 {
 
     id resultingValue = [castingTag castValue:value fromTag:self];
@@ -134,7 +134,7 @@
 
 @end
 
-@implementation YKRegexTag : YKTag
+@implementation YKRegexTag : ISA_YKTag
 
 - (id)initWithURI:(NSString *)aURI delegate:(id <YKTagDelegate>)aDelegate
 {

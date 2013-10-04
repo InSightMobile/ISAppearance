@@ -43,14 +43,14 @@
 		5C5346101776DBF700B0B5B2 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F21776DBF700B0B5B2 /* scanner.c */; };
 		5C5346111776DBF700B0B5B2 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F31776DBF700B0B5B2 /* writer.c */; };
 		5C5346121776DBF700B0B5B2 /* NSData+ISA_Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */; };
-		5C5346131776DBF700B0B5B2 /* NSString+YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FA1776DBF700B0B5B2 /* NSString+YAMLKit.m */; };
-		5C5346141776DBF700B0B5B2 /* YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FC1776DBF700B0B5B2 /* YAMLKit.m */; };
+		5C5346131776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FA1776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m */; };
+		5C5346141776DBF700B0B5B2 /* ISA_YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FC1776DBF700B0B5B2 /* ISA_YAMLKit.m */; };
 		5C5346151776DBF700B0B5B2 /* YKConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FE1776DBF700B0B5B2 /* YKConstants.m */; };
-		5C5346161776DBF700B0B5B2 /* YKEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346001776DBF700B0B5B2 /* YKEmitter.m */; };
-		5C5346171776DBF700B0B5B2 /* YKNativeTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346021776DBF700B0B5B2 /* YKNativeTagManager.m */; };
-		5C5346181776DBF700B0B5B2 /* YKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346041776DBF700B0B5B2 /* YKParser.m */; };
-		5C5346191776DBF700B0B5B2 /* YKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346061776DBF700B0B5B2 /* YKTag.m */; };
-		5C53461A1776DBF700B0B5B2 /* YKUnknownNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346081776DBF700B0B5B2 /* YKUnknownNode.m */; };
+		5C5346161776DBF700B0B5B2 /* ISA_YKEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346001776DBF700B0B5B2 /* ISA_YKEmitter.m */; };
+		5C5346171776DBF700B0B5B2 /* ISA_YKNativeTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346021776DBF700B0B5B2 /* ISA_YKNativeTagManager.m */; };
+		5C5346181776DBF700B0B5B2 /* ISA_YKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346041776DBF700B0B5B2 /* ISA_YKParser.m */; };
+		5C5346191776DBF700B0B5B2 /* ISA_YKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346061776DBF700B0B5B2 /* ISA_YKTag.m */; };
+		5C53461A1776DBF700B0B5B2 /* ISA_YKUnknownNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346081776DBF700B0B5B2 /* ISA_YKUnknownNode.m */; };
 		5C53461C1776DC5100B0B5B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461B1776DC5100B0B5B2 /* UIKit.framework */; };
 		5C53461E1776DC5700B0B5B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461D1776DC5700B0B5B2 /* QuartzCore.framework */; };
 		5C5346201776DCFB00B0B5B2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */; };
@@ -154,22 +154,22 @@
 		5C5345F51776DBF700B0B5B2 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml_private.h; sourceTree = "<group>"; };
 		5C5345F71776DBF700B0B5B2 /* NSData+ISA_Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ISA_Base64.h"; sourceTree = "<group>"; };
 		5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ISA_Base64.m"; sourceTree = "<group>"; };
-		5C5345F91776DBF700B0B5B2 /* NSString+YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+YAMLKit.h"; sourceTree = "<group>"; };
-		5C5345FA1776DBF700B0B5B2 /* NSString+YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+YAMLKit.m"; sourceTree = "<group>"; };
-		5C5345FB1776DBF700B0B5B2 /* YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YAMLKit.h; sourceTree = "<group>"; };
-		5C5345FC1776DBF700B0B5B2 /* YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YAMLKit.m; sourceTree = "<group>"; };
+		5C5345F91776DBF700B0B5B2 /* NSString+ISA_YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ISA_YAMLKit.h"; sourceTree = "<group>"; };
+		5C5345FA1776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ISA_YAMLKit.m"; sourceTree = "<group>"; };
+		5C5345FB1776DBF700B0B5B2 /* ISA_YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YAMLKit.h; sourceTree = "<group>"; };
+		5C5345FC1776DBF700B0B5B2 /* ISA_YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YAMLKit.m; sourceTree = "<group>"; };
 		5C5345FD1776DBF700B0B5B2 /* YKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKConstants.h; sourceTree = "<group>"; };
 		5C5345FE1776DBF700B0B5B2 /* YKConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKConstants.m; sourceTree = "<group>"; };
-		5C5345FF1776DBF700B0B5B2 /* YKEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKEmitter.h; sourceTree = "<group>"; };
-		5C5346001776DBF700B0B5B2 /* YKEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKEmitter.m; sourceTree = "<group>"; };
-		5C5346011776DBF700B0B5B2 /* YKNativeTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKNativeTagManager.h; sourceTree = "<group>"; };
-		5C5346021776DBF700B0B5B2 /* YKNativeTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKNativeTagManager.m; sourceTree = "<group>"; };
-		5C5346031776DBF700B0B5B2 /* YKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKParser.h; sourceTree = "<group>"; };
-		5C5346041776DBF700B0B5B2 /* YKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKParser.m; sourceTree = "<group>"; };
-		5C5346051776DBF700B0B5B2 /* YKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKTag.h; sourceTree = "<group>"; };
-		5C5346061776DBF700B0B5B2 /* YKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKTag.m; sourceTree = "<group>"; };
-		5C5346071776DBF700B0B5B2 /* YKUnknownNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKUnknownNode.h; sourceTree = "<group>"; };
-		5C5346081776DBF700B0B5B2 /* YKUnknownNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKUnknownNode.m; sourceTree = "<group>"; };
+		5C5345FF1776DBF700B0B5B2 /* ISA_YKEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKEmitter.h; sourceTree = "<group>"; };
+		5C5346001776DBF700B0B5B2 /* ISA_YKEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKEmitter.m; sourceTree = "<group>"; };
+		5C5346011776DBF700B0B5B2 /* ISA_YKNativeTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKNativeTagManager.h; sourceTree = "<group>"; };
+		5C5346021776DBF700B0B5B2 /* ISA_YKNativeTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKNativeTagManager.m; sourceTree = "<group>"; };
+		5C5346031776DBF700B0B5B2 /* ISA_YKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKParser.h; sourceTree = "<group>"; };
+		5C5346041776DBF700B0B5B2 /* ISA_YKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKParser.m; sourceTree = "<group>"; };
+		5C5346051776DBF700B0B5B2 /* ISA_YKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKTag.h; sourceTree = "<group>"; };
+		5C5346061776DBF700B0B5B2 /* ISA_YKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKTag.m; sourceTree = "<group>"; };
+		5C5346071776DBF700B0B5B2 /* ISA_YKUnknownNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKUnknownNode.h; sourceTree = "<group>"; };
+		5C5346081776DBF700B0B5B2 /* ISA_YKUnknownNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKUnknownNode.m; sourceTree = "<group>"; };
 		5C53461B1776DC5100B0B5B2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5C53461D1776DC5700B0B5B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -351,22 +351,22 @@
 			children = (
 				5C5345F71776DBF700B0B5B2 /* NSData+ISA_Base64.h */,
 				5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */,
-				5C5345F91776DBF700B0B5B2 /* NSString+YAMLKit.h */,
-				5C5345FA1776DBF700B0B5B2 /* NSString+YAMLKit.m */,
-				5C5345FB1776DBF700B0B5B2 /* YAMLKit.h */,
-				5C5345FC1776DBF700B0B5B2 /* YAMLKit.m */,
+				5C5345F91776DBF700B0B5B2 /* NSString+ISA_YAMLKit.h */,
+				5C5345FA1776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m */,
+				5C5345FB1776DBF700B0B5B2 /* ISA_YAMLKit.h */,
+				5C5345FC1776DBF700B0B5B2 /* ISA_YAMLKit.m */,
 				5C5345FD1776DBF700B0B5B2 /* YKConstants.h */,
 				5C5345FE1776DBF700B0B5B2 /* YKConstants.m */,
-				5C5345FF1776DBF700B0B5B2 /* YKEmitter.h */,
-				5C5346001776DBF700B0B5B2 /* YKEmitter.m */,
-				5C5346011776DBF700B0B5B2 /* YKNativeTagManager.h */,
-				5C5346021776DBF700B0B5B2 /* YKNativeTagManager.m */,
-				5C5346031776DBF700B0B5B2 /* YKParser.h */,
-				5C5346041776DBF700B0B5B2 /* YKParser.m */,
-				5C5346051776DBF700B0B5B2 /* YKTag.h */,
-				5C5346061776DBF700B0B5B2 /* YKTag.m */,
-				5C5346071776DBF700B0B5B2 /* YKUnknownNode.h */,
-				5C5346081776DBF700B0B5B2 /* YKUnknownNode.m */,
+				5C5345FF1776DBF700B0B5B2 /* ISA_YKEmitter.h */,
+				5C5346001776DBF700B0B5B2 /* ISA_YKEmitter.m */,
+				5C5346011776DBF700B0B5B2 /* ISA_YKNativeTagManager.h */,
+				5C5346021776DBF700B0B5B2 /* ISA_YKNativeTagManager.m */,
+				5C5346031776DBF700B0B5B2 /* ISA_YKParser.h */,
+				5C5346041776DBF700B0B5B2 /* ISA_YKParser.m */,
+				5C5346051776DBF700B0B5B2 /* ISA_YKTag.h */,
+				5C5346061776DBF700B0B5B2 /* ISA_YKTag.m */,
+				5C5346071776DBF700B0B5B2 /* ISA_YKUnknownNode.h */,
+				5C5346081776DBF700B0B5B2 /* ISA_YKUnknownNode.m */,
 			);
 			path = YamlKit;
 			sourceTree = "<group>";
@@ -596,14 +596,14 @@
 				5C5346101776DBF700B0B5B2 /* scanner.c in Sources */,
 				5C5346111776DBF700B0B5B2 /* writer.c in Sources */,
 				5C5346121776DBF700B0B5B2 /* NSData+ISA_Base64.m in Sources */,
-				5C5346131776DBF700B0B5B2 /* NSString+YAMLKit.m in Sources */,
-				5C5346141776DBF700B0B5B2 /* YAMLKit.m in Sources */,
+				5C5346131776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m in Sources */,
+				5C5346141776DBF700B0B5B2 /* ISA_YAMLKit.m in Sources */,
 				5C5346151776DBF700B0B5B2 /* YKConstants.m in Sources */,
-				5C5346161776DBF700B0B5B2 /* YKEmitter.m in Sources */,
-				5C5346171776DBF700B0B5B2 /* YKNativeTagManager.m in Sources */,
-				5C5346181776DBF700B0B5B2 /* YKParser.m in Sources */,
-				5C5346191776DBF700B0B5B2 /* YKTag.m in Sources */,
-				5C53461A1776DBF700B0B5B2 /* YKUnknownNode.m in Sources */,
+				5C5346161776DBF700B0B5B2 /* ISA_YKEmitter.m in Sources */,
+				5C5346171776DBF700B0B5B2 /* ISA_YKNativeTagManager.m in Sources */,
+				5C5346181776DBF700B0B5B2 /* ISA_YKParser.m in Sources */,
+				5C5346191776DBF700B0B5B2 /* ISA_YKTag.m in Sources */,
+				5C53461A1776DBF700B0B5B2 /* ISA_YKUnknownNode.m in Sources */,
 				5C53464F1776DEC700B0B5B2 /* UIButton+ISAppearance.m in Sources */,
 				5C5346531776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m in Sources */,
 				5C5346551776DEC700B0B5B2 /* UIView+ISAppearance.m in Sources */,

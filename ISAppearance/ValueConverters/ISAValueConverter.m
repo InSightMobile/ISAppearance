@@ -46,12 +46,12 @@
     return converter;
 }
 
-- (id)tag:(YKTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
+- (id)tag:(ISA_YKTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
 {
     return [self objectWithISANode:node];
 }
 
-- (id)tag:(YKTag *)tag castValue:(id)value fromTag:(YKTag *)castingTag
+- (id)tag:(ISA_YKTag *)tag castValue:(id)value fromTag:(ISA_YKTag *)castingTag
 {
     return [self objectWithISANode:value];
 }
@@ -62,9 +62,9 @@
 }
 
 
-- (YKTag *)parsingTagForURI:(NSString *)uri
+- (ISA_YKTag *)parsingTagForURI:(NSString *)uri
 {
-    return [[YKTag alloc] initWithURI:uri delegate:self];
+    return [[ISA_YKTag alloc] initWithURI:uri delegate:self];
 }
 
 + (NSMutableDictionary *)convertersByName

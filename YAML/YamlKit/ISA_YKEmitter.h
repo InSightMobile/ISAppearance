@@ -1,13 +1,13 @@
 //
 //  YKEncoder.h
-//  YAMLKit
+//  ISA_YAMLKit
 //
 //  Created by Patrick Thomson on 12/29/08.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface YKEmitter : NSObject
+@interface ISA_YKEmitter : NSObject
 {
     NSMutableData *buffer;
     BOOL usesExplicitDelimiters;

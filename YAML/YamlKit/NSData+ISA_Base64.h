@@ -29,9 +29,9 @@ bool separateLines,
 
 @interface NSData (ISA_Base64)
 
-+ (NSData *)ISA_dataFromBase64String:(NSString *)aString;
++ (NSData *)isa_dataFromBase64String:(NSString *)aString;
 
-- (NSString *)ISA_base64EncodedString;
+- (NSString *)isa_base64EncodedString;
 
 @end
 

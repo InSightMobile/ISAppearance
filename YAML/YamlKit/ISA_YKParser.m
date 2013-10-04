@@ -1,14 +1,14 @@
 //
-//  YKParser.m
-//  YAMLKit
+//  ISA_YKParser.m
+//  ISA_YAMLKit
 //
 //  Created by Patrick Thomson on 12/29/08.
 //
 
 #import "yaml.h"
-#import "YKParser.h"
+#import "ISA_YKParser.h"
 #import "YKConstants.h"
-#import "YKNativeTagManager.h"
+#import "ISA_YKNativeTagManager.h"
 
 typedef enum
 {
@@ -23,11 +23,11 @@ typedef enum
 @interface YKParserState : NSObject
 {
     id _node;
-    YKTag *_tag;
+    ISA_YKTag *_tag;
     YKParserStates _state;
 }
 @property(strong, nonatomic) id node;
-@property(strong, nonatomic) YKTag *tag;
+@property(strong, nonatomic) ISA_YKTag *tag;
 @property(nonatomic) YKParserStates state;
 @property(nonatomic) BOOL isKey;
 
@@ -54,7 +54,7 @@ typedef enum
 }
 @end
 
-@interface YKParser (YKParserPrivateMethods)
+@interface ISA_YKParser (YKParserPrivateMethods)
 
 - (id)interpretObjectFromEvent:(yaml_event_t)event;
 
@@ -64,7 +64,7 @@ typedef enum
 
 @end
 
-@implementation YKParser
+@implementation ISA_YKParser
 {
     NSMutableDictionary *_aliases;
 }
@@ -82,7 +82,7 @@ typedef enum
         return nil;
     }
 
-    tagsByName = [[NSMutableDictionary alloc] initWithDictionary:[[YKNativeTagManager sharedManager] tagsByName]];
+    tagsByName = [[NSMutableDictionary alloc] initWithDictionary:[[ISA_YKNativeTagManager sharedManager] tagsByName]];
     _explicitTagsByName = [tagsByName mutableCopy];
 
     _aliases = [NSMutableDictionary dictionary];
@@ -127,9 +127,9 @@ typedef enum
     return [self parseWithError:NULL];
 }
 
-- (YKTag *)explicitTagWithString:(NSString *)string
+- (ISA_YKTag *)explicitTagWithString:(NSString *)string
 {
-    YKTag *tag = [_explicitTagsByName objectForKey:string];
+    ISA_YKTag *tag = [_explicitTagsByName objectForKey:string];
 
     if (tag) return tag;
 
@@ -142,7 +142,7 @@ typedef enum
     return tag;
 }
 
-- (YKTag *)tagWithUTF8String:(char *)tagName
+- (ISA_YKTag *)tagWithUTF8String:(char *)tagName
 {
     if (!tagName)return nil;
 
@@ -288,12 +288,12 @@ typedef enum
     return documents;
 }
 
-- (void)addTag:(YKTag *)tag
+- (void)addTag:(ISA_YKTag *)tag
 {
     [tagsByName setObject:tag forKey:[tag verbatim]];
 }
 
-- (void)addExplicitTag:(YKTag *)tag
+- (void)addExplicitTag:(ISA_YKTag *)tag
 {
     [_explicitTagsByName setObject:tag forKey:[tag verbatim]];
 }
@@ -306,13 +306,13 @@ typedef enum
 
     // If an explicit tag was identified, try to cast it from nil, nil means that the implicit tag (or source tag) has
     // not been identified yet
-    YKTag *explicitTag = [self explicitTagWithString:explicitTagString];
+    ISA_YKTag *explicitTag = [self explicitTagWithString:explicitTagString];
 
     id results = [explicitTag castValue:stringValue fromTag:nil];
     if (results)
         return results;
 
-    for (YKTag *resultsTag in [tagsByName allValues]) {
+    for (ISA_YKTag *resultsTag in [tagsByName allValues]) {
         if ((results = [resultsTag decodeFromString:stringValue explicitTag:explicitTag]))
             return results;
     }

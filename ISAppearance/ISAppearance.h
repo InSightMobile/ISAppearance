@@ -24,6 +24,8 @@
 
 + (BOOL)isIOS7;
 
+- (void)monitorDirectory:(NSString *)directory;
+
 - (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory;
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;
