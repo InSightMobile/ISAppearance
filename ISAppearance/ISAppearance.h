@@ -26,6 +26,8 @@
 
 - (void)monitorDirectory:(NSString *)directory;
 
++ (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle;
+
 - (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory;
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;

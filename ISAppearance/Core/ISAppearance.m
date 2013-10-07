@@ -39,7 +39,7 @@
 
 + (id)loadDataFromFile:(NSString *)path
 {
-    return [ISA_YAMLKit loadFromFile:path];
+    return [ISA_YAMLKit loadFromFile:path error:NULL];
 }
 
 
@@ -157,6 +157,16 @@
         _monitoring = YES;
         [self watchAndReloadPath:file once:NO ];
     }
+}
+
++ (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle
+{
+    if(!bundle) {
+        bundle = [NSBundle mainBundle];
+    }
+    NSString *path = [bundle pathForResource:[string stringByDeletingPathExtension]
+                                      ofType:[string pathExtension]];
+    return [self loadDataFromFile:path];
 }
 
 - (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri

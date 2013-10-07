@@ -27,7 +27,7 @@
     return result;
 }
 
-+ (id)loadFromFile:(NSString *)path
++ (id)loadFromFile:(NSString *)path error:(NSError **)error
 {
     if (!path || [path isEqualToString:@""])
         return nil;
@@ -35,8 +35,20 @@
     ISA_YKParser *p = [[ISA_YKParser alloc] init];
     [p readFile:path];
 
-    NSArray *result = [p parse];
+    NSError *parseError = nil;
+
+    NSArray *result = [p parseWithError:&parseError];
     // If parse returns a one-element array, extract it.
+
+    if(parseError) {
+        NSLog(@"parsing failed with error: %@", parseError);
+
+        if(error) {
+            *error = parseError;
+        }
+        return nil;
+    }
+
     if ([result count] == 1) {
         return [result objectAtIndex:0];
     }
