@@ -18,6 +18,14 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
     [self.layer setMasksToBounds:YES];
 }
 
+- (void)setShadowColor:(UIColor *)color opacity:(CGFloat)opacity offset:(CGSize)offset radius:(CGFloat)radius
+{
+    [self.layer setShadowColor:color.CGColor];
+    [self.layer setShadowOffset:offset];
+    [self.layer setShadowRadius:radius];
+    [self.layer setShadowOpacity:opacity];
+}
+
 - (void)setLayerImage:(UIImage *)image
 {
     self.layer.contents = (id) image.CGImage;
