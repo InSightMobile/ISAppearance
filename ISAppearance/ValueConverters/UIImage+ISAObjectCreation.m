@@ -48,7 +48,6 @@
 
             id mode = [node objectAtIndex:1];
             if ([mode isKindOfClass:[NSValue class]]) {
-                char const *type = [(NSValue *) mode objCType];
 
                 UIEdgeInsets insets;
                 [mode getValue:&insets];

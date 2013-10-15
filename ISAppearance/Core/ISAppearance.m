@@ -194,7 +194,7 @@
         id result = [parser parseWithError:error];
         if (error && *error) {
             NSString *line = [*error userInfo][YKProblemLineKey];
-            NSString *column = [*error userInfo][YKProblemColumnKey];
+
             NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
             *error =
                     [[NSError alloc] initWithDomain:@"ISAppearance" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];

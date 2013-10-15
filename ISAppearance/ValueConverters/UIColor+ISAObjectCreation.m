@@ -136,7 +136,6 @@
                               brightness:[brightness floatValue]
                                    alpha:alpha];
         }
-
     }
     return [UIColor whiteColor];
 }
