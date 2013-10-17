@@ -63,6 +63,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 {
     if (_block) {
         _block(target);
+        return nil;
     }
     if (_invocation) {
         @try {
@@ -74,6 +75,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
             return nil;
         }
     }
+    return nil;
 }
 
 - (id)getReturnValue
