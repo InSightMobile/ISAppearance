@@ -10,6 +10,12 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
 
 @implementation UIView (ISAppearance)
 
+- (void)setRotationAngle:(CGFloat)angle
+{
+    self.transform = CGAffineTransformMakeRotation((CGFloat) (angle * M_PI/180.0));
+}
+
+
 - (void)setBorderColor:(UIColor *)color width:(CGFloat)width radius:(CGFloat)radius
 {
     [self.layer setBorderColor:color.CGColor];
