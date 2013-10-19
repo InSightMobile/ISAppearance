@@ -24,6 +24,8 @@
 
 + (BOOL)isIOS7;
 
++ (BOOL)isIOS6AndGreater;
+
 - (void)monitorDirectory:(NSString *)directory;
 
 + (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle;

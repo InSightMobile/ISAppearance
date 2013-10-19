@@ -150,6 +150,15 @@
 #endif
 }
 
++ (BOOL)isIOS6AndGreater
+{
+#ifdef __IPHONE_6_0
+    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0");
+#else
+    return NO;
+#endif
+}
+
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
 {
     [self loadAppearanceFromFile:file];
