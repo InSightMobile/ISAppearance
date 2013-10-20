@@ -28,14 +28,14 @@
     [_entries addObjectsFromArray:array];
 }
 
-- (void)applyToTarget:(id)target
+- (void)applyToTarget:(id)target runtimeSelectors:(NSArray *)selectors
 {
     for (ISAStyleEntry *entry in _entries) {
         [entry invokeWithTarget:target];
     }
 }
 
-- (BOOL)isConformToSelectors:(NSSet *)set
+- (BOOL)isConformToClassSelectors:(NSSet *)set
 {
     return [self.selectors isSubsetOfSet:set];
 }

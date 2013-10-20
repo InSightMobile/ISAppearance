@@ -1,3 +1,4 @@
+
 #import "ISAppearance.h"
 #import "ISA_YAMLKit.h"
 #import "ISAValueConverter.h"
@@ -762,8 +763,22 @@
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
 {
     NSSet *userClasses = nil;
+    NSMutableArray *runtimeSelectors = nil;
     if (classNames.length) {
-        userClasses = [NSSet setWithArray:[classNames componentsSeparatedByString:@":"]];
+        NSArray *selectors = [classNames componentsSeparatedByString:@":"];
+        NSMutableSet *staticSelectors = [NSMutableSet setWithCapacity:selectors.count];
+        for (NSString *selector in selectors) {
+            if([selector hasPrefix:@"@"]) {
+                if(!runtimeSelectors) {
+                    runtimeSelectors = [NSMutableArray arrayWithCapacity:1];
+                    [runtimeSelectors addObject:selector];
+                }
+            }
+            else {
+                [staticSelectors addObject:selector];
+            }
+        }
+        userClasses = [staticSelectors copy];
     }
     else {
         userClasses = [NSSet set];
@@ -815,7 +830,7 @@
 
             ISAStyle *classStyle = [_classStyles objectForKey:className];
             if (classStyle) {
-                [classStyle applyToTarget:target];
+                [foundStyles addObject:classStyle];
             }
 
             NSMutableSet *stylesToApply = [NSMutableSet new];
@@ -825,7 +840,7 @@
                     NSArray *candidateStyles = [styles objectForKey:userClass];
                     for (ISAStyle *style in candidateStyles) {
                         if (![stylesToApply containsObject:style] &&
-                                [style isConformToSelectors:targetClasses]) {
+                                [style isConformToClassSelectors:targetClasses]) {
                             [stylesToApply addObject:style];
                         }
                     }
@@ -837,9 +852,8 @@
         styleCache[userClasses] = styles;
     }
 
-
     for (ISAStyle *style in styles) {
-        [style applyToTarget:target];
+        [style applyToTarget:target runtimeSelectors:runtimeSelectors ];
     }
 
     return YES;

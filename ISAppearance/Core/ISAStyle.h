@@ -15,7 +15,7 @@
 
 - (void)addEntries:(NSArray *)array;
 
-- (void)applyToTarget:(id)target;
+- (void)applyToTarget:(id)target runtimeSelectors:(NSArray *)selectors;
 
-- (BOOL)isConformToSelectors:(NSSet *)set;
+- (BOOL)isConformToClassSelectors:(NSSet *)set;
 @end
