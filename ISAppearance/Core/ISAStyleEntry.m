@@ -30,7 +30,6 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     NSArray *_arguments;
     SEL _selector;
     NSString *_keyPath;
-
     void (^_block)(id);
 }
 

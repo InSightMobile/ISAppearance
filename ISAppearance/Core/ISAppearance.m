@@ -25,13 +25,15 @@
     NSMutableSet *_watchedFiles;
     BOOL _isAppearanceLoaded;
     NSMutableSet *_globalStyles;
+    NSMutableDictionary *_classesCache;
 }
 
 + (ISAppearance *)sharedInstance
 {
     static ISAppearance *_instance = nil;
     static dispatch_once_t pred;
-    dispatch_once(&pred, ^{
+    dispatch_once(&pred, ^
+    {
         _instance = [[self alloc] init];
     });
     return _instance;
@@ -49,6 +51,7 @@
     if (self) {
         [self.class prepareAppearance];
 
+        _classesCache = [NSMutableDictionary dictionary];
         _classStyles = [NSMutableDictionary dictionary];
         _objectStyles = [NSMutableDictionary dictionary];
         _definitions = [NSMutableArray array];
@@ -75,7 +78,8 @@
 + (void)prepareAppearance
 {
     static dispatch_once_t pred;
-    dispatch_once(&pred, ^{
+    dispatch_once(&pred, ^
+    {
 
         if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)]) {
             [UIView ISA_swizzleClass];
@@ -103,7 +107,8 @@
     __block dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, fileDescriptor,
             DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND,
             queue);
-    dispatch_source_set_event_handler(source, ^{
+    dispatch_source_set_event_handler(source, ^
+    {
         unsigned long flags = dispatch_source_get_data(source);
         if (once) {
             [_watchedFiles removeObject:path];
@@ -120,21 +125,26 @@
             callback();
         }
     });
-    dispatch_source_set_cancel_handler(source, ^(void) {
+    dispatch_source_set_cancel_handler(source, ^(void)
+    {
         [_watchedFiles removeObject:path];
         close(fileDescriptor);
     });
     dispatch_resume(source);
 }
 
-+ (BOOL)isPad {
++ (BOOL)isPad
+{
     return [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 }
-+ (BOOL)isPhone5 {
-    return !self.isPad && ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON );
+
++ (BOOL)isPhone5
+{
+    return !self.isPad && (fabs((double) [[UIScreen mainScreen] bounds].size.height - (double) 568) < DBL_EPSILON );
 }
 
-+ (BOOL)isRetina {
++ (BOOL)isRetina
+{
     return [UIScreen mainScreen].scale == 2.0;
 }
 
@@ -170,7 +180,7 @@
 
 + (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle
 {
-    if(!bundle) {
+    if (!bundle) {
         bundle = [NSBundle mainBundle];
     }
     NSString *path = [bundle pathForResource:[string stringByDeletingPathExtension]
@@ -180,7 +190,9 @@
 
 - (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri
 {
-    if (uri.length < 1)return nil;
+    if (uri.length < 1) {
+        return nil;
+    }
 
     ISA_YKTag *tag = nil;
 
@@ -284,6 +296,7 @@
 {
     [_classStyles removeAllObjects];
     [_objectStyles removeAllObjects];
+    [_classesCache removeAllObjects];
     return [self processAppearanceWithError:error];
 }
 
@@ -347,7 +360,9 @@
 
 - (void)addAssetsFolder:(NSString *)folder
 {
-    if (!_assets) _assets = [NSMutableArray arrayWithCapacity:1];
+    if (!_assets) {
+        _assets = [NSMutableArray arrayWithCapacity:1];
+    }
     [_assets addObject:folder];
 }
 
@@ -381,9 +396,12 @@
 
 - (void)processUIAppearance:(NSDictionary *)definition
 {
-    if (![definition isKindOfClass:[NSDictionary class]]) return;
+    if (![definition isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
 
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+    {
 
         id appearanceProxy = nil;
 
@@ -412,7 +430,9 @@
                     NSMutableArray *classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
                     for (int j = 1; j < [key count]; j++) {
                         Class mcl = NSClassFromString(key[j]);
-                        if (mcl) [classes addObject:mcl];
+                        if (mcl) {
+                            [classes addObject:mcl];
+                        }
                     }
 
                     [UINavigationBar appearance];
@@ -453,13 +473,17 @@
 
 - (void)processDefinition:(NSDictionary *)definition forClass:(NSString *)class
 {
-    if (!_definitionsByClass)
+    if (!_definitionsByClass) {
         _definitionsByClass = [NSMutableDictionary dictionary];
+    }
 
     NSMutableDictionary *classInfo = _definitionsByClass[class];
-    if (!classInfo)classInfo = [NSMutableDictionary dictionary];
+    if (!classInfo) {
+        classInfo = [NSMutableDictionary dictionary];
+    }
 
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+    {
 
     }];
     _definitionsByClass[class] = classInfo;
@@ -467,7 +491,8 @@
 
 - (void)processDefinitions:(NSDictionary *)definition
 {
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+    {
 
         if ([key isKindOfClass:[NSString class]]) {
             [self processDefinition:obj forClass:key];
@@ -503,9 +528,10 @@
         return YES;
     }
     __block BOOL result = YES;
-    __block NSError* error = nil;
+    __block NSError *error = nil;
 
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+    {
 
         NSArray *keys = [key componentsSeparatedByString:@":"];
 
@@ -551,16 +577,16 @@
         }
         [self addParams:params toSelector:selector];
     }];
-    if(pError && error) {
+    if (pError && error) {
         *pError = error;
-    }    
+    }
     return result;
 }
 
 - (BOOL)checkStyleConformance:(NSArray *)selectors
 {
     for (int i = 1; i < selectors.count; i++) {
-        if(![_globalStyles containsObject:selectors[i]]) {
+        if (![_globalStyles containsObject:selectors[i]]) {
             return NO;
         }
     }
@@ -640,7 +666,8 @@
     NSMutableArray *invocations = [NSMutableArray arrayWithCapacity:[params count]];
 
     if ([params isKindOfClass:[NSDictionary class]]) {
-        [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+        {
 
             ISAStyleEntry *entry = [ISAStyleEntry entryWithKey:key value:obj selectorParams:selectorParams];
             if (entry) {
@@ -661,7 +688,8 @@
             }
             else if ([operation isKindOfClass:[NSDictionary class]]) {
 
-                [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+                {
                     if ([key isKindOfClass:[NSString class]]) {    // property set style
                         // decode keys
                         ISAStyleEntry *entry = [ISAStyleEntry entryWithKey:key value:obj selectorParams:selectorParams];
@@ -734,13 +762,11 @@
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
 {
     NSSet *userClasses = nil;
-    if(classNames.length) {
-        NSMutableSet *classes = [NSMutableSet setWithArray:[classNames componentsSeparatedByString:@":"]];
-        [classes unionSet:_globalStyles];
-        userClasses = classes;
+    if (classNames.length) {
+        userClasses = [NSSet setWithArray:[classNames componentsSeparatedByString:@":"]];
     }
     else {
-        userClasses = [_globalStyles copy];
+        userClasses = [NSSet set];
     }
 
     if (!_isAppearanceLoaded) {
@@ -752,45 +778,70 @@
         [self registerObject:target];
     }
 
-    // apply class styles first
-    NSMutableArray *classes = [NSMutableArray array];
-
-    {// find all styles classes
-        Class class = [target class];
-        while (class) {
-            [classes addObject:NSStringFromClass(class)];
-            class = [class superclass];
-        }
+    Class targetClass = [target class];
+    NSString *targetClassName = NSStringFromClass(targetClass);
+    NSMutableDictionary *styleCache = _classesCache[targetClassName];
+    if (!styleCache) {
+        styleCache = [NSMutableDictionary dictionaryWithCapacity:1];
+        _classesCache[targetClassName] = styleCache;
     }
+    NSArray *styles = styleCache[userClasses];
+    if (!styles) {
 
-    // apply individual classes
-    for (NSString *className in classes.reverseObjectEnumerator) {
-
-        ISAStyle *classStyle = [_classStyles objectForKey:className];
-        if(classStyle) {
-            [classStyle applyToTarget:target];
+        NSSet* targetClasses = nil;
+        if (userClasses.count) {
+            NSMutableSet *classes = [userClasses mutableCopy];
+            [classes unionSet:_globalStyles];
+            targetClasses = classes;
+        }
+        else {
+            targetClasses = _globalStyles;
         }
 
-        NSMutableSet *stylesToApply = [NSMutableSet new];
-
-        for (NSString *userClass in userClasses) {
-            NSDictionary *styles = [_objectStyles objectForKey:className];
-            if (styles) {
-                NSArray *candidateStyles = [styles objectForKey:userClass];
-                for (ISAStyle *style in candidateStyles) {
-                    if (![stylesToApply containsObject:style] &&
-                            [style isConformToSelectors:userClasses]) {
-                        [stylesToApply addObject:style];
-                    }
-                }
+        // apply class styles first
+        NSMutableArray *classes = [NSMutableArray array];
+        {// find all styles classes
+            Class class = targetClass;
+            while (class) {
+                [classes addObject:NSStringFromClass(class)];
+                class = [class superclass];
             }
         }
 
-        // apply individual classes sets
-        for (ISAStyle *style in stylesToApply) {
-            [style applyToTarget:target];
+        NSMutableArray *foundStyles = [NSMutableArray new];
+
+        // apply individual classes
+        for (NSString *className in classes.reverseObjectEnumerator) {
+
+            ISAStyle *classStyle = [_classStyles objectForKey:className];
+            if (classStyle) {
+                [classStyle applyToTarget:target];
+            }
+
+            NSMutableSet *stylesToApply = [NSMutableSet new];
+            for (NSString *userClass in targetClasses) {
+                NSDictionary *styles = [_objectStyles objectForKey:className];
+                if (styles) {
+                    NSArray *candidateStyles = [styles objectForKey:userClass];
+                    for (ISAStyle *style in candidateStyles) {
+                        if (![stylesToApply containsObject:style] &&
+                                [style isConformToSelectors:targetClasses]) {
+                            [stylesToApply addObject:style];
+                        }
+                    }
+                }
+            }
+            [foundStyles addObjectsFromArray:stylesToApply.allObjects];
         }
+        styles = [foundStyles copy];
+        styleCache[userClasses] = styles;
     }
+
+
+    for (ISAStyle *style in styles) {
+        [style applyToTarget:target];
+    }
+
     return YES;
 }
 
@@ -820,7 +871,9 @@
 
             if ([isDirectory boolValue] == YES) {
                 path = [self findFile:file inFolder:theURL.path recursive:YES];
-                if (path) return path;
+                if (path) {
+                    return path;
+                }
             }
         }
     }
@@ -828,7 +881,7 @@
 }
 
 
-- (NSString *)findImageFile:(NSString *)file inFolder:(NSString *)folder  forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
+- (NSString *)findImageFile:(NSString *)file inFolder:(NSString *)folder forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
                       scale:(CGFloat *)scale
 {
     NSString *ext = [file pathExtension];
@@ -940,21 +993,24 @@
 
 - (void)watchAndReloadPath:(NSString *)path once:(BOOL)once
 {
-    [self watch:path once:once withCallback:^{
+    [self watch:path once:once withCallback:^
+    {
         [self performSelectorOnMainThread:@selector(autoReloadAppearance) withObject:nil waitUntilDone:NO];
     }];
 }
 
 - (UIImage *)loadImageNamed:(NSString *)string
 {
-    bool isRetina = [UIScreen mainScreen].scale == 2.0;
-    bool isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    bool isRetina = [ISAppearance isRetina];
+    bool isPad = [ISAppearance isPad];
 
-    UIImage *image = [self loadImageNamed:string forRetina:isRetina forPad:isIpad];
-    if (image) return image;
+    UIImage *image = [self loadImageNamed:string forRetina:isRetina forPad:isPad];
+    if (image) {
+        return image;
+    }
 
     if (!isRetina) {
-        image = [self loadImageNamed:string forRetina:YES forPad:isIpad];
+        image = [self loadImageNamed:string forRetina:YES forPad:isPad];
         // scale image
         return image;
     }
