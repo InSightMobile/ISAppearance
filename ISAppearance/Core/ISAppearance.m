@@ -624,11 +624,9 @@
 
 - (void)indexStyle:(ISAStyle *)style
 {
-    NSSet *components = style.selectors;
     NSString *className = style.className;
-
     // save a
-    if (components.count == 0) { // setup class itself
+    if (style.selectors.count == 0) { // setup class itself
         [_classStyles setObject:style forKey:className];
     }
     else {
@@ -637,7 +635,9 @@
             objectStyles = [NSMutableDictionary dictionaryWithCapacity:1];
             [_objectStyles setObject:objectStyles forKey:className];
         }
-        [objectStyles setObject:style forKey:components];
+        [objectStyles setObject:style forKey:style.selectors];
+
+        NSSet *components = style.classSelectors;
 
         for (NSString *component in components) {
             NSMutableArray *entries = [objectStyles objectForKey:component];
@@ -763,22 +763,9 @@
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
 {
     NSSet *userClasses = nil;
-    NSMutableArray *runtimeSelectors = nil;
     if (classNames.length) {
         NSArray *selectors = [classNames componentsSeparatedByString:@":"];
-        NSMutableSet *staticSelectors = [NSMutableSet setWithCapacity:selectors.count];
-        for (NSString *selector in selectors) {
-            if([selector hasPrefix:@"@"]) {
-                if(!runtimeSelectors) {
-                    runtimeSelectors = [NSMutableArray arrayWithCapacity:1];
-                    [runtimeSelectors addObject:selector];
-                }
-            }
-            else {
-                [staticSelectors addObject:selector];
-            }
-        }
-        userClasses = [staticSelectors copy];
+        userClasses = [NSSet setWithArray:selectors];
     }
     else {
         userClasses = [NSSet set];
@@ -853,7 +840,7 @@
     }
 
     for (ISAStyle *style in styles) {
-        [style applyToTarget:target runtimeSelectors:runtimeSelectors ];
+        [style applyToTarget:target];
     }
 
     return YES;

@@ -12,10 +12,14 @@
 @property(nonatomic, copy) NSString *className;
 
 @property(nonatomic, copy) NSSet *selectors;
+@property(nonatomic, copy) NSArray *runtimeSelectors;
+@property(nonatomic, copy) NSSet *classSelectors;
 
 - (void)addEntries:(NSArray *)array;
 
-- (void)applyToTarget:(id)target runtimeSelectors:(NSArray *)selectors;
+- (void)applyToTarget:(id)target;
 
 - (BOOL)isConformToClassSelectors:(NSSet *)set;
+
+- (void)processSelectors:(NSSet *)set;
 @end
