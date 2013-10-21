@@ -22,4 +22,7 @@
 - (BOOL)isConformToClassSelectors:(NSSet *)set;
 
 - (void)processSelectors:(NSSet *)set;
+
+- (NSComparisonResult)compare:(ISAStyle *)style;
+
 @end

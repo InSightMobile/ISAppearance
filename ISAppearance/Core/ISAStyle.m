@@ -50,6 +50,21 @@
     self.selectors = selectors;
 }
 
+- (NSComparisonResult)compare:(ISAStyle *)style
+{
+    int first = self.selectors.count;
+    int second = style.selectors.count;
+
+    if ( first < second ) {
+        return (NSComparisonResult)NSOrderedAscending;
+    } else if ( first > second ) {
+        return (NSComparisonResult)NSOrderedDescending;
+    } else {
+        return (NSComparisonResult)NSOrderedSame;
+    }
+}
+
+
 - (void)setSelectors:(NSSet *)selectors
 {
     _selectors = selectors;

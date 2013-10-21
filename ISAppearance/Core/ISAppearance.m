@@ -833,7 +833,8 @@
                     }
                 }
             }
-            [foundStyles addObjectsFromArray:stylesToApply.allObjects];
+            NSArray *sortedStyles = [stylesToApply.allObjects sortedArrayUsingSelector:@selector(compare:)];
+            [foundStyles addObjectsFromArray:sortedStyles];
         }
         styles = [foundStyles copy];
         styleCache[userClasses] = styles;
