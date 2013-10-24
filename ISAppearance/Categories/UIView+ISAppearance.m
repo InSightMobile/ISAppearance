@@ -12,7 +12,7 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
 
 - (void)setRotationAngle:(CGFloat)angle
 {
-    self.transform = CGAffineTransformMakeRotation((CGFloat) (angle * M_PI/180.0));
+    self.transform = CGAffineTransformMakeRotation((CGFloat) (angle * M_PI/ 180.0));
 }
 
 

@@ -29,10 +29,10 @@
 
 - (void)applyToTarget:(id)target
 {
-    for (ISARuntimeSelector* selector in _runtimeSelectors) {
-       if(![selector isApplayableTo:target]) {
-           return;
-       }
+    for (ISARuntimeSelector *selector in _runtimeSelectors) {
+        if (![selector isApplayableTo:target]) {
+            return;
+        }
     }
 
     for (ISAStyleEntry *entry in _entries) {
@@ -55,12 +55,14 @@
     int first = self.selectors.count;
     int second = style.selectors.count;
 
-    if ( first < second ) {
-        return (NSComparisonResult)NSOrderedAscending;
-    } else if ( first > second ) {
-        return (NSComparisonResult)NSOrderedDescending;
-    } else {
-        return (NSComparisonResult)NSOrderedSame;
+    if (first < second) {
+        return (NSComparisonResult) NSOrderedAscending;
+    }
+    else if (first > second) {
+        return (NSComparisonResult) NSOrderedDescending;
+    }
+    else {
+        return (NSComparisonResult) NSOrderedSame;
     }
 }
 

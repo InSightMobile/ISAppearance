@@ -266,7 +266,7 @@ bool separateLines,
 //
 - (NSString *)isa_base64EncodedString
 {
-    size_t outputLength;
+    size_t outputLength = 0;
     char *outputBuffer =
             ISA_NewBase64Encode([self bytes], [self length], true, &outputLength);
 

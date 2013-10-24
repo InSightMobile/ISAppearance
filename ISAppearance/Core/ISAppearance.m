@@ -1,4 +1,3 @@
-
 #import "ISAppearance.h"
 #import "ISA_YAMLKit.h"
 #import "ISAValueConverter.h"
@@ -790,7 +789,7 @@
     NSArray *styles = styleCache[userClasses];
     if (!styles) {
 
-        NSSet* targetClasses = nil;
+        NSSet *targetClasses = nil;
         if (userClasses.count) {
             NSMutableSet *classes = [userClasses mutableCopy];
             [classes unionSet:_globalStyles];

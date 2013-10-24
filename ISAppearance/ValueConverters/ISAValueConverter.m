@@ -21,7 +21,7 @@
     NSMutableDictionary *convertersByName = [self convertersByName];
     ISAValueConverter *converter = convertersByName[className];
     if (converter) {
-            return converter;
+        return converter;
     }
 
     NSString *converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
@@ -34,7 +34,7 @@
         if (cl) {
             converter = [[ISANSObjectValueConverter alloc] initWithObjectClass:cl];
         }
-        else if([className isEqualToString:@"id"]) {
+        else if ([className isEqualToString:@"id"]) {
             converter = [[ISANSObjectValueConverter alloc] initWithObjectClass:[NSObject class]];
         }
     }

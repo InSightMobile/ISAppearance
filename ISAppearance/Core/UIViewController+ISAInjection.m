@@ -22,7 +22,7 @@
 
 - (void)isaOverride_viewDidLoad
 {
-    if(self.isaClass) {
+    if (self.isaClass) {
         [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:[@"OnLoad:" stringByAppendingString:self.isaClass]];
     }
     else {

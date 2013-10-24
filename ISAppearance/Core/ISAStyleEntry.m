@@ -4,7 +4,8 @@
 
 #import "ISAStyleEntry.h"
 
-static NSString *SelectorNameForSetterWithString(NSString *string) {
+static NSString *SelectorNameForSetterWithString(NSString *string)
+{
     NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                                     withString:[[string substringToIndex:1] uppercaseString]];
 
@@ -12,7 +13,8 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
 }
 
 
-static SEL SelectorForPropertySetterFromString(NSString *string) {
+static SEL SelectorForPropertySetterFromString(NSString *string)
+{
 
     NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                                     withString:[[string substringToIndex:1] uppercaseString]];
@@ -30,6 +32,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     NSArray *_arguments;
     SEL _selector;
     NSString *_keyPath;
+
     void (^_block)(id);
 }
 
@@ -107,7 +110,9 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     else {
         target = rootTarget;
     }
-    if (!target) return nil;
+    if (!target) {
+            return nil;
+    }
 
     // use cashed invocation
     if (_invocation) {
@@ -231,6 +236,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         return nil;
     }
 }
+
 + (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
 {
     return [self entryWithParams:params fromIndex:0 selectorParams:selectorParams];
@@ -249,13 +255,14 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
 
     for (id component in params) {
 
-        if(index>0) {
+        if (index > 0) {
             index--;
             continue;
         }
 
         if ([component isKindOfClass:[NSDictionary class]]) {
-            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+            {
 
                 if (firstItem) {
                     NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;

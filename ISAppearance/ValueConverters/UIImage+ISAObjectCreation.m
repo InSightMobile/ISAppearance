@@ -29,11 +29,13 @@
     else if ([node isKindOfClass:[NSArray class]]) {
 
         image = [ISAValueConverter objectOfClass:self.class withISANode:node];
-        if(image) {
+        if (image) {
             return image;
         }
 
-        if ([node count] == 0)return [UIImage new];
+        if ([node count] == 0) {
+                    return [UIImage new];
+        }
 
         id firstParam = [node objectAtIndex:0];
 

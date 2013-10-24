@@ -129,7 +129,11 @@ typedef enum
 
 - (ISA_YKTag *)explicitTagWithString:(NSString *)string
 {
-    ISA_YKTag *tag = [_explicitTagsByName objectForKey:string];
+    ISA_YKTag *tag = nil;
+    
+    if(string) {
+        tag = [_explicitTagsByName objectForKey:string];
+    }
 
     if (tag) return tag;
 
