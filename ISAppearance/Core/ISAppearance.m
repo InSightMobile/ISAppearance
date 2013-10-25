@@ -1,3 +1,4 @@
+
 #import "ISAppearance.h"
 #import "ISA_YAMLKit.h"
 #import "ISAValueConverter.h"
@@ -663,9 +664,11 @@
 
 - (NSMutableArray *)styleBlockWithParams:(id)params selectorParams:(NSArray *)selectorParams
 {
-    NSMutableArray *invocations = [NSMutableArray arrayWithCapacity:[params count]];
-
+    NSMutableArray *invocations = nil;
     if ([params isKindOfClass:[NSDictionary class]]) {
+
+        invocations = [NSMutableArray arrayWithCapacity:[params count]];
+
         [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
         {
 
@@ -676,6 +679,7 @@
         }];
     }
     else if ([params isKindOfClass:[NSArray class]]) {
+        invocations = [NSMutableArray arrayWithCapacity:[params count]];
 
         for (id operation in params) {
 
@@ -756,6 +760,15 @@
     }
     else {
         [_registeredObjects removeAllObjects];
+    }
+}
+- (BOOL)applyAppearanceTo:(id)target
+{
+    if([target respondsToSelector:@selector(isaClass)]) {
+        return [self applyAppearanceTo:target usingClasses:[target isaClass]];
+    }
+    else {
+        return [self applyAppearanceTo:target usingClasses:nil];
     }
 }
 

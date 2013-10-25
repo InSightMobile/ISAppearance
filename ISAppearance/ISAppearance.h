@@ -44,6 +44,8 @@
 - (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error;
 
 
+- (BOOL)applyAppearanceTo:(id)target1;
+
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classes;
 
 - (UIImage *)loadImageNamed:(NSString *)string;
