@@ -19,10 +19,12 @@
     self = [super init];
     if (self) {
         self.mapping = @{
+                @"UIControlStateNormal" : @(UIControlStateNormal),
                 @"UIControlStateHighlighted" : @(UIControlStateHighlighted),
                 @"UIControlStateSelected" : @(UIControlStateSelected),
                 @"UIControlStateDisabled" : @(UIControlStateDisabled),
 
+                @"normal" : @(UIControlStateNormal),
                 @"highlighted" : @(UIControlStateHighlighted),
                 @"selected" : @(UIControlStateSelected),
                 @"disabled" : @(UIControlStateDisabled),
