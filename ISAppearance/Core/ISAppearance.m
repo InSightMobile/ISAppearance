@@ -5,6 +5,7 @@
 #import "ISAStyleEntry.h"
 #import "NSObject+ISA_Swizzle.h"
 #import "ISAStyle.h"
+#import "UIViewController+ISAInjection.h"
 
 @interface ISAppearance () <YKParserDelegate>
 
@@ -81,7 +82,6 @@
     static dispatch_once_t pred;
     dispatch_once(&pred, ^
     {
-
         if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)]) {
             [UIView ISA_swizzleClass];
         }

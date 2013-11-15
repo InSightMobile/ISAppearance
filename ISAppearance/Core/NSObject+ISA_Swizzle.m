@@ -22,10 +22,5 @@
     }
 }
 
-+ (void)ISA_swizzleFrom:(SEL)original to:(SEL)new
-{
-    [self ISA_swizzle:[self class] from:original to:new];
-}
-
 
 @end
