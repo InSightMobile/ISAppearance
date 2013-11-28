@@ -21,31 +21,33 @@
     CGRect srcRect;
     CGRect dstRect;
 
-    CGFloat srcAspect = imageSize.width/imageSize.height;
-    CGFloat dstAspect = size.width/size.height;
+    CGFloat srcAspect = imageSize.width / imageSize.height;
+    CGFloat dstAspect = size.width / size.height;
+
+    UIImageOrientation orientation = self.imageOrientation;
 
     switch (mode) {
         case UIViewContentModeScaleAspectFill:
 
-            if(srcAspect < dstAspect) {
-                CGFloat height = imageSize.height*srcAspect/dstAspect;
-                srcRect = CGRectMake(0, (imageSize.height - height)/2, imageSize.width, height);
+            if (srcAspect < dstAspect) {
+                CGFloat height = imageSize.height * srcAspect / dstAspect;
+                srcRect = CGRectMake(0, (imageSize.height - height) / 2, imageSize.width, height);
             }
             else {
-                CGFloat width = imageSize.width*(dstAspect/srcAspect);
-                srcRect = CGRectMake((imageSize.width - width)/2, 0, width, imageSize.height);
+                CGFloat width = imageSize.width * (dstAspect / srcAspect);
+                srcRect = CGRectMake((imageSize.width - width) / 2, 0, width, imageSize.height);
             }
             dstRect = CGRectMake(0, 0, size.width, size.height);
 
             break;
         case UIViewContentModeScaleAspectFit:
-            if(srcAspect > dstAspect) {
-                CGFloat diff = (size.height - size.height*dstAspect/srcAspect);
-                dstRect = CGRectMake(0, diff/2, size.width, size.height-diff);
+            if (srcAspect > dstAspect) {
+                CGFloat diff = (size.height - size.height * dstAspect / srcAspect);
+                dstRect = CGRectMake(0, diff / 2, size.width, size.height - diff);
             }
             else {
-                CGFloat diff = (size.width - size.width*srcAspect/dstAspect);
-                dstRect = CGRectMake(diff/2, 0, size.width-diff, size.height);
+                CGFloat diff = (size.width - size.width * srcAspect / dstAspect);
+                dstRect = CGRectMake(diff / 2, 0, size.width - diff, size.height);
             }
             srcRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
             break;
@@ -59,12 +61,32 @@
 
     CGContextSetInterpolationQuality(context, quality);
 
+    CGSize moveSize = size;
+    CGPoint origin = CGPointMake(moveSize.width / 2, moveSize.height / 2);
+
+    CGContextTranslateCTM(context, origin.x, origin.y);
+
+    if (orientation == UIImageOrientationRight) {
+        CGContextRotateCTM(context, -M_PI_2);
+        // rotate rectangle
+        srcRect = CGRectMake(srcRect.origin.y, srcRect.origin.x, srcRect.size.height, srcRect.size.width);
+    } else if (orientation == UIImageOrientationLeft) {
+        CGContextRotateCTM(context, M_PI_2);
+        // rotate rectangle
+        srcRect = CGRectMake(srcRect.origin.y, srcRect.origin.x, srcRect.size.height, srcRect.size.width);
+    } else if (orientation == UIImageOrientationDown) {
+        CGContextRotateCTM(context, M_PI);
+    } else if (orientation == UIImageOrientationUp) {
+        // no rotation
+    }
+
+    CGContextTranslateCTM(context, -origin.x, -origin.y);
+
     CGImageRef drawImage = CGImageCreateWithImageInRect([self CGImage], srcRect);
     CGContextDrawImage(context, dstRect, drawImage);
     CFRelease(drawImage);
 
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-
     UIGraphicsEndImageContext();
 
     return scaledImage;
