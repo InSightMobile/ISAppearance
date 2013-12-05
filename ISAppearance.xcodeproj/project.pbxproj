@@ -120,8 +120,8 @@
 
 /* Begin PBXFileReference section */
 		1D26A04746007248DCC1521F /* UIFont+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+ISAObjectCreation.m"; sourceTree = "<group>"; };
-		1D26A1DB6082691984AFF0C6 /* UIImage+ISAResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAResize.m"; sourceTree = "<group>"; };
 		1D26A0DE413668D4DC6B1C3D /* UIView+ISAFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAFrame.m"; sourceTree = "<group>"; };
+		1D26A1DB6082691984AFF0C6 /* UIImage+ISAResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAResize.m"; sourceTree = "<group>"; };
 		1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSObjectValueConverter.h; sourceTree = "<group>"; };
 		1D26A3650372C148AE9941B3 /* ISAClassValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAClassValueConverter.h; sourceTree = "<group>"; };
 		1D26A393A5AD07303CF43849 /* ISAClassValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAClassValueConverter.m; sourceTree = "<group>"; };

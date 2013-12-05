@@ -7,6 +7,7 @@
 #import "ISAStyle.h"
 #import "UIViewController+ISAInjection.h"
 
+
 @interface ISAppearance () <YKParserDelegate>
 
 @property(nonatomic, strong) NSMutableArray *definitions;
@@ -150,6 +151,7 @@
 }
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 
 + (BOOL)isIOS7
@@ -165,6 +167,15 @@
 {
 #ifdef __IPHONE_6_0
     return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0");
+#else
+    return NO;
+#endif
+}
+
++ (BOOL)isIOS5
+{
+#ifdef __IPHONE_6_0
+    return SYSTEM_VERSION_LESS_THAN(@"6.0");
 #else
     return NO;
 #endif

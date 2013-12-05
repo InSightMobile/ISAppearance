@@ -30,6 +30,8 @@
 
 + (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle;
 
++ (BOOL)isIOS5;
+
 - (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory;
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring;
