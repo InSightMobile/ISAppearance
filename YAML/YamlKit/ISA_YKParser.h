@@ -12,11 +12,11 @@
 
 @interface ISA_YKParser : NSObject
 {
-    BOOL readyToParse;
-    FILE *fileInput;
-    const char *stringInput;
-    void *opaque_parser;
-    NSMutableDictionary *tagsByName;
+    BOOL _readyToParse;
+    FILE *_fileInput;
+    const char *_stringInput;
+    void *_opaque_parser;
+    NSMutableDictionary *_tagsByName;
     NSMutableDictionary *_explicitTagsByName;
 }
 
@@ -35,7 +35,7 @@
 - (void)addExplicitTag:(ISA_YKTag *)tag;
 
 @property(readonly) BOOL isReadyToParse;
-@property(readonly) NSDictionary *tagsByName;
+@property(readonly) NSDictionary *_tagsByName;
 
 @property(weak) id <YKParserDelegate> delegate;
 
