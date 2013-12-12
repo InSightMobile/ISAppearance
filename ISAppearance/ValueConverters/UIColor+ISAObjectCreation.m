@@ -5,6 +5,7 @@
 
 #import "UIColor+ISAObjectCreation.h"
 #import "ISAppearance.h"
+#import "ISAppearance+Private.h"
 
 
 @implementation UIColor (ISAObjectCreation)

@@ -36,6 +36,23 @@ static SEL SelectorForPropertySetterFromString(NSString *string)
     void (^_block)(id);
 }
 
+- (instancetype)initWithInvocation:(NSInvocation *)invocation
+{
+    self = [super init];
+    if (self) {
+        _invocation = invocation;
+        [_invocation retainArguments];
+        _invocation.target = nil;
+    }
+    return self;
+}
+
++ (instancetype)entryWithInvocation:(NSInvocation *)invocation
+{
+    return [[self alloc] initWithInvocation:invocation];
+}
+
+
 - (id)initWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath
 {
     self = [super init];
@@ -115,7 +132,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string)
     }
 
     // use cashed invocation
-    if (_invocation) {
+    if (_invocation || _block) {
         return [self safeInvokeWithTarget:target];
     }
 
@@ -294,6 +311,5 @@ static SEL SelectorForPropertySetterFromString(NSString *string)
     return [ISAStyleEntry entryWithSelector:NSSelectorFromString(selectorName)
                                   arguments:parameters keyPath:keyPath];;
 }
-
 
 @end

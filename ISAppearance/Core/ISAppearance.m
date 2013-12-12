@@ -6,6 +6,8 @@
 #import "NSObject+ISA_Swizzle.h"
 #import "ISAStyle.h"
 #import "UIViewController+ISAInjection.h"
+#import "UIView+ISAInjection.h"
+#import "ISAProxy.h"
 
 
 @interface ISAppearance () <YKParserDelegate>
@@ -605,17 +607,21 @@
     return YES;
 }
 
-- (void)addParams:(NSMutableArray *)params toSelector:(NSArray *)components
+- (void)addParams:(NSArray *)params toSelector:(NSArray *)components
 {
-    //NSArray *components = [selector componentsSeparatedByString:@":"];
     NSString *className = components[0];
     Class baseClass = NSClassFromString(className);
     if (!baseClass) {
         return;
     }
-    className = NSStringFromClass(baseClass);
-
     NSArray *userComponents = [components subarrayWithRange:NSMakeRange(1, components.count - 1)];
+
+    [self addParams:params forClass:baseClass toSelector:userComponents];
+}
+
+- (void)addParams:(NSArray *)params forClass:(Class)baseClass toSelector:(NSArray *)userComponents
+{
+    NSString* className = NSStringFromClass(baseClass);
 
     NSSet *selectors = [NSSet setWithArray:userComponents];
     ISAStyle *style = [self styleWithClass:className selectors:selectors];
@@ -736,6 +742,8 @@
     return invocations;
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
 - (void)registerObject:(id)object
 {
     if (!_registeredObjects) {
@@ -749,6 +757,7 @@
     }
     [_registeredObjects addObject:object];
 }
+#pragma clang diagnostic pop
 
 
 - (void)updateAppearanceRegisteredObjects
@@ -1042,4 +1051,20 @@
     return [UIImage imageNamed:string];
 }
 
+- (void)addStyleEntry:(ISAStyleEntry *)entry forClass:(Class)class andSelector:(NSString *)selectors
+{
+    NSArray *keys = [selectors componentsSeparatedByString:@":"];
+
+    [self addParams:@[entry] forClass:class toSelector:keys];
+}
+
+- (void)registerProxy:(ISAProxy *)proxy
+{
+
+}
+
+- (void)unregisterProxy:(ISAProxy *)proxy
+{
+
+}
 @end

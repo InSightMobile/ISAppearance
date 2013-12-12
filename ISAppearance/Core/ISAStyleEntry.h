@@ -14,6 +14,9 @@
 
 - (id)initWithBlock:(void (^)(id))pFunction;
 
+- (instancetype)initWithInvocation:(NSInvocation *)invocation;
+
+
 + (id)entryWithBlock:(void (^)(id object))block;
 
 + (ISAStyleEntry *)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams;
@@ -23,5 +26,7 @@
 + (ISAStyleEntry *)entryWithParams:(NSArray *)params fromIndex:(NSUInteger)index selectorParams:(NSArray *)selectorParams;
 
 - (id)invokeWithTarget:(id)target;
+
++ (ISAStyleEntry *)entryWithInvocation:(NSInvocation *)invocation;
 
 @end

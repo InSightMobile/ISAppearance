@@ -2,6 +2,8 @@
 //
 
 #import "UIView+ISAppearance.h"
+#import "UIView+ISAInjection.h"
+#import "ISAppearance.h"
 
 static NSString *const ISACellSeparatorLayerName = @"ISACellSeparatorLayer";
 static NSString *const ISACellBackgroundLayerName = @"ISACellBackgroundLayer";
@@ -9,6 +11,23 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
 
 
 @implementation UIView (ISAppearance)
+
+@dynamic isaClass;
+
+- (void)applyISAppearance
+{
+    self.isaIsApplied = @([[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass]);
+}
+
+- (void)applyISAppearanceWithSubviews:(BOOL)subviews
+{
+    [self applyISAppearance];
+    if (subviews) {
+        for (UIView *subview in self.subviews) {
+            [subview applyISAppearanceWithSubviews:YES];
+        }
+    }
+}
 
 - (void)setRotationAngle:(CGFloat)angle
 {
@@ -30,6 +49,13 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
     [self.layer setShadowOffset:offset];
     [self.layer setShadowRadius:radius];
     [self.layer setShadowOpacity:opacity];
+}
+
+- (void)setShadowColor:(UIColor *)color offset:(CGSize)offset radius:(CGFloat)radius
+{
+    [self.layer setShadowColor:color.CGColor];
+    [self.layer setShadowOffset:offset];
+    [self.layer setShadowRadius:radius];
 }
 
 - (void)setLayerImage:(UIImage *)image

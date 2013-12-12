@@ -3,8 +3,10 @@
 
 #import "UIImage+ISAObjectCreation.h"
 #import "UIImage+ISAColor.h"
-#import "ISAppearance.h"
+#import "ISAppearance+Private.h"
 #import "ISAValueConverter.h"
+
+
 
 
 @implementation UIImage (ISAObjectCreation)
