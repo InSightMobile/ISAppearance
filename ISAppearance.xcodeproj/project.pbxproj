@@ -19,6 +19,7 @@
 		1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ACCDEEBF0DDDB9545FE0 /* ISAEnumValueConverter.h */; };
 		1D26A2A34B2C1D4FDF6048F9 /* ISARuntimeSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A8C29A6AEDBA2B4E7EB8 /* ISARuntimeSelector.h */; };
 		1D26A304CBF8616F64A98CD1 /* UIImage+ISAGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AF803A4847DCE8D837F9 /* UIImage+ISAGradient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D26A34871640117B8328B3A /* ISACGPointValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A6D7742491F4B309E7AF /* ISACGPointValueConverter.m */; };
 		1D26A374066F445D874559A3 /* ISAProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A2665323CAAC5C31B501 /* ISAProxy.h */; };
 		1D26A429BDA3EE7B20628849 /* ISAClassValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A3650372C148AE9941B3 /* ISAClassValueConverter.h */; };
 		1D26A4EDD36E6BABA4BD0970 /* UIView+ISAFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26ABDEAC8714653B5A4165 /* UIView+ISAFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,6 +30,7 @@
 		1D26A74E1F3E218254F8BFEB /* NSObject+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AB67818CAB4AD8334D74 /* NSObject+ISAppearance.m */; };
 		1D26A7A0B9F24BD0E9ADC359 /* UIView+ISAFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A0DE413668D4DC6B1C3D /* UIView+ISAFrame.m */; };
 		1D26A860C5728B358B56519B /* ISAClassValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A393A5AD07303CF43849 /* ISAClassValueConverter.m */; };
+		1D26A8E75B71B8FEDF48905F /* ISACGPointValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A03F990900FCDAAF0508 /* ISACGPointValueConverter.h */; };
 		1D26A930595A4F4E638A75BB /* ISAppearance+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A26D24DB4E3C2F2A1328 /* ISAppearance+Private.h */; };
 		1D26A9444A3DE052A234BB57 /* NSObject+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AEAEE3895268F0A6B9C7 /* NSObject+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26A9D0DA536FAD2F238C80 /* UIImage+ISATrim.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A644288BE542A3B2A479 /* UIImage+ISATrim.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -125,6 +127,7 @@
 
 /* Begin PBXFileReference section */
 		1D26A03348101EFD3E3F7924 /* UIView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISAppearance.h"; sourceTree = "<group>"; };
+		1D26A03F990900FCDAAF0508 /* ISACGPointValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGPointValueConverter.h; sourceTree = "<group>"; };
 		1D26A04746007248DCC1521F /* UIFont+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+ISAObjectCreation.m"; sourceTree = "<group>"; };
 		1D26A0DE413668D4DC6B1C3D /* UIView+ISAFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAFrame.m"; sourceTree = "<group>"; };
 		1D26A1DB6082691984AFF0C6 /* UIImage+ISAResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAResize.m"; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		1D26A5020332B6D717CF46CE /* ISAEnumValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAEnumValueConverter.m; sourceTree = "<group>"; };
 		1D26A5D81B458BC5009D39D1 /* UIImage+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAObjectCreation.m"; sourceTree = "<group>"; };
 		1D26A644288BE542A3B2A479 /* UIImage+ISATrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISATrim.h"; sourceTree = "<group>"; };
+		1D26A6D7742491F4B309E7AF /* ISACGPointValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGPointValueConverter.m; sourceTree = "<group>"; };
 		1D26A766F875CA5E3F77329F /* UIImage+ISAGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAGradient.m"; sourceTree = "<group>"; };
 		1D26A86A7C5A2219ABAEF8E9 /* ISAppearance+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ISAppearance+Private.m"; sourceTree = "<group>"; };
 		1D26A8C29A6AEDBA2B4E7EB8 /* ISARuntimeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISARuntimeSelector.h; sourceTree = "<group>"; };
@@ -474,6 +478,8 @@
 				6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */,
 				1D26A393A5AD07303CF43849 /* ISAClassValueConverter.m */,
 				1D26A3650372C148AE9941B3 /* ISAClassValueConverter.h */,
+				1D26A03F990900FCDAAF0508 /* ISACGPointValueConverter.h */,
+				1D26A6D7742491F4B309E7AF /* ISACGPointValueConverter.m */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -517,6 +523,7 @@
 				1D26A930595A4F4E638A75BB /* ISAppearance+Private.h in Headers */,
 				1D26A9444A3DE052A234BB57 /* NSObject+ISAppearance.h in Headers */,
 				1D26AF405C88F39BD626DA40 /* UIView+ISAppearance.h in Headers */,
+				1D26A8E75B71B8FEDF48905F /* ISACGPointValueConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,6 +691,7 @@
 				1D26ACF2B418FF56C453BA50 /* ISAppearance+Private.m in Sources */,
 				1D26A74E1F3E218254F8BFEB /* NSObject+ISAppearance.m in Sources */,
 				1D26ADCB3D3D15A9BFD5BC9B /* UIView+ISAppearance.m in Sources */,
+				1D26A34871640117B8328B3A /* ISACGPointValueConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
