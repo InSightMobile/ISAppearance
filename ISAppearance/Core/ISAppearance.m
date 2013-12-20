@@ -70,6 +70,7 @@
 - (void)addDefaultStyles
 {
     [self addGlobalStyle:[ISAppearance isPad] ? @"iPad" : @"iPhone"];
+    [self addGlobalStyle:[ISAppearance isPad] ? @"~iPhone" : @"~iPad"];
     [self addGlobalStyle:[ISAppearance isIOS7] ? @"iOS7" : @"~iOS7"];
     [self addGlobalStyle:[ISAppearance isPhone5] ? @"Phone5" : @"~Phone5"];
     [self addGlobalStyle:[ISAppearance isRetina] ? @"Retina" : @"~Retina"];
