@@ -6,6 +6,7 @@
 #include "ISAppearance/UIView+ISAppearance.h"
 #include "ISAppearance/NSObject+ISAppearance.h"
 
+
 @interface ISAppearance : NSObject
 
 + (ISAppearance *)sharedInstance;
@@ -53,7 +54,6 @@
 - (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring;
 
 - (void)addAssetsFolder:(NSString *)folder;
-
 
 
 @end

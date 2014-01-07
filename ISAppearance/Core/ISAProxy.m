@@ -18,21 +18,22 @@
     Class _targetClass;
     NSString *_targetSelector;
 }
-+ (ISAProxy*)proxyForClass:(Class)pClass
++ (ISAProxy *)proxyForClass:(Class)pClass
 {
     return [self proxyForClass:pClass andSelector:nil];
 }
 
 + (ISAProxy *)proxyForClass:(Class)pClass andSelector:(NSString *)selector
 {
-    ISAProxy* proxy = [ISAProxy alloc];
+    ISAProxy *proxy = [ISAProxy alloc];
     proxy->_targetClass = pClass;
     proxy->_targetSelector = selector;
     [[ISAppearance sharedInstance] registerProxy:proxy];
     return proxy;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[ISAppearance sharedInstance] unregisterProxy:self];
 }
 
@@ -45,7 +46,7 @@
 
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
-    ISAStyleEntry* entry = [ISAStyleEntry entryWithInvocation:invocation];
+    ISAStyleEntry *entry = [ISAStyleEntry entryWithInvocation:invocation];
     [[ISAppearance sharedInstance] addStyleEntry:entry forClass:_targetClass andSelector:_targetSelector];
 }
 

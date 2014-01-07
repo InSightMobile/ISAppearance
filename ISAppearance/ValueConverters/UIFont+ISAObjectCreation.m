@@ -18,19 +18,19 @@
     }
     if ([param isKindOfClass:[NSArray class]]) {
         if ([param count] < 2) {
-                    return nil;
+            return nil;
         }
         NSString *name = [param objectAtIndex:0];
         NSNumber *size = [param objectAtIndex:1];
 
         if ([name isEqualToString:@"system"]) {
-                    return [UIFont systemFontOfSize:[size floatValue]];
-                }
+            return [UIFont systemFontOfSize:[size floatValue]];
+        }
         else if ([name isEqualToString:@"bold"]) {
-                    return [UIFont boldSystemFontOfSize:[size floatValue]];
-                }
+            return [UIFont boldSystemFontOfSize:[size floatValue]];
+        }
         else {
-                    return [UIFont fontWithName:name size:[size floatValue]];
+            return [UIFont fontWithName:name size:[size floatValue]];
         }
 
     }

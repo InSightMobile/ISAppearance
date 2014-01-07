@@ -1,14 +1,13 @@
-
 #import "ISAppearance.h"
 #import "ISA_YAMLKit.h"
 #import "ISAValueConverter.h"
 #import "ISAStyleEntry.h"
-#import "NSObject+ISA_Swizzle.h"
 #import "ISAStyle.h"
-#import "UIViewController+ISAInjection.h"
-#import "UIView+ISAInjection.h"
+#import "UIViewController+isa_Injection.h"
+#import "UIView+isa_Injection.h"
 #import "ISAProxy.h"
 
+static const float kAppearanceReloadDelay = 0.25;
 
 @interface ISAppearance () <YKParserDelegate>
 
@@ -31,14 +30,14 @@
     BOOL _isAppearanceLoaded;
     NSMutableSet *_globalStyles;
     NSMutableDictionary *_classesCache;
+    BOOL _reloadScheduled;
 }
 
 + (ISAppearance *)sharedInstance
 {
     static ISAppearance *_instance = nil;
     static dispatch_once_t pred;
-    dispatch_once(&pred, ^
-    {
+    dispatch_once(&pred, ^{
         _instance = [[self alloc] init];
     });
     return _instance;
@@ -84,14 +83,13 @@
 + (void)prepareAppearance
 {
     static dispatch_once_t pred;
-    dispatch_once(&pred, ^
-    {
-        if ([[UIView class] respondsToSelector:@selector(ISA_swizzleClass)]) {
-            [UIView ISA_swizzleClass];
+    dispatch_once(&pred, ^{
+        if ([[UIView class] respondsToSelector:@selector(isa_swizzleClass)]) {
+            [UIView isa_swizzleClass];
         }
 
-        if ([[UIViewController class] respondsToSelector:@selector(ISA_swizzleClass)]) {
-            [UIViewController ISA_swizzleClass];
+        if ([[UIViewController class] respondsToSelector:@selector(isa_swizzleClass)]) {
+            [UIViewController isa_swizzleClass];
         }
     });
 }
@@ -112,8 +110,7 @@
     __block dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, fileDescriptor,
             DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND,
             queue);
-    dispatch_source_set_event_handler(source, ^
-    {
+    dispatch_source_set_event_handler(source, ^{
         unsigned long flags = dispatch_source_get_data(source);
         if (once) {
             [_watchedFiles removeObject:path];
@@ -130,8 +127,7 @@
             callback();
         }
     });
-    dispatch_source_set_cancel_handler(source, ^(void)
-    {
+    dispatch_source_set_cancel_handler(source, ^(void) {
         [_watchedFiles removeObject:path];
         close(fileDescriptor);
     });
@@ -319,7 +315,7 @@
 {
     NSError *error = nil;
     if ([self reloadAppearanceWithError:&error]) {
-        [self performSelector:@selector(reloadAppearanceWithError:) withObject:nil afterDelay:0.3];
+        NSLog(@"ISAppearance reloaded");
     }
     else {
         UIAlertView *alertView =
@@ -358,10 +354,12 @@
 {
 #if (TARGET_IPHONE_SIMULATOR)
     if (monitoring) {
-        _monitoring = YES;
         NSString *path = [self pathForMonitoredAssetFolder:folder];
         if(path) {
-            if (!_monitoredAssets) _monitoredAssets = [NSMutableArray arrayWithCapacity:1];
+            _monitoring = YES;
+            if (!_monitoredAssets) {
+                _monitoredAssets = [NSMutableArray arrayWithCapacity:1];
+            }
             [_monitoredAssets addObject:path];
         }
     }
@@ -415,8 +413,7 @@
         return;
     }
 
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-    {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         id appearanceProxy = nil;
 
@@ -497,8 +494,7 @@
         classInfo = [NSMutableDictionary dictionary];
     }
 
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-    {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
     }];
     _definitionsByClass[class] = classInfo;
@@ -506,8 +502,7 @@
 
 - (void)processDefinitions:(NSDictionary *)definition
 {
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-    {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if ([key isKindOfClass:[NSString class]]) {
             [self processDefinition:obj forClass:key];
@@ -545,8 +540,7 @@
     __block BOOL result = YES;
     __block NSError *error = nil;
 
-    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-    {
+    [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         NSArray *keys = [key componentsSeparatedByString:@":"];
 
@@ -622,7 +616,7 @@
 
 - (void)addParams:(NSArray *)params forClass:(Class)baseClass toSelector:(NSArray *)userComponents
 {
-    NSString* className = NSStringFromClass(baseClass);
+    NSString *className = NSStringFromClass(baseClass);
 
     NSSet *selectors = [NSSet setWithArray:userComponents];
     ISAStyle *style = [self styleWithClass:className selectors:selectors];
@@ -687,8 +681,7 @@
 
         invocations = [NSMutableArray arrayWithCapacity:[params count]];
 
-        [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-        {
+        [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
             ISAStyleEntry *entry = [ISAStyleEntry entryWithKey:key value:obj selectorParams:selectorParams];
             if (entry) {
@@ -710,8 +703,7 @@
             }
             else if ([operation isKindOfClass:[NSDictionary class]]) {
 
-                [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-                {
+                [operation enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                     if ([key isKindOfClass:[NSString class]]) {    // property set style
                         // decode keys
                         ISAStyleEntry *entry = [ISAStyleEntry entryWithKey:key value:obj selectorParams:selectorParams];
@@ -783,9 +775,10 @@
         [_registeredObjects removeAllObjects];
     }
 }
+
 - (BOOL)applyAppearanceTo:(id)target
 {
-    if([target respondsToSelector:@selector(isaClass)]) {
+    if ([target respondsToSelector:@selector(isaClass)]) {
         return [self applyAppearanceTo:target usingClasses:[target isaClass]];
     }
     else {
@@ -1028,10 +1021,23 @@
 
 - (void)watchAndReloadPath:(NSString *)path once:(BOOL)once
 {
-    [self watch:path once:once withCallback:^
-    {
-        [self performSelectorOnMainThread:@selector(autoReloadAppearance) withObject:nil waitUntilDone:NO];
+    [self watch:path once:once withCallback:^{
+        [self performSelectorOnMainThread:@selector(scheduleReload) withObject:nil waitUntilDone:NO];
     }];
+}
+
+- (void)scheduleReload
+{
+    if (!_reloadScheduled) {
+        _reloadScheduled = YES;
+        [self performSelector:@selector(performScheduledReload) withObject:nil afterDelay:kAppearanceReloadDelay];
+    }
+}
+
+- (void)performScheduledReload
+{
+    _reloadScheduled = NO;
+    [self autoReloadAppearance];
 }
 
 - (UIImage *)loadImageNamed:(NSString *)string

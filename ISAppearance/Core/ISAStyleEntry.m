@@ -4,8 +4,7 @@
 
 #import "ISAStyleEntry.h"
 
-static NSString *SelectorNameForSetterWithString(NSString *string)
-{
+static NSString *SelectorNameForSetterWithString(NSString *string) {
     NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                                     withString:[[string substringToIndex:1] uppercaseString]];
 
@@ -13,8 +12,7 @@ static NSString *SelectorNameForSetterWithString(NSString *string)
 }
 
 
-static SEL SelectorForPropertySetterFromString(NSString *string)
-{
+static SEL SelectorForPropertySetterFromString(NSString *string) {
 
     NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                                     withString:[[string substringToIndex:1] uppercaseString]];
@@ -128,7 +126,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string)
         target = rootTarget;
     }
     if (!target) {
-            return nil;
+        return nil;
     }
 
     // use cashed invocation
@@ -278,8 +276,7 @@ static SEL SelectorForPropertySetterFromString(NSString *string)
         }
 
         if ([component isKindOfClass:[NSDictionary class]]) {
-            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-            {
+            [component enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
                 if (firstItem) {
                     NSMutableArray *keys = [key componentsSeparatedByString:@"."].mutableCopy;

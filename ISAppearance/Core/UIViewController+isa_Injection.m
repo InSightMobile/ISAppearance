@@ -4,19 +4,19 @@
 
 
 #import <objc/runtime.h>
-#import "NSObject+ISA_Swizzle.h"
-#import "UIViewController+ISAInjection.h"
+#import "NSObject+isa_Swizzle.h"
+#import "UIViewController+isa_Injection.h"
 #import "ISAppearance.h"
 
 
-@implementation UIViewController (ISAInjection)
+@implementation UIViewController (isa_Injection)
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "InfiniteRecursion"
 
 - (void)isaOverride_awakeFromNib
 {
-    [self applyISAppearance];
+    [self isa_applyAppearance];
     [self isaOverride_awakeFromNib];
 }
 
@@ -35,30 +35,30 @@
 #pragma clang diagnostic pop
 
 
-+ (void)ISA_swizzleClass
++ (void)isa_swizzleClass
 {
 
-    [self ISA_swizzle:[UIViewController class]
+    [self isa_swizzle:[UIViewController class]
                  from:@selector(awakeFromNib)
                    to:@selector(isaOverride_awakeFromNib)];
 
-    [self ISA_swizzle:[UIViewController class]
+    [self isa_swizzle:[UIViewController class]
                  from:@selector(viewDidLoad)
                    to:@selector(isaOverride_viewDidLoad)];
 
 }
 
 
-- (void)applyISAppearance
+- (void)isa_applyAppearance
 {
     self.isaIsApplied = @([[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass]);
 }
 
-- (void)applyISAppearanceWithSubviews:(BOOL)subviews
+- (void)isa_applyAppearanceWithSubviews:(BOOL)subviews
 {
-    [self applyISAppearance];
+    [self isa_applyAppearance];
     if (self.isViewLoaded) {
-        [self.view applyISAppearanceWithSubviews:YES];
+        [self.view isa_applyAppearanceWithSubviews:YES];
     }
 }
 
@@ -70,7 +70,7 @@ static void *isaIsApplied = 0;
 {
     objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (self.isaIsApplied) {
-        [self applyISAppearance];
+        [self isa_applyAppearance];
     }
 }
 

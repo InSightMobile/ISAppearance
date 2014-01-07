@@ -31,11 +31,11 @@
 
 + (instancetype)isa_appearance
 {
-    return (id)[ISAProxy proxyForClass:self];
+    return (id) [ISAProxy proxyForClass:self];
 }
 
 + (instancetype)isa_appearanceForSelector:(NSString *)selector
 {
-    return (id)[ISAProxy proxyForClass:self andSelector:selector];
+    return (id) [ISAProxy proxyForClass:self andSelector:selector];
 }
 @end

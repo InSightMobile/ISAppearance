@@ -8,122 +8,146 @@
 
 @implementation UIView (ISAFrame)
 
-- (void)setSize:(CGSize)size {
+- (void)setSize:(CGSize)size
+{
     CGRect frame = self.frame;
     frame.size = size;
     self.frame = frame;
 }
 
-- (void)setWidth:(CGFloat)width {
+- (void)setWidth:(CGFloat)width
+{
     CGSize size = self.size;
     size.width = width;
     self.size = size;
 }
 
-- (void)setHeight:(CGFloat)height {
+- (void)setHeight:(CGFloat)height
+{
     CGSize size = self.size;
     size.height = height;
     self.size = size;
 }
 
-- (void)setOrigin:(CGPoint)origin {
+- (void)setOrigin:(CGPoint)origin
+{
     CGRect frame = self.frame;
     frame.origin = origin;
     self.frame = frame;
 }
 
-- (void)setX:(CGFloat)x {
+- (void)setX:(CGFloat)x
+{
     CGPoint origin = self.origin;
     origin.x = x;
     self.origin = origin;
 }
 
-- (void)setY:(CGFloat)y {
+- (void)setY:(CGFloat)y
+{
     CGPoint origin = self.origin;
     origin.y = y;
     self.origin = origin;
 }
 
-- (void)setLeft:(CGFloat)x {
+- (void)setLeft:(CGFloat)x
+{
     CGPoint origin = self.origin;
     origin.x = x;
     self.origin = origin;
 }
 
-- (void)setTop:(CGFloat)y {
+- (void)setTop:(CGFloat)y
+{
     CGPoint origin = self.origin;
     origin.y = y;
     self.origin = origin;
 }
 
-- (void)setRight:(CGFloat)x {
+- (void)setRight:(CGFloat)x
+{
     CGRect frame = self.frame;
-    frame.origin.x = x-frame.size.width;
+    frame.origin.x = x - frame.size.width;
     self.frame = frame;
 }
 
-- (void)setBottom:(CGFloat)y {
+- (void)setBottom:(CGFloat)y
+{
     CGRect frame = self.frame;
-    frame.origin.y = y-frame.size.height;
+    frame.origin.y = y - frame.size.height;
     self.frame = frame;
 }
 
 
 #pragma mark - Getters
 
-- (CGSize)size {
+- (CGSize)size
+{
     return self.frame.size;
 }
 
-- (CGFloat)width {
+- (CGFloat)width
+{
     return self.size.width;
 }
 
-- (CGFloat)height {
+- (CGFloat)height
+{
     return self.size.height;
 }
 
-- (CGPoint)origin {
+- (CGPoint)origin
+{
     return self.frame.origin;
 }
 
-- (CGFloat)x {
+- (CGFloat)x
+{
     return self.origin.x;
 }
 
-- (CGFloat)y {
+- (CGFloat)y
+{
     return self.origin.y;
 }
 
-- (CGFloat)left {
+- (CGFloat)left
+{
     return self.origin.x;
 }
 
-- (CGFloat)top {
+- (CGFloat)top
+{
     return self.origin.y;
 }
 
-- (CGFloat)bottom {
+- (CGFloat)bottom
+{
     return self.origin.y + self.size.height;
 }
 
-- (CGFloat)right {
+- (CGFloat)right
+{
     return self.origin.x + self.size.width;
 }
 
-- (CGPoint)topLeft {
+- (CGPoint)topLeft
+{
     return CGPointMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame));
 }
 
-- (CGPoint)topRight {
+- (CGPoint)topRight
+{
     return CGPointMake(CGRectGetMaxX(self.frame), CGRectGetMinY(self.frame));
 }
 
-- (CGPoint)bottomRight {
+- (CGPoint)bottomRight
+{
     return CGPointMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame));
 }
 
-- (CGPoint)bottomLeft {
+- (CGPoint)bottomLeft
+{
     return CGPointMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame));
 }
 

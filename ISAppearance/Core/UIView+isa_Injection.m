@@ -1,29 +1,27 @@
 #import <objc/runtime.h>
-#import "UIView+ISAInjection.h"
+#import "UIView+isa_Injection.h"
 #import "ISAppearance.h"
-#import "NSObject+ISA_Swizzle.h"
+#import "NSObject+isa_Swizzle.h"
 
-@implementation UIView (ISAInjection)
+@implementation UIView (isa_Injection)
 
 - (void)isaOverride_didMoveToWindow
 {
-    if (!self.isaIsApplied) {
-        [self applyISAppearance];
+    if (!self.isa_isAppearanceApplied) {
+        [self isa_applyAppearance];
     }
 
     [self isaOverride_didMoveToWindow];
 }
 
-+ (void)ISA_swizzleClass
++ (void)isa_swizzleClass
 {
 
-    [self ISA_swizzle:[UIView class]
+    [self isa_swizzle:[UIView class]
                  from:@selector(didMoveToWindow)
                    to:@selector(isaOverride_didMoveToWindow)];
 
 }
-
-
 
 
 static void *isaClass = 0;
@@ -32,8 +30,8 @@ static void *isaIsApplied = 0;
 - (void)setIsaClass:(NSString *)value
 {
     objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (self.isaIsApplied) {
-        [self applyISAppearance];
+    if (self.isa_isAppearanceApplied) {
+        [self isa_applyAppearance];
     }
 }
 
@@ -42,12 +40,12 @@ static void *isaIsApplied = 0;
     return objc_getAssociatedObject(self, &isaClass);
 }
 
-- (void)setIsaIsApplied:(NSNumber *)value
+- (void)isa_setAppearanceApplied:(NSNumber *)value
 {
     objc_setAssociatedObject(self, &isaIsApplied, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)isaIsApplied
+- (NSNumber *)isa_isAppearanceApplied
 {
     return objc_getAssociatedObject(self, &isaIsApplied);
 }

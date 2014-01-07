@@ -7,8 +7,6 @@
 #import "ISAValueConverter.h"
 
 
-
-
 @implementation UIImage (ISAObjectCreation)
 
 + (UIImage *)isaImageNamed:(NSString *)name
@@ -36,7 +34,7 @@
         }
 
         if ([node count] == 0) {
-                    return [UIImage new];
+            return [UIImage new];
         }
 
         id firstParam = [node objectAtIndex:0];

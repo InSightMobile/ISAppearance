@@ -16,6 +16,7 @@
 - (UIImage *)loadImageNamed:(NSString *)string;
 
 - (void)registerProxy:(ISAProxy *)proxy;
+
 - (void)unregisterProxy:(ISAProxy *)proxy;
 
 @end

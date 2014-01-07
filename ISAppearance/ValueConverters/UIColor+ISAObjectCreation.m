@@ -17,19 +17,19 @@
 
     // String should be 6 or 8 characters
     if ([cString length] < 6) {
-            return nil;
+        return nil;
     }
 
     // strip 0X if it appears
     if ([cString hasPrefix:@"0X"]) {
-            cString = [cString substringFromIndex:2];
+        cString = [cString substringFromIndex:2];
     }
     if ([cString hasPrefix:@"#"]) {
-            cString = [cString substringFromIndex:1];
+        cString = [cString substringFromIndex:1];
     }
 
     if ([cString length] != 6) {
-            return nil;
+        return nil;
     }
 
     NSRange range;
@@ -51,7 +51,7 @@
     ok &= [[NSScanner scannerWithString:bString] scanHexInt:&b];
 
     if (!ok) {
-            return nil;
+        return nil;
     }
 
     return [UIColor colorWithRed:((float) r / 255.0f)
@@ -79,7 +79,7 @@
         }
     }
     if (!cl) {
-            cl = [UIColor whiteColor];
+        cl = [UIColor whiteColor];
     }
     return cl;
 }
@@ -90,7 +90,7 @@
 
         UIColor *cl = [self colorWithString:node];
         if (cl) {
-                    return cl;
+            return cl;
         }
     }
     else if ([node isKindOfClass:[NSArray class]]) {

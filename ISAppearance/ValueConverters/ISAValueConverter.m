@@ -71,8 +71,7 @@
 {
     static NSMutableDictionary *_instance = nil;
     static dispatch_once_t pred;
-    dispatch_once(&pred, ^
-    {
+    dispatch_once(&pred, ^{
         _instance = [[NSMutableDictionary alloc] init];
     });
     return _instance;

@@ -4,13 +4,13 @@
 
 
 #import <objc/runtime.h>
-#import "NSObject+ISA_Swizzle.h"
+#import "NSObject+isa_Swizzle.h"
 
 
-@implementation NSObject (ISA_Swizzle)
+@implementation NSObject (isa_Swizzle)
 
 
-+ (void)ISA_swizzle:(Class)class from:(SEL)original to:(SEL)new
++ (void)isa_swizzle:(Class)class from:(SEL)original to:(SEL)new
 {
     Method originalMethod = class_getInstanceMethod(class, original);
     Method newMethod = class_getInstanceMethod(class, new);
