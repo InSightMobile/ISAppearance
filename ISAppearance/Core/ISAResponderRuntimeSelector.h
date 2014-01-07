@@ -4,14 +4,13 @@
 
 
 #import <Foundation/Foundation.h>
+#import "ISARuntimeSelector.h"
 
 
-@interface ISARuntimeSelector : NSObject
+@interface ISAResponderRuntimeSelector : ISARuntimeSelector
 
 - (BOOL)isApplyableTo:(id)target;
 
 - (id)initWithClassName:(NSString *)name;
-
-+ (id)selectorWithName:(NSString *)selector;
 
 @end

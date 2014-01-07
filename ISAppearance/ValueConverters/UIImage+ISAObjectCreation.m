@@ -12,7 +12,6 @@
 + (UIImage *)isaImageNamed:(NSString *)name
 {
     return [[ISAppearance sharedInstance] loadImageNamed:name];
-    //[UIImage imageNamed:name];
 }
 
 + (id)objectWithISANode:(id)node

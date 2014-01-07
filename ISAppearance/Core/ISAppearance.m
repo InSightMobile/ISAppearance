@@ -298,13 +298,25 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (void)autoReloadAppearance
 {
-    NSError *error = nil;
-    if ([self reloadAppearanceWithError:&error]) {
-        NSLog(@"ISAppearance reloaded");
+    @try {
+        NSError *error = nil;
+
+        if ([self reloadAppearanceWithError:&error]) {
+            NSLog(@"ISAppearance reloaded");
+        }
+        else {
+            NSLog(@"ISAppearance reload error: %@",error);
+            UIAlertView *alertView =
+                    [[UIAlertView alloc] initWithTitle:@"ISAppearance error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+
+            [alertView show];
+        }
     }
-    else {
+    @catch (NSException *ex) {
+
+        NSLog(@"Appearance apply expection:%@", ex);
         UIAlertView *alertView =
-                [[UIAlertView alloc] initWithTitle:@"ISAppearance error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                [[UIAlertView alloc] initWithTitle:@"ISAppearance expection" message:ex.description delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 
         [alertView show];
     }
@@ -382,7 +394,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 
     for (NSDictionary *definition in _definitions) {
-        if (![self processISAppearance:definition error:error]) {
+        if (![self processISAppearance:definition baseKeys:nil error:error]) {
             return NO;
         }
     }
@@ -508,11 +520,11 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (BOOL)processISAppearance:(NSDictionary *)definition error:(NSError * __autoreleasing *)pError
+- (BOOL)processISAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys error:(NSError * __autoreleasing *)pError
 {
     if ([definition isKindOfClass:[NSArray class]]) {
         for (id subDefinition in definition) {
-            if (![self processISAppearance:subDefinition error:pError]) {
+            if (![self processISAppearance:subDefinition baseKeys:baseKeys error:pError]) {
                 return NO;
             }
         }
@@ -530,29 +542,30 @@ static const float kAppearanceReloadDelay = 0.25;
         NSArray *keys = [key componentsSeparatedByString:@":"];
 
         NSString *defkey = keys[0];
+        NSArray *passedKeys = nil;
 
         if ([defkey isEqual:@"UIAppearance"]) {
-            if ([self checkStyleConformance:keys]) {
+            if ([self checkStyleConformance:keys passedSelectors:&passedKeys]) {
                 [self processUIAppearance:obj];
                 if (_monitoring) {
-                    [self processISAppearance:obj error:NULL ];
+                    [self processISAppearance:obj baseKeys:nil error:NULL ];
                 }
             }
             return;
         }
         else if ([defkey isEqual:@"ISAppearance"]) {
-            if ([self checkStyleConformance:keys]) {
-                [self processISAppearance:obj error:NULL ];
+            if ([self checkStyleConformance:keys passedSelectors:&passedKeys]) {
+                [self processISAppearance:obj baseKeys:passedKeys error:NULL ];
             }
             return;
         }
         else if ([defkey isEqual:@"include"]) {
-            if ([self checkStyleConformance:keys]) {
+            if ([self checkStyleConformance:keys passedSelectors:&passedKeys]) {
                 NSString *file = [self appearancePathForName:obj];
                 if (file) {
                     id includeDefinitions = [self loadAppearanceData:file error:&error];
                     if (includeDefinitions) {
-                        if ([self processISAppearance:includeDefinitions error:&error]) {
+                        if ([self processISAppearance:includeDefinitions baseKeys:passedKeys error:&error]) {
                             return;
                         }
                     }
@@ -564,12 +577,15 @@ static const float kAppearanceReloadDelay = 0.25;
             return;
         }
 
-        NSArray *selector = keys;
+        if (baseKeys.count) {
+            keys = [keys arrayByAddingObjectsFromArray:baseKeys];
+        }
+
         NSMutableArray *params = [self styleBlockWithParams:obj selectorParams:nil];
         if (!params) {
             return;
         }
-        [self addParams:params toSelector:selector];
+        [self addParams:params toSelector:keys];
     }];
     if (pError && error) {
         *pError = error;
@@ -577,12 +593,29 @@ static const float kAppearanceReloadDelay = 0.25;
     return result;
 }
 
-- (BOOL)checkStyleConformance:(NSArray *)selectors
+- (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors
 {
+    NSMutableArray *passedSelectors = pPassedSelectors ? [NSMutableArray new] : nil;
     for (int i = 1; i < selectors.count; i++) {
-        if (![_globalStyles containsObject:selectors[i]]) {
+
+        NSString *selector = selectors[i];
+        NSString *negativeSelector;
+        if ([selector hasPrefix:@"~"]) {
+            negativeSelector = [selector substringFromIndex:1];
+        }
+        else {
+            negativeSelector = [@"~" stringByAppendingString:selector];
+        }
+
+        if ([_globalStyles containsObject:negativeSelector]) {
             return NO;
         }
+        else if (![_globalStyles containsObject:selector]) {
+            [passedSelectors addObject:selector];
+        }
+    }
+    if (pPassedSelectors) {
+        *pPassedSelectors = passedSelectors;
     }
     return YES;
 }
@@ -613,7 +646,7 @@ static const float kAppearanceReloadDelay = 0.25;
         style = [ISAStyle new];
         style.baseClass = baseClass;
         style.className = className;
-        style.selectors = selectors;
+        [style processSelectors:selectors];
         [style addEntries:params];
         [self indexStyle:style];
     }

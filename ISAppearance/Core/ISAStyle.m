@@ -47,7 +47,22 @@
 
 - (void)processSelectors:(NSSet *)selectors
 {
-    self.selectors = selectors;
+    NSMutableSet* set = [NSMutableSet setWithCapacity:selectors.count];
+    NSMutableArray* runtime = [NSMutableArray new];
+    for (NSString *selector in selectors) {
+
+        ISARuntimeSelector *runtimeSelector = [ISARuntimeSelector selectorWithName:selector];
+        if(runtimeSelector) {
+            [runtime addObject:runtimeSelector];
+        }
+        else {
+            [set addObject:selector];
+        }
+    }
+    self.selectors = [set copy];
+    if(runtime.count) {
+        self.runtimeSelectors = [runtime copy];
+    }
 }
 
 - (NSComparisonResult)compare:(ISAStyle *)style
