@@ -8,6 +8,6 @@
 
 @interface ISARuntimeSelector : NSObject
 
-- (BOOL)isApplayableTo:(id)target;
+- (BOOL)isApplyableTo:(id)target;
 
 @end

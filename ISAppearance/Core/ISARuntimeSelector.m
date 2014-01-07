@@ -10,7 +10,7 @@
 {
 
 }
-- (BOOL)isApplayableTo:(id)target
+- (BOOL)isApplyableTo:(id)target
 {
     return YES;
 }

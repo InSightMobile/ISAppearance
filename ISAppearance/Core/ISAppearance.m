@@ -6,6 +6,7 @@
 #import "UIViewController+isa_Injection.h"
 #import "UIView+isa_Injection.h"
 #import "ISAProxy.h"
+#import "UIDevice+isa_SystemInfo.h"
 
 static const float kAppearanceReloadDelay = 0.25;
 
@@ -30,7 +31,7 @@ static const float kAppearanceReloadDelay = 0.25;
     BOOL _isAppearanceLoaded;
     NSMutableSet *_globalStyles;
     NSMutableDictionary *_classesCache;
-    BOOL _reloadScheduled;
+    BOOL _isReloadScheduled;
 }
 
 + (ISAppearance *)sharedInstance
@@ -68,11 +69,11 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (void)addDefaultStyles
 {
-    [self addGlobalStyle:[ISAppearance isPad] ? @"iPad" : @"iPhone"];
-    [self addGlobalStyle:[ISAppearance isPad] ? @"~iPhone" : @"~iPad"];
-    [self addGlobalStyle:[ISAppearance isIOS7] ? @"iOS7" : @"~iOS7"];
-    [self addGlobalStyle:[ISAppearance isPhone5] ? @"Phone5" : @"~Phone5"];
-    [self addGlobalStyle:[ISAppearance isRetina] ? @"Retina" : @"~Retina"];
+    [self addGlobalStyle:[UIDevice isa_isPad] ? @"iPad" : @"iPhone"];
+    [self addGlobalStyle:[UIDevice isa_isPad] ? @"~iPhone" : @"~iPad"];
+    [self addGlobalStyle:[UIDevice isa_isIOS7] ? @"iOS7" : @"~iOS7"];
+    [self addGlobalStyle:[UIDevice isa_isPhone5] ? @"Phone5" : @"~Phone5"];
+    [self addGlobalStyle:[UIDevice isa_isRetina] ? @"Retina" : @"~Retina"];
 }
 
 - (void)addGlobalStyle:(NSString *)string
@@ -136,48 +137,32 @@ static const float kAppearanceReloadDelay = 0.25;
 
 + (BOOL)isPad
 {
-    return [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    return [UIDevice isa_isPad];
 }
 
 + (BOOL)isPhone5
 {
-    return !self.isPad && (fabs((double) [[UIScreen mainScreen] bounds].size.height - (double) 568) < DBL_EPSILON );
+    return [UIDevice isa_isPhone5];
 }
 
 + (BOOL)isRetina
 {
-    return [UIScreen mainScreen].scale == 2.0;
+    return [UIDevice isa_isRetina];
 }
-
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-#define SYSTEM_VERSION_LESS_THAN(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
-
 
 + (BOOL)isIOS7
 {
-#ifdef __IPHONE_7_0
-    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0");
-#else
-    return NO;
-#endif
+    return [UIDevice isa_isIOS7];
 }
 
 + (BOOL)isIOS6AndGreater
 {
-#ifdef __IPHONE_6_0
-    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0");
-#else
-    return NO;
-#endif
+    return [UIDevice isa_isIOS6AndGreater];
 }
 
 + (BOOL)isIOS5
 {
-#ifdef __IPHONE_6_0
-    return SYSTEM_VERSION_LESS_THAN(@"6.0");
-#else
-    return NO;
-#endif
+    return [UIDevice isa_isIOS5];
 }
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
@@ -1028,15 +1013,15 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (void)scheduleReload
 {
-    if (!_reloadScheduled) {
-        _reloadScheduled = YES;
+    if (!_isReloadScheduled) {
+        _isReloadScheduled = YES;
         [self performSelector:@selector(performScheduledReload) withObject:nil afterDelay:kAppearanceReloadDelay];
     }
 }
 
 - (void)performScheduledReload
 {
-    _reloadScheduled = NO;
+    _isReloadScheduled = NO;
     [self autoReloadAppearance];
 }
 

@@ -30,7 +30,7 @@
 - (void)applyToTarget:(id)target
 {
     for (ISARuntimeSelector *selector in _runtimeSelectors) {
-        if (![selector isApplayableTo:target]) {
+        if (![selector isApplyableTo:target]) {
             return;
         }
     }
