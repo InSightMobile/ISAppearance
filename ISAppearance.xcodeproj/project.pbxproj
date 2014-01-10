@@ -107,7 +107,9 @@
 		5C5346731776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53464B1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m */; };
 		5C5346741776DEC700B0B5B2 /* ISAValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */; };
 		5C5346751776DEC700B0B5B2 /* ISAValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */; };
+		6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */; };
 		6D6EE79E33CC813BCFD796FE /* ISACGRectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */; };
+		6D6EEC0DC8FB4115E7B2791E /* ISANSTextAlignmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */; };
 		6D6EEE5E11B04BE2A4CC8096 /* ISACGRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */; };
 /* End PBXBuildFile section */
 
@@ -251,6 +253,8 @@
 		5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAValueConverter.h; sourceTree = "<group>"; };
 		5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAValueConverter.m; sourceTree = "<group>"; };
 		6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGRectValueConverter.m; sourceTree = "<group>"; };
+		6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSTextAlignmentValueConverter.m; sourceTree = "<group>"; };
+		6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSTextAlignmentValueConverter.h; sourceTree = "<group>"; };
 		6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGRectValueConverter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -504,6 +508,8 @@
 				1D26A3650372C148AE9941B3 /* ISAClassValueConverter.h */,
 				1D26A03F990900FCDAAF0508 /* ISACGPointValueConverter.h */,
 				1D26A6D7742491F4B309E7AF /* ISACGPointValueConverter.m */,
+				6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */,
+				6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -552,6 +558,7 @@
 				1D26A22EFDEFE355856D0E82 /* UIDevice+isa_SystemInfo.h in Headers */,
 				1D26AD05EDB413C03E661B78 /* ISAResponderRuntimeSelector.h in Headers */,
 				1D26AC29772BB5CEF2EFAA39 /* UIColor+ISAHexString.h in Headers */,
+				6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +731,7 @@
 				1D26A4FDE38C3A2A1890F040 /* UIDevice+isa_SystemInfo.m in Sources */,
 				1D26A7C8518A7347554E57CC /* ISAResponderRuntimeSelector.m in Sources */,
 				1D26A980BF889D4924E819E7 /* UIColor+ISAHexString.m in Sources */,
+				6D6EEC0DC8FB4115E7B2791E /* ISANSTextAlignmentValueConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
