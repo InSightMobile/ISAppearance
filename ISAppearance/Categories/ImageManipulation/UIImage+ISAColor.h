@@ -9,6 +9,8 @@
 @interface UIImage (ISAColor)
 + (UIImage *)imageWithColor:(UIColor *)color;
 
++ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
+
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor;
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth;

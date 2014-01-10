@@ -38,9 +38,11 @@
 		1D26A8E75B71B8FEDF48905F /* ISACGPointValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A03F990900FCDAAF0508 /* ISACGPointValueConverter.h */; };
 		1D26A930595A4F4E638A75BB /* ISAppearance+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A26D24DB4E3C2F2A1328 /* ISAppearance+Private.h */; };
 		1D26A9444A3DE052A234BB57 /* NSObject+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AEAEE3895268F0A6B9C7 /* NSObject+ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D26A980BF889D4924E819E7 /* UIColor+ISAHexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AE9839827E9AE47BE320 /* UIColor+ISAHexString.m */; };
 		1D26A9D0DA536FAD2F238C80 /* UIImage+ISATrim.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A644288BE542A3B2A479 /* UIImage+ISATrim.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26AA56E1380D9E8CFDA404 /* UIImage+ISAResize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A1DB6082691984AFF0C6 /* UIImage+ISAResize.m */; };
 		1D26AB9E6B1A545E3BB847C0 /* ISAProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26ADD56BF5FD415450690E /* ISAProxy.m */; };
+		1D26AC29772BB5CEF2EFAA39 /* UIColor+ISAHexString.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A910A30CFA43DEBEC75E /* UIColor+ISAHexString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26ACF2B418FF56C453BA50 /* ISAppearance+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A86A7C5A2219ABAEF8E9 /* ISAppearance+Private.m */; };
 		1D26AD05EDB413C03E661B78 /* ISAResponderRuntimeSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A66D3533C50AB1218BF8 /* ISAResponderRuntimeSelector.h */; };
 		1D26ADC76D7BE8BD18C52398 /* ISANSObjectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */; };
@@ -157,6 +159,7 @@
 		1D26A86A7C5A2219ABAEF8E9 /* ISAppearance+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ISAppearance+Private.m"; sourceTree = "<group>"; };
 		1D26A8C29A6AEDBA2B4E7EB8 /* ISARuntimeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISARuntimeSelector.h; sourceTree = "<group>"; };
 		1D26A900D0AFA472222B5E38 /* UIView+ISABorders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISABorders.m"; sourceTree = "<group>"; };
+		1D26A910A30CFA43DEBEC75E /* UIColor+ISAHexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ISAHexString.h"; sourceTree = "<group>"; };
 		1D26A9DA6F2CDF7807A31BBD /* ISANSObjectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSObjectValueConverter.m; sourceTree = "<group>"; };
 		1D26AB6022142072561AD790 /* UIImage+ISATrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISATrim.m"; sourceTree = "<group>"; };
 		1D26AB67818CAB4AD8334D74 /* NSObject+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ISAppearance.m"; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 		1D26ADA70D7E72776DF0ADE8 /* UIImage+ISAObjectCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAObjectCreation.h"; sourceTree = "<group>"; };
 		1D26ADD56BF5FD415450690E /* ISAProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAProxy.m; sourceTree = "<group>"; };
 		1D26AE7029048A9E9C00083A /* UIView+ISABorders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ISABorders.h"; sourceTree = "<group>"; };
+		1D26AE9839827E9AE47BE320 /* UIColor+ISAHexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ISAHexString.m"; sourceTree = "<group>"; };
 		1D26AEAEE3895268F0A6B9C7 /* NSObject+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ISAppearance.h"; sourceTree = "<group>"; };
 		1D26AEF5709AEBF6279CD50D /* UIView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ISAppearance.m"; sourceTree = "<group>"; };
 		1D26AF3BF4936C0963CD38ED /* UIImage+ISAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ISAColor.h"; sourceTree = "<group>"; };
@@ -431,6 +435,8 @@
 				1D26ABDEAC8714653B5A4165 /* UIView+ISAFrame.h */,
 				1D26A900D0AFA472222B5E38 /* UIView+ISABorders.m */,
 				1D26AE7029048A9E9C00083A /* UIView+ISABorders.h */,
+				1D26AE9839827E9AE47BE320 /* UIColor+ISAHexString.m */,
+				1D26A910A30CFA43DEBEC75E /* UIColor+ISAHexString.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -545,6 +551,7 @@
 				1D26A7FAF09F2C870190138A /* UIView+ISABorders.h in Headers */,
 				1D26A22EFDEFE355856D0E82 /* UIDevice+isa_SystemInfo.h in Headers */,
 				1D26AD05EDB413C03E661B78 /* ISAResponderRuntimeSelector.h in Headers */,
+				1D26AC29772BB5CEF2EFAA39 /* UIColor+ISAHexString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +723,7 @@
 				1D26A7A71DA0ACEDC4F14357 /* UIView+ISABorders.m in Sources */,
 				1D26A4FDE38C3A2A1890F040 /* UIDevice+isa_SystemInfo.m in Sources */,
 				1D26A7C8518A7347554E57CC /* ISAResponderRuntimeSelector.m in Sources */,
+				1D26A980BF889D4924E819E7 /* UIColor+ISAHexString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
