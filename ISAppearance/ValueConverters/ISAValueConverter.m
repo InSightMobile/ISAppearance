@@ -6,6 +6,8 @@
 #import "ISAValueConverter.h"
 #import "ISANSObjectValueConverter.h"
 #import "ISAStyleEntry.h"
+#import "ISAEnumValueConverter.h"
+#import "ISAEnumClassValueConverter.h"
 
 @interface ISAValueConverter () <YKTagDelegate>
 
@@ -29,7 +31,14 @@
     if (converterClass) {
         converter = [[converterClass alloc] init];
     }
-    else {
+    if (!converter) {
+        NSString *enumerationClassName = [NSString stringWithFormat:@"%@Enum", className];
+        Class enumClass = NSClassFromString(enumerationClassName);
+        if (enumClass) {
+            converter = [[ISAEnumClassValueConverter alloc] initWithObjectClass:enumClass];
+        }
+    }
+    if (!converter) {
         Class cl = NSClassFromString(className);
         if (cl) {
             converter = [[ISANSObjectValueConverter alloc] initWithObjectClass:cl];
