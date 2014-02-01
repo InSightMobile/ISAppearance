@@ -21,6 +21,8 @@
 #pragma mark Parser
 + (id)loadFromString:(NSString *)aString;
 
++ (id)loadDataFromFileNamed:(NSString *)name bundle:(NSBundle *)bundle error:(NSError **)error;
+
 + (id)loadFromFile:(NSString *)path error:(NSError **)error;
 
 + (id)loadFromURL:(NSURL *)url;

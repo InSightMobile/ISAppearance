@@ -176,12 +176,7 @@ static const float kAppearanceReloadDelay = 0.25;
 
 + (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle
 {
-    if (!bundle) {
-        bundle = [NSBundle mainBundle];
-    }
-    NSString *path = [bundle pathForResource:[string stringByDeletingPathExtension]
-                                      ofType:[string pathExtension]];
-    return [self loadDataFromFile:path];
+    return [ISA_YAMLKit loadDataFromFileNamed:string bundle:bundle error:NULL];
 }
 
 - (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri
