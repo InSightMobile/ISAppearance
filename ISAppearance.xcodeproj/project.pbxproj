@@ -113,6 +113,8 @@
 		5C5346751776DEC700B0B5B2 /* ISAValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */; };
 		6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */; };
 		6D6EE79E33CC813BCFD796FE /* ISACGRectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */; };
+		6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */; };
+		6D6EEACC47AA3EF51CD28EE2 /* UITableViewHeaderFooterView+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE197879A027BDBF4D12B /* UITableViewHeaderFooterView+ISAppearance.h */; };
 		6D6EEC0DC8FB4115E7B2791E /* ISANSTextAlignmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */; };
 		6D6EEE5E11B04BE2A4CC8096 /* ISACGRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */; };
 /* End PBXBuildFile section */
@@ -261,7 +263,9 @@
 		5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAValueConverter.h; sourceTree = "<group>"; };
 		5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAValueConverter.m; sourceTree = "<group>"; };
 		6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGRectValueConverter.m; sourceTree = "<group>"; };
+		6D6EE197879A027BDBF4D12B /* UITableViewHeaderFooterView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewHeaderFooterView+ISAppearance.h"; sourceTree = "<group>"; };
 		6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSTextAlignmentValueConverter.m; sourceTree = "<group>"; };
+		6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewHeaderFooterView+ISAppearance.m"; sourceTree = "<group>"; };
 		6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSTextAlignmentValueConverter.h; sourceTree = "<group>"; };
 		6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGRectValueConverter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -449,6 +453,8 @@
 				1D26AE7029048A9E9C00083A /* UIView+ISABorders.h */,
 				1D26AE9839827E9AE47BE320 /* UIColor+ISAHexString.m */,
 				1D26A910A30CFA43DEBEC75E /* UIColor+ISAHexString.h */,
+				6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */,
+				6D6EE197879A027BDBF4D12B /* UITableViewHeaderFooterView+ISAppearance.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 				6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */,
 				1D26A3ACEBF2B6AD6BD16CD6 /* ISAEnumClassValueConverter.h in Headers */,
 				1D26A7E1C17C28B92E1C7274 /* ISABaseEnum.h in Headers */,
+				6D6EEACC47AA3EF51CD28EE2 /* UITableViewHeaderFooterView+ISAppearance.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,6 +755,7 @@
 				6D6EEC0DC8FB4115E7B2791E /* ISANSTextAlignmentValueConverter.m in Sources */,
 				1D26A55B47AF0DEA115635EE /* ISAEnumClassValueConverter.m in Sources */,
 				1D26A697D7D04275C2026296 /* ISABaseEnum.m in Sources */,
+				6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
