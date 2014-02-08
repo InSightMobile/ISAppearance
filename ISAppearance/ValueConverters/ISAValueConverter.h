@@ -2,9 +2,9 @@
 // 
 
 #import <Foundation/Foundation.h>
-#import "ISA_YKTag.h"
+#import "ISYAMLTag.h"
 
-@class ISA_YKTag;
+@class ISYAMLTag;
 
 
 @interface ISAValueConverter : NSObject
@@ -15,6 +15,6 @@
 
 - (id)objectWithISANode:(id)node;
 
-- (ISA_YKTag *)parsingTagForURI:(NSString *)uri;
+- (ISYAMLTag *)parsingTagForURI:(NSString *)uri;
 
 @end

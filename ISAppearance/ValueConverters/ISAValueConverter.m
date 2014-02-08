@@ -9,7 +9,7 @@
 #import "ISAEnumValueConverter.h"
 #import "ISAEnumClassValueConverter.h"
 
-@interface ISAValueConverter () <YKTagDelegate>
+@interface ISAValueConverter () <ISYAMLTagDelegate>
 
 @end
 
@@ -55,12 +55,12 @@
     return converter;
 }
 
-- (id)tag:(ISA_YKTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
+- (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
 {
     return [self objectWithISANode:node];
 }
 
-- (id)tag:(ISA_YKTag *)tag castValue:(id)value fromTag:(ISA_YKTag *)castingTag
+- (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
 {
     return [self objectWithISANode:value];
 }
@@ -71,9 +71,9 @@
 }
 
 
-- (ISA_YKTag *)parsingTagForURI:(NSString *)uri
+- (ISYAMLTag *)parsingTagForURI:(NSString *)uri
 {
-    return [[ISA_YKTag alloc] initWithURI:uri delegate:self];
+    return [[ISYAMLTag alloc] initWithURI:uri delegate:self];
 }
 
 + (NSMutableDictionary *)convertersByName

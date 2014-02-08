@@ -1,14 +1,14 @@
 //
-//  ISA_YKParser.m
-//  ISA_YAMLKit
+//  ISYAMLParser.m
+//  ISYAML
 //
 //  Created by Patrick Thomson on 12/29/08.
 //
 
 #import "yaml.h"
-#import "ISA_YKParser.h"
-#import "YKConstants.h"
-#import "ISA_YKNativeTagManager.h"
+#import "ISYAMLParser.h"
+#import "ISAMLConstants.h"
+#import "ISYAMLNativeTagManager.h"
 
 typedef enum
 {
@@ -23,11 +23,11 @@ typedef enum
 @interface YKParserState : NSObject
 {
     id _node;
-    ISA_YKTag *_tag;
+    ISYAMLTag *_tag;
     YKParserStates _state;
 }
 @property(strong, nonatomic) id node;
-@property(strong, nonatomic) ISA_YKTag *tag;
+@property(strong, nonatomic) ISYAMLTag *tag;
 @property(nonatomic) YKParserStates state;
 @property(nonatomic) BOOL isKey;
 
@@ -54,54 +54,99 @@ typedef enum
 }
 @end
 
-@interface ISA_YKParser (YKParserPrivateMethods)
+@interface ISYAMLParser (YKParserPrivateMethods)
 
 - (id)interpretObjectFromEvent:(yaml_event_t)event;
 
-- (NSError *)_constructErrorFromParser:(yaml_parser_t *)p;
+- (NSError *)constructErrorFromParser:(yaml_parser_t *)p;
 
-- (void)_destroy;
+- (void)destroy;
 
 @end
 
-@implementation ISA_YKParser
+@interface ISYAMLParser ()
+@property(readonly) NSDictionary *_tagsByName;
+@end
+
+@implementation ISYAMLParser
 {
     NSMutableDictionary *_aliases;
     BOOL _parserInitialzed;
+
+    BOOL _readyToParse;
+    FILE *_fileInput;
+    const char *_stringInput;
+    void *_opaque_parser;
+    NSMutableDictionary *_tagsByName;
+    NSMutableDictionary *_explicitTagsByName;
 }
 
-@synthesize isReadyToParse = _readyToParse;
-@synthesize _tagsByName;
 
 - (id)init
 {
-    if (!(self = [super init])) {
-            return nil;
+    self = [super init];
+    if (self) {
+        [self commonInit];
+        _aliases = [NSMutableDictionary dictionary];
     }
-
-    _opaque_parser = malloc(sizeof(yaml_parser_t));
-    if (!_opaque_parser) {
-        return nil;
-    }
-
-    _tagsByName = [[NSMutableDictionary alloc] initWithDictionary:[[ISA_YKNativeTagManager sharedManager] tagsByName]];
-    _explicitTagsByName = [_tagsByName mutableCopy];
-
-    _aliases = [NSMutableDictionary dictionary];
-
     return self;
+}
+
+- (id)initWithContext:(NSMutableDictionary *)context
+{
+    self = [super init];
+    if (self) {
+        [self commonInit];
+        _aliases = context;
+    }
+    return self;
+}
+
+- (void)commonInit
+{
+    _opaque_parser = malloc(sizeof(yaml_parser_t));
+    if (_opaque_parser) {
+        _parserInitialzed = yaml_parser_initialize(_opaque_parser) != 0;
+    }
+
+    _tagsByName = [[NSMutableDictionary alloc] initWithDictionary:[[ISYAMLNativeTagManager sharedManager] tagsByName]];
+    _explicitTagsByName = [_tagsByName mutableCopy];
+}
+
+- (NSArray *)parseString:(NSString *)string parseError:(NSError **)error
+{
+    [self readString:string];
+    id result = [self parseWithError:error];
+    [self destroy];
+    return result;
+}
+
+- (NSArray *)parseData:(NSData *)data parseError:(NSError **)error
+{
+    [self readData:data];
+    id result = [self parseWithError:error];
+    [self destroy];
+    return result;
+}
+
+- (NSArray *)parseFile:(NSString *)path parseError:(NSError **)error
+{
+    [self readFile:path];
+    id result = [self parseWithError:error];
+    [self destroy];
+    return result;
 }
 
 - (void)reset
 {
-    [self _destroy];
+    [self destroy];
     _parserInitialzed = yaml_parser_initialize(_opaque_parser) != 0;
 }
 
 - (BOOL)readFile:(NSString *)path
 {
     if (!path || [path isEqualToString:@""]) {
-            return FALSE;
+        return FALSE;
     }
 
     [self reset];
@@ -109,7 +154,23 @@ typedef enum
     _fileInput = fopen([path fileSystemRepresentation], "r");
     _readyToParse = ((_fileInput != NULL) && [self prepareParser]);
     if (_readyToParse) {
-            yaml_parser_set_input_file(_opaque_parser, _fileInput);
+        yaml_parser_set_input_file(_opaque_parser, _fileInput);
+    }
+    return _readyToParse;
+}
+
+- (BOOL)readData:(NSData *)data
+{
+    if (!data.length) {
+        return FALSE;
+    }
+
+    [self reset];
+
+    _stringInput = [data bytes];
+    _readyToParse = [self prepareParser];
+    if (_readyToParse) {
+        yaml_parser_set_input_string(_opaque_parser, (const unsigned char *) _stringInput, [data length]);
     }
     return _readyToParse;
 }
@@ -117,7 +178,7 @@ typedef enum
 - (BOOL)readString:(NSString *)str
 {
     if (!str || [str isEqualToString:@""]) {
-            return FALSE;
+        return FALSE;
     }
 
     [self reset];
@@ -125,7 +186,7 @@ typedef enum
     _stringInput = [str UTF8String];
     _readyToParse = [self prepareParser];
     if (_readyToParse) {
-            yaml_parser_set_input_string(_opaque_parser, (const unsigned char *) _stringInput, [str length]);
+        yaml_parser_set_input_string(_opaque_parser, (const unsigned char *) _stringInput, [str length]);
     }
     return _readyToParse;
 }
@@ -143,29 +204,33 @@ typedef enum
     return [self parseWithError:NULL];
 }
 
-- (ISA_YKTag *)explicitTagWithString:(NSString *)string
+- (ISYAMLTag *)explicitTagWithString:(NSString *)string
 {
-    ISA_YKTag *tag = nil;
+    ISYAMLTag *tag = nil;
 
     if (string) {
         tag = [_explicitTagsByName objectForKey:string];
     }
 
-    if (tag) {return tag;}
+    if (tag) {
+        return tag;
+    }
 
-    if ([_delegate respondsToSelector:@selector(parser:tagForURI:)]) {
-        tag = [_delegate parser:self tagForURI:string];
+    if ([_tagResolver respondsToSelector:@selector(tagForURI:)]) {
+        tag = [_tagResolver tagForURI:string];
         if (tag) {
-                    [_explicitTagsByName setObject:tag forKey:string];
+            [_explicitTagsByName setObject:tag forKey:string];
         }
     }
 
     return tag;
 }
 
-- (ISA_YKTag *)tagWithUTF8String:(char *)tagName
+- (ISYAMLTag *)tagWithUTF8String:(char *)tagName
 {
-    if (!tagName) {return nil;}
+    if (!tagName) {
+        return nil;
+    }
 
     NSString *name = [NSString stringWithUTF8String:(const char *) tagName];
     return [self explicitTagWithString:name];
@@ -185,7 +250,7 @@ typedef enum
 {
     if (!_readyToParse) {
         if (e != NULL) {
-                    *e = [self _constructErrorFromParser:NULL];
+            *e = [self constructErrorFromParser:NULL];
         }
         return nil;
     }
@@ -204,12 +269,13 @@ typedef enum
     while (!done) {
         if (!yaml_parser_parse(_opaque_parser, &event)) {
             if (e != NULL) {
-                *e = [self _constructErrorFromParser:_opaque_parser];
+                *e = [self constructErrorFromParser:_opaque_parser];
             }
             // An error occurred, set the stack to null and exit loop
             documents = nil;
             done = TRUE;
-        } else {
+        }
+        else {
             switch (event.type) {
                 case YAML_STREAM_START_EVENT:
                     state.node = nil;
@@ -269,9 +335,10 @@ typedef enum
                 case YAML_SCALAR_EVENT:
 
                     if (event.data.scalar.tag == 0 && lastState.state == YKParserStateMapping) {
-                                            state.node = [NSString stringWithUTF8String:(const char *) event.data.scalar.value];
-                                        } else {
-                                                                state.node = [self interpretObjectFromEvent:event];
+                        state.node = [NSString stringWithUTF8String:(const char *) event.data.scalar.value];
+                    }
+                    else {
+                        state.node = [self interpretObjectFromEvent:event];
                     }
                     break;
                 case YAML_NO_EVENT:
@@ -311,12 +378,12 @@ typedef enum
     return documents;
 }
 
-- (void)addTag:(ISA_YKTag *)tag
+- (void)addTag:(ISYAMLTag *)tag
 {
     [_tagsByName setObject:tag forKey:[tag verbatim]];
 }
 
-- (void)addExplicitTag:(ISA_YKTag *)tag
+- (void)addExplicitTag:(ISYAMLTag *)tag
 {
     [_explicitTagsByName setObject:tag forKey:[tag verbatim]];
 }
@@ -325,21 +392,21 @@ typedef enum
 {
     // Special event, if scalar style is not a "plain" style then just return the string representation
     if (explicitTagString == nil && !plain) {
-            return stringValue;
+        return stringValue;
     }
 
     // If an explicit tag was identified, try to cast it from nil, nil means that the implicit tag (or source tag) has
     // not been identified yet
-    ISA_YKTag *explicitTag = [self explicitTagWithString:explicitTagString];
+    ISYAMLTag *explicitTag = [self explicitTagWithString:explicitTagString];
 
     id results = [explicitTag castValue:stringValue fromTag:nil];
     if (results) {
-            return results;
+        return results;
     }
 
-    for (ISA_YKTag *resultsTag in [_tagsByName allValues]) {
+    for (ISYAMLTag *resultsTag in [_tagsByName allValues]) {
         if ((results = [resultsTag decodeFromString:stringValue explicitTag:explicitTag])) {
-                    return results;
+            return results;
         }
     }
 
@@ -372,7 +439,7 @@ typedef enum
 }
 
 
-- (NSError *)_constructErrorFromParser:(yaml_parser_t *)p
+- (NSError *)constructErrorFromParser:(yaml_parser_t *)p
 {
     int code = 0;
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
@@ -410,9 +477,11 @@ typedef enum
         [data setObject:[NSNumber numberWithInteger:p->context_mark.line] forKey:YKErrorContextLineKey];
         [data setObject:[NSNumber numberWithInteger:p->context_mark.column] forKey:YKErrorContextColumnKey];
         [data setObject:[NSNumber numberWithInteger:p->context_mark.index] forKey:YKErrorContextIndexKey];
-    } else if (_readyToParse) {
+    }
+    else if (_readyToParse) {
         [data setObject:NSLocalizedString(@"Internal assertion failed, possibly due to specially malformed input.", @"") forKey:NSLocalizedDescriptionKey];
-    } else {
+    }
+    else {
         [data setObject:NSLocalizedString(@"YAML parser was not ready to parse.", @"") forKey:NSLocalizedFailureReasonErrorKey];
         [data setObject:NSLocalizedString(@"Did you remember to call readFile: or readString:?", @"") forKey:NSLocalizedDescriptionKey];
     }
@@ -420,7 +489,7 @@ typedef enum
     return [NSError errorWithDomain:YKErrorDomain code:code userInfo:data];
 }
 
-- (void)_destroy
+- (void)destroy
 {
     _stringInput = nil;
     if (_fileInput) {
@@ -438,7 +507,7 @@ typedef enum
 {
     _tagsByName = nil;
     _explicitTagsByName = nil;
-    [self _destroy];
+    [self destroy];
     free(_opaque_parser), _opaque_parser = nil;
 }
 

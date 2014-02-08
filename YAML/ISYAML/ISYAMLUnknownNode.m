@@ -1,42 +1,43 @@
 //
-//  ISA_YKUnknownNode.m
-//  ISA_YAMLKit
+//  ISYAMLUnknownNode.m
+//  ISYAML
 //
 //  Created by Faustino Osuna on 10/18/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "ISA_YKUnknownNode.h"
+#import "ISYAMLUnknownNode.h"
 
-inline ISA_YKRange ISA_YKMakeRange(ISA_YKMark start, ISA_YKMark end) {
-    ISA_YKRange results = {start, end};
+inline ISYAMLRange ISYAMLMakeRange(ISYAMLMark start, ISYAMLMark end) {
+    ISYAMLRange results = {start, end};
     return results;
 }
 
-inline ISA_YKMark ISA_YKMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx) {
-    ISA_YKMark results = {line, column, idx};
+inline ISYAMLMark ISYAMLMakeMark(NSUInteger line, NSUInteger column, NSUInteger idx) {
+    ISYAMLMark results = {line, column, idx};
     return results;
 }
 
-@implementation ISA_YKUnknownNode
+@implementation ISYAMLUnknownNode
 
-+ (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(ISA_YKTag *)aImplicitTag
-                     explicitTag:(ISA_YKTag *)aExplicitTag position:(ISA_YKRange)aPosition
++ (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(ISYAMLTag *)aImplicitTag
+                     explicitTag:(ISYAMLTag *)aExplicitTag position:(ISYAMLRange)aPosition
 {
     return [[self alloc] initWithStringValue:aStringValue implicitTag:aImplicitTag explicitTag:aExplicitTag
                                     position:aPosition];
 }
 
-- (id)initWithStringValue:(NSString *)aStringValue implicitTag:(ISA_YKTag *)aImplicitTag explicitTag:(ISA_YKTag *)aExplicitTag
-                 position:(ISA_YKRange)aPosition
+- (id)initWithStringValue:(NSString *)aStringValue implicitTag:(ISYAMLTag *)aImplicitTag explicitTag:(ISYAMLTag *)aExplicitTag
+                 position:(ISYAMLRange)aPosition
 {
-    if (!(self = [super init]))
-        return nil;
+    if (!(self = [super init])) {
+            return nil;
+    }
 
     stringValue = [aStringValue copy];
     implicitTag = aImplicitTag;
     explicitTag = aExplicitTag;
-    memcpy(&position, &aPosition, sizeof(ISA_YKRange));
+    memcpy(&position, &aPosition, sizeof(ISYAMLRange));
 
     return self;
 }

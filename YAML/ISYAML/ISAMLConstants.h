@@ -1,5 +1,5 @@
 /*
- *  YKConstants.h
+ *  ISYAMLConstants.h
  *  YAMLKit
  *
  *  Created by Patrick Thomson on 1/1/09.

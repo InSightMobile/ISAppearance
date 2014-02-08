@@ -1,6 +1,6 @@
 //
 //  YKConstants.m
-//  ISA_YAMLKit
+//  ISYAML
 //
 //  Created by Faustino Osuna on 10/18/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.

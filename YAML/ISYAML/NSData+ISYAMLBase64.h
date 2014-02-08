@@ -15,23 +15,23 @@
 #import <Foundation/Foundation.h>
 
 
-void *ISA_NewBase64Decode(
+void *ISYAMLNewBase64Decode(
         const char *inputBuffer,
         size_t length,
         size_t *outputLength);
 
-char *ISA_NewBase64Encode(
+char *ISYAMLNewBase64Encode(
         const void *inputBuffer,
         size_t length,
-bool separateLines,
+        bool separateLines,
         size_t *outputLength);
 
 
-@interface NSData (ISA_Base64)
+@interface NSData (ISYAMLBase64)
 
-+ (NSData *)isa_dataFromBase64String:(NSString *)aString;
++ (NSData *)isyaml_dataFromBase64String:(NSString *)aString;
 
-- (NSString *)isa_base64EncodedString;
+- (NSString *)isyaml_base64EncodedString;
 
 @end
 

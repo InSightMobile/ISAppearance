@@ -1,8 +1,8 @@
-#import "NSString+ISA_YAMLKit.h"
+#import "NSString+ISYAML.h"
 
-@implementation NSString (ISA_YAMLKit)
+@implementation NSString (ISYAML)
 
-- (NSInteger)isa_intValueFromBase:(UInt8)base
+- (NSInteger)isyaml_intValueFromBase:(UInt8)base
 {
     NSString *strippedString = [self stringByReplacingOccurrencesOfString:@"_" withString:@""];
     return ((NSInteger) strtol([[strippedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] bytes],

@@ -1,5 +1,5 @@
 #import "ISAppearance.h"
-#import "ISA_YAMLKit.h"
+#import "ISYAML.h"
 #import "ISAValueConverter.h"
 #import "ISAStyleEntry.h"
 #import "ISAStyle.h"
@@ -7,10 +7,12 @@
 #import "UIView+isa_Injection.h"
 #import "ISAProxy.h"
 #import "UIDevice+isa_SystemInfo.h"
+#import "ISATagResolver.h"
 
 static const float kAppearanceReloadDelay = 0.25;
 
-@interface ISAppearance () <YKParserDelegate>
+
+@interface ISAppearance () <ISYAMLParserTagResolver>
 
 @property(nonatomic, strong) NSMutableArray *definitions;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
@@ -46,7 +48,12 @@ static const float kAppearanceReloadDelay = 0.25;
 
 + (id)loadDataFromFile:(NSString *)path
 {
-    return [ISA_YAMLKit loadFromFile:path error:NULL];
+    ISATagResolver *resolver = [ISATagResolver new];
+    ISYAMLParser *parser = [ISYAMLParser new];
+    parser.tagResolver = resolver;
+    NSError *error = nil;
+    id result = [parser parseFile:path parseError:&error];
+    return result;
 }
 
 
@@ -176,16 +183,16 @@ static const float kAppearanceReloadDelay = 0.25;
 
 + (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle
 {
-    return [ISA_YAMLKit loadDataFromFileNamed:string bundle:bundle error:NULL];
+    return [ISYAML loadDataFromFileNamed:string bundle:bundle error:NULL];
 }
 
-- (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri
+- (ISYAMLTag *)tagForURI:(NSString *)uri
 {
     if (uri.length < 1) {
         return nil;
     }
 
-    ISA_YKTag *tag = nil;
+    ISYAMLTag *tag = nil;
 
     NSString *className = uri;
 
@@ -200,24 +207,20 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (id)loadAppearanceData:(NSString *)file error:(NSError * __autoreleasing *)error
 {
-    ISA_YKParser *parser = [[ISA_YKParser alloc] init];
-    parser.delegate = self;
-    if ([parser readFile:file]) {
-        id result = [parser parseWithError:error];
-        if (error && *error) {
-            NSString *line = [*error userInfo][YKProblemLineKey];
+    ISYAMLParser *parser = [[ISYAMLParser alloc] init];
+    parser.tagResolver = self;
 
-            NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
-            *error =
-                    [[NSError alloc] initWithDomain:@"ISAppearance" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];
-            return nil;
-        }
-        else {
-            return result;
-        }
+    id result = [parser parseFile:file parseError:error];
+    if (error && *error) {
+        NSString *line = [*error userInfo][YKProblemLineKey];
+
+        NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
+        *error =
+                [[NSError alloc] initWithDomain:@"ISAppearance" code:0 userInfo:@{NSLocalizedDescriptionKey : desc}];
+        return nil;
     }
     else {
-        return nil;
+        return result;
     }
 }
 

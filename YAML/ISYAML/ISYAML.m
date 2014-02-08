@@ -1,42 +1,18 @@
 //
-//  ISA_YAMLKit.m
-//  ISA_YAMLKit
+//  ISYAML.m
+//  ISYAML
 //
 //  Created by Patrick Thomson on 12/30/08.
 //  Copyright 2008 Patrick Thomson. All rights reserved.
 //
 
-#import "ISA_YAMLKit.h"
+#import "ISYAML.h"
 #import "ISAValueConverter.h"
 
-@interface ISA_YAMLKitTagResolver: NSObject <YKParserDelegate>
-@end
-
-@implementation ISA_YAMLKitTagResolver
-- (ISA_YKTag *)parser:(ISA_YKParser *)parser tagForURI:(NSString *)uri
-{
-    if (uri.length < 1) {
-        return nil;
-    }
-
-    ISA_YKTag *tag = nil;
-
-    NSString *className = uri;
-
-    if ([className characterAtIndex:0] == '!') {
-        className = [className substringFromIndex:1];
-    }
-    ISAValueConverter *converter = [ISAValueConverter converterNamed:className];
-    tag = [converter parsingTagForURI:uri];
-
-    return tag;
-}
-@end
 
 
 
-
-@implementation ISA_YAMLKit
+@implementation ISYAML
 
 #pragma mark Parser
 + (id)loadFromString:(NSString *)str
@@ -45,10 +21,9 @@
         return nil;
     }
 
-    ISA_YKParser *p = [[ISA_YKParser alloc] init];
-    [p readString:str];
+    ISYAMLParser *p = [[ISYAMLParser alloc] init];
+    NSArray *result = [p parseString:str parseError:NULL ];
 
-    NSArray *result = [p parse];
     // If parse returns a one-element array, extract it.
     if ([result count] == 1) {
         return [result objectAtIndex:0];
@@ -63,7 +38,7 @@
     }
 
     NSString *ext = [name pathExtension];
-    if(!ext.length) {
+    if (!ext.length) {
         ext = @"yaml";
     }
 
@@ -81,17 +56,11 @@
         return nil;
     }
 
-    ISA_YKParser *p = [[ISA_YKParser alloc] init];
-
-    ISA_YAMLKitTagResolver* resolver = [ISA_YAMLKitTagResolver new];
-    p.delegate = resolver;
-
-
-    [p readFile:path];
+    ISYAMLParser *p = [[ISYAMLParser alloc] init];
 
     NSError *parseError = nil;
 
-    NSArray *result = [p parseWithError:&parseError];
+    NSArray *result = [p parseFile:path parseError:&parseError];
     // If parse returns a one-element array, extract it.
 
     if (parseError) {
@@ -127,14 +96,14 @@
 #pragma mark Emitter
 + (NSString *)dumpObject:(id)object
 {
-    ISA_YKEmitter *e = [[ISA_YKEmitter alloc] init];
+    ISYAMLEmitter *e = [[ISYAMLEmitter alloc] init];
     [e emitItem:object];
     return [e emittedString];
 }
 
 + (BOOL)dumpObject:(id)object toFile:(NSString *)path
 {
-    ISA_YKEmitter *e = [[ISA_YKEmitter alloc] init];
+    ISYAMLEmitter *e = [[ISYAMLEmitter alloc] init];
     [e emitItem:object];
     return [[e emittedString] writeToFile:path
                                atomically:YES
@@ -144,7 +113,7 @@
 
 + (BOOL)dumpObject:(id)object toURL:(NSURL *)path
 {
-    ISA_YKEmitter *e = [[ISA_YKEmitter alloc] init];
+    ISYAMLEmitter *e = [[ISYAMLEmitter alloc] init];
     [e emitItem:object];
     return [[e emittedString] writeToURL:path
                               atomically:YES

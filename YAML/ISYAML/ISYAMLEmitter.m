@@ -1,27 +1,28 @@
 //
-//  ISA_YKEmitter.m
-//  ISA_YAMLKit
+//  ISYAMLEmitter.m
+//  ISYAML
 //
 //  Created by Patrick Thomson on 12/29/08.
 //
 
-#import "ISA_YKEmitter.h"
+#import "ISYAMLEmitter.h"
 #import "yaml.h"
 
-@interface ISA_YKEmitter (YKEmitterPrivateMEthods)
+@interface ISYAMLEmitter (YKEmitterPrivateMEthods)
 
 - (int)_writeItem:(id)item toDocument:(yaml_document_t *)document;
 
 @end
 
-@implementation ISA_YKEmitter
+@implementation ISYAMLEmitter
 
 @synthesize usesExplicitDelimiters, encoding;
 
 - (id)init
 {
-    if (!(self = [super init]))
-        return nil;
+    if (!(self = [super init])) {
+            return nil;
+    }
 
     opaque_emitter = malloc(sizeof(yaml_emitter_t));
     if (!opaque_emitter || !yaml_emitter_initialize(opaque_emitter)) {
@@ -73,7 +74,8 @@
             yaml_document_append_mapping_pair(doc, nodeID, keyID, valueID);
         }
         // #objectEnumerator covers NSSet/NSArray.
-    } else if ([item respondsToSelector:@selector(objectEnumerator)]) {
+    }
+    else if ([item respondsToSelector:@selector(objectEnumerator)]) {
         // emit beginning sequence
         nodeID = yaml_document_add_sequence(doc, (yaml_char_t *) YAML_DEFAULT_SEQUENCE_TAG, YAML_ANY_SEQUENCE_STYLE);
         for (id subitem in item) {
@@ -81,7 +83,8 @@
             yaml_document_append_sequence_item(doc, nodeID, newItem);
         }
         // Everything else is a scalar.
-    } else {
+    }
+    else {
         // TODO: Add optional support for tagging emitted items.
         // TODO: Wrap long lines.
         nodeID =
@@ -115,7 +118,7 @@
             converted = YAML_UTF16BE_ENCODING;
             break;
         default:
-            NSLog(@"Unsupported encoding passed to ISA_YKEmitter#setEncoding:.");
+            NSLog(@"Unsupported encoding passed to ISYAMLEmitter#setEncoding:.");
             break;
     }
     yaml_emitter_set_encoding(opaque_emitter, converted);

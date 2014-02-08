@@ -28,6 +28,7 @@
 		1D26A4FDE38C3A2A1890F040 /* UIDevice+isa_SystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A4A1D0D486E708556027 /* UIDevice+isa_SystemInfo.m */; };
 		1D26A506A1EC817615D3E4D0 /* ISANSObjectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A1F6746C9ADD9B0F19DF /* ISANSObjectValueConverter.h */; };
 		1D26A55B47AF0DEA115635EE /* ISAEnumClassValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A7C9FDB3F00A6D992E68 /* ISAEnumClassValueConverter.m */; };
+		1D26A570F548AFC84CA52507 /* ISATagResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A3A607B9B7EB01279F10 /* ISATagResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26A5DF3A716C6784F03064 /* NSObject+ISAObjectCreation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AD13AE664DD64418F3A6 /* NSObject+ISAObjectCreation.h */; };
 		1D26A611E87FF3205C524824 /* UIImage+ISAResize.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AD6D6B6E3ECA29AD272C /* UIImage+ISAResize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26A697D7D04275C2026296 /* ISABaseEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A332D37E8FB568D25C67 /* ISABaseEnum.m */; };
@@ -37,6 +38,7 @@
 		1D26A7A71DA0ACEDC4F14357 /* UIView+ISABorders.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A900D0AFA472222B5E38 /* UIView+ISABorders.m */; };
 		1D26A7C8518A7347554E57CC /* ISAResponderRuntimeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26AD28ECFF9A3BE6A8942B /* ISAResponderRuntimeSelector.m */; };
 		1D26A7E1C17C28B92E1C7274 /* ISABaseEnum.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A77599FA3F968F390B7C /* ISABaseEnum.h */; };
+		1D26A7E2CAC8AEE32B9C23E3 /* ISATagResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A343A90EE216DB811AEA /* ISATagResolver.m */; };
 		1D26A7FAF09F2C870190138A /* UIView+ISABorders.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26AE7029048A9E9C00083A /* UIView+ISABorders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D26A860C5728B358B56519B /* ISAClassValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A393A5AD07303CF43849 /* ISAClassValueConverter.m */; };
 		1D26A8E75B71B8FEDF48905F /* ISACGPointValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D26A03F990900FCDAAF0508 /* ISACGPointValueConverter.h */; };
@@ -71,15 +73,15 @@
 		5C53460F1776DBF700B0B5B2 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F11776DBF700B0B5B2 /* reader.c */; };
 		5C5346101776DBF700B0B5B2 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F21776DBF700B0B5B2 /* scanner.c */; };
 		5C5346111776DBF700B0B5B2 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F31776DBF700B0B5B2 /* writer.c */; };
-		5C5346121776DBF700B0B5B2 /* NSData+ISA_Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */; };
-		5C5346131776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FA1776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m */; };
-		5C5346141776DBF700B0B5B2 /* ISA_YAMLKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FC1776DBF700B0B5B2 /* ISA_YAMLKit.m */; };
-		5C5346151776DBF700B0B5B2 /* YKConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FE1776DBF700B0B5B2 /* YKConstants.m */; };
-		5C5346161776DBF700B0B5B2 /* ISA_YKEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346001776DBF700B0B5B2 /* ISA_YKEmitter.m */; };
-		5C5346171776DBF700B0B5B2 /* ISA_YKNativeTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346021776DBF700B0B5B2 /* ISA_YKNativeTagManager.m */; };
-		5C5346181776DBF700B0B5B2 /* ISA_YKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346041776DBF700B0B5B2 /* ISA_YKParser.m */; };
-		5C5346191776DBF700B0B5B2 /* ISA_YKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346061776DBF700B0B5B2 /* ISA_YKTag.m */; };
-		5C53461A1776DBF700B0B5B2 /* ISA_YKUnknownNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346081776DBF700B0B5B2 /* ISA_YKUnknownNode.m */; };
+		5C5346121776DBF700B0B5B2 /* NSData+ISYAMLBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F81776DBF700B0B5B2 /* NSData+ISYAMLBase64.m */; };
+		5C5346131776DBF700B0B5B2 /* NSString+ISYAML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FA1776DBF700B0B5B2 /* NSString+ISYAML.m */; };
+		5C5346141776DBF700B0B5B2 /* ISYAML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FC1776DBF700B0B5B2 /* ISYAML.m */; };
+		5C5346151776DBF700B0B5B2 /* ISAMLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FE1776DBF700B0B5B2 /* ISAMLConstants.m */; };
+		5C5346161776DBF700B0B5B2 /* ISYAMLEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346001776DBF700B0B5B2 /* ISYAMLEmitter.m */; };
+		5C5346171776DBF700B0B5B2 /* ISYAMLNativeTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346021776DBF700B0B5B2 /* ISYAMLNativeTagManager.m */; };
+		5C5346181776DBF700B0B5B2 /* ISYAMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346041776DBF700B0B5B2 /* ISYAMLParser.m */; };
+		5C5346191776DBF700B0B5B2 /* ISYAMLTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346061776DBF700B0B5B2 /* ISYAMLTag.m */; };
+		5C53461A1776DBF700B0B5B2 /* ISYAMLUnknownNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5346081776DBF700B0B5B2 /* ISYAMLUnknownNode.m */; };
 		5C53461C1776DC5100B0B5B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461B1776DC5100B0B5B2 /* UIKit.framework */; };
 		5C53461E1776DC5700B0B5B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461D1776DC5700B0B5B2 /* QuartzCore.framework */; };
 		5C5346201776DCFB00B0B5B2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */; };
@@ -111,6 +113,11 @@
 		5C5346731776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53464B1776DEC700B0B5B2 /* ISAUIOffsetValueConverter.m */; };
 		5C5346741776DEC700B0B5B2 /* ISAValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C53464C1776DEC700B0B5B2 /* ISAValueConverter.h */; };
 		5C5346751776DEC700B0B5B2 /* ISAValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C53464D1776DEC700B0B5B2 /* ISAValueConverter.m */; };
+		5CB4412718A571F300DCB1C4 /* ISYAML.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5345FB1776DBF700B0B5B2 /* ISYAML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5CB4412818A5721100DCB1C4 /* ISAMLConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5345FD1776DBF700B0B5B2 /* ISAMLConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5CB4412918A5721700DCB1C4 /* ISYAMLEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5345FF1776DBF700B0B5B2 /* ISYAMLEmitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5CB4412A18A5721C00DCB1C4 /* ISYAMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346031776DBF700B0B5B2 /* ISYAMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5CB4412B18A5722300DCB1C4 /* ISYAMLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346051776DBF700B0B5B2 /* ISYAMLTag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */; };
 		6D6EE79E33CC813BCFD796FE /* ISACGRectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */; };
 		6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */; };
@@ -151,9 +158,11 @@
 		1D26A2665323CAAC5C31B501 /* ISAProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAProxy.h; sourceTree = "<group>"; };
 		1D26A26D24DB4E3C2F2A1328 /* ISAppearance+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ISAppearance+Private.h"; sourceTree = "<group>"; };
 		1D26A332D37E8FB568D25C67 /* ISABaseEnum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISABaseEnum.m; sourceTree = "<group>"; };
+		1D26A343A90EE216DB811AEA /* ISATagResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISATagResolver.m; sourceTree = "<group>"; };
 		1D26A3650372C148AE9941B3 /* ISAClassValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAClassValueConverter.h; sourceTree = "<group>"; };
 		1D26A393A5AD07303CF43849 /* ISAClassValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAClassValueConverter.m; sourceTree = "<group>"; };
 		1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ISAObjectCreation.m"; sourceTree = "<group>"; };
+		1D26A3A607B9B7EB01279F10 /* ISATagResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISATagResolver.h; sourceTree = "<group>"; };
 		1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ISAObjectCreation.m"; sourceTree = "<group>"; };
 		1D26A45651A81B7E1E1C98F6 /* ISARuntimeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISARuntimeSelector.m; sourceTree = "<group>"; };
 		1D26A4A1BB6947E324D4DE53 /* UIImage+ISAColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ISAColor.m"; sourceTree = "<group>"; };
@@ -213,24 +222,24 @@
 		5C5345F31776DBF700B0B5B2 /* writer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = writer.c; sourceTree = "<group>"; };
 		5C5345F41776DBF700B0B5B2 /* yaml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml.h; sourceTree = "<group>"; };
 		5C5345F51776DBF700B0B5B2 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml_private.h; sourceTree = "<group>"; };
-		5C5345F71776DBF700B0B5B2 /* NSData+ISA_Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ISA_Base64.h"; sourceTree = "<group>"; };
-		5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ISA_Base64.m"; sourceTree = "<group>"; };
-		5C5345F91776DBF700B0B5B2 /* NSString+ISA_YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ISA_YAMLKit.h"; sourceTree = "<group>"; };
-		5C5345FA1776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ISA_YAMLKit.m"; sourceTree = "<group>"; };
-		5C5345FB1776DBF700B0B5B2 /* ISA_YAMLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YAMLKit.h; sourceTree = "<group>"; };
-		5C5345FC1776DBF700B0B5B2 /* ISA_YAMLKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YAMLKit.m; sourceTree = "<group>"; };
-		5C5345FD1776DBF700B0B5B2 /* YKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKConstants.h; sourceTree = "<group>"; };
-		5C5345FE1776DBF700B0B5B2 /* YKConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKConstants.m; sourceTree = "<group>"; };
-		5C5345FF1776DBF700B0B5B2 /* ISA_YKEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKEmitter.h; sourceTree = "<group>"; };
-		5C5346001776DBF700B0B5B2 /* ISA_YKEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKEmitter.m; sourceTree = "<group>"; };
-		5C5346011776DBF700B0B5B2 /* ISA_YKNativeTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKNativeTagManager.h; sourceTree = "<group>"; };
-		5C5346021776DBF700B0B5B2 /* ISA_YKNativeTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKNativeTagManager.m; sourceTree = "<group>"; };
-		5C5346031776DBF700B0B5B2 /* ISA_YKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKParser.h; sourceTree = "<group>"; };
-		5C5346041776DBF700B0B5B2 /* ISA_YKParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKParser.m; sourceTree = "<group>"; };
-		5C5346051776DBF700B0B5B2 /* ISA_YKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKTag.h; sourceTree = "<group>"; };
-		5C5346061776DBF700B0B5B2 /* ISA_YKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKTag.m; sourceTree = "<group>"; };
-		5C5346071776DBF700B0B5B2 /* ISA_YKUnknownNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISA_YKUnknownNode.h; sourceTree = "<group>"; };
-		5C5346081776DBF700B0B5B2 /* ISA_YKUnknownNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISA_YKUnknownNode.m; sourceTree = "<group>"; };
+		5C5345F71776DBF700B0B5B2 /* NSData+ISYAMLBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ISYAMLBase64.h"; sourceTree = "<group>"; };
+		5C5345F81776DBF700B0B5B2 /* NSData+ISYAMLBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ISYAMLBase64.m"; sourceTree = "<group>"; };
+		5C5345F91776DBF700B0B5B2 /* NSString+ISYAML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ISYAML.h"; sourceTree = "<group>"; };
+		5C5345FA1776DBF700B0B5B2 /* NSString+ISYAML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ISYAML.m"; sourceTree = "<group>"; };
+		5C5345FB1776DBF700B0B5B2 /* ISYAML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYAML.h; sourceTree = "<group>"; };
+		5C5345FC1776DBF700B0B5B2 /* ISYAML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYAML.m; sourceTree = "<group>"; };
+		5C5345FD1776DBF700B0B5B2 /* ISAMLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAMLConstants.h; sourceTree = "<group>"; };
+		5C5345FE1776DBF700B0B5B2 /* ISAMLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAMLConstants.m; sourceTree = "<group>"; };
+		5C5345FF1776DBF700B0B5B2 /* ISYAMLEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYAMLEmitter.h; sourceTree = "<group>"; };
+		5C5346001776DBF700B0B5B2 /* ISYAMLEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYAMLEmitter.m; sourceTree = "<group>"; };
+		5C5346011776DBF700B0B5B2 /* ISYAMLNativeTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYAMLNativeTagManager.h; sourceTree = "<group>"; };
+		5C5346021776DBF700B0B5B2 /* ISYAMLNativeTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYAMLNativeTagManager.m; sourceTree = "<group>"; };
+		5C5346031776DBF700B0B5B2 /* ISYAMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYAMLParser.h; sourceTree = "<group>"; };
+		5C5346041776DBF700B0B5B2 /* ISYAMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYAMLParser.m; sourceTree = "<group>"; };
+		5C5346051776DBF700B0B5B2 /* ISYAMLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYAMLTag.h; sourceTree = "<group>"; };
+		5C5346061776DBF700B0B5B2 /* ISYAMLTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYAMLTag.m; sourceTree = "<group>"; };
+		5C5346071776DBF700B0B5B2 /* ISYAMLUnknownNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYAMLUnknownNode.h; sourceTree = "<group>"; };
+		5C5346081776DBF700B0B5B2 /* ISYAMLUnknownNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYAMLUnknownNode.m; sourceTree = "<group>"; };
 		5C53461B1776DC5100B0B5B2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5C53461D1776DC5700B0B5B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5C53461F1776DCFB00B0B5B2 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -391,7 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				5C5345EA1776DBF700B0B5B2 /* yaml */,
-				5C5345F61776DBF700B0B5B2 /* YamlKit */,
+				5C5345F61776DBF700B0B5B2 /* ISYAML */,
 			);
 			path = YAML;
 			sourceTree = "<group>";
@@ -414,29 +423,29 @@
 			path = yaml;
 			sourceTree = "<group>";
 		};
-		5C5345F61776DBF700B0B5B2 /* YamlKit */ = {
+		5C5345F61776DBF700B0B5B2 /* ISYAML */ = {
 			isa = PBXGroup;
 			children = (
-				5C5345F71776DBF700B0B5B2 /* NSData+ISA_Base64.h */,
-				5C5345F81776DBF700B0B5B2 /* NSData+ISA_Base64.m */,
-				5C5345F91776DBF700B0B5B2 /* NSString+ISA_YAMLKit.h */,
-				5C5345FA1776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m */,
-				5C5345FB1776DBF700B0B5B2 /* ISA_YAMLKit.h */,
-				5C5345FC1776DBF700B0B5B2 /* ISA_YAMLKit.m */,
-				5C5345FD1776DBF700B0B5B2 /* YKConstants.h */,
-				5C5345FE1776DBF700B0B5B2 /* YKConstants.m */,
-				5C5345FF1776DBF700B0B5B2 /* ISA_YKEmitter.h */,
-				5C5346001776DBF700B0B5B2 /* ISA_YKEmitter.m */,
-				5C5346011776DBF700B0B5B2 /* ISA_YKNativeTagManager.h */,
-				5C5346021776DBF700B0B5B2 /* ISA_YKNativeTagManager.m */,
-				5C5346031776DBF700B0B5B2 /* ISA_YKParser.h */,
-				5C5346041776DBF700B0B5B2 /* ISA_YKParser.m */,
-				5C5346051776DBF700B0B5B2 /* ISA_YKTag.h */,
-				5C5346061776DBF700B0B5B2 /* ISA_YKTag.m */,
-				5C5346071776DBF700B0B5B2 /* ISA_YKUnknownNode.h */,
-				5C5346081776DBF700B0B5B2 /* ISA_YKUnknownNode.m */,
+				5C5345F71776DBF700B0B5B2 /* NSData+ISYAMLBase64.h */,
+				5C5345F81776DBF700B0B5B2 /* NSData+ISYAMLBase64.m */,
+				5C5345F91776DBF700B0B5B2 /* NSString+ISYAML.h */,
+				5C5345FA1776DBF700B0B5B2 /* NSString+ISYAML.m */,
+				5C5345FB1776DBF700B0B5B2 /* ISYAML.h */,
+				5C5345FC1776DBF700B0B5B2 /* ISYAML.m */,
+				5C5345FD1776DBF700B0B5B2 /* ISAMLConstants.h */,
+				5C5345FE1776DBF700B0B5B2 /* ISAMLConstants.m */,
+				5C5345FF1776DBF700B0B5B2 /* ISYAMLEmitter.h */,
+				5C5346001776DBF700B0B5B2 /* ISYAMLEmitter.m */,
+				5C5346011776DBF700B0B5B2 /* ISYAMLNativeTagManager.h */,
+				5C5346021776DBF700B0B5B2 /* ISYAMLNativeTagManager.m */,
+				5C5346031776DBF700B0B5B2 /* ISYAMLParser.h */,
+				5C5346041776DBF700B0B5B2 /* ISYAMLParser.m */,
+				5C5346051776DBF700B0B5B2 /* ISYAMLTag.h */,
+				5C5346061776DBF700B0B5B2 /* ISYAMLTag.m */,
+				5C5346071776DBF700B0B5B2 /* ISYAMLUnknownNode.h */,
+				5C5346081776DBF700B0B5B2 /* ISYAMLUnknownNode.m */,
 			);
-			path = YamlKit;
+			path = ISYAML;
 			sourceTree = "<group>";
 		};
 		5C5346231776DEC700B0B5B2 /* Categories */ = {
@@ -528,6 +537,8 @@
 				1D26A7C9FDB3F00A6D992E68 /* ISAEnumClassValueConverter.m */,
 				1D26A332D37E8FB568D25C67 /* ISABaseEnum.m */,
 				1D26A77599FA3F968F390B7C /* ISABaseEnum.h */,
+				1D26A343A90EE216DB811AEA /* ISATagResolver.m */,
+				1D26A3A607B9B7EB01279F10 /* ISATagResolver.h */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -544,6 +555,7 @@
 				5C5346581776DEC700B0B5B2 /* ISAStyle.h in Headers */,
 				5C53465A1776DEC700B0B5B2 /* ISAStyleEntry.h in Headers */,
 				5C53465C1776DEC700B0B5B2 /* NSObject+isa_Swizzle.h in Headers */,
+				5CB4412718A571F300DCB1C4 /* ISYAML.h in Headers */,
 				5C5346601776DEC700B0B5B2 /* UIViewController+isa_Injection.h in Headers */,
 				5C5346621776DEC700B0B5B2 /* ISACGColorValueConverter.h in Headers */,
 				5C5346641776DEC700B0B5B2 /* ISACGSizeValueConverter.h in Headers */,
@@ -562,6 +574,9 @@
 				1D26A304CBF8616F64A98CD1 /* UIImage+ISAGradient.h in Headers */,
 				1D26A717BCED38061C7303F1 /* UIImage+ISAColor.h in Headers */,
 				1D26A9D0DA536FAD2F238C80 /* UIImage+ISATrim.h in Headers */,
+				5CB4412B18A5722300DCB1C4 /* ISYAMLTag.h in Headers */,
+				5CB4412818A5721100DCB1C4 /* ISAMLConstants.h in Headers */,
+				5CB4412A18A5721C00DCB1C4 /* ISYAMLParser.h in Headers */,
 				6D6EE79E33CC813BCFD796FE /* ISACGRectValueConverter.h in Headers */,
 				1D26A429BDA3EE7B20628849 /* ISAClassValueConverter.h in Headers */,
 				1D26A2A34B2C1D4FDF6048F9 /* ISARuntimeSelector.h in Headers */,
@@ -575,11 +590,13 @@
 				1D26A7FAF09F2C870190138A /* UIView+ISABorders.h in Headers */,
 				1D26A22EFDEFE355856D0E82 /* UIDevice+isa_SystemInfo.h in Headers */,
 				1D26AD05EDB413C03E661B78 /* ISAResponderRuntimeSelector.h in Headers */,
+				5CB4412918A5721700DCB1C4 /* ISYAMLEmitter.h in Headers */,
 				1D26AC29772BB5CEF2EFAA39 /* UIColor+ISAHexString.h in Headers */,
 				6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */,
 				1D26A3ACEBF2B6AD6BD16CD6 /* ISAEnumClassValueConverter.h in Headers */,
 				1D26A7E1C17C28B92E1C7274 /* ISABaseEnum.h in Headers */,
 				6D6EEACC47AA3EF51CD28EE2 /* UITableViewHeaderFooterView+ISAppearance.h in Headers */,
+				1D26A570F548AFC84CA52507 /* ISATagResolver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,15 +722,15 @@
 				5C53460F1776DBF700B0B5B2 /* reader.c in Sources */,
 				5C5346101776DBF700B0B5B2 /* scanner.c in Sources */,
 				5C5346111776DBF700B0B5B2 /* writer.c in Sources */,
-				5C5346121776DBF700B0B5B2 /* NSData+ISA_Base64.m in Sources */,
-				5C5346131776DBF700B0B5B2 /* NSString+ISA_YAMLKit.m in Sources */,
-				5C5346141776DBF700B0B5B2 /* ISA_YAMLKit.m in Sources */,
-				5C5346151776DBF700B0B5B2 /* YKConstants.m in Sources */,
-				5C5346161776DBF700B0B5B2 /* ISA_YKEmitter.m in Sources */,
-				5C5346171776DBF700B0B5B2 /* ISA_YKNativeTagManager.m in Sources */,
-				5C5346181776DBF700B0B5B2 /* ISA_YKParser.m in Sources */,
-				5C5346191776DBF700B0B5B2 /* ISA_YKTag.m in Sources */,
-				5C53461A1776DBF700B0B5B2 /* ISA_YKUnknownNode.m in Sources */,
+				5C5346121776DBF700B0B5B2 /* NSData+ISYAMLBase64.m in Sources */,
+				5C5346131776DBF700B0B5B2 /* NSString+ISYAML.m in Sources */,
+				5C5346141776DBF700B0B5B2 /* ISYAML.m in Sources */,
+				5C5346151776DBF700B0B5B2 /* ISAMLConstants.m in Sources */,
+				5C5346161776DBF700B0B5B2 /* ISYAMLEmitter.m in Sources */,
+				5C5346171776DBF700B0B5B2 /* ISYAMLNativeTagManager.m in Sources */,
+				5C5346181776DBF700B0B5B2 /* ISYAMLParser.m in Sources */,
+				5C5346191776DBF700B0B5B2 /* ISYAMLTag.m in Sources */,
+				5C53461A1776DBF700B0B5B2 /* ISYAMLUnknownNode.m in Sources */,
 				5C53464F1776DEC700B0B5B2 /* UIButton+ISAppearance.m in Sources */,
 				5C5346531776DEC700B0B5B2 /* UITableViewCell+ISAppearance.m in Sources */,
 				5C5346571776DEC700B0B5B2 /* ISAppearance.m in Sources */,
@@ -756,6 +773,7 @@
 				1D26A55B47AF0DEA115635EE /* ISAEnumClassValueConverter.m in Sources */,
 				1D26A697D7D04275C2026296 /* ISABaseEnum.m in Sources */,
 				6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */,
+				1D26A7E2CAC8AEE32B9C23E3 /* ISATagResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

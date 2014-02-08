@@ -12,7 +12,7 @@
 //  appreciated but not required.
 //
 
-#import "NSData+ISA_Base64.h"
+#import "NSData+ISYAMLBase64.h"
 
 //
 // Mapping from 6 bit pattern to ASCII character.
@@ -67,7 +67,7 @@ static unsigned char base64DecodeLookup[256] =
 // returns the decoded buffer. Must be free'd by caller. Length is given by
 //	outputLength.
 //
-void *ISA_NewBase64Decode(
+void *ISYAMLNewBase64Decode(
         const char *inputBuffer,
         size_t length,
         size_t *outputLength) {
@@ -131,10 +131,10 @@ void *ISA_NewBase64Decode(
 // returns the encoded buffer. Must be free'd by caller. Length is given by
 //	outputLength.
 //
-char *ISA_NewBase64Encode(
+char *ISYAMLNewBase64Encode(
         const void *buffer,
         size_t length,
-bool separateLines,
+        bool separateLines,
         size_t *outputLength) {
     const unsigned char *inputBuffer = (const unsigned char *) buffer;
 
@@ -232,7 +232,7 @@ bool separateLines,
     return outputBuffer;
 }
 
-@implementation NSData (ISA_Base64)
+@implementation NSData (ISYAMLBase64)
 
 //
 // dataFromBase64String:
@@ -245,11 +245,11 @@ bool separateLines,
 //
 // returns the autoreleased NSData representation of the base64 string
 //
-+ (NSData *)isa_dataFromBase64String:(NSString *)aString
++ (NSData *)isyaml_dataFromBase64String:(NSString *)aString
 {
     NSData *data = [aString dataUsingEncoding:NSASCIIStringEncoding];
     size_t outputLength;
-    void *outputBuffer = ISA_NewBase64Decode([data bytes], [data length], &outputLength);
+    void *outputBuffer = ISYAMLNewBase64Decode([data bytes], [data length], &outputLength);
     NSData *result = [NSData dataWithBytes:outputBuffer length:outputLength];
     free(outputBuffer);
     return result;
@@ -264,11 +264,11 @@ bool separateLines,
 // returns an autoreleased NSString being the base 64 representation of the
 //	receiver.
 //
-- (NSString *)isa_base64EncodedString
+- (NSString *)isyaml_base64EncodedString
 {
     size_t outputLength = 0;
     char *outputBuffer =
-            ISA_NewBase64Encode([self bytes], [self length], true, &outputLength);
+            ISYAMLNewBase64Encode([self bytes], [self length], true, &outputLength);
 
     NSString *result =
             [[NSString alloc]
