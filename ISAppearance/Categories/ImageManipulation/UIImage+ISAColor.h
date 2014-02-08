@@ -18,4 +18,6 @@
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth;
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth borderRadius:(CGFloat)borderRadius;
+
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor underlineColor:(UIColor *)underlineColor underlineHeight:(CGFloat)underlineHeight insets:(UIEdgeInsets)insets;
 @end
