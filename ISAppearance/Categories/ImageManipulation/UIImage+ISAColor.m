@@ -122,6 +122,16 @@
                            underlineHeight:(CGFloat)underlineHeight
                                     insets:(UIEdgeInsets)insets
 {
+    return [self stretchableImageWithFillColor:fillColor frameColor:nil underlineColor:underlineColor
+                         underlineHeight:underlineHeight insets:insets];
+}
+
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
+                            frameColor:(UIColor *)frameColor
+                            underlineColor:(UIColor *)underlineColor
+                           underlineHeight:(CGFloat)underlineHeight
+                                    insets:(UIEdgeInsets)insets
+{
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
 
     if(underlineHeight*scale < 1) {
@@ -135,20 +145,33 @@
     CGRect lineRect = CGRectMake(drawRect.origin.x,
             drawRect.origin.y + drawRect.size.height - underlineHeight, drawRect.size.width, underlineHeight);
 
+    CGRect frameRect = CGRectMake(drawRect.origin.x,
+            drawRect.origin.y, drawRect.size.width, drawRect.size.height - underlineHeight);
+
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();;
 
-    CGContextSetFillColorWithColor(context, fillColor.CGColor);
-    CGContextFillRect(context, rect);
+    if(fillColor) {
+        CGContextSetFillColorWithColor(context, fillColor.CGColor);
+        CGContextFillRect(context, rect);
+    }
 
-    CGContextSetFillColorWithColor(context, underlineColor.CGColor);
-    CGContextFillRect(context, lineRect);
+    if(frameColor) {
+        CGContextSetFillColorWithColor(context, frameColor.CGColor);
+        CGContextFillRect(context, frameRect);
+    }
+
+    if(underlineColor) {
+        CGContextSetFillColorWithColor(context, underlineColor.CGColor);
+        CGContextFillRect(context, lineRect);
+    }
 
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return [image stretchableImageWithLeftCapWidth:(NSInteger) (insets.left + 1)
                                       topCapHeight:(NSInteger) (insets.top + 1)];
 }
+
 
 
 @end
