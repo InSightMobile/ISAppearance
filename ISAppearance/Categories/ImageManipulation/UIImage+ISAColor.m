@@ -173,5 +173,35 @@
 }
 
 
++ (UIImage *)imageWithColor:(UIColor *)fillColor
+                            mask:(UIImage *)mask
+{
+    CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
+
+    CGRect rect = CGRectMake(0, 0, mask.size.width,mask.size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextTranslateCTM(context, 0.0, rect.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+
+    CGContextClipToMask(context, rect, mask.CGImage);
+
+    CGContextSetFillColorWithColor(context, fillColor.CGColor);
+    CGContextFillRect(context, rect);
+
+
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+
+    if(!UIEdgeInsetsEqualToEdgeInsets(mask.capInsets, UIEdgeInsetsZero))
+    {
+        return [image resizableImageWithCapInsets:mask.capInsets];
+    }
+    else {
+        return image;
+    }
+}
 
 @end
