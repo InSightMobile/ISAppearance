@@ -68,10 +68,15 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
         //frame.size.height += 1;
         imageView = [[UIImageView alloc] initWithFrame:frame];
 
-        imageView.contentMode = UIViewContentModeBottom;
+        CGSize imageSize = image.size;
+
+        frame.origin.y = frame.size.height - imageSize.height;
+        frame.size.height = imageSize.height;
+
+        imageView.contentMode = UIViewContentModeScaleToFill;
 
         imageView.frame = frame;
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         imageView.layer.name = ISACellSeparatorLayerName;
 
         [self addSubview:imageView];
