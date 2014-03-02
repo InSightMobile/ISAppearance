@@ -29,10 +29,15 @@ static void *isaIsApplied = 0;
 
 - (void)setIsaClass:(NSString *)value
 {
+    NSString *currentClass = objc_getAssociatedObject(self, &isaClass);
+    if (currentClass == value || (currentClass && value && [currentClass isEqualToString:value])) {
+        return;
+    }
     objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (self.isa_isAppearanceApplied) {
         [self isa_applyAppearance];
     }
+
 }
 
 - (NSString *)isaClass
