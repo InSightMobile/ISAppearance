@@ -80,6 +80,7 @@ static const float kAppearanceReloadDelay = 0.25;
     [self addGlobalStyle:[UIDevice isa_isPad] ? @"~iPhone" : @"~iPad"];
     [self addGlobalStyle:[UIDevice isa_isIOS7] ? @"iOS7" : @"~iOS7"];
     [self addGlobalStyle:[UIDevice isa_isPhone5] ? @"Phone5" : @"~Phone5"];
+    [self addGlobalStyle:[UIDevice isa_isPhone5] ? @"iPhone5" : @"~iPhone5"];
     [self addGlobalStyle:[UIDevice isa_isRetina] ? @"Retina" : @"~Retina"];
 }
 
