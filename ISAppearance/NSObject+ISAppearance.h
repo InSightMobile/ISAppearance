@@ -15,5 +15,7 @@
 
 + (instancetype)isa_appearanceForSelector:(NSString *)selector;
 
+- (void)isa_willApplyAppearance;
+- (void)isa_didApplyAppearance;
 
 @end

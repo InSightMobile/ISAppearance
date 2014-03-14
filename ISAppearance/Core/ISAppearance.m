@@ -805,6 +805,7 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
 {
+
     NSSet *userClasses = nil;
     if (classNames.length) {
         NSArray *selectors = [classNames componentsSeparatedByString:@":"];
@@ -883,8 +884,12 @@ static const float kAppearanceReloadDelay = 0.25;
         styleCache[userClasses] = styles;
     }
 
-    for (ISAStyle *style in styles) {
-        [style applyToTarget:target];
+    if(styles.count) {
+        [target isa_willApplyAppearance];
+        for (ISAStyle *style in styles) {
+            [style applyToTarget:target];
+        }
+        [target isa_didApplyAppearance];
     }
 
     return YES;

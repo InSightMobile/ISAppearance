@@ -38,4 +38,16 @@
 {
     return (id) [ISAProxy proxyForClass:self andSelector:selector];
 }
+
+- (void)isa_willApplyAppearance
+{
+
+}
+
+- (void)isa_didApplyAppearance
+{
+
+}
+
+
 @end
