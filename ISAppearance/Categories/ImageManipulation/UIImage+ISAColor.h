@@ -22,4 +22,6 @@
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor underlineColor:(UIColor *)underlineColor underlineHeight:(CGFloat)underlineHeight insets:(UIEdgeInsets)insets;
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor frameColor:(UIColor *)frameColor underlineColor:(UIColor *)underlineColor underlineHeight:(CGFloat)underlineHeight insets:(UIEdgeInsets)insets;
+
++ (UIImage *)imageWithColor:(UIColor *)fillColor mask:(UIImage *)mask;
 @end
