@@ -58,6 +58,7 @@
 		1D26AFAAA273FDA81ECAB70C /* NSObject+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3F889D6C3151FA2A76F /* NSObject+ISAObjectCreation.m */; };
 		1D26AFCB15F023CCA401DA96 /* UIColor+ISAObjectCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D26A3A034973A65BF2DA9E0 /* UIColor+ISAObjectCreation.m */; };
 		5521B8D11778470B00C63162 /* ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521B8CF1778470B00C63162 /* ISAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C40F426190D7E8D006517D6 /* ISYAMLUnknownNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346071776DBF700B0B5B2 /* ISYAMLUnknownNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C53454B1776DB4D00B0B5B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53454A1776DB4D00B0B5B2 /* Foundation.framework */; };
 		5C53455A1776DB4D00B0B5B2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5345591776DB4D00B0B5B2 /* SenTestingKit.framework */; };
 		5C53455C1776DB4D00B0B5B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C53455B1776DB4D00B0B5B2 /* UIKit.framework */; };
@@ -119,10 +120,12 @@
 		5CB4412A18A5721C00DCB1C4 /* ISYAMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346031776DBF700B0B5B2 /* ISYAMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CB4412B18A5722300DCB1C4 /* ISYAMLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346051776DBF700B0B5B2 /* ISYAMLTag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */; };
+		6D6EE731C17B870C92F8ADB5 /* ISAUIBarPositionValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EED79AC15DC0BA584B89E /* ISAUIBarPositionValueConverter.h */; };
 		6D6EE79E33CC813BCFD796FE /* ISACGRectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */; };
 		6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */; };
 		6D6EEACC47AA3EF51CD28EE2 /* UITableViewHeaderFooterView+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE197879A027BDBF4D12B /* UITableViewHeaderFooterView+ISAppearance.h */; };
 		6D6EEC0DC8FB4115E7B2791E /* ISANSTextAlignmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */; };
+		6D6EED7132019E636824FF56 /* ISAUIBarPositionValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EEDCC03C2D6C5E5173C96 /* ISAUIBarPositionValueConverter.m */; };
 		6D6EEE5E11B04BE2A4CC8096 /* ISACGRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */; };
 /* End PBXBuildFile section */
 
@@ -276,6 +279,8 @@
 		6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSTextAlignmentValueConverter.m; sourceTree = "<group>"; };
 		6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewHeaderFooterView+ISAppearance.m"; sourceTree = "<group>"; };
 		6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSTextAlignmentValueConverter.h; sourceTree = "<group>"; };
+		6D6EED79AC15DC0BA584B89E /* ISAUIBarPositionValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIBarPositionValueConverter.h; sourceTree = "<group>"; };
+		6D6EEDCC03C2D6C5E5173C96 /* ISAUIBarPositionValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIBarPositionValueConverter.m; sourceTree = "<group>"; };
 		6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGRectValueConverter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -539,6 +544,8 @@
 				1D26A77599FA3F968F390B7C /* ISABaseEnum.h */,
 				1D26A343A90EE216DB811AEA /* ISATagResolver.m */,
 				1D26A3A607B9B7EB01279F10 /* ISATagResolver.h */,
+				6D6EED79AC15DC0BA584B89E /* ISAUIBarPositionValueConverter.h */,
+				6D6EEDCC03C2D6C5E5173C96 /* ISAUIBarPositionValueConverter.m */,
 			);
 			path = ValueConverters;
 			sourceTree = "<group>";
@@ -564,6 +571,7 @@
 				5C53466C1776DEC700B0B5B2 /* ISAUIEdgeInsetsValueConverter.h in Headers */,
 				5C5346721776DEC700B0B5B2 /* ISAUIOffsetValueConverter.h in Headers */,
 				5C5346741776DEC700B0B5B2 /* ISAValueConverter.h in Headers */,
+				5C40F426190D7E8D006517D6 /* ISYAMLUnknownNode.h in Headers */,
 				1D26A29E44A1DD818A14CEC9 /* ISAEnumValueConverter.h in Headers */,
 				1D26A5DF3A716C6784F03064 /* NSObject+ISAObjectCreation.h in Headers */,
 				1D26AE2D8C09CBFAC1DBDF93 /* UIImage+ISAObjectCreation.h in Headers */,
@@ -597,6 +605,7 @@
 				1D26A7E1C17C28B92E1C7274 /* ISABaseEnum.h in Headers */,
 				6D6EEACC47AA3EF51CD28EE2 /* UITableViewHeaderFooterView+ISAppearance.h in Headers */,
 				1D26A570F548AFC84CA52507 /* ISATagResolver.h in Headers */,
+				6D6EE731C17B870C92F8ADB5 /* ISAUIBarPositionValueConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,7 +656,8 @@
 		5C53453F1776DB4D00B0B5B2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0510;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = yarryp;
 			};
 			buildConfigurationList = 5C5345421776DB4D00B0B5B2 /* Build configuration list for PBXProject "ISAppearance" */;
@@ -774,6 +784,7 @@
 				1D26A697D7D04275C2026296 /* ISABaseEnum.m in Sources */,
 				6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */,
 				1D26A7E2CAC8AEE32B9C23E3 /* ISATagResolver.m in Sources */,
+				6D6EED7132019E636824FF56 /* ISAUIBarPositionValueConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,7 +822,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -842,7 +852,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
