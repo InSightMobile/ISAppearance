@@ -758,7 +758,7 @@ static const float kAppearanceReloadDelay = 0.25;
 {
     if (!_registeredObjects) {
         Class cl = NSClassFromString(@"NSHashTable");
-        if ([cl resolveClassMethod:@selector(weakObjectsHashTable)]) {
+        if (cl) {
             _registeredObjects = [NSHashTable weakObjectsHashTable];
         }
         else {
