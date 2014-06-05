@@ -27,6 +27,8 @@
 
 - (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classes;
 
+- (BOOL)applyBlockNamed:(NSString *)block toTarget:(id)target;
+
 
 + (BOOL)isPad;
 

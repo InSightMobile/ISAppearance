@@ -8,6 +8,7 @@
 #import "ISAProxy.h"
 #import "UIDevice+isa_SystemInfo.h"
 #import "ISATagResolver.h"
+#import "NSObject+ISAppearance.h"
 
 static const float kAppearanceReloadDelay = 0.25;
 
@@ -17,6 +18,7 @@ static const float kAppearanceReloadDelay = 0.25;
 @property(nonatomic, strong) NSMutableArray *definitions;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
 
+@property(nonatomic, strong) NSMutableDictionary* blocks;
 @end
 
 
@@ -141,6 +143,21 @@ static const float kAppearanceReloadDelay = 0.25;
         close(fileDescriptor);
     });
     dispatch_resume(source);
+}
+
+- (BOOL)applyBlockNamed:(NSString *)blockName toTarget:(id)target
+{
+    NSMutableArray *blockEntries = self.blocks[blockName];
+
+    if(!blockEntries.count) {
+        return NO;
+    }
+
+    for (ISAStyleEntry *entry in blockEntries) {
+        [entry invokeWithTarget:target];
+    }
+
+    return YES;
 }
 
 + (BOOL)isPad
@@ -572,6 +589,19 @@ static const float kAppearanceReloadDelay = 0.25;
                 // if something failed
                 result = NO;
                 *stop = YES;
+            }
+            return;
+        }
+        else if ([defkey isEqual:@"block"]) {
+            NSMutableArray *blockParams = [self styleBlockWithParams:obj selectorParams:nil];
+            if (blockParams.count && keys.count > 1) {
+                NSString *blockName = [[keys subarrayWithRange:NSMakeRange(1, keys.count - 1)] componentsJoinedByString:@":"];
+
+                if(!self.blocks) {
+                    self.blocks = [NSMutableDictionary new];
+                }
+
+                self.blocks[blockName] = blockParams;
             }
             return;
         }
