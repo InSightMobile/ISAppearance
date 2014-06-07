@@ -118,23 +118,62 @@
 
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
+                               borderColor:(UIColor *)borderColor
+                               borderWidth:(CGFloat)borderWidth
+                              borderRadius:(CGFloat)borderRadius
+                                     width:(CGFloat)width
+                                    height:(CGFloat)height
+                                    insets:(UIEdgeInsets)insets
+{
+    NSInteger borderSpace = (NSInteger) ceil(borderWidth);
+
+    CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
+
+    CGRect rect = CGRectMake(0, 0,
+            width ?: 1 + borderSpace * 2 + borderRadius * 2 + insets.left + insets.right,
+            height ?: 1 + borderSpace * 2 + borderRadius * 2 + insets.top + insets.bottom);
+
+    CGRect drawRect = UIEdgeInsetsInsetRect(rect, insets);
+    CGRect pathRect = CGRectInset(drawRect, borderWidth / 2, borderWidth / 2);
+
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();;
+
+    [fillColor setFill];
+    [borderColor setStroke];
+    CGContextSetLineWidth(context, borderWidth);
+
+
+
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:pathRect cornerRadius:borderRadius];
+    path.lineWidth = borderWidth;
+    [path fill];
+    [path stroke];
+
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return [image stretchableImageWithLeftCapWidth:ceil(rect.size.width / 2) topCapHeight:ceil(rect.size.height / 2)];
+}
+
+
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
                             underlineColor:(UIColor *)underlineColor
                            underlineHeight:(CGFloat)underlineHeight
                                     insets:(UIEdgeInsets)insets
 {
     return [self stretchableImageWithFillColor:fillColor frameColor:nil underlineColor:underlineColor
-                         underlineHeight:underlineHeight insets:insets];
+                               underlineHeight:underlineHeight insets:insets];
 }
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
-                            frameColor:(UIColor *)frameColor
+                                frameColor:(UIColor *)frameColor
                             underlineColor:(UIColor *)underlineColor
                            underlineHeight:(CGFloat)underlineHeight
                                     insets:(UIEdgeInsets)insets
 {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
 
-    if(underlineHeight*scale < 1) {
+    if (underlineHeight * scale < 1) {
         underlineHeight = 1 / scale;
     }
 
@@ -151,17 +190,17 @@
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();;
 
-    if(fillColor) {
+    if (fillColor) {
         CGContextSetFillColorWithColor(context, fillColor.CGColor);
         CGContextFillRect(context, rect);
     }
 
-    if(frameColor) {
+    if (frameColor) {
         CGContextSetFillColorWithColor(context, frameColor.CGColor);
         CGContextFillRect(context, frameRect);
     }
 
-    if(underlineColor) {
+    if (underlineColor) {
         CGContextSetFillColorWithColor(context, underlineColor.CGColor);
         CGContextFillRect(context, lineRect);
     }
@@ -174,11 +213,11 @@
 
 
 + (UIImage *)imageWithColor:(UIColor *)fillColor
-                            mask:(UIImage *)mask
+                       mask:(UIImage *)mask
 {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
 
-    CGRect rect = CGRectMake(0, 0, mask.size.width,mask.size.height);
+    CGRect rect = CGRectMake(0, 0, mask.size.width, mask.size.height);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -195,8 +234,7 @@
     UIGraphicsEndImageContext();
 
 
-    if(!UIEdgeInsetsEqualToEdgeInsets(mask.capInsets, UIEdgeInsetsZero))
-    {
+    if (!UIEdgeInsetsEqualToEdgeInsets(mask.capInsets, UIEdgeInsetsZero)) {
         return [image resizableImageWithCapInsets:mask.capInsets];
     }
     else {
