@@ -71,6 +71,19 @@
     return [image stretchableImageWithLeftCapWidth:1 topCapHeight:1];
 }
 
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)color size:(CGSize)size insets:(UIEdgeInsets)insets
+{
+    CGRect rect = CGRectMake(0, 0, size.width+insets.left+insets.right, size.height+insets.top+insets.bottom);
+    CGRect drawRect = UIEdgeInsetsInsetRect(rect, insets);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    [color setFill];
+    UIRectFill(drawRect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return [image stretchableImageWithLeftCapWidth:(NSInteger) (insets.left + 1)
+                                      topCapHeight:(NSInteger) (insets.top + 1)];
+}
+
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth
 {
     NSInteger borderSpace = (NSInteger) ceil(borderWidth);
