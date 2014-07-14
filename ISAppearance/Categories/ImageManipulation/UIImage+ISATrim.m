@@ -10,8 +10,16 @@
 
 - (UIImage *)imageCroppedByRect:(CGRect)cropRect
 {
-    CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], cropRect);
-    UIImage *image = [UIImage imageWithCGImage:imageRef];
+    CGFloat scale = self.scale;
+
+    CGRect rect = cropRect;
+    rect.origin.x *= scale;
+    rect.origin.y *= scale;
+    rect.size.width *= scale;
+    rect.size.height *= scale;
+
+    CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], rect);
+    UIImage *image = [UIImage imageWithCGImage:imageRef scale:scale orientation:self.imageOrientation];
     CGImageRelease(imageRef);
     return image;
 }
