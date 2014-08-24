@@ -6,6 +6,9 @@
 #include "ISAppearance/UIView+ISAppearance.h"
 #include "ISAppearance/NSObject+ISAppearance.h"
 
+#if TARGET_IPHONE_SIMULATOR
+#define ISA_CODE_GENERATION 1
+#endif
 
 @interface ISAppearance : NSObject
 
@@ -57,5 +60,7 @@
 
 - (void)addAssetsFolder:(NSString *)folder;
 
+
+- (NSString *)generateCode;
 
 @end

@@ -8,6 +8,7 @@
 #import "ISAStyleEntry.h"
 #import "ISAEnumValueConverter.h"
 #import "ISAEnumClassValueConverter.h"
+#import "ISAppearance+CodeGeneration.h"
 
 @interface ISAValueConverter () <ISYAMLTagDelegate>
 
@@ -57,17 +58,28 @@
 
 - (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
 {
+    if(ISA_IS_CODE_GENERATION_MODE) {
+        return [self codeWithISANode:node];
+    }
     return [self objectWithISANode:node];
 }
 
 - (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
 {
+    if(ISA_IS_CODE_GENERATION_MODE) {
+        return [self codeWithISANode:value];
+    }
     return [self objectWithISANode:value];
 }
 
 - (id)objectWithISANode:(id)node
 {
     return nil;
+}
+
+- (id)codeWithISANode:(id)node
+{
+    return [self objectWithISANode:node];
 }
 
 

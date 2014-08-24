@@ -19,13 +19,14 @@ static const float kAppearanceReloadDelay = 0.25;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
 
 @property(nonatomic, strong) NSMutableDictionary* blocks;
+
+@property(nonatomic, strong) NSMutableDictionary* classStyles;
+@property(nonatomic, strong) NSMutableDictionary* objectStyles;
 @end
 
 
 @implementation ISAppearance
 {
-    NSMutableDictionary *_classStyles;
-    NSMutableDictionary *_objectStyles;
     NSMutableArray *_sources;
     id _registeredObjects;
     BOOL _monitoring;

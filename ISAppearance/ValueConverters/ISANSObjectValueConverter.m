@@ -34,5 +34,15 @@
     return [_objectClass objectWithISANode:node];
 }
 
+- (id)codeWithISANode:(id)node
+{
+    if([_objectClass respondsToSelector:@selector(codeWithISANode:)]) {
+        return [_objectClass codeWithISANode:node];
+    }
+    else {
+        return [_objectClass objectWithISANode:node];
+    }
+}
+
 
 @end

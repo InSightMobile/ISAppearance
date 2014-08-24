@@ -7,6 +7,7 @@
 #import "ISAppearance.h"
 #import "ISAppearance+Private.h"
 #import "UIColor+ISAHexString.h"
+#import "ISACode.h"
 
 
 @implementation UIColor (ISAObjectCreation)
@@ -36,6 +37,16 @@
     }
     return cl;
 }
+
++ (id)codeWithISANode:(id)node
+{
+    UIColor *color = [self objectWithISANode:node];
+    CGFloat r,g,b,a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    return [ISACode codeWithFormat:@"[UIColor colorWithRed:%f green:%f blue:%f alpha:%f]",r,g,b,a];
+}
+
+
 
 + (id)objectWithISANode:(id)node
 {

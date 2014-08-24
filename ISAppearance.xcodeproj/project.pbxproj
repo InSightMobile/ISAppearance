@@ -119,16 +119,20 @@
 		5CB4412918A5721700DCB1C4 /* ISYAMLEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5345FF1776DBF700B0B5B2 /* ISYAMLEmitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CB4412A18A5721C00DCB1C4 /* ISYAMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346031776DBF700B0B5B2 /* ISYAMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CB4412B18A5722300DCB1C4 /* ISYAMLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5346051776DBF700B0B5B2 /* ISYAMLTag.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D6EE24D68C786C9C79A4CF9 /* ISACode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EEC714039B8217948923C /* ISACode.m */; };
 		6D6EE5D71E1370DEABEFCFF5 /* ISANSTextAlignmentValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */; };
+		6D6EE604E30E60C65EB6F0EE /* ISAppearance+CodeGeneration.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE49BF9138EBE8151DE43 /* ISAppearance+CodeGeneration.h */; };
 		6D6EE731C17B870C92F8ADB5 /* ISAUIBarPositionValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EED79AC15DC0BA584B89E /* ISAUIBarPositionValueConverter.h */; };
 		6D6EE79E33CC813BCFD796FE /* ISACGRectValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */; };
 		6D6EE7C0C8A589381F84E313 /* UITableViewHeaderFooterView+ISAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */; };
+		6D6EE964D1DA9BB8C5D89A70 /* ISAppearance+CodeGeneration.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE4202ECD52C556D51C4D /* ISAppearance+CodeGeneration.m */; };
 		6D6EEA08194EB9BDDAA359C4 /* ISAUIControlContentHorizontalAlignmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE4DAF839A8030CE81AD5 /* ISAUIControlContentHorizontalAlignmentValueConverter.m */; };
 		6D6EEACC47AA3EF51CD28EE2 /* UITableViewHeaderFooterView+ISAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE197879A027BDBF4D12B /* UITableViewHeaderFooterView+ISAppearance.h */; };
 		6D6EEC0DC8FB4115E7B2791E /* ISANSTextAlignmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */; };
 		6D6EEC866874B649CA9B31D8 /* ISAUIControlContentHorizontalAlignmentValueConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EEE4F91DA684579C9A411 /* ISAUIControlContentHorizontalAlignmentValueConverter.h */; };
 		6D6EED7132019E636824FF56 /* ISAUIBarPositionValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EEDCC03C2D6C5E5173C96 /* ISAUIBarPositionValueConverter.m */; };
 		6D6EEE5E11B04BE2A4CC8096 /* ISACGRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */; };
+		6D6EEEFDB7C25DF9549FCC4F /* ISACode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6EE3AFCE7379602EFC452E /* ISACode.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,9 +283,13 @@
 		6D6EE018DC510EFC295E308A /* ISACGRectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACGRectValueConverter.m; sourceTree = "<group>"; };
 		6D6EE197879A027BDBF4D12B /* UITableViewHeaderFooterView+ISAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewHeaderFooterView+ISAppearance.h"; sourceTree = "<group>"; };
 		6D6EE1A0EBC9E2028206000D /* ISANSTextAlignmentValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISANSTextAlignmentValueConverter.m; sourceTree = "<group>"; };
+		6D6EE3AFCE7379602EFC452E /* ISACode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACode.h; sourceTree = "<group>"; };
 		6D6EE3EE5BF9B6E6A06A3B74 /* UITableViewHeaderFooterView+ISAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewHeaderFooterView+ISAppearance.m"; sourceTree = "<group>"; };
+		6D6EE4202ECD52C556D51C4D /* ISAppearance+CodeGeneration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ISAppearance+CodeGeneration.m"; sourceTree = "<group>"; };
+		6D6EE49BF9138EBE8151DE43 /* ISAppearance+CodeGeneration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ISAppearance+CodeGeneration.h"; sourceTree = "<group>"; };
 		6D6EE4DAF839A8030CE81AD5 /* ISAUIControlContentHorizontalAlignmentValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIControlContentHorizontalAlignmentValueConverter.m; sourceTree = "<group>"; };
 		6D6EE970F97ADEBEA5DD0332 /* ISANSTextAlignmentValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISANSTextAlignmentValueConverter.h; sourceTree = "<group>"; };
+		6D6EEC714039B8217948923C /* ISACode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISACode.m; sourceTree = "<group>"; };
 		6D6EED79AC15DC0BA584B89E /* ISAUIBarPositionValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAUIBarPositionValueConverter.h; sourceTree = "<group>"; };
 		6D6EEDCC03C2D6C5E5173C96 /* ISAUIBarPositionValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAUIBarPositionValueConverter.m; sourceTree = "<group>"; };
 		6D6EEDD57E399C85F0D11F0C /* ISACGRectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISACGRectValueConverter.h; sourceTree = "<group>"; };
@@ -376,6 +384,7 @@
 				1D26AEAEE3895268F0A6B9C7 /* NSObject+ISAppearance.h */,
 				1D26AEF5709AEBF6279CD50D /* UIView+ISAppearance.m */,
 				1D26A03348101EFD3E3F7924 /* UIView+ISAppearance.h */,
+				6D6EEEF34C150B8CD4F7816A /* CodeGeneration */,
 			);
 			path = ISAppearance;
 			sourceTree = "<group>";
@@ -556,6 +565,17 @@
 			path = ValueConverters;
 			sourceTree = "<group>";
 		};
+		6D6EEEF34C150B8CD4F7816A /* CodeGeneration */ = {
+			isa = PBXGroup;
+			children = (
+				6D6EE49BF9138EBE8151DE43 /* ISAppearance+CodeGeneration.h */,
+				6D6EE4202ECD52C556D51C4D /* ISAppearance+CodeGeneration.m */,
+				6D6EEC714039B8217948923C /* ISACode.m */,
+				6D6EE3AFCE7379602EFC452E /* ISACode.h */,
+			);
+			path = CodeGeneration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -613,6 +633,8 @@
 				1D26A570F548AFC84CA52507 /* ISATagResolver.h in Headers */,
 				6D6EE731C17B870C92F8ADB5 /* ISAUIBarPositionValueConverter.h in Headers */,
 				6D6EEC866874B649CA9B31D8 /* ISAUIControlContentHorizontalAlignmentValueConverter.h in Headers */,
+				6D6EE604E30E60C65EB6F0EE /* ISAppearance+CodeGeneration.h in Headers */,
+				6D6EEEFDB7C25DF9549FCC4F /* ISACode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +815,8 @@
 				1D26A7E2CAC8AEE32B9C23E3 /* ISATagResolver.m in Sources */,
 				6D6EED7132019E636824FF56 /* ISAUIBarPositionValueConverter.m in Sources */,
 				6D6EEA08194EB9BDDAA359C4 /* ISAUIControlContentHorizontalAlignmentValueConverter.m in Sources */,
+				6D6EE964D1DA9BB8C5D89A70 /* ISAppearance+CodeGeneration.m in Sources */,
+				6D6EE24D68C786C9C79A4CF9 /* ISACode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

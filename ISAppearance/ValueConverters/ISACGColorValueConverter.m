@@ -1,13 +1,11 @@
 //
-//  ISACGColorValueConverter.m
-//  socials
-//
-//  Created by yar on 19.01.13.
-//  Copyright (c) 2013 Ярослав. All rights reserved.
 //
 
 #import "ISACGColorValueConverter.h"
 #import "UIColor+ISAObjectCreation.h"
+#import "ISAppearance.h"
+#import "NSObject+ISAppearance.h"
+
 
 
 @implementation ISACGColorValueConverter
@@ -28,5 +26,12 @@
 
     return invocation;
 }
+
+#ifdef ISA_CODE_GENERATION
+- (id)codeWithISANode:(id)node
+{
+    return [ISACode codeWithFormat:@"[(%@) CGColor]", node];
+}
+#endif
 
 @end

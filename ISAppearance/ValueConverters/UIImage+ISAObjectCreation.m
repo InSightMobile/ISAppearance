@@ -14,6 +14,11 @@
     return [[ISAppearance sharedInstance] loadImageNamed:name];
 }
 
++ (id)codeWithISANode:(id)node
+{
+    return [ISACode new];
+}
+
 + (id)objectWithISANode:(id)node
 {
     UIImage *image = nil;

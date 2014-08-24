@@ -3,6 +3,8 @@
 
 
 #import "ISAStyleEntry.h"
+#import "ISACode.h"
+#import "ISAppearance.h"
 
 static NSString *SelectorNameForSetterWithString(NSString *string) {
     NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
@@ -251,6 +253,13 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         return nil;
     }
 }
+
+#ifdef ISA_CODE_GENERATION
+- (id)generateCode
+{
+    return [ISACode codeWithInvokation:_invocation keyPath:_keyPath selector:_selector arguments:_arguments];
+}
+#endif
 
 + (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
 {

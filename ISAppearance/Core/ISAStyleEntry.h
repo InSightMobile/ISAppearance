@@ -29,4 +29,6 @@
 
 + (ISAStyleEntry *)entryWithInvocation:(NSInvocation *)invocation;
 
+- (id)generateCode;
+
 @end
