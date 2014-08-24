@@ -1088,8 +1088,8 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (void)performScheduledReload
 {
-    _isReloadScheduled = NO;
     [self autoReloadAppearance];
+    _isReloadScheduled = NO;
 }
 
 - (UIImage *)loadImageNamed:(NSString *)string
