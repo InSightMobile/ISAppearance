@@ -10,9 +10,11 @@
 
 - (UIImage *)imageResizeToSize:(CGSize)size mode:(UIViewContentMode)mode quality:(CGInterpolationQuality)quality
 {
-    UIGraphicsBeginImageContext(size);
+    CGFloat srcScale = self.scale;
+    UIGraphicsBeginImageContextWithOptions(size,NO, 0);
 
     CGSize imageSize = self.size;
+
 
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(context, 0.0, size.height);
@@ -82,12 +84,20 @@
 
     CGContextTranslateCTM(context, -origin.x, -origin.y);
 
+    srcRect.origin.x *= srcScale;
+    srcRect.origin.y *= srcScale;
+    srcRect.size.width *= srcScale;
+    srcRect.size.height *= srcScale;
+
     CGImageRef drawImage = CGImageCreateWithImageInRect([self CGImage], srcRect);
     CGContextDrawImage(context, dstRect, drawImage);
     CFRelease(drawImage);
 
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
+
+    NSLog(@"scaledImage = %f %f", scaledImage.size.width, scaledImage.scale);
 
     return scaledImage;
 }
