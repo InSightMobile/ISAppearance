@@ -342,17 +342,6 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (NSString *)pathForMonitoredAssetFolder:(NSString *)directory
 {
-    if ([directory hasPrefix:@"~/"]) {
-        // we use this trick to locate user directory outside of simulator
-
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-
-        NSUInteger pos = [path rangeOfString:@"/Library/Application Support/iPhone Simulator/"].location;
-        path = [path substringToIndex:pos];
-
-        directory = [path stringByAppendingPathComponent:[directory substringFromIndex:2]];
-    }
-
     BOOL isDirectory;
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDirectory];
 
