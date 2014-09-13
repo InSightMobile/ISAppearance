@@ -41,6 +41,11 @@
 
 + (BOOL)isa_isIOS7
 {
+    return [self isa_isIOS7AndLater];
+}
+
++ (BOOL)isa_isIOS7AndLater
+{
 #ifdef __IPHONE_7_0
     static int result = -1;
     if(result<0) {
@@ -52,17 +57,23 @@
 #endif
 }
 
-+ (BOOL)isa_isPreIOS7
+
++ (BOOL)isa_isIOS8AndLater
 {
-#ifdef __IPHONE_7_0
+#ifdef __IPHONE_8_0
     static int result = -1;
     if(result<0) {
-        result = SYSTEM_VERSION_LESS_THAN(@"7.0");
+        result = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0");
     }
     return result > 0;
 #else
-    return YES;
+    return NO;
 #endif
+}
+
++ (BOOL)isa_isPreIOS7
+{
+    return ![self isa_isIOS7AndLater];
 }
 
 + (BOOL)isa_isIOS6AndGreater

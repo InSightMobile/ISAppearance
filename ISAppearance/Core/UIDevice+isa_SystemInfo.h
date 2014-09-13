@@ -14,6 +14,10 @@
 
 + (BOOL)isa_isIOS7;
 
++ (BOOL)isa_isIOS7AndLater;
+
++ (BOOL)isa_isIOS8AndLater;
+
 + (BOOL)isa_isIOS6AndGreater;
 
 + (BOOL)isa_isIOS5;
