@@ -9,4 +9,7 @@
 
 + (UIColor *)colorWithHexString:(NSString *)hex;
 
+- (NSString *)hexString;
+
+- (NSString *)hexStringWithAlpha;
 @end
