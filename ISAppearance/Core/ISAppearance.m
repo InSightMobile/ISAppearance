@@ -794,10 +794,10 @@ static const float kAppearanceReloadDelay = 0.25;
 {
     for (id object in [_registeredObjects copy]) {
         if ([object respondsToSelector:@selector(isaClass)]) {
-            [self applyAppearanceTo:object usingClasses:[object isaClass]];
+            [self applyAppearanceTo:object usingClassesString:[object isaClass]];
         }
         else {
-            [self applyAppearanceTo:object usingClasses:nil];
+            [self applyAppearanceTo:object usingClassesString:nil];
         }
     }
     if (_monitoring) {
@@ -816,22 +816,27 @@ static const float kAppearanceReloadDelay = 0.25;
 - (BOOL)applyAppearanceTo:(id)target
 {
     if ([target respondsToSelector:@selector(isaClass)]) {
-        return [self applyAppearanceTo:target usingClasses:[target isaClass]];
+        return [self applyAppearanceTo:target usingClassesString:[target isaClass]];
     }
     else {
-        return [self applyAppearanceTo:target usingClasses:nil];
+        return [self applyAppearanceTo:target usingClassesString:nil];
     }
 }
 
-- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classNames
+- (BOOL)applyAppearanceTo:(id)target usingClassesString:(NSString *)classNames
 {
-
     NSSet *userClasses = nil;
     if (classNames.length) {
         NSArray *selectors = [classNames componentsSeparatedByString:@":"];
         userClasses = [NSSet setWithArray:selectors];
     }
-    else {
+    return [self applyAppearanceTo:target usingClasses:userClasses];
+}
+
+- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSSet *)userClasses
+{
+
+    if(!userClasses) {
         userClasses = [NSSet set];
     }
 

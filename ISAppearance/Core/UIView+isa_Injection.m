@@ -16,28 +16,40 @@
 
 + (void)isa_swizzleClass
 {
-
     [self isa_swizzle:[UIView class]
                  from:@selector(didMoveToWindow)
                    to:@selector(isaOverride_didMoveToWindow)];
-
 }
 
 
 static void *isaClass = 0;
+static void *isaClasses = 0;
 static void *isaIsApplied = 0;
 
 - (void)setIsaClass:(NSString *)value
 {
-    NSString *currentClass = objc_getAssociatedObject(self, &isaClass);
-    if (currentClass == value || (currentClass && value && [currentClass isEqualToString:value])) {
+    objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
+
+    NSSet *classes = [NSSet setWithArray:[value componentsSeparatedByString:@":"]];
+    [self isa_setAppearanceClasses:classes];
+}
+
+- (NSSet *)isa_appearanceClasses
+{
+    return objc_getAssociatedObject(self, &isaClasses);
+}
+
+- (void)isa_setAppearanceClasses:(NSSet *)value
+{
+    NSSet *currentClass = objc_getAssociatedObject(self, &isaClasses);
+    if (currentClass == value || (currentClass && value && [currentClass isEqualToSet:value])) {
         return;
     }
-    objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, &isaClasses, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
+
     if (self.isa_isAppearanceApplied) {
         [self isa_applyAppearance];
     }
-
 }
 
 - (NSString *)isaClass

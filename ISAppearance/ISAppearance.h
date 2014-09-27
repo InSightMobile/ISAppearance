@@ -28,7 +28,9 @@
 
 - (BOOL)applyAppearanceTo:(id)target1;
 
-- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSString *)classes;
+- (BOOL)applyAppearanceTo:(id)target usingClassesString:(NSString *)classes;
+
+- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSSet *)userClasses;
 
 - (BOOL)applyBlockNamed:(NSString *)block toTarget:(id)target;
 

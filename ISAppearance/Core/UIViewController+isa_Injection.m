@@ -23,10 +23,10 @@
 - (void)isaOverride_viewDidLoad
 {
     if (self.isaClass) {
-        [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:[@"OnLoad:" stringByAppendingString:self.isaClass]];
+        [[ISAppearance sharedInstance] applyAppearanceTo:self usingClassesString:[@"OnLoad:" stringByAppendingString:self.isaClass]];
     }
     else {
-        [[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:@"OnLoad"];
+        [[ISAppearance sharedInstance] applyAppearanceTo:self usingClassesString:@"OnLoad"];
     }
 
     [self isaOverride_viewDidLoad];
@@ -51,7 +51,7 @@
 
 - (void)isa_applyAppearance
 {
-    self.isaIsApplied = @([[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass]);
+    self.isaIsApplied = @([[ISAppearance sharedInstance] applyAppearanceTo:self usingClassesString:self.isaClass]);
 }
 
 - (void)isa_applyAppearanceWithSubviews:(BOOL)subviews

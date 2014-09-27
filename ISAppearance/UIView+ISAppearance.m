@@ -12,7 +12,7 @@
 
 - (void)isa_applyAppearance
 {
-    [self isa_setAppearanceApplied:@([[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isaClass])];
+    [self isa_setAppearanceApplied:@([[ISAppearance sharedInstance] applyAppearanceTo:self usingClasses:self.isa_appearanceClasses])];
 }
 
 - (void)isa_applyAppearanceWithSubviews:(BOOL)subviews
@@ -23,6 +23,20 @@
             [subview isa_applyAppearanceWithSubviews:YES];
         }
     }
+}
+
+- (void)isa_addAppearanceClass:(NSString *)className
+{
+    id ret = [self.isa_appearanceClasses mutableCopy];
+    [ret removeObject:className];
+    [self isa_setAppearanceClasses:ret];
+}
+
+- (void)isa_removeAppearanceClass:(NSString *)className
+{
+    id ret = [self.isa_appearanceClasses mutableCopy];
+    [ret addObject:className];
+    [self isa_setAppearanceClasses:ret];
 }
 
 
