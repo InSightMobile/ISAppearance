@@ -2,8 +2,40 @@
 // 
 
 #import "UIFont+ISAObjectCreation.h"
+#import "ISACode.h"
 
 @implementation UIFont (ISAObjectCreation)
+
++ (id)codeWithISANode:(id)param
+{
+    if ([param isKindOfClass:[NSNumber class]]) {
+        return [ISACode codeWithClass:[UIFont class] format:@"[UIFont systemFontOfSize:%@]",param];
+    }
+    else if ([param isKindOfClass:[NSString class]]) {
+        CGFloat size = [param floatValue];
+        if (size) {
+            return [ISACode codeWithClass:[UIFont class] format:@"[UIFont systemFontOfSize:%@]",param];
+        }
+    }
+    if ([param isKindOfClass:[NSArray class]]) {
+        if ([param count] < 2) {
+            return nil;
+        }
+        NSString *name = [param objectAtIndex:0];
+        NSNumber *size = [param objectAtIndex:1];
+
+        if ([name isEqualToString:@"system"]) {
+            return [ISACode codeWithClass:[UIFont class] format:@"[UIFont systemFontOfSize:%@]",size];
+        }
+        else if ([name isEqualToString:@"bold"]) {
+            return [ISACode codeWithClass:[UIFont class] format:@"[UIFont boldSystemFontOfSize:%@]",size];
+        }
+        else {
+            return [ISACode codeWithClass:[UIFont class] format:@"[UIFont fontWithName:%@ size:%@]", [ISACode codeForString:name], size];
+        }
+    }
+    return [ISACode codeForNil];
+}
 
 + (id)objectWithISANode:(id)param
 {

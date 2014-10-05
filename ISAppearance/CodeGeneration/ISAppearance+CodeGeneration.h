@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 #import "ISAppearance.h"
 
-
+#define ISA_CODE_GENERATION
 
 
 #ifdef ISA_CODE_GENERATION
@@ -16,6 +16,7 @@
 @interface ISAppearance (CodeGeneration)
 
 + (BOOL)isCodeGeneration;
+
 
 
 

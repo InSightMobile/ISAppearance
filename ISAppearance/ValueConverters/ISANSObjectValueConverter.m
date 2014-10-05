@@ -37,10 +37,11 @@
 - (id)codeWithISANode:(id)node
 {
     if([_objectClass respondsToSelector:@selector(codeWithISANode:)]) {
-        return [_objectClass codeWithISANode:node];
+        return [ISACode fixCodeForClass:_objectClass value:[_objectClass codeWithISANode:node]];
+
     }
     else {
-        return [_objectClass objectWithISANode:node];
+        return [ISACode fixCodeForClass:_objectClass value:[_objectClass objectWithISANode:node]];
     }
 }
 

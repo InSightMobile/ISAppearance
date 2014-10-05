@@ -5,6 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class ISACode;
+
 
 @interface ISAStyleEntry : NSObject
 
@@ -29,6 +31,7 @@
 
 + (ISAStyleEntry *)entryWithInvocation:(NSInvocation *)invocation;
 
-- (id)generateCode;
+- (ISACode*)generateCode;
 
+- (ISACode*)codeWithTarget:(id)rootTarget;
 @end

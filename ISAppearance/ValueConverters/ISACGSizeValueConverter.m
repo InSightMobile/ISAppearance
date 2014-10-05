@@ -37,4 +37,10 @@
     return [NSValue value:&size withObjCType:@encode(CGSize)];
 }
 
+- (id)codeWithISANode:(id)node
+{
+    CGSize size = [[self objectWithISANode:node] CGSizeValue];
+    return [ISACode codeWithFormat:@"CGSizeMake(%f,%f)", size.width, size.height];
+}
+
 @end

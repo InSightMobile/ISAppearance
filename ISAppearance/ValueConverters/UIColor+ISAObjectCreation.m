@@ -43,7 +43,7 @@
     UIColor *color = [self objectWithISANode:node];
     CGFloat r,g,b,a;
     [color getRed:&r green:&g blue:&b alpha:&a];
-    return [ISACode codeWithFormat:@"[UIColor colorWithRed:%f green:%f blue:%f alpha:%f]",r,g,b,a];
+    return [ISACode codeWithClass:[UIColor class] format:@"[UIColor colorWithRed:%f green:%f blue:%f alpha:%f]",r,g,b,a];
 }
 
 

@@ -8,10 +8,12 @@
 
 @interface ISARuntimeSelector : NSObject
 
+@property(nonatomic, copy) NSString *name;
+
 - (BOOL)isApplyableTo:(id)target;
 
 - (id)initWithClassName:(NSString *)name;
 
-+ (id)selectorWithName:(NSString *)selector;
++ (id)selectorWithName:(NSString *)name;
 
 @end

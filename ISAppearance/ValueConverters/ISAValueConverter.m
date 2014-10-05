@@ -3,7 +3,7 @@
 
 
 
-#import "ISAValueConverter.h"
+#import "ISAValueConverting.h"
 #import "ISANSObjectValueConverter.h"
 #import "ISAStyleEntry.h"
 #import "ISAEnumValueConverter.h"
@@ -12,6 +12,7 @@
 
 @interface ISAValueConverter () <ISYAMLTagDelegate>
 
+@property(nonatomic, copy) NSString *className;
 @end
 
 @implementation ISAValueConverter
@@ -19,18 +20,17 @@
 
 }
 
-+ (ISAValueConverter *)converterNamed:(NSString *)className
++ (id<ISAValueConverting>)converterNamed:(NSString *)className
 {
     NSMutableDictionary *convertersByName = [self convertersByName];
-    ISAValueConverter *converter = convertersByName[className];
+    ISAValueConverter* converter = convertersByName[className];
     if (converter) {
         return converter;
     }
 
-    NSString *converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
-    Class converterClass = NSClassFromString(converterClassName);
+    Class converterClass = [self converterClassForTypeName:className];
     if (converterClass) {
-        converter = [[converterClass alloc] init];
+        converter = (ISAValueConverter*) [[converterClass alloc] init];
     }
     if (!converter) {
         NSString *enumerationClassName = [NSString stringWithFormat:@"%@Enum", className];
@@ -50,16 +50,24 @@
     }
 
     if (converter) {
+        converter.className = className;
         convertersByName[className] = converter;
     }
 
     return converter;
 }
 
++ (Class)converterClassForTypeName:(NSString *)className
+{
+    NSString *converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
+    Class converterClass = NSClassFromString(converterClassName);
+    return converterClass;
+}
+
 - (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
 {
     if(ISA_IS_CODE_GENERATION_MODE) {
-        return [self codeWithISANode:node];
+        return [ISACode fixCodeForTypeName:self.className value:[self codeWithISANode:node]];
     }
     return [self objectWithISANode:node];
 }
@@ -67,7 +75,9 @@
 - (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
 {
     if(ISA_IS_CODE_GENERATION_MODE) {
-        return [self codeWithISANode:value];
+        id r = [ISACode fixCodeForTypeName:self.className value:[self codeWithISANode:value]];
+
+        return r;
     }
     return [self objectWithISANode:value];
 }
@@ -80,6 +90,11 @@
 - (id)codeWithISANode:(id)node
 {
     return [self objectWithISANode:node];
+}
+
+- (id)boxedCodeWithISANode:(id)node
+{
+    return nil;
 }
 
 
@@ -96,6 +111,24 @@
         _instance = [[NSMutableDictionary alloc] init];
     });
     return _instance;
+}
+
++ (id)codeOfClass:(Class)pClass withISANode:(id)node
+{
+    id result = nil;
+    if ([node isKindOfClass:[NSArray class]]) {
+        if ([node count] > 0) {
+            if ([node[0] isKindOfClass:[NSDictionary class]]) {
+                ISAStyleEntry *entry = [ISAStyleEntry entryWithParams:node fromIndex:0 selectorParams:nil];
+                result = [entry codeWithTarget:pClass];
+            }
+            else if ([node count] > 1 && [node[1] isKindOfClass:[NSDictionary class]]) {
+                ISAStyleEntry *entry = [ISAStyleEntry entryWithParams:node fromIndex:1 selectorParams:nil];
+                result = [entry codeWithTarget:node[0]];
+            }
+        }
+    }
+    return result;
 }
 
 + (id)objectOfClass:(Class)pClass withISANode:(id)node

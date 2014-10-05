@@ -18,5 +18,7 @@
 
 - (void)setBottom:(CGFloat)y;
 
+- (void)setSize:(CGSize)size;
+
 - (void)setWidth:(CGFloat)width;
 @end

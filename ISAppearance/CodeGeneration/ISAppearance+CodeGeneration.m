@@ -6,17 +6,19 @@
 #import "ISAStyleEntry.h"
 #import "ISAStyle.h"
 #import "ISACode.h"
+#import "ISARuntimeSelector.h"
 
 static BOOL _codeGenerationMode;
 
 static NSString *_codeTemplate = @""
-        "#import \"ISAppearance.h\"\n"
-        "@interface ISAppearance(GeneratedStyles)\n"
-        "@end\n"
-        "@implementation ISAppearance(GeneratedStyles)\n"
-        "- (void)registerGeneratedStyles {\n"
-        "%@\n"
-        "}\n"
+        "#import <ISAppearance/ISAppearance.h>\n"
+        "%@\n\n"
+        "@interface ISAppearance(GeneratedStyles)\n\n"
+        "@end\n\n"
+        "@implementation ISAppearance(GeneratedStyles)\n\n"
+        "- (void)registerGeneratedStyles {\n\n"
+        "%@\n\n"
+        "}\n\n"
         "@end";
 
 @implementation ISAppearance (CodeGeneration)
@@ -26,15 +28,59 @@ static NSString *_codeTemplate = @""
     return _codeGenerationMode;
 }
 
-- (NSString *)generateCode
+- (NSString *)generateCodeWithIncludes:(NSArray *)userIncludes
 {
     _codeGenerationMode = YES;
+    [self clearCurrentClasses];
     [self processAppearance];
 
     NSMutableArray *classes = [NSMutableArray new];
+    NSMutableSet *includes = [NSMutableSet setWithArray:userIncludes];
+
+    for (NSArray *appearance in self.UIAppearanceClasses) {
+
+        ISAStyleEntry *style = appearance[2];
+
+        NSArray *classSelectors = [appearance[1] isKindOfClass:[NSArray class]] ? appearance[1] : nil;
+        NSArray *baseKeys = [appearance[3] isKindOfClass:[NSArray class]] ? appearance[3] : nil;
+
+        ISACode *target = nil;
+        if (classSelectors.count) {
+
+            NSMutableArray *selCode = [NSMutableArray new];
+
+            for (NSString *sel in classSelectors) {
+                [selCode addObject:[NSString stringWithFormat:@"[%@ class]", sel]];
+                [self includeClassName:NSStringFromClass(sel) to:includes];
+            }
+
+            [self includeClassName:NSStringFromClass(appearance[0]) to:includes];
+
+            target = [ISACode codeWithFormat:
+                    @"[%@ appearanceWhenContainedIn:%@,nil]",
+                    appearance[0],
+                    [selCode componentsJoinedByString:@","]
+            ];
+        }
+        else {
+            target = [ISACode codeWithFormat:@"[%@ appearance]", appearance[0]];
+        }
+
+        ISACode *code = [style codeWithTarget:target];
+
+        if(baseKeys.count)  {
+
+            code = [ISACode codeWithFormat:@"if([self isConditionsPassed:%@]){%@;}",[ISACode codeForArray:baseKeys],code];
+
+
+        }
+
+        [classes addObject:[NSString stringWithFormat:@"    %@;\n", code.codeString]];
+
+    }
 
     [self.classStyles enumerateKeysAndObjectsUsingBlock:^(id key, ISAStyle *style, BOOL *stop) {
-        [self processStyleStyle:style resultClasses:classes];
+        [self processStyleStyle:style resultClasses:classes includes:includes];
     }];
 
     [self.objectStyles enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *styles, BOOL *stop) {
@@ -43,43 +89,67 @@ static NSString *_codeTemplate = @""
             if ([styleOrArray isKindOfClass:[NSArray class]]) {
 
                 for (ISAStyle *style in styleOrArray) {
-                    [self processStyleStyle:style resultClasses:classes];
+                    [self processStyleStyle:style resultClasses:classes includes:includes];
                 }
             }
             else {
-                [self processStyleStyle:styleOrArray resultClasses:classes];
+                [self processStyleStyle:styleOrArray resultClasses:classes includes:includes];
             }
         }];
     }];
 
-    NSString *code = [NSString stringWithFormat:_codeTemplate, [classes componentsJoinedByString:@"\n"]];
+    NSString *code = [NSString stringWithFormat:
+            _codeTemplate,
+            [includes.allObjects componentsJoinedByString:@"\n"],
+            [classes componentsJoinedByString:@"\n"]];
 
 
     _codeGenerationMode = NO;
+    [self clearCurrentClasses];
+    [self processAppearance];
     return code;
 }
 
-- (void)processStyleStyle:(ISAStyle *)style resultClasses:(NSMutableArray *)classes
+- (void)processStyleStyle:(ISAStyle *)style resultClasses:(NSMutableArray *)classes includes:(NSMutableSet *)includes
 {
+    NSString *className = style.className;
+
+    [self includeClassName:className to:includes];
+
     NSMutableArray *entryStrings = [NSMutableArray new];
     for (ISAStyleEntry *styleEntry in style.entries) {
-        [entryStrings addObject:[self generateCodeForEntry:styleEntry]];
+        [entryStrings addObject:[NSString stringWithFormat:@"%@;", [self generateCodeForEntry:styleEntry]]];
     }
-    NSString *styleCode = [entryStrings componentsJoinedByString:@";\n        "];
+    NSString *styleCode = [entryStrings componentsJoinedByString:@"\n        "];
 
-    NSString *styleSelectors = [style.classSelectors.allObjects componentsJoinedByString:@":"];
+    NSMutableArray *selectors = [NSMutableArray new];
+    [selectors addObjectsFromArray:style.classSelectors.allObjects];
+
+    for (ISARuntimeSelector *runtimeSelector in style.runtimeSelectors) {
+        [selectors addObject:runtimeSelector.name];
+    }
+
+    NSString *styleSelectors = [selectors componentsJoinedByString:@":"];
     if (style.classSelectors.count == 0) {
         styleSelectors = @"nil";
     }
     else {
-        styleSelectors = [NSString stringWithFormat:@"@\"%@\"",styleSelectors];
+        styleSelectors = [NSString stringWithFormat:@"@\"%@\"", styleSelectors];
     }
 
-    NSString *classCode = [NSString stringWithFormat:@"    [%@ isa_appearanceForSelector:%@ withBlock:^(id object) {\n"
+
+    NSString *classCode = [NSString stringWithFormat:@"    [%@ isa_appearanceForSelector:%@ withBlock:^(%@ *object) {\n"
                                                              "        %@\n"
-                                                             "    }];\n", style.className, styleSelectors, styleCode];
+                                                             "    }];\n", className, styleSelectors, className, styleCode];
 
     [classes addObject:classCode];
+}
+
+- (void)includeClassName:(NSString *)className to:(NSMutableSet *)includes
+{
+    if (![className hasPrefix:@"UI"]) {
+        [includes addObject:[NSString stringWithFormat:@"#import \"%@.h\"", className]];
+    }
 }
 
 - (id)generateCodeForEntry:(ISAStyleEntry *)entry
@@ -88,6 +158,18 @@ static NSString *_codeTemplate = @""
 
 
     return codeEntry.codeString;
+}
+
+
+- (void)generateCodeWithPath:(NSString *)path
+{
+
+    NSString *include = [[path.lastPathComponent stringByDeletingPathExtension] stringByAppendingPathExtension:@"h"];
+
+
+    NSString *code = [self generateCodeWithIncludes:@[[NSString stringWithFormat:@"#import \"%@\"", include]]];
+    [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+
 }
 
 

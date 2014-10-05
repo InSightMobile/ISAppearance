@@ -4,7 +4,7 @@
 #import "UIImage+ISAObjectCreation.h"
 #import "UIImage+ISAColor.h"
 #import "ISAppearance+Private.h"
-#import "ISAValueConverter.h"
+#import "ISAValueConverting.h"
 
 
 @implementation UIImage (ISAObjectCreation)
@@ -16,7 +16,62 @@
 
 + (id)codeWithISANode:(id)node
 {
-    return [ISACode new];
+    ISACode *image = nil;
+    if ([node isKindOfClass:[NSString class]]) {
+        return [ISACode codeWithFormat:@"[UIImage imageNamed:%@]", [ISACode codeForString:node]];
+    }
+    else if ([node isKindOfClass:[NSArray class]]) {
+
+        image = [ISAValueConverter codeOfClass:self.class withISANode:node];
+        if (image) {
+            return [ISACode codeForObject:image];
+        }
+
+        if ([node count] == 0) {
+            return [UIImage new];
+        }
+
+        id firstParam = [node objectAtIndex:0];
+
+        ISACode *firstCodeParam = [ISACode codeForObject:firstParam];
+
+        if (firstCodeParam.codeClass == [UIColor class]) {
+            image = [ISACode codeWithClass:[UIImage class] format:@"[UIImage imageWithColor:%@]", firstCodeParam];
+        }
+        else if (firstCodeParam.codeClass == [NSString class]) {
+            image = [ISACode codeWithClass:[UIImage class] format:@"[UIImage imageNamed:%@]", firstCodeParam];
+        }
+
+        if ([node count] == 2) {
+
+            ISACode *secondCodeParam = [ISACode codeForObject:[node objectAtIndex:1]];
+            image = [ISACode codeWithClass:[UIImage class] format:@"[%@ resizableImageWithCapInsets:%@]", image, secondCodeParam];
+        }
+        else if ([node count] == 3) {
+
+            image = [ISACode codeWithClass:[UIImage class]
+                                    format:@"[%@ stretchableImageWithLeftCapWidth:%@ topCapHeight:%@]",
+                                           image,
+                                           [ISACode codeForObject:[node objectAtIndex:1]],
+                                           [ISACode codeForObject:[node objectAtIndex:2]]];
+
+        }
+        else if ([node count] == 5) {
+
+            image = [ISACode codeWithClass:[UIImage class]
+                                    format:@"[%@ resizableImageWithCapInsets:UIEdgeInsetsMake(%@,%@,%@,%@)]",
+                                           image,
+                                           [ISACode codeForObject:[node objectAtIndex:1]],
+                                           [ISACode codeForObject:[node objectAtIndex:2]],
+                                           [ISACode codeForObject:[node objectAtIndex:3]],
+                                           [ISACode codeForObject:[node objectAtIndex:4]]];
+        }
+    }
+    if (!image) {
+        image = [ISACode codeWithFormat:@"[UIImage new]"];
+    }
+    return image;
+
 }
 
 + (id)objectWithISANode:(id)node

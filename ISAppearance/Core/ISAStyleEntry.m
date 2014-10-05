@@ -253,12 +253,19 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
     }
 }
 
-#ifdef ISA_CODE_GENERATION
+//#ifdef ISA_CODE_GENERATION
 - (id)generateCode
 {
     return [ISACode codeWithInvokation:_invocation keyPath:_keyPath selector:_selector arguments:_arguments];
 }
-#endif
+
+- (ISACode*)codeWithTarget:(id)rootTarget
+{
+
+    return [ISACode codeWithInvokation:_invocation target:rootTarget keyPath:_keyPath selector:_selector arguments:_arguments];
+}
+
+//#endif
 
 + (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
 {

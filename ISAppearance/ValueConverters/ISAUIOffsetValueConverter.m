@@ -38,4 +38,15 @@
 }
 
 
+- (id)codeWithISANode:(id)node
+{
+    UIOffset offset = [[self objectWithISANode:node] UIOffsetValue];
+    return [ISACode codeWithTypeName:@"UIOffset" format:@"UIOffsetMake(%f,%f)",offset.horizontal,offset.vertical];
+}
+
+- (id)boxedCodeWithISANode:(id)node
+{
+    return [ISACode codeWithFormat:@"[NSValue valueWithUIOffset:%@]",[ISACode codeWithTypeName:@"UIOffset" object:node]];
+}
+
 @end

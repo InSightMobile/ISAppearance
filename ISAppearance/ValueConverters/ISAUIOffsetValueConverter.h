@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Ярослав. All rights reserved.
 //
 
-#import "ISAValueConverter.h"
+#import "ISAValueConverting.h"
 
 @interface ISAUIOffsetValueConverter : ISAValueConverter
 

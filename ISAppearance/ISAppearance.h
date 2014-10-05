@@ -26,6 +26,8 @@
 - (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error;
 
 
+- (BOOL)isConditionsPassed:(NSArray *)conditions;
+
 - (BOOL)applyAppearanceTo:(id)target1;
 
 - (BOOL)applyAppearanceTo:(id)target usingClassesString:(NSString *)classes;
@@ -63,6 +65,9 @@
 - (void)addAssetsFolder:(NSString *)folder;
 
 
-- (NSString *)generateCode;
+- (void)generateCodeWithPath:(NSString *)string;
+
+- (void)processGeneratedAppearance;
+
 
 @end

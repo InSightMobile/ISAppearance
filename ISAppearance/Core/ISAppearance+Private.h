@@ -25,4 +25,8 @@
 
 - (void)unregisterProxy:(ISAProxy *)proxy;
 
+- (void)clearCurrentClasses;
+
+@property(nonatomic, strong) NSMutableArray *UIAppearanceClasses;
+
 @end

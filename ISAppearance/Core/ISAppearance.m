@@ -1,6 +1,6 @@
 #import "ISAppearance.h"
 #import "ISYAML.h"
-#import "ISAValueConverter.h"
+#import "ISAValueConverting.h"
 #import "ISAStyleEntry.h"
 #import "ISAStyle.h"
 #import "UIViewController+isa_Injection.h"
@@ -9,6 +9,7 @@
 #import "UIDevice+isa_SystemInfo.h"
 #import "ISATagResolver.h"
 #import "NSObject+ISAppearance.h"
+#import "ISAppearance+CodeGeneration.h"
 
 static const float kAppearanceReloadDelay = 0.25;
 
@@ -22,6 +23,10 @@ static const float kAppearanceReloadDelay = 0.25;
 
 @property(nonatomic, strong) NSMutableDictionary* classStyles;
 @property(nonatomic, strong) NSMutableDictionary* objectStyles;
+
+@property(nonatomic, strong) NSMutableArray *UIAppearanceClasses;
+
+- (void)registerGeneratedStyles;
 @end
 
 
@@ -307,10 +312,15 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (BOOL)reloadAppearanceWithError:(NSError * __autoreleasing *)error
 {
+    [self clearCurrentClasses];
+    return [self processAppearanceWithError:error];
+}
+
+- (void)clearCurrentClasses
+{
     [_classStyles removeAllObjects];
     [_objectStyles removeAllObjects];
     [_classesCache removeAllObjects];
-    return [self processAppearanceWithError:error];
 }
 
 - (void)autoReloadAppearance
@@ -404,13 +414,15 @@ static const float kAppearanceReloadDelay = 0.25;
             return NO;
         }
     }
-    _isAppearanceLoaded = YES;
-    [self updateAppearanceRegisteredObjects];
+    if(!ISA_IS_CODE_GENERATION_MODE) {
+        _isAppearanceLoaded = YES;
+        [self updateAppearanceRegisteredObjects];
+    }
 
     return YES;
 }
 
-- (void)processUIAppearance:(NSDictionary *)definition
+- (void)processUIAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys
 {
     if (![definition isKindOfClass:[NSDictionary class]]) {
         return;
@@ -430,19 +442,21 @@ static const float kAppearanceReloadDelay = 0.25;
             }
         }
 
+        Class <UIAppearance> cl;
+        NSMutableArray *classes = nil;
 
         if ([key isKindOfClass:[NSString class]]) {
-            Class <UIAppearance> cl = NSClassFromString(key);
+            cl = NSClassFromString(key);
             if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
                 appearanceProxy = [cl appearance];
             }
         }
         else if ([key isKindOfClass:[NSArray class]]) {
             if ([key count]) {
-                Class <UIAppearance> cl = NSClassFromString(key[0]);
+                cl = NSClassFromString(key[0]);
                 if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
 
-                    NSMutableArray *classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
+                    classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
                     for (int j = 1; j < [key count]; j++) {
                         Class mcl = NSClassFromString(key[j]);
                         if (mcl) {
@@ -481,9 +495,26 @@ static const float kAppearanceReloadDelay = 0.25;
         }
 
         if (appearanceProxy) {
-            [self processUIAppearanceProxy:appearanceProxy withParams:obj];
+            NSMutableArray *entries = [self styleBlockWithParams:obj selectorParams:nil];
+            for (ISAStyleEntry *entry in entries) {
+                if (ISA_IS_CODE_GENERATION_MODE) {
+                    [self addUIAppearanceForClass:cl selectors:classes entry:entry baseKeys:baseKeys];
+                }
+                else {
+                    [entry invokeWithTarget:appearanceProxy];
+                }
+            }
         }
     }];
+}
+
+- (void)addUIAppearanceForClass:(Class <UIAppearance>)pClass selectors:(NSMutableArray *)selectors entry:(ISAStyleEntry *)entry baseKeys:(NSArray *)keys
+{
+    if(!self.UIAppearanceClasses) {
+        self.UIAppearanceClasses = [NSMutableArray new]; 
+    }
+
+    [self.UIAppearanceClasses addObject:@[pClass,selectors?:[NSNull null],entry,keys?:[NSNull null]]];
 }
 
 - (void)processDefinition:(NSDictionary *)definition forClass:(NSString *)class
@@ -518,14 +549,6 @@ static const float kAppearanceReloadDelay = 0.25;
     }];
 }
 
-- (void)processUIAppearanceProxy:(id)appearanceProxy withParams:(NSArray *)params
-{
-    NSMutableArray *entries = [self styleBlockWithParams:params selectorParams:nil ];
-    for (ISAStyleEntry *entry in entries) {
-        [entry invokeWithTarget:appearanceProxy];
-    }
-}
-
 - (BOOL)processISAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys error:(NSError * __autoreleasing *)pError
 {
     if ([definition isKindOfClass:[NSArray class]]) {
@@ -552,9 +575,9 @@ static const float kAppearanceReloadDelay = 0.25;
 
         if ([defkey isEqual:@"UIAppearance"]) {
             if ([self checkStyleConformance:keys passedSelectors:&passedKeys]) {
-                [self processUIAppearance:obj];
+                [self processUIAppearance:obj baseKeys:passedKeys];
                 if (_monitoring) {
-                    [self processISAppearance:obj baseKeys:nil error:NULL ];
+                    [self processISAppearance:obj baseKeys:passedKeys error:NULL ];
                 }
             }
             return;
@@ -611,9 +634,32 @@ static const float kAppearanceReloadDelay = 0.25;
     }
     return result;
 }
+- (BOOL)isConditionsPassed:(NSArray *)conditions
+{
+    for (NSString *condition in conditions) {
+        NSString *negativeCondition;
+        if ([condition hasPrefix:@"~"]) {
+            negativeCondition = [condition substringFromIndex:1];
+        }
+        else {
+            negativeCondition = [@"~" stringByAppendingString:condition];
+        }
+
+        if ([_globalStyles containsObject:negativeCondition]) {
+            return NO;
+        }
+    }
+    return YES;
+
+}
 
 - (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors
 {
+    if(ISA_IS_CODE_GENERATION_MODE) {
+        *pPassedSelectors = [selectors subarrayWithRange:NSMakeRange(1, selectors.count-1)];
+        return YES;
+    }
+
     NSMutableArray *passedSelectors = pPassedSelectors ? [NSMutableArray new] : nil;
     for (int i = 1; i < selectors.count; i++) {
 
@@ -1122,5 +1168,13 @@ static const float kAppearanceReloadDelay = 0.25;
 - (void)unregisterProxy:(ISAProxy *)proxy
 {
 
+}
+
+- (void)processGeneratedAppearance
+{
+    if([self respondsToSelector:@selector(registerGeneratedStyles)]) {
+        [self registerGeneratedStyles];
+    }
+    [self processAppearance];
 }
 @end

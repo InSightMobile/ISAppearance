@@ -30,7 +30,7 @@
 #ifdef ISA_CODE_GENERATION
 - (id)codeWithISANode:(id)node
 {
-    return [ISACode codeWithFormat:@"[(%@) CGColor]", node];
+    return [ISACode codeWithFormat:@"[%@ CGColor]", [UIColor codeWithISANode:node]];
 }
 #endif
 

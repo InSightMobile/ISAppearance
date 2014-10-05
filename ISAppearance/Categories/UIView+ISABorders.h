@@ -15,4 +15,6 @@
 - (void)setShadowColor:(UIColor *)color offset:(CGSize)offset radius:(CGFloat)radius;
 
 - (void)setLayerImage:(UIImage *)image;
+
+- (void)setSeparatorImage:(UIImage *)image;
 @end
