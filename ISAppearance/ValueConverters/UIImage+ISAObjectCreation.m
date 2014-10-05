@@ -18,7 +18,7 @@
 {
     ISACode *image = nil;
     if ([node isKindOfClass:[NSString class]]) {
-        return [ISACode codeWithFormat:@"[UIImage imageNamed:%@]", [ISACode codeForString:node]];
+        return [ISACode codeWithClass:[UIImage class] flags:ISACodeCached format:@"[UIImage imageNamed:%@]", [ISACode codeForString:node]];
     }
     else if ([node isKindOfClass:[NSArray class]]) {
 
@@ -39,7 +39,7 @@
             image = [ISACode codeWithClass:[UIImage class] format:@"[UIImage imageWithColor:%@]", firstCodeParam];
         }
         else if (firstCodeParam.codeClass == [NSString class]) {
-            image = [ISACode codeWithClass:[UIImage class] format:@"[UIImage imageNamed:%@]", firstCodeParam];
+            image = [ISACode codeWithClass:[UIImage class] flags:ISACodeCached format:@"[UIImage imageNamed:%@]", firstCodeParam];
         }
 
         if ([node count] == 2) {
@@ -50,6 +50,7 @@
         else if ([node count] == 3) {
 
             image = [ISACode codeWithClass:[UIImage class]
+                                     flags:image.flags
                                     format:@"[%@ stretchableImageWithLeftCapWidth:%@ topCapHeight:%@]",
                                            image,
                                            [ISACode codeForObject:[node objectAtIndex:1]],
@@ -59,6 +60,7 @@
         else if ([node count] == 5) {
 
             image = [ISACode codeWithClass:[UIImage class]
+                                     flags:image.flags
                                     format:@"[%@ resizableImageWithCapInsets:UIEdgeInsetsMake(%@,%@,%@,%@)]",
                                            image,
                                            [ISACode codeForObject:[node objectAtIndex:1]],

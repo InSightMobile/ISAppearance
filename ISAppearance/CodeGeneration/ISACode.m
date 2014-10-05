@@ -4,11 +4,14 @@
 #import <objc/runtime.h>
 #import "ISACode.h"
 #import "ISAValueConverting.h"
-#import "NSObject+ISAppearance.h"
+#import "ISACodeManager.h"
+#import "ISAStyleEntry.h"
+#import "ISACodeEntry.h"
 
 
 @interface ISACode ()
 @property(nonatomic, copy) NSString *typeName;
+@property(nonatomic, weak) ISACodeEntry *entry;
 @end
 
 @implementation ISACode
@@ -21,11 +24,23 @@
     va_list arguments;
     va_start(arguments, format);
 
-    NSString* codeString =  [[NSString alloc] initWithFormat:format arguments:arguments];
+    NSString *codeString = [[NSString alloc] initWithFormat:format arguments:arguments];
 
     va_end(arguments);
 
     return [[self alloc] initWithClass:codeClass codeString:codeString];
+}
+
++ (instancetype)codeWithClass:(Class)codeClass flags:(ISACodeFlags)flags format:(NSString *)format, ...
+{
+    va_list arguments;
+    va_start(arguments, format);
+
+    NSString *codeString = [[NSString alloc] initWithFormat:format arguments:arguments];
+
+    va_end(arguments);
+
+    return [[self alloc] initWithClass:codeClass typeName:nil flags:flags codeString:codeString];
 }
 
 + (instancetype)codeWithTypeName:(NSString *)typeName format:(NSString *)format, ...
@@ -33,7 +48,7 @@
     va_list arguments;
     va_start(arguments, format);
 
-    NSString* codeString =  [[NSString alloc] initWithFormat:format arguments:arguments];
+    NSString *codeString = [[NSString alloc] initWithFormat:format arguments:arguments];
 
     va_end(arguments);
 
@@ -45,32 +60,53 @@
     va_list arguments;
     va_start(arguments, format);
 
-    NSString* codeString =  [[NSString alloc] initWithFormat:format arguments:arguments];
+    NSString *codeString = [[NSString alloc] initWithFormat:format arguments:arguments];
 
     va_end(arguments);
-    
+
     return [[self alloc] initWithCodeString:codeString];
 }
 
-- (instancetype)initWithClass:(Class)cl codeString:(NSString *)codeString
+- (NSString *)codeString
 {
-    self = [super init];
-    if (self) {
-        self.codeString = codeString;
-        self.codeClass = cl;
-        self.typeName = NSStringFromClass(cl);
-    }
-    return self;
+    return self.entry ? [NSString stringWithFormat:@"<?%@?>", self.entry.name] : self.sourceString;
+}
+
+- (void)setCodeClass:(Class)codeClass
+{
+    _codeClass = codeClass;
+    [self registerCode];
 }
 
 - (instancetype)initWithTypeName:(NSString *)typeName codeString:(NSString *)codeString
 {
+    return [self initWithClass:nil typeName:typeName flags:0 codeString:codeString];
+}
+
+- (instancetype)initWithClass:(Class)cl typeName:(NSString *)typeName flags:(ISACodeFlags)flags codeString:(NSString *)codeString
+{
     self = [super init];
     if (self) {
-        self.codeString = codeString;
-        self.typeName =typeName;
+        _sourceString = codeString;
+        _codeClass = cl;
+        _typeName = typeName ?: (cl ?NSStringFromClass(cl) : nil);
+        _flags = flags;
+
+        [self registerCode];
     }
     return self;
+}
+
+- (instancetype)initWithClass:(Class)cl codeString:(NSString *)codeString
+{
+    return [self initWithClass:cl typeName:nil flags:0 codeString:codeString];
+}
+
+- (void)registerCode
+{
+    if(self.sourceString.length > 0 && !self.entry) {
+        self.entry = [[ISACodeManager instance] registerCode:self];
+    }
 }
 
 - (instancetype)initWithCodeString:(NSString *)codeString
@@ -78,18 +114,18 @@
     return [self initWithClass:nil codeString:codeString];
 }
 
-+ (NSString*)codeStringForObject:(id)argument
++ (NSString *)codeStringForObject:(id)argument
 {
-    if([argument isKindOfClass:[ISACode class]]) {
-        return [(ISACode *) argument codeString] ?: @"[? EMPTY]";
+    if ([argument isKindOfClass:[ISACode class]]) {
+        return [(ISACode *) argument sourceString] ?: @"[? EMPTY]";
     }
-    if([argument isKindOfClass:[NSString class]]) {
-        return [NSString stringWithFormat:@"@\"%@\"",argument];
+    if ([argument isKindOfClass:[NSString class]]) {
+        return [NSString stringWithFormat:@"@\"%@\"", argument];
     }
-    if([argument isKindOfClass:[NSNumber class]]) {
-        return [NSString stringWithFormat:@"%@",argument];
+    if ([argument isKindOfClass:[NSNumber class]]) {
+        return [NSString stringWithFormat:@"%@", argument];
     }
-    return [NSString stringWithFormat:@"[? %@]",argument];
+    return [NSString stringWithFormat:@"[? %@]", argument];
 }
 
 
@@ -97,6 +133,12 @@
 {
     return self.codeString ?: @"[? EMPTY]";
 }
+
+- (NSString *)debugDescription
+{
+    return self.sourceString;
+}
+
 
 + (ISACode *)codeForString:(NSString *)string
 {
@@ -108,7 +150,7 @@
 {
     ISACode *baseCode = nil;
 
-    if([value isKindOfClass:[ISACode class]]) {
+    if ([value isKindOfClass:[ISACode class]]) {
 
         baseCode = value;
     }
@@ -116,7 +158,7 @@
         return [[ISACode alloc] initWithClass:pClass codeString:[ISACode codeStringForObject:value]];
     }
 
-    if(!baseCode.codeClass) {
+    if (!baseCode.codeClass) {
         baseCode.codeClass = pClass;
     }
     return baseCode;
@@ -126,14 +168,14 @@
 {
     ISACode *baseCode = nil;
 
-    if([value isKindOfClass:[ISACode class]]) {
+    if ([value isKindOfClass:[ISACode class]]) {
         baseCode = value;
     }
     else {
         return [[ISACode alloc] initWithTypeName:name codeString:[ISACode codeStringForObject:value]];
     }
 
-    if(!baseCode.typeName) {
+    if (!baseCode.typeName) {
         baseCode.typeName = name;
     }
     return baseCode;
@@ -144,16 +186,16 @@
 {
     ISACode *code = [self codeForObject:argument];
 
-    if(code.codeClass == [NSNumber class]) {
-        code = [ISACode codeWithFormat:@"@(%@)",code];
+    if (code.codeClass == [NSNumber class]) {
+        code = [ISACode codeWithFormat:@"@(%@)", code];
     }
 
-    if(!code.codeClass && code.typeName.length>0) {
+    if (!code.codeClass && code.typeName.length > 0) {
 
-        id<ISAValueConverting> converter = [ISAValueConverter converterNamed:code.typeName];
+        id <ISAValueConverting> converter = [ISAValueConverter converterNamed:code.typeName];
 
         ISACode *boxedCode = [converter boxedCodeWithISANode:code];
-        if(boxedCode) {
+        if (boxedCode) {
             code = boxedCode;
         }
     }
@@ -164,19 +206,19 @@
 
 + (ISACode *)codeForObject:(id)argument
 {
-    if([argument isKindOfClass:[ISACode class]]) {
+    if ([argument isKindOfClass:[ISACode class]]) {
         return argument;
     }
-    else if([argument isKindOfClass:[NSString class]]) {
+    else if ([argument isKindOfClass:[NSString class]]) {
         return [ISACode codeForString:argument];
     }
-    else if([argument isKindOfClass:[NSNumber class]]) {
+    else if ([argument isKindOfClass:[NSNumber class]]) {
         return [ISACode codeForNumber:argument];
     }
-    else if([argument isKindOfClass:[NSArray class]]) {
+    else if ([argument isKindOfClass:[NSArray class]]) {
         return [ISACode codeForArray:argument];
     }
-    else if([argument isKindOfClass:[NSDictionary class]]) {
+    else if ([argument isKindOfClass:[NSDictionary class]]) {
         return [ISACode codeForDictionary:argument];
     }
     return [[ISACode alloc] initWithClass:[argument class] codeString:[ISACode codeStringForObject:argument]];
@@ -187,10 +229,10 @@
     NSMutableArray *code = [NSMutableArray new];
 
     [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [code addObject:[ISACode codeWithFormat:@"%@: %@",[ISACode codeForBoxedObject:key],[ISACode codeForBoxedObject:obj]].codeString];
+        [code addObject:[ISACode codeWithFormat:@"%@: %@", [ISACode codeForBoxedObject:key], [ISACode codeForBoxedObject:obj]].sourceString];
     }];
 
-    return [ISACode codeWithClass:[NSDictionary class] format:@"@{%@}",[code componentsJoinedByString:@","]];
+    return [ISACode codeWithClass:[NSDictionary class] format:@"@{%@}", [code componentsJoinedByString:@","]];
 }
 
 + (ISACode *)codeForArray:(NSArray *)array
@@ -198,10 +240,10 @@
     NSMutableArray *code = [NSMutableArray new];
 
     for (id object in array) {
-        [code addObject:[ISACode codeForBoxedObject:object].codeString];
+        [code addObject:[ISACode codeForBoxedObject:object].sourceString];
     }
 
-    return [ISACode codeWithClass:[NSArray class] format:@"@[%@]",[code componentsJoinedByString:@","]];
+    return [ISACode codeWithClass:[NSArray class] format:@"@[%@]", [code componentsJoinedByString:@","]];
 }
 
 + (ISACode *)codeForNumber:(NSNumber *)argument
@@ -219,15 +261,15 @@
 {
     ISACode *targetCode = nil;
 
-    if(class_isMetaClass(object_getClass(target))) {
+    if (class_isMetaClass(object_getClass(target))) {
         targetCode = [ISACode codeWithFormat:NSStringFromClass(target)];
     }
     else {
         targetCode = [ISACode codeForObject:target];
     }
 
-    if(path) {
-        targetCode = [ISACode codeWithFormat:@"%@.%@",targetCode,path];
+    if (path) {
+        targetCode = [ISACode codeWithFormat:@"%@.%@", targetCode, path];
     }
 
 
@@ -245,11 +287,11 @@
 
         ISACode *argument = argumentsCode[i];
 
-        [methodCode addObject:[NSString stringWithFormat:@"%@:",selectorComponents[i]]];
+        [methodCode addObject:[NSString stringWithFormat:@"%@:", selectorComponents[i]]];
         [methodCode addObject:argument.codeString];
     }
 
-    return [self codeWithFormat:@"[%@ %@]",targetCode,[methodCode componentsJoinedByString:@" "]];
+    return [self codeWithFormat:@"[%@ %@]", targetCode, [methodCode componentsJoinedByString:@" "]];
 }
 
 + (id)codeWithInvokation:(NSInvocation *)invocation keyPath:(NSString *)path selector:(SEL)sel arguments:(NSArray *)arguments

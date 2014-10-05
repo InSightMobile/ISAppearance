@@ -128,7 +128,10 @@
             }
         }
     }
-    return result;
+    if(result) {
+        return [ISACode fixCodeForClass:pClass value:result];
+    }
+    return nil;
 }
 
 + (id)objectOfClass:(Class)pClass withISANode:(id)node

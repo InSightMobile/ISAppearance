@@ -3,16 +3,32 @@
 
 #import <Foundation/Foundation.h>
 
+@class ISACodeEntry;
+@class ISACode;
+
+typedef NS_OPTIONS(NSInteger , ISACodeFlags )
+{
+    ISACodeCached = 1 << 0,
+    ISACodeForceInline = 1 << 1,
+
+};
+
 
 @interface ISACode : NSObject
 
-@property(nonatomic, copy) NSString *codeString;
+@property(nonatomic, readonly) NSString *codeString;
+
+@property(nonatomic, copy) NSString *sourceString;
 
 @property(nonatomic, strong) Class codeClass;
+
+@property(nonatomic) ISACodeFlags flags;
 
 - (instancetype)initWithTypeName:(NSString *)typeName codeString:(NSString *)codeString;
 
 + (instancetype)codeWithClass:(Class)codeClass format:(NSString *)format, ... NS_FORMAT_FUNCTION(2,3);
+
++ (instancetype)codeWithClass:(Class)codeClass flags:(ISACodeFlags)flags format:(NSString *)format, ...;
 
 + (instancetype)codeWithTypeName:(NSString *)typeName format:(NSString *)format, ...;
 

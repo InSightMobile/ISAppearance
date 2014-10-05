@@ -7,6 +7,7 @@
 #import "ISAStyle.h"
 #import "ISACode.h"
 #import "ISARuntimeSelector.h"
+#import "ISACodeManager.h"
 
 static BOOL _codeGenerationMode;
 
@@ -17,6 +18,7 @@ static NSString *_codeTemplate = @""
         "@end\n\n"
         "@implementation ISAppearance(GeneratedStyles)\n\n"
         "- (void)registerGeneratedStyles {\n\n"
+        "%@\n\n"
         "%@\n\n"
         "}\n\n"
         "@end";
@@ -33,6 +35,9 @@ static NSString *_codeTemplate = @""
     _codeGenerationMode = YES;
     [self clearCurrentClasses];
     [self processAppearance];
+
+    ISACodeManager *manager = [ISACodeManager instance];
+
 
     NSMutableArray *classes = [NSMutableArray new];
     NSMutableSet *includes = [NSMutableSet setWithArray:userIncludes];
@@ -68,14 +73,14 @@ static NSString *_codeTemplate = @""
 
         ISACode *code = [style codeWithTarget:target];
 
-        if(baseKeys.count)  {
+        if (baseKeys.count) {
 
-            code = [ISACode codeWithFormat:@"if([self isConditionsPassed:%@]){%@;}",[ISACode codeForArray:baseKeys],code];
+            code = [ISACode codeWithFormat:@"if([self isConditionsPassed:%@]){%@;}", [ISACode codeForArray:baseKeys], code];
 
 
         }
 
-        [classes addObject:[NSString stringWithFormat:@"    %@;\n", code.codeString]];
+        [classes addObject:[NSString stringWithFormat:@"    %@;\n", code.sourceString]];
 
     }
 
@@ -98,10 +103,17 @@ static NSString *_codeTemplate = @""
         }];
     }];
 
+
+    NSString *sourceCode = [classes componentsJoinedByString:@"\n"];
+
+    NSString *generatedCode = [manager generateCodeWithSource:sourceCode];
+
+
     NSString *code = [NSString stringWithFormat:
             _codeTemplate,
             [includes.allObjects componentsJoinedByString:@"\n"],
-            [classes componentsJoinedByString:@"\n"]];
+            [manager.definitions componentsJoinedByString:@"\n\n"],
+                    generatedCode];
 
 
     _codeGenerationMode = NO;
@@ -156,8 +168,7 @@ static NSString *_codeTemplate = @""
 {
     ISACode *codeEntry = [entry generateCode];
 
-
-    return codeEntry.codeString;
+    return codeEntry.sourceString;
 }
 
 
