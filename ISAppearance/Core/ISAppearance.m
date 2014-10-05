@@ -910,11 +910,13 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 
     if(styles.count) {
-        [target isa_willApplyAppearance];
-        for (ISAStyle *style in styles) {
-            [style applyToTarget:target];
+        @autoreleasepool {
+            [target isa_willApplyAppearance];
+            for (ISAStyle *style in styles) {
+                [style applyToTarget:target];
+            }
+            [target isa_didApplyAppearance];
         }
-        [target isa_didApplyAppearance];
     }
 
     return YES;

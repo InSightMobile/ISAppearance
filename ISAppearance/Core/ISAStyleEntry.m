@@ -223,7 +223,6 @@ static SEL SelectorForPropertySetterFromString(NSString *string) {
         argumentPos++;
     }
     free(buffer);
-    [invocation retainArguments];
     _invocation = invocation;
     return [self safeInvokeWithTarget:target];
 }
