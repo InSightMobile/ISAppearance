@@ -4,9 +4,6 @@
 #import <Foundation/Foundation.h>
 #import "ISAppearance.h"
 
-#define ISA_CODE_GENERATION
-
-
 #ifdef ISA_CODE_GENERATION
 #define ISA_IS_CODE_GENERATION_MODE ([ISAppearance isCodeGeneration])
 #else
