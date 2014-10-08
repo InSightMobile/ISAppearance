@@ -13,8 +13,6 @@
 @implementation UIColor (ISAObjectCreation)
 
 
-
-
 + (id)colorWithString:(NSString *)node
 {
     // try named colors
@@ -41,11 +39,10 @@
 + (id)codeWithISANode:(id)node
 {
     UIColor *color = [self objectWithISANode:node];
-    CGFloat r,g,b,a;
+    CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
-    return [ISACode codeWithClass:[UIColor class] format:@"[UIColor colorWithRed:%f green:%f blue:%f alpha:%f]",r,g,b,a];
+    return [ISACode codeWithClass:[UIColor class] format:@"[UIColor colorWithRed:%f green:%f blue:%f alpha:%f]", r, g, b, a];
 }
-
 
 
 + (id)objectWithISANode:(id)node
@@ -88,11 +85,9 @@
                     if (cl) {
                         return [cl colorWithAlphaComponent:[node[1 + offset] floatValue] * mod];
                     }
-                    else {
-                        return [UIColor colorWithWhite:[[node objectAtIndex:0 + offset] floatValue] * mod
-                                                 alpha:[[node objectAtIndex:1 + offset] floatValue] * mod];
-                    }
                 }
+                return [UIColor colorWithWhite:[[node objectAtIndex:0 + offset] floatValue] * mod
+                                         alpha:[[node objectAtIndex:1 + offset] floatValue] * mod];
             }
         }
         else {
