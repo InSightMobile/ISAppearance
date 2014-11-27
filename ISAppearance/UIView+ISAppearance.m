@@ -28,14 +28,14 @@
 - (void)isa_addAppearanceClass:(NSString *)className
 {
     id ret = [self.isa_appearanceClasses mutableCopy];
-    [ret removeObject:className];
+    [ret addObject:className];
     [self isa_setAppearanceClasses:ret];
 }
 
 - (void)isa_removeAppearanceClass:(NSString *)className
 {
     id ret = [self.isa_appearanceClasses mutableCopy];
-    [ret addObject:className];
+    [ret removeObject:className];
     [self isa_setAppearanceClasses:ret];
 }
 
