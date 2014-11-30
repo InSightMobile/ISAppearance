@@ -47,9 +47,7 @@ static void *isaIsApplied = 0;
     }
     objc_setAssociatedObject(self, &isaClasses, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
-    if (self.isa_isAppearanceApplied) {
-        [self isa_applyAppearance];
-    }
+    [self isa_updateAppearance];
 }
 
 - (NSString *)isaClass
@@ -57,14 +55,14 @@ static void *isaIsApplied = 0;
     return objc_getAssociatedObject(self, &isaClass);
 }
 
-- (void)isa_setAppearanceApplied:(NSNumber *)value
+- (void)isa_setAppearanceApplied:(BOOL)value
 {
-    objc_setAssociatedObject(self, &isaIsApplied, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &isaIsApplied, @(value), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)isa_isAppearanceApplied
+- (BOOL)isa_isAppearanceApplied
 {
-    return objc_getAssociatedObject(self, &isaIsApplied);
+    return [objc_getAssociatedObject(self, &isaIsApplied) boolValue];
 }
 
 

@@ -7,6 +7,10 @@
 
 - (void)isa_applyAppearance;
 
+- (void)isa_applyAppearanceIfNeeded;
+
+- (void)isa_updateAppearance;
+
 - (void)isa_applyAppearanceWithSubviews:(BOOL)subviews;
 
 - (void)isa_addAppearanceClass:(NSString *)className;

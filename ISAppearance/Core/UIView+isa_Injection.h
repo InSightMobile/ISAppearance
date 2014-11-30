@@ -13,8 +13,8 @@
 
 - (void)isa_setAppearanceClasses:(NSSet *)value;
 
-- (void)isa_setAppearanceApplied:(NSNumber *)value;
+- (void)isa_setAppearanceApplied:(BOOL)value;
 
-- (NSNumber *)isa_isAppearanceApplied;
+- (BOOL)isa_isAppearanceApplied;
 
 @end
