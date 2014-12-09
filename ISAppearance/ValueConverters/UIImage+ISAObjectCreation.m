@@ -45,7 +45,19 @@
         if ([node count] == 2) {
 
             ISACode *secondCodeParam = [ISACode codeForObject:[node objectAtIndex:1]];
-            image = [ISACode codeWithClass:[UIImage class] format:@"[%@ resizableImageWithCapInsets:%@]", image, secondCodeParam];
+
+            if(secondCodeParam.codeClass == [NSString class]) {
+                NSString *modeName = secondCodeParam.sourceString;
+                if([modeName isEqualToString:@"original"]) {
+                    image = [ISACode codeWithClass:[UIImage class] format:@"[%@ imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]]", image];
+                }
+                else if([modeName isEqualToString:@"template"]) {
+                    image = [ISACode codeWithClass:[UIImage class] format:@"[%@ imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]]", image];
+                }
+            }
+            else {
+                image = [ISACode codeWithClass:[UIImage class] format:@"[%@ resizableImageWithCapInsets:%@]", image, secondCodeParam];
+            }
         }
         else if ([node count] == 3) {
 
@@ -110,6 +122,15 @@
         if ([node count] == 2) {
 
             id mode = [node objectAtIndex:1];
+            if ([mode isKindOfClass:[NSString class]]) {
+                NSString *modeName = mode;
+                if([modeName isEqualToString:@"original"]) {
+                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                }
+                else if([modeName isEqualToString:@"template"]) {
+                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                }
+            }
             if ([mode isKindOfClass:[NSValue class]]) {
 
                 UIEdgeInsets insets;
