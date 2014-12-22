@@ -10,6 +10,8 @@
 
 + (BOOL)isa_isPhone5;
 
++ (BOOL)isa_isIPhone4InchOrBigger;
+
 + (BOOL)isa_isRetina;
 
 + (BOOL)isa_isIOS7;

@@ -26,6 +26,15 @@
     return result > 0;
 }
 
++ (BOOL)isa_isIPhone4InchOrBigger
+{
+    static int result = -1;
+    if(result<0) {
+        result = !self.isa_isPad && [[UIScreen mainScreen] bounds].size.height >= 568;
+    }
+    return result > 0;
+}
+
 + (BOOL)isa_isRetina
 {
     static int result = -1;
