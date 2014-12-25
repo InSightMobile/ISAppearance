@@ -70,5 +70,4 @@
 
 - (void)processGeneratedAppearance;
 
-
 @end

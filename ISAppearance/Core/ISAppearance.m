@@ -407,6 +407,8 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error
 {
+    [ISAppearance prepareAppearance];
+    
     if (![self reloadAppearanceSourcesWithError:error]) {
 
         return NO;
@@ -426,6 +428,13 @@ static const float kAppearanceReloadDelay = 0.25;
     _isAppearanceLoaded = YES;
     [self updateAppearanceRegisteredObjects];
     return YES;
+}
+
+- (Class)classForKey:(NSString*)key {
+    Class cl = NSClassFromString(key);
+    
+    
+    return cl;
 }
 
 - (void)processUIAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys
@@ -452,25 +461,23 @@ static const float kAppearanceReloadDelay = 0.25;
         NSMutableArray *classes = nil;
 
         if ([key isKindOfClass:[NSString class]]) {
-            cl = NSClassFromString(key);
+            cl = [self classForKey:key];
             if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
                 appearanceProxy = [cl appearance];
             }
         }
         else if ([key isKindOfClass:[NSArray class]]) {
             if ([key count]) {
-                cl = NSClassFromString(key[0]);
+                cl = [self classForKey:key[0]];
                 if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
 
                     classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
                     for (int j = 1; j < [key count]; j++) {
-                        Class mcl = NSClassFromString(key[j]);
+                        Class mcl = [self classForKey:key[j]];
                         if (mcl) {
                             [classes addObject:mcl];
                         }
                     }
-
-                    [UINavigationBar appearance];
 
                     switch (classes.count) {
                         case 0:
@@ -700,7 +707,7 @@ static const float kAppearanceReloadDelay = 0.25;
 - (void)addParams:(NSArray *)params toSelector:(NSArray *)components
 {
     NSString *className = components[0];
-    Class baseClass = NSClassFromString(className);
+    Class baseClass = [self classForKey:className];
     if (!baseClass) {
         return;
     }

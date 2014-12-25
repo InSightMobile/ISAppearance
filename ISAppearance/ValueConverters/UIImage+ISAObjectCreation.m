@@ -32,7 +32,7 @@
         }
 
         if ([node count] == 0) {
-            return [UIImage new];
+            return [ISACode codeWithClass:[UIImage class] format:@"[UIImage new]"];
         }
 
         id firstParam = [node objectAtIndex:0];
