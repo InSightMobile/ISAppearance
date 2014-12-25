@@ -36,12 +36,6 @@
 #define COCOAPODS_VERSION_MINOR_ISAppearance_ISYAML 1
 #define COCOAPODS_VERSION_PATCH_ISAppearance_ISYAML 1
 
-// ISAppearance/ImageManipulation
-#define COCOAPODS_POD_AVAILABLE_ISAppearance_ImageManipulation
-#define COCOAPODS_VERSION_MAJOR_ISAppearance_ImageManipulation 0
-#define COCOAPODS_VERSION_MINOR_ISAppearance_ImageManipulation 1
-#define COCOAPODS_VERSION_PATCH_ISAppearance_ImageManipulation 1
-
 // ISAppearance/ValueConverters
 #define COCOAPODS_POD_AVAILABLE_ISAppearance_ValueConverters
 #define COCOAPODS_VERSION_MAJOR_ISAppearance_ValueConverters 0

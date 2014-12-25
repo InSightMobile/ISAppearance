@@ -1,1 +1,1 @@
-../../../../../ISAppearance/Categories/ImageManipulation/UIImage+ISAResize.h
+../../../../../ISAppearance/Categories/UIImage+ISAResize.h

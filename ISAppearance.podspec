@@ -36,10 +36,6 @@ Pod::Spec.new do |s|
     ss.source_files = 'ISAppearance/Categories/*.{h,m}'
   end  
 
-  s.subspec 'ImageManipulation' do |ss|
-    ss.source_files = 'ISAppearance/Categories/ImageManipulation/*.{h,m}'
-  end  
-
   s.subspec 'ISYAML' do |ss|
     ss.source_files = 'YAML/ISYAML/*.{h,m}'
     ss.dependency 'LibYAML', '~> 0.1.4'

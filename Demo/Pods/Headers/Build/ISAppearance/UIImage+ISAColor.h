@@ -1,1 +1,1 @@
-../../../../../ISAppearance/Categories/ImageManipulation/UIImage+ISAColor.h
+../../../../../ISAppearance/Categories/UIImage+ISAColor.h

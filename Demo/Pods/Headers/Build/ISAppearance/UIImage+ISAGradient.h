@@ -1,1 +1,1 @@
-../../../../../ISAppearance/Categories/ImageManipulation/UIImage+ISAGradient.h
+../../../../../ISAppearance/Categories/UIImage+ISAGradient.h

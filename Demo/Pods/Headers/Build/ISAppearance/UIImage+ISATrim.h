@@ -1,1 +1,1 @@
-../../../../../ISAppearance/Categories/ImageManipulation/UIImage+ISATrim.h
+../../../../../ISAppearance/Categories/UIImage+ISATrim.h
