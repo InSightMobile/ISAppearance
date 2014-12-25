@@ -8,6 +8,10 @@
 
 #import "ISACGSizeValueConverter.h"
 
+#if ISA_CODE_GENERATION
+#import "ISAValueConverter+CodeGeneration.h"
+#endif
+
 @implementation ISACGSizeValueConverter
 
 - (id)objectWithISANode:(id)node
@@ -37,10 +41,12 @@
     return [NSValue value:&size withObjCType:@encode(CGSize)];
 }
 
+#if ISA_CODE_GENERATION
 - (id)codeWithISANode:(id)node
 {
     CGSize size = [[self objectWithISANode:node] CGSizeValue];
     return [ISACode codeWithFormat:@"CGSizeMake(%f,%f)", size.width, size.height];
 }
+#endif
 
 @end

@@ -60,46 +60,46 @@
     NSMutableDictionary *mutableBuiltInTags = [NSMutableDictionary dictionary];
 
     // !!int: tag:yaml.org,2002:int ( http://yaml.org/type/int.html )
-    ISYAMLRegexTag *intTag = [[ISYAMLRegexTag alloc] initWithURI:YKIntegerTagDeclaration delegate:self];
+    ISYAMLRegexTag *intTag = [[ISYAMLRegexTag alloc] initWithURI:ISYAMLIntegerTagDeclaration delegate:self];
     [intTag addRegexDeclaration:YAML_INT_BINARY_REGEX hint:[NSNumber numberWithInt:2]];
     [intTag addRegexDeclaration:YAML_INT_OCTAL_REGEX hint:[NSNumber numberWithInt:8]];
     [intTag addRegexDeclaration:YAML_INT_DECIMAL_REGEX hint:[NSNumber numberWithInt:10]];
     [intTag addRegexDeclaration:YAML_INT_HEX_REGEX hint:[NSNumber numberWithInt:16]];
     [intTag addRegexDeclaration:YAML_INT_SEXAGESIMAL_REGEX hint:[NSNumber numberWithInt:60]];
-    [mutableBuiltInTags setObject:intTag forKey:YKIntegerTagDeclaration];
+    [mutableBuiltInTags setObject:intTag forKey:ISYAMLIntegerTagDeclaration];
 
     // !!float: tag:yaml.org,2002:float ( http://yaml.org/type/float.html )
-    ISYAMLRegexTag *floatTag = [[ISYAMLRegexTag alloc] initWithURI:YKFloatTagDeclaration delegate:self];
+    ISYAMLRegexTag *floatTag = [[ISYAMLRegexTag alloc] initWithURI:ISYAMLFloatTagDeclaration delegate:self];
     [floatTag addRegexDeclaration:YAML_FLOAT_DECIMAL_REGEX hint:[NSNumber numberWithInt:10]];
     [floatTag addRegexDeclaration:YAML_FLOAT_SEXAGESIMAL_REGEX hint:[NSNumber numberWithInt:60]];
     [floatTag addRegexDeclaration:YAML_FLOAT_INFINITY_REGEX hint:[NSNumber numberWithInt:-1]];
     [floatTag addRegexDeclaration:YAML_FLOAT_NAN_REGEX hint:[NSDecimalNumber notANumber]];
-    [mutableBuiltInTags setObject:floatTag forKey:YKFloatTagDeclaration];
+    [mutableBuiltInTags setObject:floatTag forKey:ISYAMLFloatTagDeclaration];
 
     // !!bool: tag:yaml.org,2002:bool ( http://yaml.org/type/bool.html )
-    ISYAMLRegexTag *boolTag = [[ISYAMLRegexTag alloc] initWithURI:YKBooleanTagDeclaration delegate:self];
+    ISYAMLRegexTag *boolTag = [[ISYAMLRegexTag alloc] initWithURI:ISYAMLBooleanTagDeclaration delegate:self];
     [boolTag addRegexDeclaration:YAML_BOOL_TRUE_REGEX hint:(id) kCFBooleanTrue];
     [boolTag addRegexDeclaration:YAML_BOOL_FALSE_REGEX hint:(id) kCFBooleanFalse];
-    [mutableBuiltInTags setObject:boolTag forKey:YKBooleanTagDeclaration];
+    [mutableBuiltInTags setObject:boolTag forKey:ISYAMLBooleanTagDeclaration];
 
     // !!null: tag:yaml.org,2002:null ( http://yaml.org/type/null.html )
-    ISYAMLRegexTag *nullTag = [[ISYAMLRegexTag alloc] initWithURI:YKNullTagDeclaration delegate:self];
+    ISYAMLRegexTag *nullTag = [[ISYAMLRegexTag alloc] initWithURI:ISYAMLNullTagDeclaration delegate:self];
     [nullTag addRegexDeclaration:YAML_NULL_REGEX hint:[NSNull null]];
-    [mutableBuiltInTags setObject:nullTag forKey:YKNullTagDeclaration];
+    [mutableBuiltInTags setObject:nullTag forKey:ISYAMLNullTagDeclaration];
 
     // !!timestamp: tag:yaml.org,2002:timestamp ( http://yaml.org/type/timestamp.html )
-    ISYAMLRegexTag *timestampTag = [[ISYAMLRegexTag alloc] initWithURI:YKTimeStampTagDeclaration delegate:self];
+    ISYAMLRegexTag *timestampTag = [[ISYAMLRegexTag alloc] initWithURI:ISYAMLTimeStampTagDeclaration delegate:self];
     [timestampTag addRegexDeclaration:YAML_TIMESTAMP_YMD_REGEX hint:(id) kCFBooleanTrue];
     [timestampTag addRegexDeclaration:YAML_TIMESTAMP_YMDTZ_REGEX hint:(id) kCFBooleanFalse];
-    [mutableBuiltInTags setObject:timestampTag forKey:YKTimeStampTagDeclaration];
+    [mutableBuiltInTags setObject:timestampTag forKey:ISYAMLTimeStampTagDeclaration];
 
     // !!str: tag:yaml.org,2002:str ( http://yaml.org/type/str.html )
-    ISYAMLTag *stringTag = [[ISYAMLTag alloc] initWithURI:YKStringTagDeclaration delegate:self];
-    [mutableBuiltInTags setObject:stringTag forKey:YKStringTagDeclaration];
+    ISYAMLTag *stringTag = [[ISYAMLTag alloc] initWithURI:ISYAMLStringTagDeclaration delegate:self];
+    [mutableBuiltInTags setObject:stringTag forKey:ISYAMLStringTagDeclaration];
 
     // !!binary: tag:yaml.org,2002:binary ( http://yaml.org/type/binary.html )
-    ISYAMLTag *binaryTag = [[ISYAMLTag alloc] initWithURI:YKBinaryTagDeclaration delegate:self];
-    [mutableBuiltInTags setObject:binaryTag forKey:YKBinaryTagDeclaration];
+    ISYAMLTag *binaryTag = [[ISYAMLTag alloc] initWithURI:ISYAMLBinaryTagDeclaration delegate:self];
+    [mutableBuiltInTags setObject:binaryTag forKey:ISYAMLBinaryTagDeclaration];
 
     _tagsByName = [[NSDictionary alloc] initWithDictionary:mutableBuiltInTags];
 
@@ -139,7 +139,7 @@
     id hint = [extraInfo valueForKey:@"hint"];
     NSArray *components = [extraInfo valueForKey:@"components"];
 
-    if (tag == [_tagsByName valueForKey:YKIntegerTagDeclaration]) {
+    if (tag == [_tagsByName valueForKey:ISYAMLIntegerTagDeclaration]) {
         int base = [hint intValue];
         if (base == 2) {
             return [NSNumber numberWithInteger:
@@ -157,7 +157,7 @@
             return [NSNumber numberWithInteger:[stringValue isyaml_intValueFromBase:base]];
         }
     }
-    else if (tag == [_tagsByName valueForKey:YKFloatTagDeclaration]) {
+    else if (tag == [_tagsByName valueForKey:ISYAMLFloatTagDeclaration]) {
         int base = [hint intValue];
         double resultValue = 0;
         switch (base) {
@@ -185,11 +185,11 @@
                 break;
         }
     }
-    else if (tag == [_tagsByName valueForKey:YKBooleanTagDeclaration] ||
-            tag == [_tagsByName valueForKey:YKNullTagDeclaration]) {
+    else if (tag == [_tagsByName valueForKey:ISYAMLBooleanTagDeclaration] ||
+            tag == [_tagsByName valueForKey:ISYAMLNullTagDeclaration]) {
         return hint;
     }
-    else if (tag == [_tagsByName valueForKey:YKTimeStampTagDeclaration]) {
+    else if (tag == [_tagsByName valueForKey:ISYAMLTimeStampTagDeclaration]) {
         // Timestamp
         if (hint == (id) kCFBooleanTrue) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -239,13 +239,13 @@
 - (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
 {
     if (!castingTag) {
-        if (tag == [_tagsByName valueForKey:YKStringTagDeclaration]) {
+        if (tag == [_tagsByName valueForKey:ISYAMLStringTagDeclaration]) {
                     return value;
                 }
-        else if (tag == [_tagsByName valueForKey:YKNullTagDeclaration]) {
+        else if (tag == [_tagsByName valueForKey:ISYAMLNullTagDeclaration]) {
                     return [NSNull null];
                 }
-        else if (tag == [_tagsByName valueForKey:YKBinaryTagDeclaration]) {
+        else if (tag == [_tagsByName valueForKey:ISYAMLBinaryTagDeclaration]) {
                     return [NSData isyaml_dataFromBase64String:value];
         }
     }
@@ -255,8 +255,8 @@
 - (id)tag:(ISYAMLTag *)tag castValue:(id)value toTag:(ISYAMLTag *)castingTag
 {
     // Try to cast results to an 'Integer'
-    if (castingTag == [_tagsByName valueForKey:YKIntegerTagDeclaration]) {
-        if (tag == [_tagsByName valueForKey:YKNullTagDeclaration]) {
+    if (castingTag == [_tagsByName valueForKey:ISYAMLIntegerTagDeclaration]) {
+        if (tag == [_tagsByName valueForKey:ISYAMLNullTagDeclaration]) {
                     return [NSNumber numberWithInt:0];
         }
         if ([value isKindOfClass:[NSNumber class]]) {
@@ -264,7 +264,7 @@
         }
         // Try to cast results to a 'Float'
     }
-    else if (castingTag == [_tagsByName valueForKey:YKFloatTagDeclaration]) {
+    else if (castingTag == [_tagsByName valueForKey:ISYAMLFloatTagDeclaration]) {
         if (value == [NSNull null]) {
                     return [NSNumber numberWithDouble:0.0];
         }
@@ -273,7 +273,7 @@
         }
         // Try to cast results to a 'Boolean'
     }
-    else if (castingTag == [_tagsByName valueForKey:YKBooleanTagDeclaration]) {
+    else if (castingTag == [_tagsByName valueForKey:ISYAMLBooleanTagDeclaration]) {
         if (value == [NSNull null]) {
                     return (id) kCFBooleanFalse;
         }

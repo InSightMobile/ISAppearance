@@ -5,7 +5,9 @@
 #import "UIColor+ISAObjectCreation.h"
 #import "ISAppearance.h"
 #import "NSObject+ISAppearance.h"
-
+#if ISA_CODE_GENERATION
+#import "ISAValueConverter+CodeGeneration.h"
+#endif
 
 
 @implementation ISACGColorValueConverter
@@ -27,7 +29,7 @@
     return invocation;
 }
 
-#ifdef ISA_CODE_GENERATION
+#if ISA_CODE_GENERATION
 - (id)codeWithISANode:(id)node
 {
     return [ISACode codeWithFormat:@"[%@ CGColor]", [UIColor codeWithISANode:node]];

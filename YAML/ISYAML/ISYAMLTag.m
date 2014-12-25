@@ -7,7 +7,6 @@
 //
 
 #import "ISYAMLTag.h"
-//#import "RegexKitLite.h"
 #import "ISYAMLUnknownNode.h"
 
 @interface ISYAMLTag (YKTagPrivateMethods)

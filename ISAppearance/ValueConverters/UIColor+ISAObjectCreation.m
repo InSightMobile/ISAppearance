@@ -6,8 +6,11 @@
 #import "UIColor+ISAObjectCreation.h"
 #import "ISAppearance.h"
 #import "ISAppearance+Private.h"
-#import "UIColor+ISAHexString.h"
+#import "UIColor+ISACHexString.h"
+
+#if ISA_CODE_GENERATION
 #import "ISACode.h"
+#endif
 
 
 @implementation UIColor (ISAObjectCreation)
@@ -22,7 +25,7 @@
 
         return [UIColor performSelector:colorNameSelector];
     }
-    UIColor *cl = [self colorWithHexString:node];
+    UIColor *cl = [self isa_colorWithHexString:node];
 
     if (!cl) {
         UIImage *image = [[ISAppearance sharedInstance] loadImageNamed:node];
@@ -36,6 +39,7 @@
     return cl;
 }
 
+#if ISA_CODE_GENERATION
 + (id)codeWithISANode:(id)node
 {
     UIColor *color = [self objectWithISANode:node];
@@ -43,6 +47,7 @@
     [color getRed:&r green:&g blue:&b alpha:&a];
     return [ISACode codeWithClass:[UIColor class] format:@"[UIColor colorWithRed:%f green:%f blue:%f alpha:%f]", r, g, b, a];
 }
+#endif
 
 
 + (id)objectWithISANode:(id)node

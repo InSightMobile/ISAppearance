@@ -2,10 +2,13 @@
 // 
 
 #import "UIFont+ISAObjectCreation.h"
+#if ISA_CODE_GENERATION
 #import "ISACode.h"
+#endif
 
 @implementation UIFont (ISAObjectCreation)
 
+#if ISA_CODE_GENERATION
 + (id)codeWithISANode:(id)param
 {
     if ([param isKindOfClass:[NSNumber class]]) {
@@ -36,6 +39,7 @@
     }
     return [ISACode codeForNil];
 }
+#endif
 
 + (id)objectWithISANode:(id)param
 {

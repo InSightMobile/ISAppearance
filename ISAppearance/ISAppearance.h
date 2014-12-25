@@ -6,10 +6,6 @@
 #include "ISAppearance/UIView+ISAppearance.h"
 #include "ISAppearance/NSObject+ISAppearance.h"
 
-#if TARGET_IPHONE_SIMULATOR
-#define ISA_CODE_GENERATION 1
-#endif
-
 #define ISA_STRINGIZE_IMPL(s) @#s
 #define ISA_STRINGIZE(s) ISA_STRINGIZE_IMPL(s)
 

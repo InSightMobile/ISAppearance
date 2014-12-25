@@ -1,10 +1,10 @@
 //
 // 
 
-
-
 #import "ISAUIEdgeInsetsValueConverter.h"
-
+#if ISA_CODE_GENERATION
+#import "ISAValueConverter+CodeGeneration.h"
+#endif
 
 @implementation ISAUIEdgeInsetsValueConverter
 {
@@ -27,7 +27,7 @@
     return [NSValue value:&insets withObjCType:@encode(UIEdgeInsets)];
 }
 
-#ifdef ISA_CODE_GENERATION
+#if ISA_CODE_GENERATION
 
 - (id)codeWithISANode:(id)node
 {

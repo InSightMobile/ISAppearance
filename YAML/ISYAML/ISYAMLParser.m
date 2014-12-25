@@ -465,18 +465,18 @@ typedef enum
         [data setObject:[NSNumber numberWithInteger:enc] forKey:NSStringEncodingErrorKey];
 
         [data setObject:(!p->problem ? [NSNull null] : [NSString stringWithUTF8String:p->problem])
-                 forKey:YKProblemDescriptionKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_offset] forKey:YKProblemOffsetKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_value] forKey:YKProblemValueKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_mark.line] forKey:YKProblemLineKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_mark.index] forKey:YKProblemIndexKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_mark.column] forKey:YKProblemColumnKey];
+                 forKey:ISYAMLProblemDescriptionKey];
+        [data setObject:[NSNumber numberWithInteger:p->problem_offset] forKey:ISYAMLProblemOffsetKey];
+        [data setObject:[NSNumber numberWithInteger:p->problem_value] forKey:ISYAMLProblemValueKey];
+        [data setObject:[NSNumber numberWithInteger:p->problem_mark.line] forKey:ISYAMLProblemLineKey];
+        [data setObject:[NSNumber numberWithInteger:p->problem_mark.index] forKey:ISYAMLProblemIndexKey];
+        [data setObject:[NSNumber numberWithInteger:p->problem_mark.column] forKey:ISYAMLProblemColumnKey];
 
         [data setObject:(!p->context ? [NSNull null] : [NSString stringWithUTF8String:p->context])
-                 forKey:YKErrorContextDescriptionKey];
-        [data setObject:[NSNumber numberWithInteger:p->context_mark.line] forKey:YKErrorContextLineKey];
-        [data setObject:[NSNumber numberWithInteger:p->context_mark.column] forKey:YKErrorContextColumnKey];
-        [data setObject:[NSNumber numberWithInteger:p->context_mark.index] forKey:YKErrorContextIndexKey];
+                 forKey:ISYAMLErrorContextDescriptionKey];
+        [data setObject:[NSNumber numberWithInteger:p->context_mark.line] forKey:ISYAMLErrorContextLineKey];
+        [data setObject:[NSNumber numberWithInteger:p->context_mark.column] forKey:ISYAMLErrorContextColumnKey];
+        [data setObject:[NSNumber numberWithInteger:p->context_mark.index] forKey:ISYAMLErrorContextIndexKey];
     }
     else if (_readyToParse) {
         [data setObject:NSLocalizedString(@"Internal assertion failed, possibly due to specially malformed input.", @"") forKey:NSLocalizedDescriptionKey];
@@ -486,7 +486,7 @@ typedef enum
         [data setObject:NSLocalizedString(@"Did you remember to call readFile: or readString:?", @"") forKey:NSLocalizedDescriptionKey];
     }
 
-    return [NSError errorWithDomain:YKErrorDomain code:code userInfo:data];
+    return [NSError errorWithDomain:ISYAMLErrorDomain code:code userInfo:data];
 }
 
 - (void)destroy

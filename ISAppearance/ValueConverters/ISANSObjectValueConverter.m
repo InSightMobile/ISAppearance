@@ -1,9 +1,10 @@
 //
 // 
 
-
-
 #import "ISANSObjectValueConverter.h"
+#if ISA_CODE_GENERATION
+#import "ISAValueConverter+CodeGeneration.h"
+#endif
 
 
 @interface ISANSObjectValueConverter ()
@@ -34,6 +35,7 @@
     return [_objectClass objectWithISANode:node];
 }
 
+#if ISA_CODE_GENERATION
 - (id)codeWithISANode:(id)node
 {
     if([_objectClass respondsToSelector:@selector(codeWithISANode:)]) {
@@ -44,6 +46,6 @@
         return [ISACode fixCodeForClass:_objectClass value:[_objectClass objectWithISANode:node]];
     }
 }
-
+#endif
 
 @end

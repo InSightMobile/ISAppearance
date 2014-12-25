@@ -2,10 +2,12 @@
 // 
 
 #import "UIImage+ISAObjectCreation.h"
-#import "UIImage+ISAColor.h"
+#import "UIImage+ISACColor.h"
 #import "ISAppearance+Private.h"
 #import "ISAValueConverting.h"
-
+#if ISA_CODE_GENERATION
+#import "ISAValueConverter+CodeGeneration.h"
+#endif
 
 @implementation UIImage (ISAObjectCreation)
 
@@ -13,6 +15,8 @@
 {
     return [[ISAppearance sharedInstance] loadImageNamed:name];
 }
+
+#if ISA_CODE_GENERATION
 
 + (id)codeWithISANode:(id)node
 {
@@ -92,6 +96,8 @@
 
 }
 
+#endif
+
 + (id)objectWithISANode:(id)node
 {
     UIImage *image = nil;
@@ -116,7 +122,7 @@
         id firstParam = [node objectAtIndex:0];
 
         if ([firstParam isKindOfClass:[UIColor class]]) {
-            image = [UIImage imageWithColor:firstParam];
+            image = [UIImage isa_imageWithColor:firstParam];
         }
         else if ([firstParam isKindOfClass:[NSString class]]) {
             image = [self isaImageNamed:firstParam];

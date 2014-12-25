@@ -1,0 +1,1 @@
+../../../../../ISAppearance/Categories/UITableViewCell+ISAppearance.h

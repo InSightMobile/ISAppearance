@@ -9,7 +9,10 @@
 #import "UIDevice+isa_SystemInfo.h"
 #import "ISATagResolver.h"
 #import "NSObject+ISAppearance.h"
+
+#if ISA_CODE_GENERATION
 #import "ISAppearance+CodeGeneration.h"
+#endif
 
 static const float kAppearanceReloadDelay = 0.25;
 
@@ -236,7 +239,7 @@ static const float kAppearanceReloadDelay = 0.25;
 
     id result = [parser parseFile:file parseError:error];
     if (error && *error) {
-        NSString *line = [*error userInfo][YKProblemLineKey];
+        NSString *line = [*error userInfo][ISYAMLProblemLineKey];
 
         NSString *desc = [NSString stringWithFormat:@"Error in %@:%@", file.lastPathComponent, line];
         *error =
@@ -414,11 +417,14 @@ static const float kAppearanceReloadDelay = 0.25;
             return NO;
         }
     }
-    if(!ISA_IS_CODE_GENERATION_MODE) {
-        _isAppearanceLoaded = YES;
-        [self updateAppearanceRegisteredObjects];
+#if ISA_CODE_GENERATION
+    if(ISA_IS_CODE_GENERATION_MODE) {
+        return YES;
     }
+#endif
 
+    _isAppearanceLoaded = YES;
+    [self updateAppearanceRegisteredObjects];
     return YES;
 }
 
@@ -497,12 +503,16 @@ static const float kAppearanceReloadDelay = 0.25;
         if (appearanceProxy) {
             NSMutableArray *entries = [self styleBlockWithParams:obj selectorParams:nil];
             for (ISAStyleEntry *entry in entries) {
+#if ISA_CODE_GENERATION
                 if (ISA_IS_CODE_GENERATION_MODE) {
                     [self addUIAppearanceForClass:cl selectors:classes entry:entry baseKeys:baseKeys];
                 }
                 else {
                     [entry invokeWithTarget:appearanceProxy];
                 }
+#else
+                [entry invokeWithTarget:appearanceProxy];
+#endif
             }
         }
     }];
@@ -655,10 +665,12 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors
 {
+#if ISA_CODE_GENERATION
     if(ISA_IS_CODE_GENERATION_MODE) {
         *pPassedSelectors = [selectors subarrayWithRange:NSMakeRange(1, selectors.count-1)];
         return YES;
     }
+#endif
 
     NSMutableArray *passedSelectors = pPassedSelectors ? [NSMutableArray new] : nil;
     for (int i = 1; i < selectors.count; i++) {

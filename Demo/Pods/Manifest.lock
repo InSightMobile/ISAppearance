@@ -1,0 +1,31 @@
+PODS:
+  - ISAppearance (0.1.1):
+    - ISAppearance/Core (= 0.1.1)
+    - ISAppearance/ValueConverters (= 0.1.1)
+  - ISAppearance/Categories (0.1.1)
+  - ISAppearance/CodeGeneration (0.1.1):
+    - ISAppearance/Core
+  - ISAppearance/Core (0.1.1):
+    - ISAppearance/ISYAML
+  - ISAppearance/ImageManipulation (0.1.1)
+  - ISAppearance/ISYAML (0.1.1):
+    - LibYAML (~> 0.1.4)
+  - ISAppearance/ValueConverters (0.1.1):
+    - ISAppearance/Core
+  - LibYAML (0.1.4)
+
+DEPENDENCIES:
+  - ISAppearance (from `../`)
+  - ISAppearance/Categories (from `../`)
+  - ISAppearance/CodeGeneration (from `../`)
+  - ISAppearance/ImageManipulation (from `../`)
+
+EXTERNAL SOURCES:
+  ISAppearance:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ISAppearance: 50665c2cc0ca35227c628c70c1d1152107906cd0
+  LibYAML: d447960375d9114187bfddba6e6c24d69bff11f8
+
+COCOAPODS: 0.35.0

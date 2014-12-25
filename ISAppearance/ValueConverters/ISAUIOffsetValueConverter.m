@@ -7,6 +7,9 @@
 //
 
 #import "ISAUIOffsetValueConverter.h"
+#if ISA_CODE_GENERATION
+#import "ISAValueConverter+CodeGeneration.h"
+#endif
 
 @implementation ISAUIOffsetValueConverter
 
@@ -37,7 +40,7 @@
     return [NSValue value:&insets withObjCType:@encode(UIOffset)];
 }
 
-
+#if ISA_CODE_GENERATION
 - (id)codeWithISANode:(id)node
 {
     UIOffset offset = [[self objectWithISANode:node] UIOffsetValue];
@@ -48,5 +51,6 @@
 {
     return [ISACode codeWithFormat:@"[NSValue valueWithUIOffset:%@]",[ISACode codeWithTypeName:@"UIOffset" object:node]];
 }
+#endif
 
 @end
