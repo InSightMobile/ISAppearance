@@ -11,11 +11,16 @@
     if (self) {
         self.mapping = @{
                 @"UIBarMetricsDefault" : @(UIBarMetricsDefault),
-                @"UIBarMetricsLandscapePhone" : @(UIBarMetricsLandscapePhone),
+                @"UIBarMetricsCompact" : @(UIBarMetricsCompact),
 
                 @"default" : @(UIBarMetricsDefault),
                 @"landscapePhone" : @(UIBarMetricsLandscapePhone),
                 @"landscape" : @(UIBarMetricsLandscapePhone),
+
+                @"Default" : @(UIBarMetricsDefault),
+                @"Compact" : @(UIBarMetricsCompact),
+                @"DefaultPrompt" : @(UIBarMetricsDefaultPrompt),
+                @"CompactPrompt" : @(UIBarMetricsCompactPrompt),
         };
     }
     return self;
