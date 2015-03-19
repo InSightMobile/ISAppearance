@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
   end  
 
   s.subspec 'ISYAML' do |ss|
-    ss.source_files = 'YAML/ISYAML/*.{h,m}'
+    ss.source_files = 'ISYAML/*.{h,m}'
     ss.dependency 'LibYAML', '~> 0.1.4'
   end 
   
