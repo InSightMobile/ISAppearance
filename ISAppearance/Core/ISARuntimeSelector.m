@@ -22,8 +22,16 @@
 + (id)selectorWithName:(NSString *)name
 {
     if([name hasPrefix:@"!"]) {
-        NSString *className = [name substringFromIndex:1];
-        ISARuntimeSelector* runtimeSelector = [[ISAResponderRuntimeSelector alloc] initWithClassName:className];
+        NSString *selectorName = [name substringFromIndex:1];
+
+        BOOL negative = NO;
+
+        if([selectorName hasPrefix:@"~"]) {
+            selectorName = [selectorName substringFromIndex:1];
+            negative = YES;
+        }
+
+        ISARuntimeSelector* runtimeSelector = [[ISAResponderRuntimeSelector alloc] initWithClassName:selectorName negative:negative];
 
 #if ISA_CODE_GENERATION
         if(ISA_IS_CODE_GENERATION_MODE) {

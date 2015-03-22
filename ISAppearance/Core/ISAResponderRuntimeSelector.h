@@ -11,6 +11,6 @@
 
 - (BOOL)isApplyableTo:(id)target;
 
-- (id)initWithClassName:(NSString *)name;
+- (id)initWithClassName:(NSString *)name negative:(BOOL)negative;
 
 @end

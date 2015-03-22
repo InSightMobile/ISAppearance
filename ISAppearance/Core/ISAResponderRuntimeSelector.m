@@ -11,32 +11,30 @@
 
 @implementation ISAResponderRuntimeSelector
 {
-
+    BOOL _negative;
     Class _targetClass;
 }
 
 - (BOOL)isApplyableTo:(id)target
 {
     if([target isKindOfClass:[UIResponder class]]) {
-
         UIResponder* responder = target;
-
         while(responder) {
-
             if([responder isKindOfClass:_targetClass]) {
-                return YES;
+                return !_negative;
             }
             responder = responder.nextResponder;
         }
-        return NO;
+        return _negative;
     }
-    return NO;
+    return _negative;
 }
 
-- (id)initWithClassName:(NSString *)className
+- (id)initWithClassName:(NSString *)className negative:(BOOL)negative;
 {
     self = [super init];
     if(self) {
+        _negative = negative;
         _targetClass = NSClassFromString(className);
     }
     return self;
