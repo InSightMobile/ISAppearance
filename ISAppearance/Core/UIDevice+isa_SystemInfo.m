@@ -98,17 +98,4 @@
 #endif
 }
 
-+ (BOOL)isa_isIOS5
-{
-#ifdef __IPHONE_6_0
-    static int result = -1;
-    if(result<0) {
-        result =  SYSTEM_VERSION_LESS_THAN(@"6.0");
-    }
-    return result > 0;
-#else
-    return YES;
-#endif
-}
-
 @end

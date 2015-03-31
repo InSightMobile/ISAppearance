@@ -38,19 +38,6 @@
 - (BOOL)applyBlockNamed:(NSString *)block toTarget:(id)target;
 
 
-+ (BOOL)isPad;
-
-+ (BOOL)isPhone5;
-
-+ (BOOL)isRetina;
-
-+ (BOOL)isIOS7;
-
-+ (BOOL)isIOS5;
-
-+ (BOOL)isIOS6AndGreater;
-
-
 + (id)loadDataFromFile:(NSString *)path;
 
 - (void)loadAppearanceFromFile:(NSString *)file;
@@ -66,5 +53,17 @@
 - (void)addAssetsFolder:(NSString *)folder;
 
 - (void)processGeneratedAppearance;
+
+// deprecated 
+
++ (BOOL)isPad __attribute__ ((deprecated));
+
++ (BOOL)isPhone5 __attribute__ ((deprecated));
+
++ (BOOL)isRetina __attribute__ ((deprecated));
+
++ (BOOL)isIOS7 __attribute__ ((deprecated));
+
++ (BOOL)isIOS6AndGreater __attribute__ ((deprecated));
 
 @end

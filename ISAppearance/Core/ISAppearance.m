@@ -93,9 +93,9 @@ static const float kAppearanceReloadDelay = 0.25;
 {
     [self addGlobalStyle:[UIDevice isa_isPad] ? @"iPad" : @"iPhone"];
     [self addGlobalStyle:[UIDevice isa_isPad] ? @"~iPhone" : @"~iPad"];
-    [self addGlobalStyle:[UIDevice isa_isIOS7] ? @"iOS7" : @"~iOS7"];
-    [self addGlobalStyle:[UIDevice isa_isPhone5] ? @"Phone5" : @"~Phone5"];
-    [self addGlobalStyle:[UIDevice isa_isPhone5] ? @"iPhone5" : @"~iPhone5"];
+    [self addGlobalStyle:[UIDevice isa_isIOS7AndLater] ? @"iOS7" : @"~iOS7"];
+    [self addGlobalStyle:[UIDevice isa_isIPhone4InchOrBigger] ? @"Phone5" : @"~Phone5"];
+    [self addGlobalStyle:[UIDevice isa_isIPhone4InchOrBigger] ? @"iPhone5" : @"~iPhone5"];
     [self addGlobalStyle:[UIDevice isa_isRetina] ? @"Retina" : @"~Retina"];
 }
 
@@ -196,11 +196,6 @@ static const float kAppearanceReloadDelay = 0.25;
 + (BOOL)isIOS6AndGreater
 {
     return [UIDevice isa_isIOS6AndGreater];
-}
-
-+ (BOOL)isIOS5
-{
-    return [UIDevice isa_isIOS5];
 }
 
 - (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
@@ -1165,8 +1160,8 @@ static const float kAppearanceReloadDelay = 0.25;
 
 - (UIImage *)loadImageNamed:(NSString *)string
 {
-    bool isRetina = [ISAppearance isRetina];
-    bool isPad = [ISAppearance isPad];
+    bool isRetina = [UIDevice isa_isRetina];
+    bool isPad = [UIDevice isa_isPad];
 
     UIImage *image = [self loadImageNamed:string forRetina:isRetina forPad:isPad];
     if (image) {

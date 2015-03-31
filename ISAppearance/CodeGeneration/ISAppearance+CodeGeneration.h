@@ -20,7 +20,6 @@
 + (BOOL)isCodeGeneration;
 
 - (void)generateCodeWithPath:(NSString *)string;
-- (void)processGeneratedAppearance;
 
 @end
 
