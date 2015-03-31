@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
     ss.source_files = 'ISAppearance/CodeGeneration/*.{h,m}'
     ss.dependency 'ISAppearance/Core'
     ss.prefix_header_contents = '
-    	#if TARGET_IPHONE_SIMULATOR
+    #if TARGET_IPHONE_SIMULATOR
 		#define ISA_CODE_GENERATION 1
 		#endif'
   end  
