@@ -65,4 +65,6 @@
 
 - (void)addAssetsFolder:(NSString *)folder;
 
+- (void)processGeneratedAppearance;
+
 @end

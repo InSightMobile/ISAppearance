@@ -202,6 +202,7 @@
 		5CFFF1361693F23200C6BCC1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0620;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = infoshell;
 			};

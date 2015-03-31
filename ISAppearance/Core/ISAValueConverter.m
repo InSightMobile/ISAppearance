@@ -74,6 +74,14 @@
     return [self objectWithISANode:node];
 }
 
+- (id)tag:(ISYAMLTag *)tag decodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo {
+    return nil;
+}
+
+- (id)tag:(ISYAMLTag *)tag castValue:(id)value toTag:(ISYAMLTag *)castingTag {
+    return nil;
+}
+
 - (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
 {
 #if ISA_CODE_GENERATION

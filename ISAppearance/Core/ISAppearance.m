@@ -47,6 +47,10 @@ static const float kAppearanceReloadDelay = 0.25;
     BOOL _isReloadScheduled;
 }
 
+- (void)registerGeneratedStyles {
+    
+}
+
 + (ISAppearance *)sharedInstance
 {
     static ISAppearance *_instance = nil;
@@ -462,14 +466,14 @@ static const float kAppearanceReloadDelay = 0.25;
 
         if ([key isKindOfClass:[NSString class]]) {
             cl = [self classForKey:key];
-            if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
+            if ([(id)cl conformsToProtocol:@protocol(UIAppearance)]) {
                 appearanceProxy = [cl appearance];
             }
         }
         else if ([key isKindOfClass:[NSArray class]]) {
             if ([key count]) {
                 cl = [self classForKey:key[0]];
-                if ([cl conformsToProtocol:@protocol(UIAppearance)]) {
+                if ([(id)cl conformsToProtocol:@protocol(UIAppearance)]) {
 
                     classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
                     for (int j = 1; j < [key count]; j++) {
@@ -496,12 +500,17 @@ static const float kAppearanceReloadDelay = 0.25;
                             appearanceProxy =
                                     [cl appearanceWhenContainedIn:classes[0], classes[1], classes[2], classes[3], nil];
                             break;
-                        default:
-                            NSLog(@"ISArrearance: many appearance arguments: %d", classes.count);
                         case 5:
                             appearanceProxy =
                                     [cl appearanceWhenContainedIn:classes[0], classes[1], classes[2], classes[3], classes[4], nil];
                             break;
+                        case 6:
+                            appearanceProxy =
+                            [cl appearanceWhenContainedIn:classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], nil];
+                            break;
+                        default:
+                            NSLog(@"ISArrearance: too many appearance arguments: %lu", (unsigned long)classes.count);
+
                     }
                 }
             }
@@ -1196,4 +1205,5 @@ static const float kAppearanceReloadDelay = 0.25;
     }
     [self processAppearance];
 }
+
 @end

@@ -23,6 +23,10 @@ static NSString *_codeTemplate = @""
         "}\n\n"
         "@end";
 
+@interface ISAppearance ()
+
+@end
+
 @implementation ISAppearance (CodeGeneration)
 
 + (BOOL)isCodeGeneration
@@ -182,6 +186,7 @@ static NSString *_codeTemplate = @""
     [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
 
 }
+
 
 
 @end

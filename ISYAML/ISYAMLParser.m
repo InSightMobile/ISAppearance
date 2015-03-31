@@ -65,7 +65,7 @@ typedef enum
 @end
 
 @interface ISYAMLParser ()
-@property(readonly) NSDictionary *_tagsByName;
+
 @end
 
 @implementation ISYAMLParser
@@ -286,7 +286,7 @@ typedef enum
                     break;
                 case YAML_ALIAS_EVENT:
                     if (event.data.alias.anchor) {
-                        NSString *anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+                        NSString *anchor = [NSString stringWithUTF8String:(char*)event.data.sequence_start.anchor];
                         id value = [_aliases objectForKey:anchor];
                         if (value) {
                             state.node = value;
@@ -298,9 +298,9 @@ typedef enum
                     break;
                 case YAML_SEQUENCE_START_EVENT:
                     if (event.data.sequence_start.anchor) {
-                        state.anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+                        state.anchor = [NSString stringWithUTF8String:(char*)event.data.sequence_start.anchor];
                     }
-                    state.tag = [self tagWithUTF8String:event.data.sequence_start.tag];
+                    state.tag = [self tagWithUTF8String:(char*)event.data.sequence_start.tag];
                     state.node = [NSMutableArray array];
                     state.state = YKParserStateSeqence;
                     [containerStack addObject:lastState];
@@ -316,9 +316,9 @@ typedef enum
                     break;
                 case YAML_MAPPING_START_EVENT:
                     if (event.data.mapping_start.anchor) {
-                        state.anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+                        state.anchor = [NSString stringWithUTF8String:(char*)event.data.sequence_start.anchor];
                     }
-                    state.tag = [self tagWithUTF8String:event.data.mapping_start.tag];
+                    state.tag = [self tagWithUTF8String:(char*)event.data.mapping_start.tag];
                     state.node = [NSMutableDictionary dictionary];
                     state.state = YKParserStateMapping;
                     [containerStack addObject:lastState];
@@ -380,12 +380,12 @@ typedef enum
 
 - (void)addTag:(ISYAMLTag *)tag
 {
-    [_tagsByName setObject:tag forKey:[tag verbatim]];
+    _tagsByName[tag.verbatim] = tag;
 }
 
 - (void)addExplicitTag:(ISYAMLTag *)tag
 {
-    [_explicitTagsByName setObject:tag forKey:[tag verbatim]];
+    _explicitTagsByName[tag.verbatim] = tag;
 }
 
 - (id)interpretObjectFromString:(NSString *)stringValue explicitTag:(NSString *)explicitTagString plain:(BOOL)plain
@@ -417,7 +417,7 @@ typedef enum
 {
     NSString *anchor;
     if (event.data.mapping_start.anchor) {
-        anchor = [NSString stringWithUTF8String:event.data.sequence_start.anchor];
+        anchor = [NSString stringWithUTF8String:(char*)event.data.sequence_start.anchor];
     }
 
     NSString *stringValue = (!event.data.scalar.value ? nil :
@@ -462,28 +462,26 @@ typedef enum
             default:
                 break;
         }
-        [data setObject:[NSNumber numberWithInteger:enc] forKey:NSStringEncodingErrorKey];
+        data[NSStringEncodingErrorKey] = @(enc);
 
-        [data setObject:(!p->problem ? [NSNull null] : [NSString stringWithUTF8String:p->problem])
-                 forKey:ISYAMLProblemDescriptionKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_offset] forKey:ISYAMLProblemOffsetKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_value] forKey:ISYAMLProblemValueKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_mark.line] forKey:ISYAMLProblemLineKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_mark.index] forKey:ISYAMLProblemIndexKey];
-        [data setObject:[NSNumber numberWithInteger:p->problem_mark.column] forKey:ISYAMLProblemColumnKey];
+        data[ISYAMLProblemDescriptionKey] = !p->problem ? [NSNull null] : [NSString stringWithUTF8String:p->problem];
+        data[ISYAMLProblemOffsetKey] = [NSNumber numberWithInteger:p->problem_offset];
+        data[ISYAMLProblemValueKey] = [NSNumber numberWithInteger:p->problem_value];
+        data[ISYAMLProblemLineKey] = [NSNumber numberWithInteger:p->problem_mark.line];
+        data[ISYAMLProblemIndexKey] = [NSNumber numberWithInteger:p->problem_mark.index];
+        data[ISYAMLProblemColumnKey] = [NSNumber numberWithInteger:p->problem_mark.column];
 
-        [data setObject:(!p->context ? [NSNull null] : [NSString stringWithUTF8String:p->context])
-                 forKey:ISYAMLErrorContextDescriptionKey];
-        [data setObject:[NSNumber numberWithInteger:p->context_mark.line] forKey:ISYAMLErrorContextLineKey];
-        [data setObject:[NSNumber numberWithInteger:p->context_mark.column] forKey:ISYAMLErrorContextColumnKey];
-        [data setObject:[NSNumber numberWithInteger:p->context_mark.index] forKey:ISYAMLErrorContextIndexKey];
+        data[ISYAMLErrorContextDescriptionKey] = !p->context ? [NSNull null] : [NSString stringWithUTF8String:p->context];
+        data[ISYAMLErrorContextLineKey] = [NSNumber numberWithInteger:p->context_mark.line];
+        data[ISYAMLErrorContextColumnKey] = [NSNumber numberWithInteger:p->context_mark.column];
+        data[ISYAMLErrorContextIndexKey] = [NSNumber numberWithInteger:p->context_mark.index];
     }
     else if (_readyToParse) {
-        [data setObject:NSLocalizedString(@"Internal assertion failed, possibly due to specially malformed input.", @"") forKey:NSLocalizedDescriptionKey];
+        data[NSLocalizedDescriptionKey] = NSLocalizedString(@"Internal assertion failed, possibly due to specially malformed input.", @"");
     }
     else {
-        [data setObject:NSLocalizedString(@"YAML parser was not ready to parse.", @"") forKey:NSLocalizedFailureReasonErrorKey];
-        [data setObject:NSLocalizedString(@"Did you remember to call readFile: or readString:?", @"") forKey:NSLocalizedDescriptionKey];
+        data[NSLocalizedFailureReasonErrorKey] = NSLocalizedString(@"YAML parser was not ready to parse.", @"");
+        data[NSLocalizedDescriptionKey] = NSLocalizedString(@"Did you remember to call readFile: or readString:?", @"");
     }
 
     return [NSError errorWithDomain:ISYAMLErrorDomain code:code userInfo:data];

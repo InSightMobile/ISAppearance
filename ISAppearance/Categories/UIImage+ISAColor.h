@@ -9,8 +9,6 @@
 
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
 
-+ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor size:(CGSize)size;
-
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor;
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth;
