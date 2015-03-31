@@ -4,7 +4,6 @@
 #import "ISAValueConverting.h"
 #import "ISANSObjectValueConverter.h"
 #import "ISAStyleEntry.h"
-#import "ISAEnumValueConverter.h"
 #import "ISAEnumClassValueConverter.h"
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
