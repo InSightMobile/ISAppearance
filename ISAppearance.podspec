@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/InSightMobile/ISAppearance.git', :tag => '0.1.2'}
   s.requires_arc = true
   s.default_subspecs = 'Core','ValueConverters'
+  s.homepage = 'https://github.com/InSightMobile/ISAppearance'
 
   s.ios.deployment_target = '7.0'
   s.ios.frameworks = 'UIKit'

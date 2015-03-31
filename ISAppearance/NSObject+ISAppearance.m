@@ -11,11 +11,6 @@
 #import "ISAppearance+Private.h"
 
 
-@interface NSObject (ISAppearance)
-
-
-@end
-
 @implementation NSObject (ISAppearance)
 
 + (void)isa_appearanceWithBlock:(void (^)(id object))block

@@ -5,9 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class ISACode;
-
-
 @interface ISAStyleEntry : NSObject
 
 - (id)initWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath;
@@ -31,7 +28,4 @@
 
 + (ISAStyleEntry *)entryWithInvocation:(NSInvocation *)invocation;
 
-- (ISACode*)generateCode;
-
-- (ISACode*)codeWithTarget:(id)rootTarget;
 @end

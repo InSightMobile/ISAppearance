@@ -54,7 +54,7 @@ static NSString *_codeTemplate = @""
 
             NSMutableArray *selCode = [NSMutableArray new];
 
-            for (NSString *sel in classSelectors) {
+            for (Class sel in classSelectors) {
                 [selCode addObject:[NSString stringWithFormat:@"[%@ class]", sel]];
                 [self includeClassName:NSStringFromClass(sel) to:includes];
             }

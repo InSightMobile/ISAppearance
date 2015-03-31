@@ -21,7 +21,7 @@
 
 - (NSData *)emittedData;
 
-@property(assign) BOOL usesExplicitDelimiters;
-@property(assign) NSStringEncoding encoding;
+@property(nonatomic) BOOL usesExplicitDelimiters;
+@property(nonatomic) NSStringEncoding encoding;
 
 @end

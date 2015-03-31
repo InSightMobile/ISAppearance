@@ -1,5 +1,0 @@
-#include "Pods-ISAppearance.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/ISAppearance" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ISAppearance" "${PODS_ROOT}/Headers/Public/LibYAML"
-OTHER_LDFLAGS = ${PODS_ISAPPEARANCE_OTHER_LDFLAGS} -ObjC
-PODS_ROOT = ${SRCROOT}

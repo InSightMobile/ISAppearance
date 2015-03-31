@@ -53,7 +53,7 @@
 - (id)objectWithISANode:(id)node
 {
     NSInteger result = [self getIntegerFromNode:node];
-    return [NSNumber numberWithInt:result];
+    return [NSNumber numberWithInteger:result];
 }
 
 - (NSInteger)getIntegerFromNode:(id)node

@@ -1,9 +1,0 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#endif
-
-#import "Pods-environment.h"
-
-  	#if TARGET_IPHONE_SIMULATOR
-#define ISA_CODE_GENERATION 1
-#endif

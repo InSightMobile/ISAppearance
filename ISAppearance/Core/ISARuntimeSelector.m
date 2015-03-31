@@ -44,4 +44,9 @@
     return nil;
 }
 
+- (BOOL)isApplyableTo:(id)target {
+    return NO;
+}
+
+
 @end

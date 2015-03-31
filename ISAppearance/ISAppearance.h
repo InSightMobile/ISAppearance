@@ -65,9 +65,4 @@
 
 - (void)addAssetsFolder:(NSString *)folder;
 
-
-- (void)generateCodeWithPath:(NSString *)string;
-
-- (void)processGeneratedAppearance;
-
 @end

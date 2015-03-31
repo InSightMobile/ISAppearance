@@ -52,10 +52,7 @@
 
 - (void)generateDefinition
 {
-    NSObject *const r = nil;
-
     NSString *definition = [NSString stringWithFormat:@"   %@ * const %@ = %@;",self.className,self.name,self.resolvedCode];
-
     [[ISACodeManager instance] addDefinition:definition];
 }
 

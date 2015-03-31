@@ -66,14 +66,6 @@
 		5C5345601776DB4D00B0B5B2 /* libISAppearance.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5345471776DB4D00B0B5B2 /* libISAppearance.a */; };
 		5C5345661776DB4D00B0B5B2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C5345641776DB4D00B0B5B2 /* InfoPlist.strings */; };
 		5C5345691776DB4D00B0B5B2 /* ISAppearanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345681776DB4D00B0B5B2 /* ISAppearanceTests.m */; };
-		5C53460A1776DBF700B0B5B2 /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345EB1776DBF700B0B5B2 /* api.c */; };
-		5C53460B1776DBF700B0B5B2 /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345ED1776DBF700B0B5B2 /* dumper.c */; };
-		5C53460C1776DBF700B0B5B2 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345EE1776DBF700B0B5B2 /* emitter.c */; };
-		5C53460D1776DBF700B0B5B2 /* loader.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345EF1776DBF700B0B5B2 /* loader.c */; };
-		5C53460E1776DBF700B0B5B2 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F01776DBF700B0B5B2 /* parser.c */; };
-		5C53460F1776DBF700B0B5B2 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F11776DBF700B0B5B2 /* reader.c */; };
-		5C5346101776DBF700B0B5B2 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F21776DBF700B0B5B2 /* scanner.c */; };
-		5C5346111776DBF700B0B5B2 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F31776DBF700B0B5B2 /* writer.c */; };
 		5C5346121776DBF700B0B5B2 /* NSData+ISYAMLBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345F81776DBF700B0B5B2 /* NSData+ISYAMLBase64.m */; };
 		5C5346131776DBF700B0B5B2 /* NSString+ISYAML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FA1776DBF700B0B5B2 /* NSString+ISYAML.m */; };
 		5C5346141776DBF700B0B5B2 /* ISYAML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5345FC1776DBF700B0B5B2 /* ISYAML.m */; };
@@ -224,17 +216,6 @@
 		5C5345651776DB4D00B0B5B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5C5345671776DB4D00B0B5B2 /* ISAppearanceTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISAppearanceTests.h; sourceTree = "<group>"; };
 		5C5345681776DB4D00B0B5B2 /* ISAppearanceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISAppearanceTests.m; sourceTree = "<group>"; };
-		5C5345EB1776DBF700B0B5B2 /* api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = api.c; sourceTree = "<group>"; };
-		5C5345EC1776DBF700B0B5B2 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		5C5345ED1776DBF700B0B5B2 /* dumper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dumper.c; sourceTree = "<group>"; };
-		5C5345EE1776DBF700B0B5B2 /* emitter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emitter.c; sourceTree = "<group>"; };
-		5C5345EF1776DBF700B0B5B2 /* loader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loader.c; sourceTree = "<group>"; };
-		5C5345F01776DBF700B0B5B2 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
-		5C5345F11776DBF700B0B5B2 /* reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = reader.c; sourceTree = "<group>"; };
-		5C5345F21776DBF700B0B5B2 /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
-		5C5345F31776DBF700B0B5B2 /* writer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = writer.c; sourceTree = "<group>"; };
-		5C5345F41776DBF700B0B5B2 /* yaml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml.h; sourceTree = "<group>"; };
-		5C5345F51776DBF700B0B5B2 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml_private.h; sourceTree = "<group>"; };
 		5C5345F71776DBF700B0B5B2 /* NSData+ISYAMLBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ISYAMLBase64.h"; sourceTree = "<group>"; };
 		5C5345F81776DBF700B0B5B2 /* NSData+ISYAMLBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ISYAMLBase64.m"; sourceTree = "<group>"; };
 		5C5345F91776DBF700B0B5B2 /* NSString+ISYAML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ISYAML.h"; sourceTree = "<group>"; };
@@ -427,28 +408,9 @@
 		5C5345E61776DBF700B0B5B2 /* YAML */ = {
 			isa = PBXGroup;
 			children = (
-				5C5345EA1776DBF700B0B5B2 /* yaml */,
 				5C5345F61776DBF700B0B5B2 /* ISYAML */,
 			);
 			path = YAML;
-			sourceTree = "<group>";
-		};
-		5C5345EA1776DBF700B0B5B2 /* yaml */ = {
-			isa = PBXGroup;
-			children = (
-				5C5345EB1776DBF700B0B5B2 /* api.c */,
-				5C5345EC1776DBF700B0B5B2 /* config.h */,
-				5C5345ED1776DBF700B0B5B2 /* dumper.c */,
-				5C5345EE1776DBF700B0B5B2 /* emitter.c */,
-				5C5345EF1776DBF700B0B5B2 /* loader.c */,
-				5C5345F01776DBF700B0B5B2 /* parser.c */,
-				5C5345F11776DBF700B0B5B2 /* reader.c */,
-				5C5345F21776DBF700B0B5B2 /* scanner.c */,
-				5C5345F31776DBF700B0B5B2 /* writer.c */,
-				5C5345F41776DBF700B0B5B2 /* yaml.h */,
-				5C5345F51776DBF700B0B5B2 /* yaml_private.h */,
-			);
-			path = yaml;
 			sourceTree = "<group>";
 		};
 		5C5345F61776DBF700B0B5B2 /* ISYAML */ = {
@@ -691,7 +653,7 @@
 			name = ISAppearanceTests;
 			productName = ISAppearanceTests;
 			productReference = 5C5345581776DB4D00B0B5B2 /* ISAppearanceTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -767,14 +729,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C53460A1776DBF700B0B5B2 /* api.c in Sources */,
-				5C53460B1776DBF700B0B5B2 /* dumper.c in Sources */,
-				5C53460C1776DBF700B0B5B2 /* emitter.c in Sources */,
-				5C53460D1776DBF700B0B5B2 /* loader.c in Sources */,
-				5C53460E1776DBF700B0B5B2 /* parser.c in Sources */,
-				5C53460F1776DBF700B0B5B2 /* reader.c in Sources */,
-				5C5346101776DBF700B0B5B2 /* scanner.c in Sources */,
-				5C5346111776DBF700B0B5B2 /* writer.c in Sources */,
 				5C5346121776DBF700B0B5B2 /* NSData+ISYAMLBase64.m in Sources */,
 				5C5346131776DBF700B0B5B2 /* NSString+ISYAML.m in Sources */,
 				5C5346141776DBF700B0B5B2 /* ISYAML.m in Sources */,

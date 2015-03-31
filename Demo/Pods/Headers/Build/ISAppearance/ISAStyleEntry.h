@@ -1,1 +1,0 @@
-../../../../../ISAppearance/Core/ISAStyleEntry.h

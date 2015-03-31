@@ -8,5 +8,3 @@
 #import "ISAProxy.h"
 
 
-@implementation ISAppearance (Private)
-@end

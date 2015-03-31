@@ -70,7 +70,7 @@
                 offset = 1;
             }
 
-            int count = [node count] - offset;
+            NSInteger count = [node count] - offset;
 
             if (count >= 4) {
                 return [UIColor colorWithRed:[[node objectAtIndex:0 + offset] floatValue] * mod

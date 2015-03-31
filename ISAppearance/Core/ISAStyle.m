@@ -67,8 +67,8 @@
 
 - (NSComparisonResult)compare:(ISAStyle *)style
 {
-    int first = self.selectors.count;
-    int second = style.selectors.count;
+    NSInteger first = self.selectors.count;
+    NSInteger second = style.selectors.count;
 
     if (first < second) {
         return (NSComparisonResult) NSOrderedAscending;

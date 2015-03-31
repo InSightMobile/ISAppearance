@@ -74,26 +74,8 @@
 - (NSString *)generateCodeWithSource:(NSString *)source
 {
     return [ISACodeEntry processCodeWithSource:source withProcessor:^NSString *(ISACodeEntry *entry) {
-
         return [entry referenceCode];
     }];
-
-    NSMutableString *generated = [NSMutableString new];
-
-    NSScanner* scanner = [NSScanner scannerWithString:source];
-
-    while(!scanner.atEnd) {
-
-        NSString *base = nil;
-        NSString *itemName = nil;
-        [scanner scanUpToString:@"[?" intoString:&base];
-        [scanner scanString:@"[?" intoString:NULL];
-        [scanner scanUpToString:@"?]" intoString:&itemName];
-        [scanner scanString:@"?]" intoString:NULL];
-
-        [generated appendString:base];
-    }
-
     return nil;
 }
 
