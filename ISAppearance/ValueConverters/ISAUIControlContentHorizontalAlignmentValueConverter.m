@@ -4,13 +4,11 @@
 #import "ISAUIControlContentHorizontalAlignmentValueConverter.h"
 
 
-@implementation ISAUIControlContentHorizontalAlignmentValueConverter
-{
+@implementation ISAUIControlContentHorizontalAlignmentValueConverter {
 
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         self.mapping = @{

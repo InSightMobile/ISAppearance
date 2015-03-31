@@ -13,6 +13,6 @@
 
 + (id)sharedManager;
 
-@property(readonly,strong) NSDictionary *tagsByName;
+@property(readonly, strong) NSDictionary *tagsByName;
 
 @end

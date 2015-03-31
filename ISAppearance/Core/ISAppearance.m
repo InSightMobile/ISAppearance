@@ -22,10 +22,10 @@ static const float kAppearanceReloadDelay = 0.25;
 @property(nonatomic, strong) NSMutableArray *definitions;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
 
-@property(nonatomic, strong) NSMutableDictionary* blocks;
+@property(nonatomic, strong) NSMutableDictionary *blocks;
 
-@property(nonatomic, strong) NSMutableDictionary* classStyles;
-@property(nonatomic, strong) NSMutableDictionary* objectStyles;
+@property(nonatomic, strong) NSMutableDictionary *classStyles;
+@property(nonatomic, strong) NSMutableDictionary *objectStyles;
 
 @property(nonatomic, strong) NSMutableArray *UIAppearanceClasses;
 
@@ -33,8 +33,7 @@ static const float kAppearanceReloadDelay = 0.25;
 @end
 
 
-@implementation ISAppearance
-{
+@implementation ISAppearance {
     NSMutableArray *_sources;
     id _registeredObjects;
     BOOL _monitoring;
@@ -48,11 +47,10 @@ static const float kAppearanceReloadDelay = 0.25;
 }
 
 - (void)registerGeneratedStyles {
-    
+
 }
 
-+ (ISAppearance *)sharedInstance
-{
++ (ISAppearance *)sharedInstance {
     static ISAppearance *_instance = nil;
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
@@ -61,8 +59,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return _instance;
 }
 
-+ (id)loadDataFromFile:(NSString *)path
-{
++ (id)loadDataFromFile:(NSString *)path {
     ISATagResolver *resolver = [ISATagResolver new];
     ISYAMLParser *parser = [ISYAMLParser new];
     parser.tagResolver = resolver;
@@ -72,8 +69,7 @@ static const float kAppearanceReloadDelay = 0.25;
 }
 
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         [self.class prepareAppearance];
@@ -89,8 +85,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return self;
 }
 
-- (void)addDefaultStyles
-{
+- (void)addDefaultStyles {
     [self addGlobalStyle:[UIDevice isa_isPad] ? @"iPad" : @"iPhone"];
     [self addGlobalStyle:[UIDevice isa_isPad] ? @"~iPhone" : @"~iPad"];
     [self addGlobalStyle:[UIDevice isa_isIOS7AndLater] ? @"iOS7" : @"~iOS7"];
@@ -99,13 +94,11 @@ static const float kAppearanceReloadDelay = 0.25;
     [self addGlobalStyle:[UIDevice isa_isRetina] ? @"Retina" : @"~Retina"];
 }
 
-- (void)addGlobalStyle:(NSString *)string
-{
+- (void)addGlobalStyle:(NSString *)string {
     [_globalStyles addObjectsFromArray:[string componentsSeparatedByString:@":"]];
 }
 
-+ (void)prepareAppearance
-{
++ (void)prepareAppearance {
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
         if ([[UIView class] respondsToSelector:@selector(isa_swizzleClass)]) {
@@ -118,8 +111,7 @@ static const float kAppearanceReloadDelay = 0.25;
     });
 }
 
-- (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback
-{
+- (void)watch:(NSString *)path once:(BOOL)once withCallback:(void (^)())callback {
     if (_watchedFiles) {
         _watchedFiles = [NSMutableSet setWithCapacity:1];
     }
@@ -158,11 +150,10 @@ static const float kAppearanceReloadDelay = 0.25;
     dispatch_resume(source);
 }
 
-- (BOOL)applyBlockNamed:(NSString *)blockName toTarget:(id)target
-{
+- (BOOL)applyBlockNamed:(NSString *)blockName toTarget:(id)target {
     NSMutableArray *blockEntries = self.blocks[blockName];
 
-    if(!blockEntries.count) {
+    if (!blockEntries.count) {
         return NO;
     }
 
@@ -173,47 +164,39 @@ static const float kAppearanceReloadDelay = 0.25;
     return YES;
 }
 
-+ (BOOL)isPad
-{
++ (BOOL)isPad {
     return [UIDevice isa_isPad];
 }
 
-+ (BOOL)isPhone5
-{
++ (BOOL)isPhone5 {
     return [UIDevice isa_isPhone5];
 }
 
-+ (BOOL)isRetina
-{
++ (BOOL)isRetina {
     return [UIDevice isa_isRetina];
 }
 
-+ (BOOL)isIOS7
-{
++ (BOOL)isIOS7 {
     return [UIDevice isa_isIOS7];
 }
 
-+ (BOOL)isIOS6AndGreater
-{
++ (BOOL)isIOS6AndGreater {
     return [UIDevice isa_isIOS6AndGreater];
 }
 
-- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring
-{
+- (void)loadAppearanceFromFile:(NSString *)file withMonitoring:(BOOL)monitoring {
     [self loadAppearanceFromFile:file];
     if (monitoring) {
         _monitoring = YES;
-        [self watchAndReloadPath:file once:NO ];
+        [self watchAndReloadPath:file once:NO];
     }
 }
 
-+ (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle
-{
++ (id)loadDataFromFileNamed:(NSString *)string bundle:(NSBundle *)bundle {
     return [ISYAML loadDataFromFileNamed:string bundle:bundle error:NULL];
 }
 
-- (ISYAMLTag *)tagForURI:(NSString *)uri
-{
+- (ISYAMLTag *)tagForURI:(NSString *)uri {
     if (uri.length < 1) {
         return nil;
     }
@@ -231,8 +214,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return tag;
 }
 
-- (id)loadAppearanceData:(NSString *)file error:(NSError * __autoreleasing *)error
-{
+- (id)loadAppearanceData:(NSString *)file error:(NSError *__autoreleasing *)error {
     ISYAMLParser *parser = [[ISYAMLParser alloc] init];
     parser.tagResolver = self;
 
@@ -250,26 +232,23 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (void)loadAppearanceFromFile:(NSString *)file
-{
+- (void)loadAppearanceFromFile:(NSString *)file {
     if ([[NSFileManager defaultManager] isReadableFileAtPath:file]) {
         [_sources addObject:file];
     }
 }
 
-- (void)loadAppearanceNamed:(NSString *)name
-{
+- (void)loadAppearanceNamed:(NSString *)name {
     NSString *file = [self appearancePathForName:name];
     if (file) {
         [self loadAppearanceFromFile:file];
     }
     if (_monitoring) {
-        [self watchAndReloadPath:file once:NO ];
+        [self watchAndReloadPath:file once:NO];
     }
 }
 
-- (NSString *)appearancePathForName:(NSString *)name
-{
+- (NSString *)appearancePathForName:(NSString *)name {
     NSString *ext = [name pathExtension];
     NSString *path = nil;
     if (!ext.length) {
@@ -281,8 +260,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return path;
 }
 
-- (void)monitorDirectory:(NSString *)directory
-{
+- (void)monitorDirectory:(NSString *)directory {
 #if (TARGET_IPHONE_SIMULATOR)
     if (directory.length) {
         [self addAssetsFolder:directory withMonitoring:YES];
@@ -291,14 +269,12 @@ static const float kAppearanceReloadDelay = 0.25;
 }
 
 
-- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory
-{
+- (void)loadAppearanceNamed:(NSString *)name withMonitoringForDirectory:(NSString *)directory {
     [self monitorDirectory:directory];
     [self loadAppearanceNamed:name];
 }
 
-- (BOOL)reloadAppearanceSourcesWithError:(NSError * __autoreleasing *)error
-{
+- (BOOL)reloadAppearanceSourcesWithError:(NSError *__autoreleasing *)error {
     [_definitions removeAllObjects];
     for (NSString *file in _sources) {
         NSArray *definitions = [self loadAppearanceData:file error:error];
@@ -312,21 +288,18 @@ static const float kAppearanceReloadDelay = 0.25;
     return YES;
 }
 
-- (BOOL)reloadAppearanceWithError:(NSError * __autoreleasing *)error
-{
+- (BOOL)reloadAppearanceWithError:(NSError *__autoreleasing *)error {
     [self clearCurrentClasses];
     return [self processAppearanceWithError:error];
 }
 
-- (void)clearCurrentClasses
-{
+- (void)clearCurrentClasses {
     [_classStyles removeAllObjects];
     [_objectStyles removeAllObjects];
     [_classesCache removeAllObjects];
 }
 
-- (void)autoReloadAppearance
-{
+- (void)autoReloadAppearance {
     @try {
         NSError *error = nil;
 
@@ -334,7 +307,7 @@ static const float kAppearanceReloadDelay = 0.25;
             NSLog(@"ISAppearance reloaded");
         }
         else {
-            NSLog(@"ISAppearance reload error: %@",error);
+            NSLog(@"ISAppearance reload error: %@", error);
             UIAlertView *alertView =
                     [[UIAlertView alloc] initWithTitle:@"ISAppearance error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 
@@ -352,8 +325,7 @@ static const float kAppearanceReloadDelay = 0.25;
 
 }
 
-- (NSString *)pathForMonitoredAssetFolder:(NSString *)directory
-{
+- (NSString *)pathForMonitoredAssetFolder:(NSString *)directory {
     BOOL isDirectory;
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDirectory];
 
@@ -365,8 +337,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring
-{
+- (void)addAssetsFolder:(NSString *)folder withMonitoring:(BOOL)monitoring {
 #if (TARGET_IPHONE_SIMULATOR)
     if (monitoring) {
         NSString *path = [self pathForMonitoredAssetFolder:folder];
@@ -386,16 +357,14 @@ static const float kAppearanceReloadDelay = 0.25;
 #endif
 }
 
-- (void)addAssetsFolder:(NSString *)folder
-{
+- (void)addAssetsFolder:(NSString *)folder {
     if (!_assets) {
         _assets = [NSMutableArray arrayWithCapacity:1];
     }
     [_assets addObject:folder];
 }
 
-- (BOOL)processAppearance
-{
+- (BOOL)processAppearance {
     NSError *error = nil;
     if (![self processAppearanceWithError:&error]) {
         NSLog(@"ISAppearance failed with error %@", error);
@@ -404,10 +373,9 @@ static const float kAppearanceReloadDelay = 0.25;
     return YES;
 }
 
-- (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error
-{
+- (BOOL)processAppearanceWithError:(NSError *__autoreleasing *)error {
     [ISAppearance prepareAppearance];
-    
+
     if (![self reloadAppearanceSourcesWithError:error]) {
 
         return NO;
@@ -429,15 +397,14 @@ static const float kAppearanceReloadDelay = 0.25;
     return YES;
 }
 
-- (Class)classForKey:(NSString*)key {
+- (Class)classForKey:(NSString *)key {
     Class cl = NSClassFromString(key);
-    
-    
+
+
     return cl;
 }
 
-- (void)processUIAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys
-{
+- (void)processUIAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys {
     if (![definition isKindOfClass:[NSDictionary class]]) {
         return;
     }
@@ -461,14 +428,14 @@ static const float kAppearanceReloadDelay = 0.25;
 
         if ([key isKindOfClass:[NSString class]]) {
             cl = [self classForKey:key];
-            if ([(id)cl conformsToProtocol:@protocol(UIAppearance)]) {
+            if ([(id) cl conformsToProtocol:@protocol(UIAppearance)]) {
                 appearanceProxy = [cl appearance];
             }
         }
         else if ([key isKindOfClass:[NSArray class]]) {
             if ([key count]) {
                 cl = [self classForKey:key[0]];
-                if ([(id)cl conformsToProtocol:@protocol(UIAppearance)]) {
+                if ([(id) cl conformsToProtocol:@protocol(UIAppearance)]) {
 
                     classes = [NSMutableArray arrayWithCapacity:[key count] - 1];
                     for (int j = 1; j < [key count]; j++) {
@@ -501,10 +468,10 @@ static const float kAppearanceReloadDelay = 0.25;
                             break;
                         case 6:
                             appearanceProxy =
-                            [cl appearanceWhenContainedIn:classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], nil];
+                                    [cl appearanceWhenContainedIn:classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], nil];
                             break;
                         default:
-                            NSLog(@"ISArrearance: too many appearance arguments: %lu", (unsigned long)classes.count);
+                            NSLog(@"ISArrearance: too many appearance arguments: %lu", (unsigned long) classes.count);
 
                     }
                 }
@@ -529,17 +496,15 @@ static const float kAppearanceReloadDelay = 0.25;
     }];
 }
 
-- (void)addUIAppearanceForClass:(Class <UIAppearance>)pClass selectors:(NSMutableArray *)selectors entry:(ISAStyleEntry *)entry baseKeys:(NSArray *)keys
-{
-    if(!self.UIAppearanceClasses) {
-        self.UIAppearanceClasses = [NSMutableArray new]; 
+- (void)addUIAppearanceForClass:(Class <UIAppearance>)pClass selectors:(NSMutableArray *)selectors entry:(ISAStyleEntry *)entry baseKeys:(NSArray *)keys {
+    if (!self.UIAppearanceClasses) {
+        self.UIAppearanceClasses = [NSMutableArray new];
     }
 
-    [self.UIAppearanceClasses addObject:@[pClass,selectors?:[NSNull null],entry,keys?:[NSNull null]]];
+    [self.UIAppearanceClasses addObject:@[pClass, selectors ?: [NSNull null], entry, keys ?: [NSNull null]]];
 }
 
-- (void)processDefinition:(NSDictionary *)definition forClass:(NSString *)class
-{
+- (void)processDefinition:(NSDictionary *)definition forClass:(NSString *)class {
     if (!_definitionsByClass) {
         _definitionsByClass = [NSMutableDictionary dictionary];
     }
@@ -555,8 +520,7 @@ static const float kAppearanceReloadDelay = 0.25;
     _definitionsByClass[class] = classInfo;
 }
 
-- (void)processDefinitions:(NSDictionary *)definition
-{
+- (void)processDefinitions:(NSDictionary *)definition {
     [definition enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if ([key isKindOfClass:[NSString class]]) {
@@ -570,8 +534,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }];
 }
 
-- (BOOL)processISAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys error:(NSError * __autoreleasing *)pError
-{
+- (BOOL)processISAppearance:(NSDictionary *)definition baseKeys:(NSArray *)baseKeys error:(NSError *__autoreleasing *)pError {
     if ([definition isKindOfClass:[NSArray class]]) {
         for (id subDefinition in definition) {
             if (![self processISAppearance:subDefinition baseKeys:baseKeys error:pError]) {
@@ -598,14 +561,14 @@ static const float kAppearanceReloadDelay = 0.25;
             if ([self checkStyleConformance:keys passedSelectors:&passedKeys]) {
                 [self processUIAppearance:obj baseKeys:passedKeys];
                 if (_monitoring) {
-                    [self processISAppearance:obj baseKeys:passedKeys error:NULL ];
+                    [self processISAppearance:obj baseKeys:passedKeys error:NULL];
                 }
             }
             return;
         }
         else if ([defkey isEqual:@"ISAppearance"]) {
             if ([self checkStyleConformance:keys passedSelectors:&passedKeys]) {
-                [self processISAppearance:obj baseKeys:passedKeys error:NULL ];
+                [self processISAppearance:obj baseKeys:passedKeys error:NULL];
             }
             return;
         }
@@ -631,7 +594,7 @@ static const float kAppearanceReloadDelay = 0.25;
             if (blockParams.count && keys.count > 1) {
                 NSString *blockName = [[keys subarrayWithRange:NSMakeRange(1, keys.count - 1)] componentsJoinedByString:@":"];
 
-                if(!self.blocks) {
+                if (!self.blocks) {
                     self.blocks = [NSMutableDictionary new];
                 }
 
@@ -655,8 +618,8 @@ static const float kAppearanceReloadDelay = 0.25;
     }
     return result;
 }
-- (BOOL)isConditionsPassed:(NSArray *)conditions
-{
+
+- (BOOL)isConditionsPassed:(NSArray *)conditions {
     for (NSString *condition in conditions) {
         NSString *negativeCondition;
         if ([condition hasPrefix:@"~"]) {
@@ -674,8 +637,7 @@ static const float kAppearanceReloadDelay = 0.25;
 
 }
 
-- (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors
-{
+- (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors {
 #if ISA_CODE_GENERATION
     if(ISA_IS_CODE_GENERATION_MODE) {
         *pPassedSelectors = [selectors subarrayWithRange:NSMakeRange(1, selectors.count-1)];
@@ -708,8 +670,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return YES;
 }
 
-- (void)addParams:(NSArray *)params toSelector:(NSArray *)components
-{
+- (void)addParams:(NSArray *)params toSelector:(NSArray *)components {
     NSString *className = components[0];
     Class baseClass = [self classForKey:className];
     if (!baseClass) {
@@ -720,8 +681,7 @@ static const float kAppearanceReloadDelay = 0.25;
     [self addParams:params forClass:baseClass toSelector:userComponents];
 }
 
-- (void)addParams:(NSArray *)params forClass:(Class)baseClass toSelector:(NSArray *)userComponents
-{
+- (void)addParams:(NSArray *)params forClass:(Class)baseClass toSelector:(NSArray *)userComponents {
     NSString *className = NSStringFromClass(baseClass);
 
     NSSet *selectors = [NSSet setWithArray:userComponents];
@@ -740,8 +700,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (void)indexStyle:(ISAStyle *)style
-{
+- (void)indexStyle:(ISAStyle *)style {
     NSString *className = style.className;
     // save a
     if (style.selectors.count == 0) { // setup class itself
@@ -769,8 +728,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (ISAStyle *)styleWithClass:(NSString *)className selectors:(NSSet *)components
-{
+- (ISAStyle *)styleWithClass:(NSString *)className selectors:(NSSet *)components {
     if (components.count == 0) { // setup class itself
         return [_classStyles valueForKey:className];
     }
@@ -780,8 +738,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (NSMutableArray *)styleBlockWithParams:(id)params selectorParams:(NSArray *)selectorParams
-{
+- (NSMutableArray *)styleBlockWithParams:(id)params selectorParams:(NSArray *)selectorParams {
     NSMutableArray *invocations = nil;
     if ([params isKindOfClass:[NSDictionary class]]) {
 
@@ -843,8 +800,8 @@ static const float kAppearanceReloadDelay = 0.25;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
-- (void)registerObject:(id)object
-{
+
+- (void)registerObject:(id)object {
     if (!_registeredObjects) {
         Class cl = NSClassFromString(@"NSHashTable");
         if (cl) {
@@ -856,11 +813,11 @@ static const float kAppearanceReloadDelay = 0.25;
     }
     [_registeredObjects addObject:object];
 }
+
 #pragma clang diagnostic pop
 
 
-- (void)updateAppearanceRegisteredObjects
-{
+- (void)updateAppearanceRegisteredObjects {
     for (id object in [_registeredObjects copy]) {
         if ([object respondsToSelector:@selector(isaClass)]) {
             [self applyAppearanceTo:object usingClassesString:[object isaClass]];
@@ -882,8 +839,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (BOOL)applyAppearanceTo:(id)target
-{
+- (BOOL)applyAppearanceTo:(id)target {
     if ([target respondsToSelector:@selector(isaClass)]) {
         return [self applyAppearanceTo:target usingClassesString:[target isaClass]];
     }
@@ -892,8 +848,7 @@ static const float kAppearanceReloadDelay = 0.25;
     }
 }
 
-- (BOOL)applyAppearanceTo:(id)target usingClassesString:(NSString *)classNames
-{
+- (BOOL)applyAppearanceTo:(id)target usingClassesString:(NSString *)classNames {
     NSSet *userClasses = nil;
     if (classNames.length) {
         NSArray *selectors = [classNames componentsSeparatedByString:@":"];
@@ -902,10 +857,9 @@ static const float kAppearanceReloadDelay = 0.25;
     return [self applyAppearanceTo:target usingClasses:userClasses];
 }
 
-- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSSet *)userClasses
-{
+- (BOOL)applyAppearanceTo:(id)target usingClasses:(NSSet *)userClasses {
 
-    if(!userClasses) {
+    if (!userClasses) {
         userClasses = [NSSet set];
     }
 
@@ -978,7 +932,7 @@ static const float kAppearanceReloadDelay = 0.25;
         styleCache[userClasses] = styles;
     }
 
-    if(styles.count) {
+    if (styles.count) {
         @autoreleasepool {
             [target isa_willApplyAppearance];
             for (ISAStyle *style in styles) {
@@ -991,8 +945,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return YES;
 }
 
-- (NSString *)findFile:(NSString *)file inFolder:(NSString *)folder recursive:(BOOL)reqcursive
-{
+- (NSString *)findFile:(NSString *)file inFolder:(NSString *)folder recursive:(BOOL)reqcursive {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *path = [folder stringByAppendingPathComponent:file];
     if ([manager fileExistsAtPath:path]) {
@@ -1028,8 +981,7 @@ static const float kAppearanceReloadDelay = 0.25;
 
 
 - (NSString *)findImageFile:(NSString *)file inFolder:(NSString *)folder forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
-                      scale:(CGFloat *)scale
-{
+                      scale:(CGFloat *)scale {
     NSString *ext = [file pathExtension];
     NSString *name = [file stringByDeletingPathExtension];
 
@@ -1075,13 +1027,12 @@ static const float kAppearanceReloadDelay = 0.25;
     return nil;
 }
 
-- (NSString *)findFileNamed:(NSString *)file
-{
+- (NSString *)findFileNamed:(NSString *)file {
     NSString *path = nil;
     for (NSString *folder in _monitoredAssets) {
         path = [self findFile:file inFolder:folder recursive:YES];
         if (path) {
-            [self watchAndReloadPath:path once:YES ];
+            [self watchAndReloadPath:path once:YES];
             break;
         }
     }
@@ -1099,8 +1050,7 @@ static const float kAppearanceReloadDelay = 0.25;
     return path;
 }
 
-- (UIImage *)loadImageNamed:(NSString *)string forRetina:(BOOL)isRetina forPad:(BOOL)isIpad
-{
+- (UIImage *)loadImageNamed:(NSString *)string forRetina:(BOOL)isRetina forPad:(BOOL)isIpad {
     NSString *path = nil;
     UIImage *image = nil;
     CGFloat scale = 0;
@@ -1108,7 +1058,7 @@ static const float kAppearanceReloadDelay = 0.25;
     for (NSString *folder in _monitoredAssets) {
         path = [self findImageFile:string inFolder:folder forRetina:isRetina forPad:isIpad scale:&scale];
         if (path) {
-            [self watchAndReloadPath:path once:YES ];
+            [self watchAndReloadPath:path once:YES];
             break;
         }
     }
@@ -1137,29 +1087,25 @@ static const float kAppearanceReloadDelay = 0.25;
     return image;
 }
 
-- (void)watchAndReloadPath:(NSString *)path once:(BOOL)once
-{
+- (void)watchAndReloadPath:(NSString *)path once:(BOOL)once {
     [self watch:path once:once withCallback:^{
         [self performSelectorOnMainThread:@selector(scheduleReload) withObject:nil waitUntilDone:NO];
     }];
 }
 
-- (void)scheduleReload
-{
+- (void)scheduleReload {
     if (!_isReloadScheduled) {
         _isReloadScheduled = YES;
         [self performSelector:@selector(performScheduledReload) withObject:nil afterDelay:kAppearanceReloadDelay];
     }
 }
 
-- (void)performScheduledReload
-{
+- (void)performScheduledReload {
     [self autoReloadAppearance];
     _isReloadScheduled = NO;
 }
 
-- (UIImage *)loadImageNamed:(NSString *)string
-{
+- (UIImage *)loadImageNamed:(NSString *)string {
     bool isRetina = [UIDevice isa_isRetina];
     bool isPad = [UIDevice isa_isPad];
 
@@ -1176,26 +1122,22 @@ static const float kAppearanceReloadDelay = 0.25;
     return [UIImage imageNamed:string];
 }
 
-- (void)addStyleEntry:(ISAStyleEntry *)entry forClass:(Class)class andSelector:(NSString *)selectors
-{
+- (void)addStyleEntry:(ISAStyleEntry *)entry forClass:(Class)class andSelector:(NSString *)selectors {
     NSArray *keys = [selectors componentsSeparatedByString:@":"];
 
     [self addParams:@[entry] forClass:class toSelector:keys];
 }
 
-- (void)registerProxy:(ISAProxy *)proxy
-{
+- (void)registerProxy:(ISAProxy *)proxy {
 
 }
 
-- (void)unregisterProxy:(ISAProxy *)proxy
-{
+- (void)unregisterProxy:(ISAProxy *)proxy {
 
 }
 
-- (void)processGeneratedAppearance
-{
-    if([self respondsToSelector:@selector(registerGeneratedStyles)]) {
+- (void)processGeneratedAppearance {
+    if ([self respondsToSelector:@selector(registerGeneratedStyles)]) {
         [self registerGeneratedStyles];
     }
     [self processAppearance];

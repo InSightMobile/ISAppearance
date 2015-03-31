@@ -2,6 +2,7 @@
 // 
 
 #import "UIFont+ISAObjectCreation.h"
+
 #if ISA_CODE_GENERATION
 #import "ISACode.h"
 #endif
@@ -41,8 +42,7 @@
 }
 #endif
 
-+ (id)objectWithISANode:(id)param
-{
++ (id)objectWithISANode:(id)param {
     if ([param isKindOfClass:[NSNumber class]]) {
         return [UIFont systemFontOfSize:[param floatValue]];
     }

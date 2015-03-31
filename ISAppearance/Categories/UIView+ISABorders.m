@@ -12,36 +12,31 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
 
 @implementation UIView (ISABorders)
 
-- (void)setRotationAngle:(CGFloat)angle
-{
-    self.transform = CGAffineTransformMakeRotation((CGFloat) (angle * M_PI/ 180.0));
+- (void)setRotationAngle:(CGFloat)angle {
+    self.transform = CGAffineTransformMakeRotation((CGFloat) (angle * M_PI / 180.0));
 }
 
-- (void)setBorderColor:(UIColor *)color width:(CGFloat)width radius:(CGFloat)radius
-{
+- (void)setBorderColor:(UIColor *)color width:(CGFloat)width radius:(CGFloat)radius {
     [self.layer setBorderColor:color.CGColor];
     [self.layer setBorderWidth:width];
     [self.layer setCornerRadius:radius];
     [self.layer setMasksToBounds:YES];
 }
 
-- (void)setShadowColor:(UIColor *)color opacity:(CGFloat)opacity offset:(CGSize)offset radius:(CGFloat)radius
-{
+- (void)setShadowColor:(UIColor *)color opacity:(CGFloat)opacity offset:(CGSize)offset radius:(CGFloat)radius {
     [self.layer setShadowColor:color.CGColor];
     [self.layer setShadowOffset:offset];
     [self.layer setShadowRadius:radius];
     [self.layer setShadowOpacity:opacity];
 }
 
-- (void)setShadowColor:(UIColor *)color offset:(CGSize)offset radius:(CGFloat)radius
-{
+- (void)setShadowColor:(UIColor *)color offset:(CGSize)offset radius:(CGFloat)radius {
     [self.layer setShadowColor:color.CGColor];
     [self.layer setShadowOffset:offset];
     [self.layer setShadowRadius:radius];
 }
 
-- (void)setLayerImage:(UIImage *)image
-{
+- (void)setLayerImage:(UIImage *)image {
     self.layer.contents = (id) image.CGImage;
     self.layer.contentsScale = [UIScreen mainScreen].scale;
     self.layer.contentsCenter = CGRectMake(
@@ -52,8 +47,7 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
                     image.capInsets.top) / image.size.height);
 }
 
-- (void)setSeparatorImage:(UIImage *)image
-{
+- (void)setSeparatorImage:(UIImage *)image {
     UIImageView *imageView = nil;
 
     for (UIView *subview in self.subviews) {
@@ -84,8 +78,7 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
     imageView.image = image;
 }
 
-- (void)setVerticalSeparatorImage:(UIImage *)image
-{
+- (void)setVerticalSeparatorImage:(UIImage *)image {
     UIImageView *imageView = nil;
 
     for (UIView *subview in self.subviews) {
@@ -111,8 +104,7 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
     imageView.image = image;
 }
 
-- (void)setBackgroundImage:(UIImage *)image
-{
+- (void)setBackgroundImage:(UIImage *)image {
     UIImageView *imageView = nil;
 
     for (UIView *subview in self.subviews) {
@@ -135,8 +127,7 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
     imageView.image = image;
 }
 
-- (void)setBackgroundViewImage:(UIImage *)image forKeyPath:(NSString *)keyPath;
-{
+- (void)setBackgroundViewImage:(UIImage *)image forKeyPath:(NSString *)keyPath; {
     UIView *currentView = [self valueForKeyPath:keyPath];
 
     if ([currentView isKindOfClass:[UIImageView class]]) {
@@ -150,8 +141,7 @@ static NSString *const ISACellVerticalSeparatorLayerName = @"ISACellVerticalSepa
     }
 }
 
-- (void)setImageView:(UIImage *)image forKeyPath:(NSString *)keyPath;
-{
+- (void)setImageView:(UIImage *)image forKeyPath:(NSString *)keyPath; {
     UIView *currentView = [self valueForKeyPath:keyPath];
 
     if ([currentView isKindOfClass:[UIImageView class]]) {

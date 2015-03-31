@@ -15,8 +15,10 @@
 - (id)initWithContext:(NSMutableDictionary *)context;
 
 - (NSArray *)parseString:(NSString *)string parseError:(NSError **)error;
+
 - (NSArray *)parseData:(NSData *)data parseError:(NSError **)error;
-- (NSArray *)parseFile:(NSString *)path  parseError:(NSError **)error;
+
+- (NSArray *)parseFile:(NSString *)path parseError:(NSError **)error;
 
 @property(strong, nonatomic) id <ISYAMLParserTagResolver> tagResolver;
 

@@ -18,6 +18,7 @@
 @interface ISYAML : NSObject
 
 #pragma mark Parser
+
 + (id)loadFromString:(NSString *)aString;
 
 + (id)loadDataFromFileNamed:(NSString *)name bundle:(NSBundle *)bundle error:(NSError **)error;

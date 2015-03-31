@@ -7,9 +7,9 @@
 #include "ISAValueConverting.h"
 
 
-@interface ISAValueConverter : NSObject<ISAValueConverting>
+@interface ISAValueConverter : NSObject <ISAValueConverting>
 
-+ (id<ISAValueConverting>)converterNamed:(NSString *)className;
++ (id <ISAValueConverting>)converterNamed:(NSString *)className;
 
 + (id)objectOfClass:(Class)pClass withISANode:(id)node;
 

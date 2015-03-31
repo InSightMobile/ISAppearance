@@ -76,7 +76,7 @@ void *ISYAMLNewBase64Decode(
     }
 
     size_t outputBufferSize =
-            ((length + BASE64_UNIT_SIZE- 1) / BASE64_UNIT_SIZE) * BINARY_UNIT_SIZE;
+            ((length + BASE64_UNIT_SIZE - 1) / BASE64_UNIT_SIZE) * BINARY_UNIT_SIZE;
     unsigned char *outputBuffer = (unsigned char *) malloc(outputBufferSize);
 
     size_t i = 0;
@@ -245,8 +245,7 @@ char *ISYAMLNewBase64Encode(
 //
 // returns the autoreleased NSData representation of the base64 string
 //
-+ (NSData *)isyaml_dataFromBase64String:(NSString *)aString
-{
++ (NSData *)isyaml_dataFromBase64String:(NSString *)aString {
     NSData *data = [aString dataUsingEncoding:NSASCIIStringEncoding];
     size_t outputLength;
     void *outputBuffer = ISYAMLNewBase64Decode([data bytes], [data length], &outputLength);
@@ -264,8 +263,7 @@ char *ISYAMLNewBase64Encode(
 // returns an autoreleased NSString being the base 64 representation of the
 //	receiver.
 //
-- (NSString *)isyaml_base64EncodedString
-{
+- (NSString *)isyaml_base64EncodedString {
     size_t outputLength = 0;
     char *outputBuffer =
             ISYAMLNewBase64Encode([self bytes], [self length], true, &outputLength);

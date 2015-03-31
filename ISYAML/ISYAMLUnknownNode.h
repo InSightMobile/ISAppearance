@@ -9,15 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "ISYAMLTag.h"
 
-typedef struct
-{
+typedef struct {
     NSUInteger line;
     NSUInteger column;
     NSUInteger index;
 } ISYAMLMark;
 
-typedef struct
-{
+typedef struct {
     ISYAMLMark start;
     ISYAMLMark end;
 } ISYAMLRange;
@@ -26,8 +24,7 @@ ISYAMLRange ISYAMLMakeRange(ISYAMLMark start, ISYAMLMark end);
 
 ISYAMLMark ISYAMLMakeMark(NSUInteger line, NSUInteger column, NSUInteger index);
 
-@interface ISYAMLUnknownNode : NSObject
-{
+@interface ISYAMLUnknownNode : NSObject {
     ISYAMLRange position;
     ISYAMLTag *implicitTag;
     ISYAMLTag *explicitTag;

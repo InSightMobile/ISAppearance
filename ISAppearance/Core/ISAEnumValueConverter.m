@@ -6,13 +6,11 @@
 #import "ISAEnumValueConverter.h"
 
 
-@implementation ISAEnumValueConverter
-{
+@implementation ISAEnumValueConverter {
 
 }
 
-- (NSInteger)valueFromString:(NSString *)string
-{
+- (NSInteger)valueFromString:(NSString *)string {
     NSUInteger result = 0;
 
     NSArray *values = [string componentsSeparatedByString:@"|"];
@@ -30,14 +28,12 @@
     return result;
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     NSInteger result = [self getIntegerFromNode:node];
     return [NSNumber numberWithInteger:result];
 }
 
-- (NSInteger)getIntegerFromNode:(id)node
-{
+- (NSInteger)getIntegerFromNode:(id)node {
     NSInteger result = 0;
 
     if ([node isKindOfClass:[NSString class]]) {

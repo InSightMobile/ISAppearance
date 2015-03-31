@@ -18,10 +18,9 @@
 
 @synthesize usesExplicitDelimiters, encoding;
 
-- (id)init
-{
+- (id)init {
     if (!(self = [super init])) {
-            return nil;
+        return nil;
     }
 
     opaque_emitter = malloc(sizeof(yaml_emitter_t));
@@ -40,15 +39,13 @@
 }
 
 
-- (void)dealloc
-{
+- (void)dealloc {
     yaml_emitter_delete(opaque_emitter);
     buffer = nil;
     free(opaque_emitter), opaque_emitter = nil;
 }
 
-- (void)emitItem:(id)item
-{
+- (void)emitItem:(id)item {
     // Create and initialize a document to hold this.
     yaml_document_t document;
     memset(&document, 0, sizeof(document));
@@ -61,8 +58,7 @@
     yaml_document_delete(&document);
 }
 
-- (int)_writeItem:(id)item toDocument:(yaml_document_t *)doc
-{
+- (int)_writeItem:(id)item toDocument:(yaml_document_t *)doc {
     int nodeID = 0;
     // #keyEnumerator covers NSMapTable/NSHashTable/NSDictionary
     if ([item respondsToSelector:@selector(keyEnumerator)]) {
@@ -93,18 +89,15 @@
     return nodeID;
 }
 
-- (NSString *)emittedString
-{
+- (NSString *)emittedString {
     return [[NSString alloc] initWithData:buffer encoding:NSUTF8StringEncoding];
 }
 
-- (NSData *)emittedData
-{
+- (NSData *)emittedData {
     return [NSData dataWithData:buffer];
 }
 
-- (void)setEncoding:(NSStringEncoding)newEnc
-{
+- (void)setEncoding:(NSStringEncoding)newEnc {
     encoding = newEnc;
     yaml_encoding_t converted = YAML_ANY_ENCODING;
     switch (encoding) {

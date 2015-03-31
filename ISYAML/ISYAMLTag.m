@@ -21,21 +21,19 @@
 
 @end
 
-@implementation ISYAMLTag
-{
+@implementation ISYAMLTag {
     NSString *verbatim;
     NSString *shorthand;
     id <ISYAMLTagDelegate> __weak delegate;
 }
 
-- (id)initWithURI:(NSString *)aURI delegate:(id <ISYAMLTagDelegate>)aDelegate
-{
+- (id)initWithURI:(NSString *)aURI delegate:(id <ISYAMLTagDelegate>)aDelegate {
     if (!aURI) {
         return nil;
     }
 
     if (!(self = [super init])) {
-            return nil;
+        return nil;
     }
 
     verbatim = [aURI copy];
@@ -45,54 +43,49 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     verbatim = nil;
     shorthand = nil;
     delegate = nil;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), verbatim];
 }
 
-- (id)decodeFromString:(NSString *)stringValue explicitTag:(ISYAMLTag *)explicitTag
-{
+- (id)decodeFromString:(NSString *)stringValue explicitTag:(ISYAMLTag *)explicitTag {
     // If string cannot be decoded, nil is returned.  If the string was decoded and cannot be casted, YKUknownNode is returned
     id resultingValue = [self internalDecodeFromString:stringValue
                                              extraInfo:[NSDictionary dictionaryWithObject:(explicitTag ? (id) explicitTag : (id) [NSNull null])
                                                                                    forKey:@"explicitTag"]];
     if (!resultingValue || !explicitTag || self == explicitTag) {
-            return resultingValue;
+        return resultingValue;
     }
 
     id castedValue = [self castValue:resultingValue toTag:explicitTag];
     if (castedValue) {
-            return castedValue;
+        return castedValue;
     }
 
     return [ISYAMLUnknownNode unknownNodeWithStringValue:stringValue implicitTag:self explicitTag:explicitTag
                                                 position:ISYAMLMakeRange(ISYAMLMakeMark(0, 0, 0), ISYAMLMakeMark(0, 0, 0))];
 }
 
-- (id)internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
-{
+- (id)internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo {
     id result = nil;
 
     if (result) {
-            return result;
+        return result;
     }
 
     if (![delegate respondsToSelector:@selector(tag:decodeFromString:extraInfo:)]) {
-            return nil;
+        return nil;
     }
 
     return [(id <ISYAMLTagDelegate>) delegate tag:self decodeFromString:stringValue extraInfo:extraInfo];
 }
 
-- (id)castValue:(id)value fromTag:(ISYAMLTag *)castingTag
-{
+- (id)castValue:(id)value fromTag:(ISYAMLTag *)castingTag {
     id result = nil;
     if (!castingTag) {
         if ([delegate respondsToSelector:@selector(tag:processNode:extraInfo:)]) {
@@ -100,33 +93,31 @@
         }
     }
     if (result) {
-            return result;
+        return result;
     }
 
     if (![delegate respondsToSelector:@selector(tag:castValue:fromTag:)]) {
-            return nil;
+        return nil;
     }
     return [(id <ISYAMLTagDelegate>) delegate tag:self castValue:value fromTag:castingTag];
 }
 
-- (id)castValue:(id)value toTag:(ISYAMLTag *)castingTag
-{
+- (id)castValue:(id)value toTag:(ISYAMLTag *)castingTag {
 
     id resultingValue = [castingTag castValue:value fromTag:self];
     if (resultingValue) {
-            return resultingValue;
+        return resultingValue;
     }
 
     if (![delegate respondsToSelector:@selector(tag:castValue:toTag:)]) {
-            return nil;
+        return nil;
     }
     return [(id <ISYAMLTagDelegate>) delegate tag:self castValue:value toTag:castingTag];
 }
 
 @synthesize verbatim;
 
-- (id)processNode:(id)node
-{
+- (id)processNode:(id)node {
     if (![delegate respondsToSelector:@selector(tag:processNode:extraInfo:)]) {
         return node;
     }
@@ -151,10 +142,9 @@
 
 @implementation ISYAMLRegexTag : ISYAMLTag
 
-- (id)initWithURI:(NSString *)aURI delegate:(id <ISYAMLTagDelegate>)aDelegate
-{
+- (id)initWithURI:(NSString *)aURI delegate:(id <ISYAMLTagDelegate>)aDelegate {
     if (!(self = [super initWithURI:aURI delegate:aDelegate])) {
-            return nil;
+        return nil;
     }
 
     regexDeclarations = [[NSMutableDictionary alloc] init];
@@ -162,22 +152,19 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     regexDeclarations = nil;
 }
 
-- (void)addRegexDeclaration:(NSString *)regex hint:(id)hint
-{
+- (void)addRegexDeclaration:(NSString *)regex hint:(id)hint {
     [regexDeclarations setValue:(hint ? hint : [NSNull null]) forKey:regex];
 }
 
-- (id)internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
-{
+- (id)internalDecodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo {
     id hint = nil;
     NSArray *components = [self findRegexThatMatchesStringValue:stringValue hint:&hint];
     if (!components) {
-            return nil;
+        return nil;
     }
 
     NSMutableDictionary *scopeMutableExtraInfo = [NSMutableDictionary dictionaryWithDictionary:extraInfo];
@@ -188,8 +175,7 @@
     return [super internalDecodeFromString:stringValue extraInfo:scopeExtraInfo];
 }
 
-- (NSArray *)arrayOfCaptureComponentsFrom:(NSString *)string matchedByRegex:(NSString *)regexp
-{
+- (NSArray *)arrayOfCaptureComponentsFrom:(NSString *)string matchedByRegex:(NSString *)regexp {
     NSError *error = NULL;
 
     NSRegularExpression *regex = [NSRegularExpression
@@ -206,15 +192,14 @@
     return array;
 }
 
-- (NSArray *)findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id *)hint
-{
+- (NSArray *)findRegexThatMatchesStringValue:(NSString *)stringValue hint:(id *)hint {
     NSArray *components = nil;
     for (NSString *regex in regexDeclarations) {
 
         components = [self arrayOfCaptureComponentsFrom:stringValue matchedByRegex:regex];
         if ([components count] > 0) {
             if (hint) {
-                            *hint = [regexDeclarations valueForKey:regex];
+                *hint = [regexDeclarations valueForKey:regex];
             }
             return components;
         }

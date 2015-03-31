@@ -7,13 +7,11 @@
 #import "ISACGRectValueConverter.h"
 
 
-@implementation ISACGRectValueConverter
-{
+@implementation ISACGRectValueConverter {
 
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     CGRect rect = CGRectZero;
 
     if ([node isKindOfClass:[NSArray class]]) {

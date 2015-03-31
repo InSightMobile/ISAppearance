@@ -2,17 +2,16 @@
 // 
 
 #import "ISAUIEdgeInsetsValueConverter.h"
+
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
 
-@implementation ISAUIEdgeInsetsValueConverter
-{
+@implementation ISAUIEdgeInsetsValueConverter {
 
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     UIEdgeInsets insets = UIEdgeInsetsZero;
 
     if ([node isKindOfClass:[NSArray class]]) {

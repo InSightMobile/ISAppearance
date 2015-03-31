@@ -11,14 +11,14 @@
 @implementation ISYAML
 
 #pragma mark Parser
-+ (id)loadFromString:(NSString *)str
-{
+
++ (id)loadFromString:(NSString *)str {
     if (!str || [str isEqualToString:@""]) {
         return nil;
     }
 
     ISYAMLParser *p = [[ISYAMLParser alloc] init];
-    NSArray *result = [p parseString:str parseError:NULL ];
+    NSArray *result = [p parseString:str parseError:NULL];
 
     // If parse returns a one-element array, extract it.
     if ([result count] == 1) {
@@ -27,8 +27,7 @@
     return result;
 }
 
-+ (id)loadDataFromFileNamed:(NSString *)name bundle:(NSBundle *)bundle error:(NSError **)error
-{
++ (id)loadDataFromFileNamed:(NSString *)name bundle:(NSBundle *)bundle error:(NSError **)error {
     if (!bundle) {
         bundle = [NSBundle mainBundle];
     }
@@ -46,8 +45,7 @@
 }
 
 
-+ (id)loadFromFile:(NSString *)path error:(NSError **)error
-{
++ (id)loadFromFile:(NSString *)path error:(NSError **)error {
     if (!path || [path isEqualToString:@""]) {
         return nil;
     }
@@ -74,8 +72,7 @@
     return result;
 }
 
-+ (id)loadFromURL:(NSURL *)url
-{
++ (id)loadFromURL:(NSURL *)url {
     if (!url) {
         return nil;
     }
@@ -90,15 +87,14 @@
 }
 
 #pragma mark Emitter
-+ (NSString *)dumpObject:(id)object
-{
+
++ (NSString *)dumpObject:(id)object {
     ISYAMLEmitter *e = [[ISYAMLEmitter alloc] init];
     [e emitItem:object];
     return [e emittedString];
 }
 
-+ (BOOL)dumpObject:(id)object toFile:(NSString *)path
-{
++ (BOOL)dumpObject:(id)object toFile:(NSString *)path {
     ISYAMLEmitter *e = [[ISYAMLEmitter alloc] init];
     [e emitItem:object];
     return [[e emittedString] writeToFile:path
@@ -107,8 +103,7 @@
                                     error:NULL];
 }
 
-+ (BOOL)dumpObject:(id)object toURL:(NSURL *)path
-{
++ (BOOL)dumpObject:(id)object toURL:(NSURL *)path {
     ISYAMLEmitter *e = [[ISYAMLEmitter alloc] init];
     [e emitItem:object];
     return [[e emittedString] writeToURL:path

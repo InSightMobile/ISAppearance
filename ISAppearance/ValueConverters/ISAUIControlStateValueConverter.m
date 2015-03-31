@@ -1,9 +1,7 @@
 //
 //  ISAUIControlStateValueConverter.m
-//  ISAppearanceDemo
+//  ISAppearance
 //
-//  Created by yar on 19.01.13.
-//  Copyright (c) 2013 infoshell. All rights reserved.
 //
 
 #import "ISAUIControlStateValueConverter.h"
@@ -14,8 +12,7 @@
 
 @implementation ISAUIControlStateValueConverter
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         self.mapping = @{

@@ -10,6 +10,7 @@
 
 @optional
 - (id)codeWithISANode:(id)node;
+
 - (id)boxedCodeWithISANode:(id)node;
 
 @end

@@ -8,8 +8,7 @@
 
 @implementation UIColor (ISACHexString)
 
-+ (UIColor *)isa_colorWithHexString:(NSString *)hex
-{
++ (UIColor *)isa_colorWithHexString:(NSString *)hex {
     NSString *cString =
             [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
 

@@ -5,8 +5,7 @@
 
 @implementation UIImage (ISAGradient)
 
-+ (UIImage *)imageWithVerticalGradient:(NSArray *)colors height:(CGFloat)height
-{
++ (UIImage *)imageWithVerticalGradient:(NSArray *)colors height:(CGFloat)height {
 
     CGSize size = CGSizeMake(1, height);
     CGFloat scale = 1;

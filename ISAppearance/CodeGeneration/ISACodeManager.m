@@ -3,7 +3,6 @@
 
 #import "ISACodeManager.h"
 #import "ISACodeEntry.h"
-#import "ISACode.h"
 
 
 @interface ISACodeManager ()
@@ -12,13 +11,11 @@
 @property(nonatomic) int varIndex;
 @end
 
-@implementation ISACodeManager
-{
+@implementation ISACodeManager {
 
 }
 
-+ (ISACodeManager *)instance
-{
++ (ISACodeManager *)instance {
     static ISACodeManager *_instance = nil;
 
     @synchronized (self) {
@@ -30,8 +27,7 @@
     return _instance;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.entriesByCode = [NSMutableDictionary new];
@@ -42,23 +38,21 @@
     return self;
 }
 
-- (NSString *)generateNameForCode:(ISACode *)code
-{
+- (NSString *)generateNameForCode:(ISACode *)code {
     self.varIndex++;
-    return [NSString stringWithFormat:@"var%d",self.varIndex];
+    return [NSString stringWithFormat:@"var%d", self.varIndex];
 }
 
 
-- (ISACodeEntry *)registerCode:(ISACode *)code
-{
-    if(!code.codeClass) {
+- (ISACodeEntry *)registerCode:(ISACode *)code {
+    if (!code.codeClass) {
         return nil;
     }
 
 
     ISACodeEntry *entry = _entriesByCode[code.sourceString];
 
-    if(!entry) {
+    if (!entry) {
         entry = [ISACodeEntry entryWithCode:code name:[self generateNameForCode:code]];
         _entriesByCode[code.sourceString] = entry;
         _entriesByName[entry.name] = entry;
@@ -70,22 +64,18 @@
 }
 
 
-
-- (NSString *)generateCodeWithSource:(NSString *)source
-{
+- (NSString *)generateCodeWithSource:(NSString *)source {
     return [ISACodeEntry processCodeWithSource:source withProcessor:^NSString *(ISACodeEntry *entry) {
         return [entry referenceCode];
     }];
     return nil;
 }
 
-- (ISACodeEntry *)entryForName:(NSString *)name
-{
+- (ISACodeEntry *)entryForName:(NSString *)name {
     return _entriesByName[name];
 }
 
-- (void)addDefinition:(NSString *)definition
-{
+- (void)addDefinition:(NSString *)definition {
     [_definitions addObject:definition];
 }
 

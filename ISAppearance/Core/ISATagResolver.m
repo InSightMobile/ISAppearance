@@ -10,13 +10,11 @@
 
 @end
 
-@implementation ISATagResolver
-{
+@implementation ISATagResolver {
 
 }
 
-- (ISYAMLTag *)tagForURI:(NSString *)uri
-{
+- (ISYAMLTag *)tagForURI:(NSString *)uri {
     if (uri.length < 1) {
         return nil;
     }

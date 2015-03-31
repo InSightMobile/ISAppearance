@@ -5,14 +5,14 @@
 #import "UIImage+ISACColor.h"
 #import "ISAppearance+Private.h"
 #import "ISAValueConverter.h"
+
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
 
 @implementation UIImage (ISAObjectCreation)
 
-+ (UIImage *)isaImageNamed:(NSString *)name
-{
++ (UIImage *)isaImageNamed:(NSString *)name {
     return [[ISAppearance sharedInstance] loadImageNamed:name];
 }
 
@@ -98,8 +98,7 @@
 
 #endif
 
-+ (id)objectWithISANode:(id)node
-{
++ (id)objectWithISANode:(id)node {
     UIImage *image = nil;
     if ([node isKindOfClass:[NSString class]]) {
 

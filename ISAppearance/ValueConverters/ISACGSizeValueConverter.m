@@ -14,8 +14,7 @@
 
 @implementation ISACGSizeValueConverter
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     CGSize size = CGSizeZero;
 
     if ([node isKindOfClass:[NSArray class]]) {

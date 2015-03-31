@@ -8,13 +8,11 @@
 #import "ISARuntimeSelector.h"
 
 
-@implementation ISAStyle
-{
+@implementation ISAStyle {
 
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         self.entries = [NSMutableArray new];
@@ -22,13 +20,11 @@
     return self;
 }
 
-- (void)addEntries:(NSArray *)array
-{
+- (void)addEntries:(NSArray *)array {
     [_entries addObjectsFromArray:array];
 }
 
-- (void)applyToTarget:(id)target
-{
+- (void)applyToTarget:(id)target {
     for (ISARuntimeSelector *selector in _runtimeSelectors) {
         if (![selector isApplyableTo:target]) {
             return;
@@ -40,19 +36,17 @@
     }
 }
 
-- (BOOL)isConformToClassSelectors:(NSSet *)set
-{
+- (BOOL)isConformToClassSelectors:(NSSet *)set {
     return [_classSelectors isSubsetOfSet:set];
 }
 
-- (void)processSelectors:(NSSet *)selectors
-{
-    NSMutableSet* set = [NSMutableSet setWithCapacity:selectors.count];
-    NSMutableArray* runtime = [NSMutableArray new];
+- (void)processSelectors:(NSSet *)selectors {
+    NSMutableSet *set = [NSMutableSet setWithCapacity:selectors.count];
+    NSMutableArray *runtime = [NSMutableArray new];
     for (NSString *selector in selectors) {
 
         ISARuntimeSelector *runtimeSelector = [ISARuntimeSelector selectorWithName:selector];
-        if(runtimeSelector) {
+        if (runtimeSelector) {
             [runtime addObject:runtimeSelector];
         }
         else {
@@ -60,13 +54,12 @@
         }
     }
     self.selectors = [set copy];
-    if(runtime.count) {
+    if (runtime.count) {
         self.runtimeSelectors = [runtime copy];
     }
 }
 
-- (NSComparisonResult)compare:(ISAStyle *)style
-{
+- (NSComparisonResult)compare:(ISAStyle *)style {
     NSInteger first = self.selectors.count;
     NSInteger second = style.selectors.count;
 
@@ -82,8 +75,7 @@
 }
 
 
-- (void)setSelectors:(NSSet *)selectors
-{
+- (void)setSelectors:(NSSet *)selectors {
     _selectors = selectors;
     _classSelectors = selectors;
 }

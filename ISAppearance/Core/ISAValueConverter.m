@@ -5,6 +5,7 @@
 #import "ISANSObjectValueConverter.h"
 #import "ISAStyleEntry.h"
 #import "ISAEnumClassValueConverter.h"
+
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
@@ -14,22 +15,20 @@
 @property(nonatomic, copy) NSString *className;
 @end
 
-@implementation ISAValueConverter
-{
+@implementation ISAValueConverter {
 
 }
 
-+ (id<ISAValueConverting>)converterNamed:(NSString *)className
-{
++ (id <ISAValueConverting>)converterNamed:(NSString *)className {
     NSMutableDictionary *convertersByName = [self convertersByName];
-    ISAValueConverter* converter = convertersByName[className];
+    ISAValueConverter *converter = convertersByName[className];
     if (converter) {
         return converter;
     }
 
     Class converterClass = [self converterClassForTypeName:className];
     if (converterClass) {
-        converter = (ISAValueConverter*) [[converterClass alloc] init];
+        converter = (ISAValueConverter *) [[converterClass alloc] init];
     }
     if (!converter) {
         NSString *enumerationClassName = [NSString stringWithFormat:@"%@Enum", className];
@@ -56,15 +55,13 @@
     return converter;
 }
 
-+ (Class)converterClassForTypeName:(NSString *)className
-{
++ (Class)converterClassForTypeName:(NSString *)className {
     NSString *converterClassName = [NSString stringWithFormat:@"ISA%@ValueConverter", className];
     Class converterClass = NSClassFromString(converterClassName);
     return converterClass;
 }
 
-- (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
-{
+- (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo {
 #if ISA_CODE_GENERATION
     if(ISA_IS_CODE_GENERATION_MODE) {
         return [ISACode fixCodeForTypeName:self.className value:[self codeWithISANode:node]];
@@ -81,8 +78,7 @@
     return nil;
 }
 
-- (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
-{
+- (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag {
 #if ISA_CODE_GENERATION
     if(ISA_IS_CODE_GENERATION_MODE) {
         return [ISACode fixCodeForTypeName:self.className value:[self codeWithISANode:value]];
@@ -91,18 +87,15 @@
     return [self objectWithISANode:value];
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     return nil;
 }
 
-- (ISYAMLTag *)parsingTagForURI:(NSString *)uri
-{
+- (ISYAMLTag *)parsingTagForURI:(NSString *)uri {
     return [[ISYAMLTag alloc] initWithURI:uri delegate:self];
 }
 
-+ (NSMutableDictionary *)convertersByName
-{
++ (NSMutableDictionary *)convertersByName {
     static NSMutableDictionary *_instance = nil;
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
@@ -111,8 +104,7 @@
     return _instance;
 }
 
-+ (id)objectOfClass:(Class)pClass withISANode:(id)node
-{
++ (id)objectOfClass:(Class)pClass withISANode:(id)node {
     id result = nil;
     if ([node isKindOfClass:[NSArray class]]) {
         if ([node count] > 0) {

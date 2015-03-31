@@ -8,8 +8,7 @@
 
 @implementation UIImage (ISAColor)
 
-+ (UIImage *)imageWithColor:(UIColor *)color
-{
++ (UIImage *)imageWithColor:(UIColor *)color {
     CGRect rect = CGRectMake(0, 0, 1, 1);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
     [color setFill];
@@ -19,8 +18,7 @@
     return image;
 }
 
-+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size
-{
++ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
     CGRect rect = CGRectMake(0, 0, size.width, size.height);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
     [color setFill];
@@ -30,8 +28,7 @@
     return image;
 }
 
-+ (UIImage *)imageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor size:(CGSize)size
-{
++ (UIImage *)imageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor size:(CGSize)size {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
     CGRect rect = CGRectMake(0, 0, size.width, size.height);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
@@ -44,8 +41,7 @@
     return image;
 }
 
-+ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor
-{
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
     CGRect rect = CGRectMake(0, 0, 1 + 2, 1 + 2);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
@@ -58,9 +54,8 @@
     return [image stretchableImageWithLeftCapWidth:1 topCapHeight:1];
 }
 
-+ (UIImage *)stretchableImageWithFillColor:(UIColor *)color size:(CGSize)size insets:(UIEdgeInsets)insets
-{
-    CGRect rect = CGRectMake(0, 0, size.width+insets.left+insets.right, size.height+insets.top+insets.bottom);
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)color size:(CGSize)size insets:(UIEdgeInsets)insets {
+    CGRect rect = CGRectMake(0, 0, size.width + insets.left + insets.right, size.height + insets.top + insets.bottom);
     CGRect drawRect = UIEdgeInsetsInsetRect(rect, insets);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
     [color setFill];
@@ -71,8 +66,7 @@
                                       topCapHeight:(NSInteger) (insets.top + 1)];
 }
 
-+ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth
-{
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth {
     NSInteger borderSpace = (NSInteger) ceil(borderWidth);
 
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
@@ -91,8 +85,7 @@
     return [image stretchableImageWithLeftCapWidth:borderSpace topCapHeight:borderSpace];
 }
 
-+ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth borderRadius:(CGFloat)borderRadius
-{
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth borderRadius:(CGFloat)borderRadius {
     NSInteger borderSpace = (NSInteger) ceil(borderWidth);
 
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
@@ -123,8 +116,7 @@
                               borderRadius:(CGFloat)borderRadius
                                      width:(CGFloat)width
                                     height:(CGFloat)height
-                                    insets:(UIEdgeInsets)insets
-{
+                                    insets:(UIEdgeInsets)insets {
     NSInteger borderSpace = (NSInteger) ceil(borderWidth);
 
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
@@ -144,7 +136,6 @@
     CGContextSetLineWidth(context, borderWidth);
 
 
-
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:pathRect cornerRadius:borderRadius];
     path.lineWidth = borderWidth;
     [path fill];
@@ -159,8 +150,7 @@
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
                             underlineColor:(UIColor *)underlineColor
                            underlineHeight:(CGFloat)underlineHeight
-                                    insets:(UIEdgeInsets)insets
-{
+                                    insets:(UIEdgeInsets)insets {
     return [self stretchableImageWithFillColor:fillColor frameColor:nil underlineColor:underlineColor
                                underlineHeight:underlineHeight insets:insets];
 }
@@ -169,8 +159,7 @@
                                 frameColor:(UIColor *)frameColor
                             underlineColor:(UIColor *)underlineColor
                            underlineHeight:(CGFloat)underlineHeight
-                                    insets:(UIEdgeInsets)insets
-{
+                                    insets:(UIEdgeInsets)insets {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
 
     if (underlineHeight * scale < 1) {
@@ -213,8 +202,7 @@
 
 
 + (UIImage *)imageWithColor:(UIColor *)fillColor
-                       mask:(UIImage *)mask
-{
+                       mask:(UIImage *)mask {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
 
     CGRect rect = CGRectMake(0, 0, mask.size.width, mask.size.height);

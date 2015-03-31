@@ -8,8 +8,7 @@
 
 @implementation UIImage (ISATrim)
 
-- (UIImage *)imageCroppedByRect:(CGRect)cropRect
-{
+- (UIImage *)imageCroppedByRect:(CGRect)cropRect {
     CGFloat scale = self.scale;
 
     CGRect rect = cropRect;
@@ -24,8 +23,7 @@
     return image;
 }
 
-- (UIImage *)imageHorizontalStipFrom:(CGFloat)from height:(CGFloat)height
-{
+- (UIImage *)imageHorizontalStipFrom:(CGFloat)from height:(CGFloat)height {
     return [self imageCroppedByRect:CGRectMake(0, from, self.size.width, height)];
 }
 

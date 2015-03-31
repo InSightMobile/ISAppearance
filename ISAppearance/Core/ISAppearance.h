@@ -9,7 +9,7 @@
 #define ISA_STRINGIZE_IMPL(s) @#s
 #define ISA_STRINGIZE(s) ISA_STRINGIZE_IMPL(s)
 
-#define ISA_PATH_FROM_BASE(base,path) (ISA_STRINGIZE_IMPL(base) path)
+#define ISA_PATH_FROM_BASE(base, path) (ISA_STRINGIZE_IMPL(base) path)
 
 @interface ISAppearance : NSObject
 
@@ -24,7 +24,7 @@
 
 - (BOOL)processAppearance;
 
-- (BOOL)processAppearanceWithError:(NSError * __autoreleasing *)error;
+- (BOOL)processAppearanceWithError:(NSError *__autoreleasing *)error;
 
 
 - (BOOL)isConditionsPassed:(NSArray *)conditions;

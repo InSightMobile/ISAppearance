@@ -3,20 +3,17 @@
 
 #import "ISACGColorValueConverter.h"
 #import "UIColor+ISAObjectCreation.h"
-#import "ISAppearance.h"
-#import "NSObject+ISAppearance.h"
+
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
 
 
-@implementation ISACGColorValueConverter
-{
+@implementation ISACGColorValueConverter {
 
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     UIColor *color = [UIColor objectWithISANode:node];
 
     NSInvocation *invocation =

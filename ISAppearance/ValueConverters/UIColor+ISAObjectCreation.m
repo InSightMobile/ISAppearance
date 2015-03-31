@@ -16,8 +16,7 @@
 @implementation UIColor (ISAObjectCreation)
 
 
-+ (id)colorWithString:(NSString *)node
-{
++ (id)colorWithString:(NSString *)node {
     // try named colors
     SEL colorNameSelector = NSSelectorFromString([NSString stringWithFormat:@"%@Color", node]);
 
@@ -50,8 +49,7 @@
 #endif
 
 
-+ (id)objectWithISANode:(id)node
-{
++ (id)objectWithISANode:(id)node {
     if ([node isKindOfClass:[NSString class]]) {
 
         UIColor *cl = [self colorWithString:node];

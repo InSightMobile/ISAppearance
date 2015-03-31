@@ -3,7 +3,6 @@
 
 #import "ISAppearance+CodeGeneration.h"
 #import "ISAppearance+Private.h"
-#import "ISAStyleEntry.h"
 #import "ISAStyle.h"
 #import "ISACode.h"
 #import "ISARuntimeSelector.h"
@@ -29,13 +28,11 @@ static NSString *_codeTemplate = @""
 
 @implementation ISAppearance (CodeGeneration)
 
-+ (BOOL)isCodeGeneration
-{
++ (BOOL)isCodeGeneration {
     return _codeGenerationMode;
 }
 
-- (NSString *)generateCodeWithIncludes:(NSArray *)userIncludes
-{
+- (NSString *)generateCodeWithIncludes:(NSArray *)userIncludes {
     _codeGenerationMode = YES;
     [self clearCurrentClasses];
     [self processAppearance];
@@ -117,7 +114,7 @@ static NSString *_codeTemplate = @""
             _codeTemplate,
             [includes.allObjects componentsJoinedByString:@"\n"],
             [manager.definitions componentsJoinedByString:@"\n\n"],
-                    generatedCode];
+            generatedCode];
 
 
     _codeGenerationMode = NO;
@@ -126,8 +123,7 @@ static NSString *_codeTemplate = @""
     return code;
 }
 
-- (void)processStyleStyle:(ISAStyle *)style resultClasses:(NSMutableArray *)classes includes:(NSMutableSet *)includes
-{
+- (void)processStyleStyle:(ISAStyle *)style resultClasses:(NSMutableArray *)classes includes:(NSMutableSet *)includes {
     NSString *className = style.className;
 
     [self includeClassName:className to:includes];
@@ -161,23 +157,20 @@ static NSString *_codeTemplate = @""
     [classes addObject:classCode];
 }
 
-- (void)includeClassName:(NSString *)className to:(NSMutableSet *)includes
-{
+- (void)includeClassName:(NSString *)className to:(NSMutableSet *)includes {
     if (![className hasPrefix:@"UI"]) {
         [includes addObject:[NSString stringWithFormat:@"#import \"%@.h\"", className]];
     }
 }
 
-- (id)generateCodeForEntry:(ISAStyleEntry *)entry
-{
+- (id)generateCodeForEntry:(ISAStyleEntry *)entry {
     ISACode *codeEntry = [entry generateCode];
 
     return codeEntry.sourceString;
 }
 
 
-- (void)generateCodeWithPath:(NSString *)path
-{
+- (void)generateCodeWithPath:(NSString *)path {
 
     NSString *include = [[path.lastPathComponent stringByDeletingPathExtension] stringByAppendingPathExtension:@"h"];
 
@@ -186,7 +179,6 @@ static NSString *_codeTemplate = @""
     [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
 
 }
-
 
 
 @end

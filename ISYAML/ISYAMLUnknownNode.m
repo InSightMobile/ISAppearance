@@ -21,17 +21,15 @@ inline ISYAMLMark ISYAMLMakeMark(NSUInteger line, NSUInteger column, NSUInteger 
 @implementation ISYAMLUnknownNode
 
 + (id)unknownNodeWithStringValue:(NSString *)aStringValue implicitTag:(ISYAMLTag *)aImplicitTag
-                     explicitTag:(ISYAMLTag *)aExplicitTag position:(ISYAMLRange)aPosition
-{
+                     explicitTag:(ISYAMLTag *)aExplicitTag position:(ISYAMLRange)aPosition {
     return [[self alloc] initWithStringValue:aStringValue implicitTag:aImplicitTag explicitTag:aExplicitTag
                                     position:aPosition];
 }
 
 - (id)initWithStringValue:(NSString *)aStringValue implicitTag:(ISYAMLTag *)aImplicitTag explicitTag:(ISYAMLTag *)aExplicitTag
-                 position:(ISYAMLRange)aPosition
-{
+                 position:(ISYAMLRange)aPosition {
     if (!(self = [super init])) {
-            return nil;
+        return nil;
     }
 
     stringValue = [aStringValue copy];
@@ -42,15 +40,13 @@ inline ISYAMLMark ISYAMLMakeMark(NSUInteger line, NSUInteger column, NSUInteger 
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     stringValue = nil;
     implicitTag = nil;
     explicitTag = nil;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
     return [NSString stringWithFormat:@"{!%@ %@ (%ld:%ld),(%ld:%ld)}", explicitTag, stringValue,
                                       (long) position.start.line, (long) position.start.column, (long) position.end.line, (long) position.end.column];
 }

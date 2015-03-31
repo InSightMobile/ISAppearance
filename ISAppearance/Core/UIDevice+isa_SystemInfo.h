@@ -19,7 +19,9 @@
 
 
 + (BOOL)isa_isPhone5 __attribute__ ((deprecated));
+
 + (BOOL)isa_isIOS7 __attribute__ ((deprecated));
+
 + (BOOL)isa_isIOS6AndGreater __attribute__ ((deprecated));
 
 @end

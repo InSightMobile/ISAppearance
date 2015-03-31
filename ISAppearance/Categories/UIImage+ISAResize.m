@@ -8,14 +8,13 @@
 
 @implementation UIImage (ISAResize)
 
-- (UIImage *)imageResizeToSize:(CGSize)size mode:(UIViewContentMode)mode quality:(CGInterpolationQuality)quality
-{
-    if(size.width == 0 || size.height == 0) {
+- (UIImage *)imageResizeToSize:(CGSize)size mode:(UIViewContentMode)mode quality:(CGInterpolationQuality)quality {
+    if (size.width == 0 || size.height == 0) {
         return [UIImage new];
     }
 
     CGFloat srcScale = self.scale;
-    UIGraphicsBeginImageContextWithOptions(size,NO, 0);
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
 
     CGSize imageSize = self.size;
 

@@ -2,7 +2,6 @@
 //
 
 #import "ISACodeEntry.h"
-#import "ISACode.h"
 #import "ISACodeManager.h"
 
 
@@ -15,58 +14,52 @@
 @property(nonatomic) ISACodeFlags flags;
 @end
 
-@implementation ISACodeEntry
-{
+@implementation ISACodeEntry {
 
     NSString *_referenceCode;
 }
-- (NSString *)referenceCode
-{
-    if(_referenceCode) {
+- (NSString *)referenceCode {
+    if (_referenceCode) {
         return _referenceCode;
     }
-    
-    if(self.shouldGeneratedDefinition) {
+
+    if (self.shouldGeneratedDefinition) {
 
         _referenceCode = self.name;
         [self generateDefinition];
 
     }
-    else {        
-        _referenceCode = self.resolvedCode;        
+    else {
+        _referenceCode = self.resolvedCode;
     }
-    
+
     return _referenceCode;
 }
 
-- (BOOL)shouldGeneratedDefinition
-{
-    if(self.codeClass == [NSNumber class] ||
+- (BOOL)shouldGeneratedDefinition {
+    if (self.codeClass == [NSNumber class] ||
             self.codeClass == [NSString class] ||
             (self.flags & ISACodeCached) ||
-            (self.flags & ISACodeForceInline))  {
+            (self.flags & ISACodeForceInline)) {
         return NO;
     }
     return YES;
 }
 
-- (void)generateDefinition
-{
-    NSString *definition = [NSString stringWithFormat:@"   %@ * const %@ = %@;",self.className,self.name,self.resolvedCode];
+- (void)generateDefinition {
+    NSString *definition = [NSString stringWithFormat:@"   %@ * const %@ = %@;", self.className, self.name, self.resolvedCode];
     [[ISACodeManager instance] addDefinition:definition];
 }
 
-- (NSString *)resolvedCode
-{
+- (NSString *)resolvedCode {
     NSString *generatedCode = [ISACodeEntry processCodeWithSource:self.sourceCode withProcessor:^NSString *(ISACodeEntry *entry) {
         return entry.referenceCode;
     }];
     return generatedCode;
 }
 
-+ (ISACodeEntry *)entryWithCode:(ISACode *)code name:(NSString *)name
-{
-    ISACodeEntry* entry = [[self alloc] init];
++ (ISACodeEntry *)entryWithCode:(ISACode *)code name:(NSString *)name {
+    ISACodeEntry *entry = [[self alloc] init];
 
     entry.codeReferenceCount = 1;
     entry.name = name;
@@ -78,25 +71,23 @@
     return entry;
 }
 
-- (void)addCode:(ISACode *)code
-{
+- (void)addCode:(ISACode *)code {
     self.codeReferenceCount++;
 }
 
 
-+ (NSString *)processCodeWithSource:(NSString *)source withProcessor:(NSString *(^)(ISACodeEntry *entry))processor
-{
++ (NSString *)processCodeWithSource:(NSString *)source withProcessor:(NSString *(^)(ISACodeEntry *entry))processor {
     NSMutableString *generated = [NSMutableString new];
 
-    NSScanner* scanner = [NSScanner scannerWithString:source];
+    NSScanner *scanner = [NSScanner scannerWithString:source];
     scanner.charactersToBeSkipped = nil;
 
-    while(!scanner.atEnd) {
+    while (!scanner.atEnd) {
 
         NSString *base = nil;
         NSString *itemName = nil;
         [scanner scanUpToString:@"<?" intoString:&base];
-        if([scanner scanString:@"<?" intoString:NULL]) {
+        if ([scanner scanString:@"<?" intoString:NULL]) {
             [scanner scanUpToString:@"?>" intoString:&itemName];
             [scanner scanString:@"?>" intoString:NULL];
 

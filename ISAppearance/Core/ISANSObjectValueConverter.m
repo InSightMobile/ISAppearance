@@ -2,6 +2,7 @@
 // 
 
 #import "ISANSObjectValueConverter.h"
+
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
@@ -11,13 +12,11 @@
 @property(nonatomic, strong) Class objectClass;
 @end
 
-@implementation ISANSObjectValueConverter
-{
+@implementation ISANSObjectValueConverter {
 
 }
 
-- (id)initWithObjectClass:(Class)objectClass
-{
+- (id)initWithObjectClass:(Class)objectClass {
     self = [super init];
     if (self) {
         if ([objectClass respondsToSelector:@selector(objectWithISANode:)]) {
@@ -30,8 +29,7 @@
     return self;
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     return [_objectClass objectWithISANode:node];
 }
 

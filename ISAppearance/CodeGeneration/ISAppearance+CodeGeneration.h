@@ -12,7 +12,6 @@
 #endif
 
 
-
 @class ISACode;
 
 @interface ISAppearance (CodeGeneration)
@@ -25,7 +24,8 @@
 
 @class ISACode;
 
-@interface ISAStyleEntry(CodeGeneration)
-- (ISACode*)generateCode;
-- (ISACode*)codeWithTarget:(id)rootTarget;
+@interface ISAStyleEntry (CodeGeneration)
+- (ISACode *)generateCode;
+
+- (ISACode *)codeWithTarget:(id)rootTarget;
 @end

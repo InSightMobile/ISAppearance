@@ -10,8 +10,7 @@
 
 @implementation ISACGPointValueConverter
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     CGPoint point = CGPointZero;
 
     if ([node isKindOfClass:[NSArray class]]) {

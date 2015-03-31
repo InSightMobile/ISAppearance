@@ -18,8 +18,7 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
 @interface ISAStyleEntry ()
 @end
 
-@implementation ISAStyleEntry
-{
+@implementation ISAStyleEntry {
 @private
     NSInvocation *_invocation;
     NSArray *_arguments;
@@ -29,8 +28,7 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     void (^_block)(id);
 }
 
-- (instancetype)initWithInvocation:(NSInvocation *)invocation
-{
+- (instancetype)initWithInvocation:(NSInvocation *)invocation {
     self = [super init];
     if (self) {
         _invocation = invocation;
@@ -40,14 +38,12 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return self;
 }
 
-+ (instancetype)entryWithInvocation:(NSInvocation *)invocation
-{
++ (instancetype)entryWithInvocation:(NSInvocation *)invocation {
     return [[self alloc] initWithInvocation:invocation];
 }
 
 
-- (id)initWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath
-{
+- (id)initWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath {
     self = [super init];
     if (self) {
         _selector = selector;
@@ -57,8 +53,7 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return self;
 }
 
-- (id)initWithBlock:(void (^)(id))block
-{
+- (id)initWithBlock:(void (^)(id))block {
     self = [super init];
     if (self) {
         _block = [block copy];
@@ -66,13 +61,11 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return self;
 }
 
-+ (id)entryWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath
-{
++ (id)entryWithSelector:(SEL)selector arguments:(NSArray *)arguments keyPath:(NSString *)keyPath {
     return [[ISAStyleEntry alloc] initWithSelector:selector arguments:arguments keyPath:keyPath];
 }
 
-- (id)safeInvokeWithTarget:(id)target
-{
+- (id)safeInvokeWithTarget:(id)target {
     if (_block) {
         _block(target);
         return nil;
@@ -90,8 +83,7 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return nil;
 }
 
-- (id)getReturnValue
-{
+- (id)getReturnValue {
     if (strcmp(_invocation.methodSignature.methodReturnType, @encode(id)) == 0) {
         __autoreleasing id returnValue = nil;
         [_invocation getReturnValue:&returnValue];
@@ -100,13 +92,11 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return nil;
 }
 
-+ (id)entryWithBlock:(void (^)(id object))block
-{
++ (id)entryWithBlock:(void (^)(id object))block {
     return [[ISAStyleEntry alloc] initWithBlock:block];
 }
 
-- (id)invokeWithTarget:(id)rootTarget
-{
+- (id)invokeWithTarget:(id)rootTarget {
     id target = nil;
     if (_keyPath) {
         @try {
@@ -220,8 +210,7 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return [self safeInvokeWithTarget:target];
 }
 
-+ (ISAStyleEntry *)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams
-{
++ (ISAStyleEntry *)entryWithKey:(id)key value:(id)value selectorParams:(NSArray *)selectorParams {
     if ([key isKindOfClass:[NSString class]]) {
 
         NSArray *array;
@@ -260,13 +249,11 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
 
 #endif
 
-+ (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams
-{
++ (ISAStyleEntry *)entryWithParams:(NSArray *)params selectorParams:(NSArray *)selectorParams {
     return [self entryWithParams:params fromIndex:0 selectorParams:selectorParams];
 }
 
-+ (ISAStyleEntry *)entryWithParams:(NSArray *)params fromIndex:(NSUInteger)index selectorParams:(NSArray *)selectorParams
-{
++ (ISAStyleEntry *)entryWithParams:(NSArray *)params fromIndex:(NSUInteger)index selectorParams:(NSArray *)selectorParams {
     NSMutableString *selectorName = [NSMutableString string];
     NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:[params count]];
     __block NSString *keyPath = nil;

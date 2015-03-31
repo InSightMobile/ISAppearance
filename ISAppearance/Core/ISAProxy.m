@@ -12,19 +12,16 @@
 
 @end
 
-@implementation ISAProxy
-{
+@implementation ISAProxy {
 
     Class _targetClass;
     NSString *_targetSelector;
 }
-+ (ISAProxy *)proxyForClass:(Class)pClass
-{
++ (ISAProxy *)proxyForClass:(Class)pClass {
     return [self proxyForClass:pClass andSelector:nil];
 }
 
-+ (ISAProxy *)proxyForClass:(Class)pClass andSelector:(NSString *)selector
-{
++ (ISAProxy *)proxyForClass:(Class)pClass andSelector:(NSString *)selector {
     ISAProxy *proxy = [ISAProxy alloc];
     proxy->_targetClass = pClass;
     proxy->_targetSelector = selector;
@@ -32,20 +29,17 @@
     return proxy;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[ISAppearance sharedInstance] unregisterProxy:self];
 }
 
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
-{
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
     Method method = class_getInstanceMethod(_targetClass, aSelector);
     return [NSMethodSignature signatureWithObjCTypes:method_getDescription(method)->types];
 }
 
-- (void)forwardInvocation:(NSInvocation *)invocation
-{
+- (void)forwardInvocation:(NSInvocation *)invocation {
     ISAStyleEntry *entry = [ISAStyleEntry entryWithInvocation:invocation];
     [[ISAppearance sharedInstance] addStyleEntry:entry forClass:_targetClass andSelector:_targetSelector];
 }

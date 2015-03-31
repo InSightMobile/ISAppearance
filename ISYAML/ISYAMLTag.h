@@ -42,8 +42,7 @@
 
 @end
 
-@interface ISYAMLRegexTag : ISYAMLTag
-{
+@interface ISYAMLRegexTag : ISYAMLTag {
     NSDictionary *regexDeclarations;
 }
 

@@ -11,13 +11,11 @@
 @property(nonatomic, strong) Class objectClass;
 @end
 
-@implementation ISAEnumClassValueConverter
-{
+@implementation ISAEnumClassValueConverter {
 
 }
 
-- (id)initWithObjectClass:(Class)objectClass
-{
+- (id)initWithObjectClass:(Class)objectClass {
     self = [super init];
     if (self) {
         if ([objectClass respondsToSelector:@selector(numberWithName:)]) {
@@ -30,8 +28,7 @@
     return self;
 }
 
-- (NSInteger)valueFromString:(NSString *)string
-{
+- (NSInteger)valueFromString:(NSString *)string {
     NSUInteger result = 0;
 
     NSArray *values = [string componentsSeparatedByString:@"|"];
@@ -50,14 +47,12 @@
     return result;
 }
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     NSInteger result = [self getIntegerFromNode:node];
     return [NSNumber numberWithInteger:result];
 }
 
-- (NSInteger)getIntegerFromNode:(id)node
-{
+- (NSInteger)getIntegerFromNode:(id)node {
     NSInteger result = 0;
 
     if ([node isKindOfClass:[NSString class]]) {

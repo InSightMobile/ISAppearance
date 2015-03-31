@@ -7,8 +7,7 @@
 
 @implementation UITableViewCell (ISAppearance)
 
-- (void)setBackgroundViewImage:(UIImage *)image
-{
+- (void)setBackgroundViewImage:(UIImage *)image {
     if ([self.backgroundView isKindOfClass:[UIImageView class]]) {
         [(UIImageView *) self.backgroundView setImage:image];
     }
@@ -20,8 +19,7 @@
     }
 }
 
-- (void)setSelectedBackgroundViewImage:(UIImage *)image
-{
+- (void)setSelectedBackgroundViewImage:(UIImage *)image {
     if ([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
         [(UIImageView *) self.selectedBackgroundView setImage:image];
     }
@@ -33,13 +31,11 @@
     }
 }
 
-- (void)setBackgroundViewColor:(UIColor *)color
-{
+- (void)setBackgroundViewColor:(UIColor *)color {
     [self setBackgroundViewImage:[UIImage imageWithColor:color]];
 }
 
-- (void)setSelectedBackgroundViewColor:(UIColor *)color
-{
+- (void)setSelectedBackgroundViewColor:(UIColor *)color {
     [self setSelectedBackgroundViewImage:[UIImage imageWithColor:color]];
 }
 

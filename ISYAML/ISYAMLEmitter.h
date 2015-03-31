@@ -7,8 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ISYAMLEmitter : NSObject
-{
+@interface ISYAMLEmitter : NSObject {
     NSMutableData *buffer;
     BOOL usesExplicitDelimiters;
     NSStringEncoding encoding;

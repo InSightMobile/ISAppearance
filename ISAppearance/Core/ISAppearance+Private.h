@@ -13,11 +13,14 @@
 
 @property(nonatomic, strong) NSMutableArray *definitions;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
-@property(nonatomic, strong) NSMutableDictionary* blocks;
-@property(nonatomic, strong) NSMutableDictionary* classStyles;
-@property(nonatomic, strong) NSMutableDictionary* objectStyles;
+@property(nonatomic, strong) NSMutableDictionary *blocks;
+@property(nonatomic, strong) NSMutableDictionary *classStyles;
+@property(nonatomic, strong) NSMutableDictionary *objectStyles;
 
-- (void)addStyleEntry:(ISAStyleEntry *)entry forClass:(Class)class andSelector:(NSString *)selectors;
+- (void)addStyleEntry:(ISAStyleEntry *)entry forClass:(Class)class
+
+andSelector: (NSString * )
+selectors;
 
 - (UIImage *)loadImageNamed:(NSString *)string;
 

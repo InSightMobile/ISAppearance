@@ -3,14 +3,12 @@
 //
 
 #import "ISAValueConverter+CodeGeneration.h"
-#import "ISAStyleEntry.h"
 
 
 @implementation ISAValueConverter (CodeGeneration)
 
 
-+ (id)codeOfClass:(Class)pClass withISANode:(id)node
-{
++ (id)codeOfClass:(Class)pClass withISANode:(id)node {
     id result = nil;
     if ([node isKindOfClass:[NSArray class]]) {
         if ([node count] > 0) {
@@ -24,19 +22,17 @@
             }
         }
     }
-    if(result) {
+    if (result) {
         return [ISACode fixCodeForClass:pClass value:result];
     }
     return nil;
 }
 
-- (id)codeWithISANode:(id)node
-{
+- (id)codeWithISANode:(id)node {
     return [self objectWithISANode:node];
 }
 
-- (id)boxedCodeWithISANode:(id)node
-{
+- (id)boxedCodeWithISANode:(id)node {
     return nil;
 }
 

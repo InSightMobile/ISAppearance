@@ -10,7 +10,9 @@
 @interface ISAValueConverter (CodeGeneration)
 
 + (id)codeOfClass:(Class)pClass withISANode:(id)node;
+
 - (id)codeWithISANode:(id)node;
+
 - (id)boxedCodeWithISANode:(id)node;
 
 @end

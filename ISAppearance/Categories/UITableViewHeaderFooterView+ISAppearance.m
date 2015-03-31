@@ -9,8 +9,7 @@
 
 @implementation UITableViewHeaderFooterView (ISAppearance)
 
-- (void)setBackgroundViewImage:(UIImage *)image
-{
+- (void)setBackgroundViewImage:(UIImage *)image {
     if ([self.backgroundView isKindOfClass:[UIImageView class]]) {
         [(UIImageView *) self.backgroundView setImage:image];
     }
@@ -22,8 +21,7 @@
     }
 }
 
-- (void)setBackgroundViewColor:(UIColor *)color
-{
+- (void)setBackgroundViewColor:(UIColor *)color {
     [self setBackgroundViewImage:[UIImage imageWithColor:color]];
 }
 

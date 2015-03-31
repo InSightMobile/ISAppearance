@@ -35,14 +35,13 @@
 #define YAML_TIMESTAMP_YMD_REGEX        @"^(?:[0-9]{4}-[0-9]{2}-[0-9]{2})$"
 #define YAML_TIMESTAMP_YMDTZ_REGEX      @"^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})(?:[Tt]|[ \\t]+)([0-9]{1,2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]*))?[ \\t]*(?:Z|(?:([-+][0-9]{1,2})(?::([0-9]{2}))?))?$"
 
-@interface ISYAMLNativeTagManager ()  <ISYAMLTagDelegate>
+@interface ISYAMLNativeTagManager () <ISYAMLTagDelegate>
 
 @end
 
 @implementation ISYAMLNativeTagManager
 
-+ (id)sharedManager
-{
++ (id)sharedManager {
     static ISYAMLNativeTagManager *__sharedManager = nil;
     static dispatch_once_t ref;
     dispatch_once(&ref, ^{
@@ -51,10 +50,9 @@
     return __sharedManager;
 }
 
-- (id)init
-{
+- (id)init {
     if (!(self = [super init])) {
-            return nil;
+        return nil;
     }
 
     NSMutableDictionary *mutableBuiltInTags = [NSMutableDictionary dictionary];
@@ -106,8 +104,7 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone
-{
+- (id)copyWithZone:(NSZone *)zone {
 #pragma unused(zone)
 
     return self;
@@ -134,8 +131,7 @@
     return self;
 }
 */
-- (id)tag:(ISYAMLTag *)tag decodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo
-{
+- (id)tag:(ISYAMLTag *)tag decodeFromString:(NSString *)stringValue extraInfo:(NSDictionary *)extraInfo {
     id hint = [extraInfo valueForKey:@"hint"];
     NSArray *components = [extraInfo valueForKey:@"components"];
 
@@ -163,10 +159,10 @@
         switch (base) {
             case -1:
                 if ([stringValue hasPrefix:@"-"]) {
-                                    return (id) kCFNumberPositiveInfinity;
-                                }
+                    return (id) kCFNumberPositiveInfinity;
+                }
                 else {
-                                    return (id) kCFNumberNegativeInfinity;
+                    return (id) kCFNumberNegativeInfinity;
                 }
                 break;
             case 10:
@@ -214,10 +210,10 @@
 
         NSTimeZone *timeZone = nil;
         if (deltaFromGMTInSeconds != 0) {
-                    timeZone = [NSTimeZone timeZoneForSecondsFromGMT:deltaFromGMTInSeconds];
-                }
+            timeZone = [NSTimeZone timeZoneForSecondsFromGMT:deltaFromGMTInSeconds];
+        }
         else {
-                    timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+            timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
         }
 
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -236,56 +232,53 @@
     return nil;
 }
 
-- (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag
-{
+- (id)tag:(ISYAMLTag *)tag castValue:(id)value fromTag:(ISYAMLTag *)castingTag {
     if (!castingTag) {
         if (tag == [_tagsByName valueForKey:ISYAMLStringTagDeclaration]) {
-                    return value;
-                }
+            return value;
+        }
         else if (tag == [_tagsByName valueForKey:ISYAMLNullTagDeclaration]) {
-                    return [NSNull null];
-                }
+            return [NSNull null];
+        }
         else if (tag == [_tagsByName valueForKey:ISYAMLBinaryTagDeclaration]) {
-                    return [NSData isyaml_dataFromBase64String:value];
+            return [NSData isyaml_dataFromBase64String:value];
         }
     }
     return nil;
 }
 
-- (id)tag:(ISYAMLTag *)tag castValue:(id)value toTag:(ISYAMLTag *)castingTag
-{
+- (id)tag:(ISYAMLTag *)tag castValue:(id)value toTag:(ISYAMLTag *)castingTag {
     // Try to cast results to an 'Integer'
     if (castingTag == [_tagsByName valueForKey:ISYAMLIntegerTagDeclaration]) {
         if (tag == [_tagsByName valueForKey:ISYAMLNullTagDeclaration]) {
-                    return [NSNumber numberWithInt:0];
+            return [NSNumber numberWithInt:0];
         }
         if ([value isKindOfClass:[NSNumber class]]) {
-                    return [NSNumber numberWithInt:[value intValue]];
+            return [NSNumber numberWithInt:[value intValue]];
         }
         // Try to cast results to a 'Float'
     }
     else if (castingTag == [_tagsByName valueForKey:ISYAMLFloatTagDeclaration]) {
         if (value == [NSNull null]) {
-                    return [NSNumber numberWithDouble:0.0];
+            return [NSNumber numberWithDouble:0.0];
         }
         if ([value isKindOfClass:[NSNumber class]]) {
-                    return [NSNumber numberWithDouble:[value doubleValue]];
+            return [NSNumber numberWithDouble:[value doubleValue]];
         }
         // Try to cast results to a 'Boolean'
     }
     else if (castingTag == [_tagsByName valueForKey:ISYAMLBooleanTagDeclaration]) {
         if (value == [NSNull null]) {
-                    return (id) kCFBooleanFalse;
+            return (id) kCFBooleanFalse;
         }
         if ([value isKindOfClass:[NSNumber class]]) {
-                    return ([value doubleValue] > 0 ? (id) kCFBooleanTrue : (id) kCFBooleanFalse);
+            return ([value doubleValue] > 0 ? (id) kCFBooleanTrue : (id) kCFBooleanFalse);
         }
     }
     return nil;
 }
 
-- (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo
-{
+- (id)tag:(ISYAMLTag *)tag processNode:(id)node extraInfo:(NSDictionary *)extraInfo {
     return nil;
 }
 

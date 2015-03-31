@@ -14,14 +14,12 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "InfiniteRecursion"
 
-- (void)isaOverride_awakeFromNib
-{
+- (void)isaOverride_awakeFromNib {
     [self isa_applyAppearance];
     [self isaOverride_awakeFromNib];
 }
 
-- (void)isaOverride_viewDidLoad
-{
+- (void)isaOverride_viewDidLoad {
     if (self.isaClass) {
         [[ISAppearance sharedInstance] applyAppearanceTo:self usingClassesString:[@"OnLoad:" stringByAppendingString:self.isaClass]];
     }
@@ -35,8 +33,7 @@
 #pragma clang diagnostic pop
 
 
-+ (void)isa_swizzleClass
-{
++ (void)isa_swizzleClass {
 
     [self isa_swizzle:[UIViewController class]
                  from:@selector(awakeFromNib)
@@ -49,13 +46,11 @@
 }
 
 
-- (void)isa_applyAppearance
-{
+- (void)isa_applyAppearance {
     self.isaIsApplied = @([[ISAppearance sharedInstance] applyAppearanceTo:self usingClassesString:self.isaClass]);
 }
 
-- (void)isa_applyAppearanceWithSubviews:(BOOL)subviews
-{
+- (void)isa_applyAppearanceWithSubviews:(BOOL)subviews {
     [self isa_applyAppearance];
     if (self.isViewLoaded) {
         [self.view isa_applyAppearanceWithSubviews:YES];
@@ -66,26 +61,22 @@
 static void *isaClass = 0;
 static void *isaIsApplied = 0;
 
-- (void)setIsaClass:(NSString *)value
-{
+- (void)setIsaClass:(NSString *)value {
     objc_setAssociatedObject(self, &isaClass, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (self.isaIsApplied) {
         [self isa_applyAppearance];
     }
 }
 
-- (NSString *)isaClass
-{
+- (NSString *)isaClass {
     return objc_getAssociatedObject(self, &isaClass);
 }
 
-- (void)setIsaIsApplied:(NSNumber *)value
-{
+- (void)setIsaIsApplied:(NSNumber *)value {
     objc_setAssociatedObject(self, &isaIsApplied, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)isaIsApplied
-{
+- (NSNumber *)isaIsApplied {
     return objc_getAssociatedObject(self, &isaIsApplied);
 }
 

@@ -6,13 +6,11 @@
 #import "ISANSTextAlignmentValueConverter.h"
 
 
-@implementation ISANSTextAlignmentValueConverter
-{
+@implementation ISANSTextAlignmentValueConverter {
 
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         self.mapping = @{

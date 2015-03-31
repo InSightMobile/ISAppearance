@@ -6,8 +6,7 @@
 
 @implementation UIButton (ISAppearance)
 
-- (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state
-{
+- (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state {
     [self setBackgroundImage:[UIImage imageWithColor:color] forState:state];
 }
 

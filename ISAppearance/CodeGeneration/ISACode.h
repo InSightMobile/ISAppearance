@@ -6,8 +6,7 @@
 @class ISACodeEntry;
 @class ISACode;
 
-typedef NS_OPTIONS(NSInteger , ISACodeFlags )
-{
+typedef NS_OPTIONS(NSInteger, ISACodeFlags) {
     ISACodeCached = 1 << 0,
     ISACodeForceInline = 1 << 1,
 
@@ -26,13 +25,13 @@ typedef NS_OPTIONS(NSInteger , ISACodeFlags )
 
 - (instancetype)initWithTypeName:(NSString *)typeName codeString:(NSString *)codeString;
 
-+ (instancetype)codeWithClass:(Class)codeClass format:(NSString *)format, ... NS_FORMAT_FUNCTION(2,3);
++ (instancetype)codeWithClass:(Class)codeClass format:(NSString *)format, ... NS_FORMAT_FUNCTION(2, 3);
 
 + (instancetype)codeWithClass:(Class)codeClass flags:(ISACodeFlags)flags format:(NSString *)format, ...;
 
 + (instancetype)codeWithTypeName:(NSString *)typeName format:(NSString *)format, ...;
 
-+ (instancetype)codeWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
++ (instancetype)codeWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
 
 + (id)codeWithInvokation:(NSInvocation *)invocation keyPath:(NSString *)path selector:(SEL)selector arguments:(NSArray *)arguments;

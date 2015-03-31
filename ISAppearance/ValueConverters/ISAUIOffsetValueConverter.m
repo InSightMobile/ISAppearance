@@ -7,14 +7,14 @@
 //
 
 #import "ISAUIOffsetValueConverter.h"
+
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
 
 @implementation ISAUIOffsetValueConverter
 
-- (id)objectWithISANode:(id)node
-{
+- (id)objectWithISANode:(id)node {
     UIOffset insets = UIOffsetZero;
 
     if ([node isKindOfClass:[NSArray class]]) {
