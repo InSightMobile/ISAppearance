@@ -1,13 +1,14 @@
 Pod::Spec.new do |s|
   s.name     = 'ISAppearance'
-  s.version  = '0.1.1'
+  s.version  = '0.1.2'
   s.license  = 'MIT'
   s.summary  = 'Appearance library.'
-  s.source   = { :git => 'git@bitbucket.org:Infoshell/isappearance.git', :branch => "develop",  :submodules => true }
+  s.authors  =  'Yaroslav Ponomarenko'
+  s.source   = { :git => 'https://github.com/InSightMobile/ISAppearance.git', :tag => '0.1.2'}
   s.requires_arc = true
   s.default_subspecs = 'Core','ValueConverters'
 
-  s.ios.deployment_target = '6.0'
+  s.ios.deployment_target = '7.0'
   s.ios.frameworks = 'UIKit'
 
   s.public_header_files = 'ISAppearance/*.h'
