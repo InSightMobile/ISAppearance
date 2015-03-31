@@ -4,7 +4,7 @@
 
 
 #import "ISATagResolver.h"
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 
 @interface ISATagResolver ()
 

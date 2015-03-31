@@ -1,7 +1,7 @@
 //
 // 
 
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 #import "ISANSObjectValueConverter.h"
 #import "ISAStyleEntry.h"
 #import "ISAEnumClassValueConverter.h"

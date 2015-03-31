@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 infoshell. All rights reserved.
 //
 
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 #import "ISAEnumValueConverter.h"
 
 @interface ISAUIControlStateValueConverter : ISAEnumValueConverter

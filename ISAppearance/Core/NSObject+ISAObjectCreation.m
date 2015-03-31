@@ -2,7 +2,7 @@
 // 
 
 #import "NSObject+ISAObjectCreation.h"
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 
 @implementation NSObject (ISAObjectCreation)
 

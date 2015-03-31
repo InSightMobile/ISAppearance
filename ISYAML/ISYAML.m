@@ -7,7 +7,7 @@
 //
 
 #import "ISYAML.h"
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 
 @implementation ISYAML
 

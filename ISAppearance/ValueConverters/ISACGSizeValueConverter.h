@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Ярослав. All rights reserved.
 //
 
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 
 @interface ISACGSizeValueConverter : ISAValueConverter
 

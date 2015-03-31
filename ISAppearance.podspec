@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '7.0'
   s.ios.frameworks = 'UIKit'
 
-  s.public_header_files = 'ISAppearance/Core/ISAppearance.h'
+  s.public_header_files = 'ISAppearance/Core/ISAppearance.h', 'ISAppearance/Core/ISAValueConverter.h'
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'ISAppearance/Core/*.{h,m}'

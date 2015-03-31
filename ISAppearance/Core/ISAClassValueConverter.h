@@ -2,7 +2,7 @@
 // 
 
 #import <Foundation/Foundation.h>
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 
 
 @interface ISAClassValueConverter : ISAValueConverter

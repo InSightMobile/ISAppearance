@@ -4,7 +4,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 
 
 @interface ISAEnumClassValueConverter : ISAValueConverter

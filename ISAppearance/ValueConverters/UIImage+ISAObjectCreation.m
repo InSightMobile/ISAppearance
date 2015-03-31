@@ -4,7 +4,7 @@
 #import "UIImage+ISAObjectCreation.h"
 #import "UIImage+ISACColor.h"
 #import "ISAppearance+Private.h"
-#import "ISAValueConverting.h"
+#import "ISAValueConverter.h"
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
 #endif
