@@ -29,19 +29,6 @@
     UIGraphicsEndImageContext();
     return image;
 }
-+ (UIImage *)imageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor size:(CGSize)size
-{
-    CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
-    CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
-    [fillColor setFill];
-    UIRectFill(rect);
-    [borderColor setFill];
-    UIRectFrame(rect);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
 
 + (UIImage *)imageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor size:(CGSize)size
 {
