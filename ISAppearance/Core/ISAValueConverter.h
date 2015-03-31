@@ -4,20 +4,7 @@
 #import <Foundation/Foundation.h>
 #import "ISYAMLTag.h"
 #import "ISAppearance.h"
-
-@class ISYAMLTag;
-
-@protocol ISAValueConverting <NSObject>
-
-- (id)objectWithISANode:(id)node;
-
-- (ISYAMLTag *)parsingTagForURI:(NSString *)uri;
-
-@optional
-- (id)codeWithISANode:(id)node;
-- (id)boxedCodeWithISANode:(id)node;
-
-@end
+#include "ISAValueConverting.h"
 
 
 @interface ISAValueConverter : NSObject<ISAValueConverting>
