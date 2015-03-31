@@ -36,6 +36,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Categories' do |ss|
     ss.source_files = 'ISAppearance/Categories/*.{h,m}'
+    ss.dependency 'ISAppearance/Core'
   end  
 
   s.subspec 'ISYAML' do |ss|
