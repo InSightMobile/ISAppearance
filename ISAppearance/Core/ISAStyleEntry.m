@@ -15,15 +15,6 @@ static NSString *SelectorNameForSetterWithString(NSString *string) {
     return [NSString stringWithFormat:@"set%@", sel];
 }
 
-
-static SEL SelectorForPropertySetterFromString(NSString *string) {
-
-    NSString *sel = [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-                                                    withString:[[string substringToIndex:1] uppercaseString]];
-
-    return NSSelectorFromString([NSString stringWithFormat:@"set%@:", sel]);
-}
-
 @interface ISAStyleEntry ()
 @end
 

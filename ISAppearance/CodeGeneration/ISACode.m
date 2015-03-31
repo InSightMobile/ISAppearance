@@ -262,7 +262,10 @@
     ISACode *targetCode = nil;
 
     if (class_isMetaClass(object_getClass(target))) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-security"
         targetCode = [ISACode codeWithFormat:NSStringFromClass(target)];
+#pragma clang diagnostic pop
     }
     else {
         targetCode = [ISACode codeForObject:target];
