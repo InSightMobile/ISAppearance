@@ -109,6 +109,18 @@
     return [image stretchableImageWithLeftCapWidth:ceil(rect.size.width / 2) topCapHeight:ceil(rect.size.height / 2)];
 }
 
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
+                              borderRadius:(CGFloat)borderRadius
+                                    insets:(UIEdgeInsets)insets {
+
+    return [self stretchableImageWithFillColor:fillColor
+                                   borderColor:[UIColor clearColor]
+                                   borderWidth:0
+                                  borderRadius:borderRadius
+                                         width:0
+                                        height:0
+                                        insets:insets];
+}
 
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor
                                borderColor:(UIColor *)borderColor
@@ -134,7 +146,6 @@
     [fillColor setFill];
     [borderColor setStroke];
     CGContextSetLineWidth(context, borderWidth);
-
 
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:pathRect cornerRadius:borderRadius];
     path.lineWidth = borderWidth;
@@ -217,10 +228,8 @@
     CGContextSetFillColorWithColor(context, fillColor.CGColor);
     CGContextFillRect(context, rect);
 
-
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
 
     if (!UIEdgeInsetsEqualToEdgeInsets(mask.capInsets, UIEdgeInsetsZero)) {
         return [image resizableImageWithCapInsets:mask.capInsets];
