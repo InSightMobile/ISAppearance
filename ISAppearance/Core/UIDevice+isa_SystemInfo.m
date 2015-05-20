@@ -35,7 +35,7 @@
 + (BOOL)isa_isRetina {
     static int result = -1;
     if (result < 0) {
-        result = [UIScreen mainScreen].scale == 2.0;
+        result = [UIScreen mainScreen].scale >= 2.0;
     }
     return result > 0;
 }

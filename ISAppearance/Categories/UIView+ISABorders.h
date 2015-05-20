@@ -4,6 +4,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface UIView (ISABorders)
 - (void)setRotationAngle:(CGFloat)angle;
