@@ -41,14 +41,20 @@
     return image;
 }
 
++ (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor {
+    return [self stretchableImageWithFillColor:fillColor borderColor:nil];
+}
+
 + (UIImage *)stretchableImageWithFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor {
     CGFloat scale = [UIDevice isa_isRetina] ? 2 : 1;
     CGRect rect = CGRectMake(0, 0, 1 + 2, 1 + 2);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, scale);
     [fillColor setFill];
     UIRectFill(rect);
-    [borderColor setFill];
-    UIRectFrame(rect);
+    if(borderColor) {
+        [borderColor setFill];
+        UIRectFrame(rect);
+    }
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return [image stretchableImageWithLeftCapWidth:1 topCapHeight:1];
