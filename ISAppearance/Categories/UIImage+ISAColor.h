@@ -3,6 +3,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "UIImage+ISACColor.h"
 
 @interface UIImage (ISAColor)
 + (UIImage *)imageWithColor:(UIColor *)color;
