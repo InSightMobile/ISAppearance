@@ -6,7 +6,7 @@
 #import "ISAResponderRuntimeSelector.h"
 
 #if ISA_CODE_GENERATION
-#import "ISAppearance+CodeGeneration.h"
+#import "ISAConfig+CodeGeneration.h"
 #endif
 
 

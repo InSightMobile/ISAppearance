@@ -1,8 +1,8 @@
 //
 //
 
-#import "ISAppearance+CodeGeneration.h"
-#import "ISAppearance+Private.h"
+#import "ISAConfig+CodeGeneration.h"
+#import "ISAConfig+Private.h"
 #import "ISAStyle.h"
 #import "ISACode.h"
 #import "ISARuntimeSelector.h"
@@ -26,7 +26,7 @@ static NSString *_codeTemplate = @""
 
 @end
 
-@implementation ISAppearance (CodeGeneration)
+@implementation ISAConfig (CodeGeneration)
 
 + (BOOL)isCodeGeneration {
     return _codeGenerationMode;

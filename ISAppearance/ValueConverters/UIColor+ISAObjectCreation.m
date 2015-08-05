@@ -3,10 +3,12 @@
 
 
 
+#import <ISAppearance/ISAConfig.h>
 #import "UIColor+ISAObjectCreation.h"
 #import "ISAppearance.h"
 #import "ISAppearance+Private.h"
 #import "UIColor+ISACHexString.h"
+#import "ISAConfig+Private.h"
 
 #if ISA_CODE_GENERATION
 #import "ISACode.h"
@@ -27,7 +29,7 @@
     UIColor *cl = [self isa_colorWithHexString:node];
 
     if (!cl) {
-        UIImage *image = [[ISAppearance sharedInstance] loadImageNamed:node];
+        UIImage *image = [[ISAConfig sharedInstance] loadImageNamed:node];
         if (image) {
             return [UIColor colorWithPatternImage:image];
         }

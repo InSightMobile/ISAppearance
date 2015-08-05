@@ -1,10 +1,11 @@
 //
 // 
 
+#import <ISAppearance/ISAConfig.h>
 #import "UIImage+ISAObjectCreation.h"
 #import "UIImage+ISACColor.h"
-#import "ISAppearance+Private.h"
 #import "ISAValueConverter.h"
+#import "ISAConfig+Private.h"
 
 #if ISA_CODE_GENERATION
 #import "ISAValueConverter+CodeGeneration.h"
@@ -13,7 +14,7 @@
 @implementation UIImage (ISAObjectCreation)
 
 + (UIImage *)isaImageNamed:(NSString *)name {
-    return [[ISAppearance sharedInstance] loadImageNamed:name];
+    return [[ISAConfig sharedInstance] loadImageNamed:name];
 }
 
 #if ISA_CODE_GENERATION

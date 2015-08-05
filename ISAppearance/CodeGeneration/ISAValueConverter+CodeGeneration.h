@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ISAValueConverter.h"
-#import "ISAppearance+CodeGeneration.h"
+#import "ISAConfig+CodeGeneration.h"
 #import "ISACode.h"
 
 @interface ISAValueConverter (CodeGeneration)

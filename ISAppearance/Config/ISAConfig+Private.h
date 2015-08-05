@@ -5,11 +5,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ISAppearance.h"
+#import "ISAConfig.h"
 
 @class ISAStyleEntry;
 @class ISAProxy;
 
-@interface ISAppearance (Private)
+@interface ISAConfig (Private)
 
 @property(nonatomic, strong) NSMutableArray *definitions;
 @property(nonatomic, strong) NSMutableDictionary *definitionsByClass;
@@ -17,22 +18,11 @@
 @property(nonatomic, strong) NSMutableDictionary *classStyles;
 @property(nonatomic, strong) NSMutableDictionary *objectStyles;
 
-- (void)addStyleEntry:(ISAStyleEntry *)entry
-             forClass:(Class)aClass
-          andSelector:(NSString *)selectors;
-
-- (void)addParams:(NSArray *)params forClass:(Class)baseClass toSelector:(NSArray *)userComponents;
-
-- (void)registerProxy:(ISAProxy *)proxy;
-
-- (void)unregisterProxy:(ISAProxy *)proxy;
-
+- (UIImage *)loadImageNamed:(NSString *)string;
 - (void)clearCurrentClasses;
 
 @property(nonatomic, strong) NSMutableArray *UIAppearanceClasses;
 
-- (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors;
-
-- (void)setAppearanceReady:(BOOL)ready;
+- (UIImage *)loadImageNamed:(NSString *)string;
 
 @end
