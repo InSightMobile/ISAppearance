@@ -3,6 +3,7 @@
 
 #import "ISAConfig+CodeGeneration.h"
 #import "ISAConfig+Private.h"
+#import "ISAppearance+Private.h"
 #import "ISAStyle.h"
 #import "ISACode.h"
 #import "ISARuntimeSelector.h"
@@ -82,14 +83,15 @@ static NSString *_codeTemplate = @""
         }
 
         [classes addObject:[NSString stringWithFormat:@"    %@;\n", code.sourceString]];
-
     }
 
-    [self.classStyles enumerateKeysAndObjectsUsingBlock:^(id key, ISAStyle *style, BOOL *stop) {
+    ISAppearance *appearance = [ISAppearance sharedInstance];
+
+    [appearance.classStyles enumerateKeysAndObjectsUsingBlock:^(id key, ISAStyle *style, BOOL *stop) {
         [self processStyleStyle:style resultClasses:classes includes:includes];
     }];
 
-    [self.objectStyles enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *styles, BOOL *stop) {
+    [appearance.objectStyles enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *styles, BOOL *stop) {
         [styles enumerateKeysAndObjectsUsingBlock:^(id key, id styleOrArray, BOOL *stop) {
 
             if ([styleOrArray isKindOfClass:[NSArray class]]) {

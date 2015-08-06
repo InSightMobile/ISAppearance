@@ -29,8 +29,6 @@
 
 - (void)clearCurrentClasses;
 
-@property(nonatomic, strong) NSMutableArray *UIAppearanceClasses;
-
 - (BOOL)checkStyleConformance:(NSArray *)selectors passedSelectors:(NSArray **)pPassedSelectors;
 
 - (void)setAppearanceReady:(BOOL)ready;

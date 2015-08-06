@@ -23,6 +23,5 @@
 
 @property(nonatomic, strong) NSMutableArray *UIAppearanceClasses;
 
-- (UIImage *)loadImageNamed:(NSString *)string;
 
 @end
